@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:play_hq/blocs/auth_bloc.dart';
 import 'package:play_hq/constants/route_constants.dart';
@@ -11,20 +13,36 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   AuthBloc _authBloc;
 
+  Stream _previousStream;
+  StreamSubscription _streamSubscription;
+
+  void _listen(Stream<bool> stream) {
+    _streamSubscription = _authBloc.loginState.stream.listen((value) {
+      Navigator.pushReplacementNamed(context, HomeRoute);
+    });
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _authBloc = Provider.of<AuthBloc>(context);
+
+    if (_authBloc.loginState.stream != _previousStream) {
+      _streamSubscription?.cancel();
+      _previousStream = _authBloc.loginState.stream;
+      _listen(_authBloc.loginState.stream);
+    }
+
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _streamSubscription.cancel();
     super.dispose();
   }
-  void nextScreen(){
-    Navigator.pushReplacementNamed(context, HomeRoute);
-  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,18 +78,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         return Text(snapshot.hasData ? snapshot.data : '');
                       }),
                 ),
-                StreamBuilder<bool>(
-                    stream: _authBloc.loginState,
-                    builder:
-                        (BuildContext context, AsyncSnapshot<bool> snapshot) {
-                          nextScreen();
-                          return RaisedButton(
-                        onPressed: () {
-                          _authBloc.login();
-                        },
-                        child: Text('Login'),
-                      );
-                    }),
+                RaisedButton(
+                  onPressed: () {
+                    _authBloc.login();
+                  },
+                  child: Text('Login'),
+                )
               ],
             ),
           ],

@@ -24,8 +24,7 @@ class AuthBloc extends Object {
       _passwordController.sink; // sink is exposed and is used to add data
 
   BehaviorSubject<bool> _initialAuthState = BehaviorSubject<bool>();
-  PublishSubject<bool> _loginState = PublishSubject();
-  Stream<bool> get loginState => _loginState.stream;
+  PublishSubject<bool> loginState = PublishSubject();
 
   AuthBloc() {}
 
@@ -43,9 +42,9 @@ class AuthBloc extends Object {
       SecureStorage.writeValue(ACCESS_TOKEN, userData.auth.accessToken);
       SecureStorage.writeValue(REFRESH_TOKEN, userData.auth.refreshToken);
 
-      _loginState.sink.add(true);
+      loginState.sink.add(true);
     } catch (e) {
-      _loginState.addError('Invalid Credentials');
+      loginState.addError('Invalid Credentials');
     }
   }
 
@@ -67,6 +66,6 @@ class AuthBloc extends Object {
     _passwordController.close();
 
     _initialAuthState.close();
-    _loginState.close();
+    loginState.close();
   }
 }
