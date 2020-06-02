@@ -18,11 +18,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _listen(Stream<bool> stream) {
     _streamSubscription = stream.listen((state) {
-        if (state) {
-          Navigator.pushReplacementNamed(context, HomeRoute);
-        }
-      },
-    );
+      if (state) {
+        Navigator.pushReplacementNamed(context, HomeRoute);
+      }
+    }, onError: (e) {
+      print(e);
+    });
   }
 
   @override
