@@ -17,9 +17,9 @@ class _LoginScreenState extends State<LoginScreen> {
   StreamSubscription _streamSubscription;
 
   void _listen(Stream<bool> stream) {
-    _streamSubscription = _authBloc.loginState.stream.listen((value) {
+    _streamSubscription = stream.listen((value) {
       Navigator.pushReplacementNamed(context, HomeRoute);
-    });
+    },);
   }
 
   @override
