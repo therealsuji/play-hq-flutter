@@ -20,13 +20,14 @@ class AuthBloc extends Object {
   Stream<String> get getPassword => _password.stream; // this gets value
   StreamController<String> _passwordController = StreamController();
 
-  Sink<String> get setPassword =>
-      _passwordController.sink; // sink is exposed and is used to add data
+  Sink<String> get setPassword =>_passwordController.sink; // sink is exposed and is used to add data
 
   BehaviorSubject<bool> _initialAuthState = BehaviorSubject<bool>();
   PublishSubject<bool> loginState = PublishSubject();
 
-  AuthBloc() {}
+  AuthBloc() {
+
+  }
 
   Future<Stream<bool>> getAuthState() async {
     var state = await SecureStorage.readValue(ACCESS_TOKEN);
@@ -41,9 +42,9 @@ class AuthBloc extends Object {
       var userData = UserLoginModel.fromJson(res.data);
       SecureStorage.writeValue(ACCESS_TOKEN, userData.auth.accessToken);
       SecureStorage.writeValue(REFRESH_TOKEN, userData.auth.refreshToken);
-
       loginState.sink.add(true);
     } catch (e) {
+
       loginState.addError('Invalid Credentials');
     }
   }

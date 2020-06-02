@@ -17,9 +17,12 @@ class _LoginScreenState extends State<LoginScreen> {
   StreamSubscription _streamSubscription;
 
   void _listen(Stream<bool> stream) {
-    _streamSubscription = stream.listen((value) {
-      Navigator.pushReplacementNamed(context, HomeRoute);
-    },);
+    _streamSubscription = stream.listen((state) {
+        if (state) {
+          Navigator.pushReplacementNamed(context, HomeRoute);
+        }
+      },
+    );
   }
 
   @override
@@ -32,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
       _previousStream = _authBloc.loginState.stream;
       _listen(_authBloc.loginState.stream);
     }
-
   }
 
   @override
@@ -40,8 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
     _streamSubscription.cancel();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
