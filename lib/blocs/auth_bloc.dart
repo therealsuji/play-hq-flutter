@@ -7,26 +7,33 @@ import 'package:play_hq/models/user_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AuthBloc extends Object {
-  BehaviorSubject<String> _userName =
-      BehaviorSubject<String>(); //this holds value
-  Stream<String> get getUserName => _userName.stream; // this gets value
-  StreamController<String> _userNameController = StreamController();
-
-  Sink<String> get setUserName =>
-      _userNameController.sink; // sink is exposed and is used to add data
+  BehaviorSubject<String> _email = BehaviorSubject<String>(); //this holds value
+  Stream<String> get getEmail =>
+      _email.stream; // this is used for validations and getting the value
+  StreamController<String> _emailController = StreamController();
+  Sink<String> get setEmail =>
+      _emailController.sink; // sink is exposed and is used to add data
 
   BehaviorSubject<String> _password = BehaviorSubject<String>();
-
-  Stream<String> get getPassword => _password.stream; // this gets value
+  Stream<String> get getPassword =>
+      _password.stream; // this is used for validations and getting the value
   StreamController<String> _passwordController = StreamController();
-
-  Sink<String> get setPassword =>_passwordController.sink; // sink is exposed and is used to add data
+  Sink<String> get setPassword =>
+      _passwordController.sink; // sink is exposed and is used to add data
 
   BehaviorSubject<bool> _initialAuthState = BehaviorSubject<bool>();
-  PublishSubject<bool> loginState = PublishSubject();
+  PublishSubject<bool> _loginState = PublishSubject(); // this holds value
+  Stream<bool> get getLoginState =>
+      _loginState.stream; // this gets the login state
+  Sink<bool> get setLoginState => _loginState.sink; // this sets the login state
 
   AuthBloc() {
-
+    _emailController.stream.listen((event) {
+      _email.add(event);
+    });
+    _passwordController.stream.listen((event) {
+      _password.add(event);
+    });
   }
 
   Future<Stream<bool>> getAuthState() async {
@@ -36,16 +43,29 @@ class AuthBloc extends Object {
   }
 
   void login() async {
+    if ((_email.value == null) || !_email.value.contains('@')) {
+      print('bad');
+      _email.addError('Enter a valid email');
+      return;
+    }
+     
+    if ((_password.value == null)) {
+      _password.addError('Enter a valid password');
+      return;
+    }
+
     try {
       var res = await NetworkClient.dio.post('/auth/login',
-          data: {"email": 'sujitha123@gmail.com', "password": 'sujitharox'});
+          data: {"email": _email.value.trim(), "password": _password.value.trim()});
+      _email.value = null;
+      _password.value = null;
       var userData = UserLoginModel.fromJson(res.data);
       SecureStorage.writeValue(ACCESS_TOKEN, userData.auth.accessToken);
       SecureStorage.writeValue(REFRESH_TOKEN, userData.auth.refreshToken);
-      loginState.sink.add(true);
+      setLoginState.add(true);
     } catch (e) {
-
-      loginState.addError('Invalid Credentials');
+     
+      _loginState.addError('Invalid Credentials');
     }
   }
 
@@ -53,20 +73,14 @@ class AuthBloc extends Object {
     await SecureStorage.deleteAll();
   }
 
-  void test() async {
-    try {
-      var res = await NetworkClient.dio.get('/auth');
-    } catch (e) {print(e);}
-  }
-
   void dispose() {
-    _userName.close();
-    _userNameController.close();
+    _email.close();
+    _emailController.close();
 
     _password.close();
     _passwordController.close();
 
     _initialAuthState.close();
-    loginState.close();
+    _loginState.close();
   }
 }

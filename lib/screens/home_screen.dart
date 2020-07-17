@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ), RaisedButton(
                   child: Text('Test Refresh'),
                   onPressed: () async{
-                    _authBloc.test();
+                   
 
                   },
                 )
