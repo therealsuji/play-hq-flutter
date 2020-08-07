@@ -17,13 +17,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void didChangeDependencies(){
     super.didChangeDependencies();
+    ScreenUtils.setScreenSizes(context);
     NetworkClient(); // initialize the network client before doing any requests
     _authBloc = Provider.of<AuthBloc>(context);
     _authBloc.getAuthState().then((value) => value.listen((state) {
       if(state){
         Navigator.pushReplacementNamed(context, HomeRoute);
       }else{
-        Navigator.pushReplacementNamed(context, LoginRoute);
+        Navigator.pushReplacementNamed(context, MainScreenRoute);
       }
     }));
    }

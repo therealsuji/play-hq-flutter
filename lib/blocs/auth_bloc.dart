@@ -37,8 +37,7 @@ class AuthBloc extends Object {
 
   void login() async {
     try {
-      var res = await NetworkClient.dio.post('/auth/login',
-          data: {"email": 'sujitha123@gmail.com', "password": 'sujitharox'});
+      var res = await NetworkClient.dio.post('/auth/login', data: {"email": 'sujitha123@gmail.com', "password": 'sujitharox'});
       var userData = UserLoginModel.fromJson(res.data);
       SecureStorage.writeValue(ACCESS_TOKEN, userData.auth.accessToken);
       SecureStorage.writeValue(REFRESH_TOKEN, userData.auth.refreshToken);
