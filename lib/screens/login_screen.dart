@@ -31,10 +31,10 @@ class _LoginScreenState extends State<LoginScreen> {
     super.didChangeDependencies();
     _authBloc = Provider.of<AuthBloc>(context);
 
-    if (_authBloc.loginState.stream != _previousStream) {
+    if (_authBloc.getLoginState != _previousStream) {
       _streamSubscription?.cancel();
-      _previousStream = _authBloc.loginState.stream;
-      _listen(_authBloc.loginState.stream);
+      _previousStream = _authBloc.getLoginState;
+      _listen(_authBloc.getLoginState);
     }
   }
 
@@ -54,31 +54,46 @@ class _LoginScreenState extends State<LoginScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Container(
-                  color: Colors.blue,
-                  width: MediaQuery.of(context).size.width,
-                  child: TextField(
-                    onChanged: (val) {
-                      _authBloc.setUserName.add(val);
-                    },
-                    decoration: InputDecoration(hintText: "UserName"),
-                  ),
+                StreamBuilder<String>(
+                  stream: _authBloc.getEmail,
+                  builder: (context, snapshot) {
+                    return Container(
+                      color: Colors.blue,
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        onChanged: (val) {
+                          _authBloc.setEmail.add(val);
+                        },
+                        decoration: InputDecoration(
+                          errorText: snapshot.error,
+                          errorStyle:TextStyle(color: Colors.red) ,
+                          hintText: "Email"
+                          ),
+                      ),
+                    );
+                  }
                 ),
-                Container(
-                  color: Colors.red,
-                  width: MediaQuery.of(context).size.width,
-                  child: TextField(
-                    decoration: InputDecoration(hintText: "Email"),
-                  ),
+                SizedBox(height: 15,),
+                StreamBuilder<String>(
+                  stream: _authBloc.getPassword,
+                  builder: (context, snapshot) {
+                    return Container(
+                      color: Colors.red,
+                      width: MediaQuery.of(context).size.width,
+                      child: TextField(
+                        onChanged: (val) {
+                          _authBloc.setPassword.add(val);
+                        },
+                        decoration: InputDecoration(
+                          errorText: snapshot.error,
+                          errorStyle:TextStyle(color: Colors.red) ,
+                          hintText: "Password"
+                          ),
+                      ),
+                    );
+                  }
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  child: StreamBuilder<String>(
-                      stream: _authBloc.getUserName,
-                      builder: (context, snapshot) {
-                        return Text(snapshot.hasData ? snapshot.data : '');
-                      }),
-                ),
+               
                 RaisedButton(
                   onPressed: () {
                     _authBloc.login();
