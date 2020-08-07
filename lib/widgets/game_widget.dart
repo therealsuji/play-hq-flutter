@@ -14,7 +14,7 @@ class GamesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtils.getDesignWidth(105),
+      width: ScreenUtils.getDesignWidth(106),
       height:  ScreenUtils.getDesignHeight(160),
       decoration: BoxDecoration(
           boxShadow: [
