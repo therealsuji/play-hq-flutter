@@ -31,11 +31,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.didChangeDependencies();
     _authBloc = Provider.of<AuthBloc>(context);
 
-    if (_authBloc.getLoginState != _previousStream) {
+  /*  if (_authBloc.getLoginState != _previousStream) {
       _streamSubscription?.cancel();
       _previousStream = _authBloc.getLoginState;
       _listen(_authBloc.getLoginState);
-    }
+    }*/
   }
 
   @override
@@ -55,14 +55,12 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 StreamBuilder<String>(
-                  stream: _authBloc.getEmail,
                   builder: (context, snapshot) {
                     return Container(
                       color: Colors.blue,
                       width: MediaQuery.of(context).size.width,
                       child: TextField(
                         onChanged: (val) {
-                          _authBloc.setEmail.add(val);
                         },
                         decoration: InputDecoration(
                           errorText: snapshot.error,
