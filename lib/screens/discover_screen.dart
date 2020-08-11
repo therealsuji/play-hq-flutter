@@ -5,6 +5,7 @@ import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 import 'package:play_hq/widgets/carousal_widget.dart';
+import 'package:play_hq/widgets/discover_carousel_widget.dart';
 
 class DiscoverScreen extends StatelessWidget {
   @override
@@ -70,62 +71,23 @@ class DiscoverScreen extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 60),
+              padding: const EdgeInsets.only(top: 30),
               child: CarouselSlider(
                 options: CarouselOptions(
-                    height: ScreenUtils.getDesignHeight(180),
+                    height: ScreenUtils.getDesignHeight(220),
                     disableCenter: true,
-                    viewportFraction: 0.83,
+                    viewportFraction: 0.85,
                     enlargeCenterPage: true,
-
                     enlargeStrategy: CenterPageEnlargeStrategy.scale),
                 items: [1, 2].map((i) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 5.0),
-                          child: Stack(
-                             overflow: Overflow.visible,
-                            children: [
-                              Container(
-                                height: ScreenUtils.getDesignHeight(180),
-                                decoration: BoxDecoration(
-                                  borderRadius:BorderRadius.circular(5),
-                                  image: DecorationImage(
-                                    fit: BoxFit.fill,
-                                    image: AssetImage(
-                                      'assets/images/cyber.png',
-                                    ),
-                                  ),
-                                ),
+                      return DiscoverCarouselWidget(
+                        gameName: "Cyberpunk 2077",
+                        backgroundUrl: 'assets/images/cyber.png',
+                        characterUrl: 'assets/images/cyber-ct.png',
 
-                              ),
-                              Container(
-                                height: ScreenUtils.getDesignHeight(180),
-                                 decoration: BoxDecoration(
-                                     borderRadius:BorderRadius.circular(5),
-
-                                     color: Colors.white,
-                                    gradient: LinearGradient(
-                                        begin: FractionalOffset.topCenter,
-                                        end: FractionalOffset.bottomCenter,
-                                        colors: [
-                                          Colors.white.withOpacity(0.0),
-                                          Colors.black.withOpacity(0.9),
-                                        ],
-                                        stops: [
-                                          0.0,
-                                          1.0
-                                        ])),
-                              ),
-                              Positioned(
-                                right:0,
-                                bottom:50,
-
-                                child:Container(color: Colors.red,height: ScreenUtils.getDesignHeight(200),width: 100,),
-                              ),
-                            ],
-                          ));
+                      );
                     },
                   );
                 }).toList(),
