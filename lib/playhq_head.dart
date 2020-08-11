@@ -18,9 +18,12 @@ class PlayHqHead extends StatelessWidget {
         )
       ],
       child: MaterialApp(
+
           debugShowCheckedModeBanner: false,
           onGenerateRoute: MyRoutes.generateRoute,
           initialRoute: SplashScreenRoute),
     );
   }
 }
+
+
