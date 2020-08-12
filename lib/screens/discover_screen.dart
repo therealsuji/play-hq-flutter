@@ -19,7 +19,7 @@ class DiscoverScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 25),
         // DO THE BOUNCY THANGG
-        physics: BouncingScrollPhysics(),
+//        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -102,7 +102,7 @@ class DiscoverScreen extends StatelessWidget {
               height: ScreenUtils.getDesignHeight(70),
               child: ListView.builder(
                   // BOUNCYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
-                  physics: BouncingScrollPhysics(),
+//                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(left: 24),
                   scrollDirection: Axis.horizontal,
                   itemCount: 5,
@@ -123,7 +123,7 @@ class DiscoverScreen extends StatelessWidget {
               height: ScreenUtils.getDesignHeight(160),
               child: ListView.builder(
                   // BOUNCYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
-                  physics: BouncingScrollPhysics(),
+//                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(left: 24),
                   scrollDirection: Axis.horizontal,
                   itemCount: 5,
@@ -154,7 +154,7 @@ class DiscoverScreen extends StatelessWidget {
               height: ScreenUtils.getDesignHeight(160),
               child: ListView.builder(
                   // BOUNCYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
-                  physics: BouncingScrollPhysics(),
+//                  physics: BouncingScrollPhysics(),
                   padding: EdgeInsets.only(left: 24),
                   scrollDirection: Axis.horizontal,
                   itemCount: 5,
