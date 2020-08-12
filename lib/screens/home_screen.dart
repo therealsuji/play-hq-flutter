@@ -30,6 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Background,
       body: SingleChildScrollView(
+        // DO THE BOUNCY THANGG
+        physics: BouncingScrollPhysics(),
         child: Container(
           margin: EdgeInsets.only(left: 24, right: 24, top: 51),
           child: Column(

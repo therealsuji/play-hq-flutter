@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/constants/font_string_constants.dart';
+import 'package:play_hq/constants/route_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 import 'package:play_hq/widgets/carousal_widget.dart';
@@ -12,8 +13,7 @@ import 'package:play_hq/widgets/game_widget.dart';
 class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    PageController carouselController =
-        PageController(initialPage: 0, viewportFraction: 0.9);
+
     return Scaffold(
       backgroundColor: Background,
       body: SingleChildScrollView(
@@ -130,10 +130,13 @@ class DiscoverScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.only(right: 15),
-                      child: GamesWidget(
-                        gameName: 'Ghost of Tsushima',
-                        price: '4000 LKR',
-                        backgroundUrl: 'assets/images/tshushima.jpg',
+                      child: GestureDetector(
+                        onTap: (){Navigator.pushNamed(context, GameDetailRoute);},
+                        child: GamesWidget(
+                          gameName: 'Ghost of Tsushima',
+                          price: '4000 LKR',
+                          backgroundUrl: 'assets/images/tshushima.jpg',
+                        ),
                       ),
                     );
                   }),
