@@ -32,7 +32,7 @@ class CarousalWidget extends StatelessWidget {
                         width: ScreenUtils.bodyWidth,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(5.0),
-                            color: Colors.white),
+                             ),
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(5.0),
                             child: Image.asset(
