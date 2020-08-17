@@ -145,7 +145,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
   }
 }
 
-// customer clipper to cut the left side of the charchter
+// customer clipper to cut the left side of the character
 
 //clip illustration
 //  __________________________________________________
