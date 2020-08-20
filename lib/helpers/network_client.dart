@@ -37,24 +37,26 @@ class NetworkClient {
     }, onError: (DioError e) async {
       //Do something with response error
       if (e.response != null) {
-         switch (e.response.statusCode) {
+        switch (e.response.statusCode) {
           case 401:
             dio.lock();
             dio.interceptors.responseLock.lock();
-            dio.interceptors.errorLock.lock(); // lock dio to enqueue all requests
+            dio.interceptors.errorLock
+                .lock(); // lock dio to enqueue all requests
             RequestOptions options = e.response.request;
             var accessToken = await SecureStorage.readValue(REFRESH_TOKEN);
             //get new refresh and access token
             var res = await tokenDio.post("/auth/getRefreshToken",
                 data: {"refreshToken": accessToken});
             var tokens = Auth.fromJson(res.data);
-             await SecureStorage.writeValue(ACCESS_TOKEN, tokens.accessToken);
+            await SecureStorage.writeValue(ACCESS_TOKEN, tokens.accessToken);
             await SecureStorage.writeValue(REFRESH_TOKEN, tokens.refreshToken);
             // add new access token to current 401 request
             options.headers["Authorization"] = "Bearer " + tokens.accessToken;
             dio.unlock();
             dio.interceptors.responseLock.unlock();
-            dio.interceptors.errorLock.unlock(); // unlock dio and return previous request
+            dio.interceptors.errorLock
+                .unlock(); // unlock dio and return previous request
             return dio.request(options.path, options: options);
             break;
           case 404:
