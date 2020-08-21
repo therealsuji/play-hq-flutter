@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/blocs/auth_bloc.dart';
@@ -42,10 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'Home',
-                    style: TextStyle(
-                        fontSize: 25,
-                        color: Colors.white,
-                        fontFamily: CircularBold),
+                    style: TextStyle(fontSize: 25, color: Colors.white, fontFamily: CircularBold),
                   ),
                   Spacer(),
                   SizedBox(
@@ -69,10 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: EdgeInsets.only(top: 10),
                   child: Text(
                     'Get the best deals on the latest games',
-                    style: TextStyle(
-                        fontFamily: CircularBook,
-                        fontSize: 14,
-                        color: Colors.white.withOpacity(0.7)),
+                    style: TextStyle(fontFamily: CircularBook, fontSize: 14, color: Colors.white.withOpacity(0.7)),
                   )),
               //Custom Widget for the carousal Slider
               CarousalWidget(
@@ -86,10 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: EdgeInsets.only(top: 25),
                 child: Text(
                   'From your Wishlist',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: CircularBold,
-                      color: Colors.white),
+                  style: TextStyle(fontSize: 18, fontFamily: CircularBold, color: Colors.white),
                 ),
               ),
               Container(
@@ -119,19 +111,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               _myGameForSale(),
-               Container(
+              Container(
                 margin: EdgeInsets.only(top: 25),
                 child: Text(
                   'Suggested for you',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontFamily: CircularBold,
-                      color: Colors.white),
+                  style: TextStyle(fontSize: 18, fontFamily: CircularBold, color: Colors.white),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
-                    top: 15, bottom: ScreenUtils.getDesignHeight(30)),
+                margin: EdgeInsets.only(top: 15, bottom: ScreenUtils.getDesignHeight(30)),
                 height: ScreenUtils.getDesignHeight(160),
                 width: ScreenUtils.bodyWidth,
                 child: Row(
@@ -156,6 +144,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+              Container(
+                padding: EdgeInsets.only(bottom: 50),
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Primary,
+                  child: Text("Logout"),
+                  onPressed: () async {
+                    await _authBloc.logOut();
+                    Navigator.pushNamedAndRemoveUntil(context, LoginRoute, (Route<dynamic> route) => false);
+                  },
+                ),
+              )
             ],
           ),
         ),
@@ -181,8 +181,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                   child: Container(
-                    decoration:
-                        new BoxDecoration(color: Colors.white.withOpacity(0.0)),
+                    decoration: new BoxDecoration(color: Colors.white.withOpacity(0.0)),
                   ),
                 ),
               ),
@@ -213,9 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(20),
-                bottom: ScreenUtils.getDesignHeight(20)),
+            padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20), bottom: ScreenUtils.getDesignHeight(20)),
             margin: EdgeInsets.only(left: 20, right: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -223,10 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Text(
                   'My Games for Sale',
                   style: TextStyle(
-                      fontFamily: CircularBold,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                      fontFamily: CircularBold, fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 Container(
                     margin: EdgeInsets.only(top: 12),
@@ -246,45 +240,32 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Game Title',
                               style: TextStyle(
-                                  fontFamily: Neusa,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Primary),
+                                  fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: Primary),
                             ),
                             Container(
                                 margin: EdgeInsets.only(top: 8),
                                 child: Text(
                                   'Horizon: Zero Dawn',
-                                  style: TextStyle(
-                                      fontFamily: CircularBook,
-                                      fontSize: 14,
-                                      color: Colors.white),
+                                  style: TextStyle(fontFamily: CircularBook, fontSize: 14, color: Colors.white),
                                 )),
                           ],
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.only(
-                            left: ScreenUtils.getDesignWidth(20)),
+                        margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Impressions',
                               style: TextStyle(
-                                  fontFamily: Neusa,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Primary),
+                                  fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: Primary),
                             ),
                             Container(
                                 margin: EdgeInsets.only(top: 8),
                                 child: Text(
                                   '20',
-                                  style: TextStyle(
-                                      fontFamily: CircularBook,
-                                      fontSize: 14,
-                                      color: Colors.white),
+                                  style: TextStyle(fontFamily: CircularBook, fontSize: 14, color: Colors.white),
                                 )),
                           ],
                         ),
@@ -293,17 +274,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Container(
                         height: ScreenUtils.getDesignHeight(30),
                         width: ScreenUtils.getDesignWidth(80),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(3.0),
-                            color: Primary),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: Primary),
                         child: Center(
                           child: Text(
                             'VIEW ALL',
                             style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: Neusa),
+                                fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: Neusa),
                           ),
                         ),
                       )
@@ -317,5 +293,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }

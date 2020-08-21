@@ -1,12 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/blocs/auth_bloc.dart';
 import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/constants/route_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/my_flutter_app_icons.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/widgets/text_fields/email_address_textfield_widget.dart';
+import 'package:play_hq/widgets/text_fields/password_textfield_widget.dart';
+
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -22,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _listen(Stream<bool> stream) {
     _streamSubscription = stream.listen((state) {
+
       if (state) {
         Navigator.pushReplacementNamed(context, HomeRoute);
       }
@@ -35,11 +39,11 @@ class _LoginScreenState extends State<LoginScreen> {
     super.didChangeDependencies();
     _authBloc = Provider.of<AuthBloc>(context);
 
-    /*  if (_authBloc.getLoginState != _previousStream) {
+      if (_authBloc.loginState.stream != _previousStream) {
       _streamSubscription?.cancel();
-      _previousStream = _authBloc.getLoginState;
-      _listen(_authBloc.getLoginState);
-    }*/
+      _previousStream = _authBloc.loginState.stream;
+      _listen(_authBloc.loginState.stream);
+    }
   }
 
   @override
@@ -51,18 +55,20 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-              color: Background,
-              image: DecorationImage(
-                  image: ExactAssetImage('assets/images/login-bg.png'),
-                  fit: BoxFit.cover)),
-        ),
-        Positioned.fill(
-          left: 24,
-          right: 24,
+        body: GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: ExactAssetImage('assets/images/login-bg.png'),
+                fit: BoxFit.cover,
+                alignment: Alignment.topCenter)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -88,49 +94,35 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 29),
-                child: _textInput(isPassword: false, inputFieldName: ""),
-              )
+                child: EmailAddressTextField(
+                    stream: _authBloc.getUserName, sink: _authBloc.setUserName),
+              ),
+              PasswordTextField(
+                  stream: _authBloc.getPassword, sink: _authBloc.setPassword),
+              Container(
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50)),
+                  width: double.infinity,
+                  height: ScreenUtils.getDesignHeight(45),
+                  child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(6.0),
+                          side: BorderSide(color: Primary)),
+                      color: Primary,
+                      child: Text(
+                        'Login',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: Neusa,
+                            fontSize: 18),
+                      ),
+                      onPressed: () {
+                        _authBloc.login();
+                      }))
             ],
           ),
         ),
-      ],
-    ));
-  }
-
-  Widget _textInput(
-      {@required bool isPassword, @required String inputFieldName}) {
-    return Container(
-      margin: EdgeInsets.only(top: 15),
-      child: Column(
-        children: [
-          Text(
-            'Email Address/Usernmame',
-            style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-                fontSize: 14,
-                fontFamily: CircularBook),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: TextField(
-              obscureText: isPassword,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(15.0),
-                  hintText: inputFieldName,
-                  hintStyle: Theme.of(context)
-                      .textTheme
-                      .body2
-                      .copyWith(fontSize: ScreenUtils.bodyWidth * 0.035)),
-            ),
-          )
-        ],
       ),
-    );
+    ));
   }
 
   Widget oldWidget() {

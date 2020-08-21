@@ -17,12 +17,13 @@ class NetworkClient {
   static final tokenDio = new Dio(); // this is used only for token refreshing
 
   NetworkClient._internal() {
-    dio.options.baseUrl = 'http://192.168.1.2:3000';
+    dio.options.baseUrl = 'http://192.168.1.7:3000/';
     dio.options.connectTimeout = 10000;
     dio.options.receiveTimeout = 5000;
     tokenDio.options = dio.options;
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+       print(options.path);
       var accessToken = await SecureStorage.readValue(ACCESS_TOKEN);
       if (accessToken != null) {
         options.headers["Authorization"] = "Bearer " + accessToken;
@@ -35,6 +36,7 @@ class NetworkClient {
     }, onResponse: (Response response) async {
       return response; // continue
     }, onError: (DioError e) async {
+
       //Do something with response error
       if (e.response != null) {
         switch (e.response.statusCode) {

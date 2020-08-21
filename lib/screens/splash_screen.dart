@@ -22,9 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
     _authBloc = Provider.of<AuthBloc>(context);
     _authBloc.getAuthState().then((value) => value.listen((state) {
       if(state){
-        Navigator.pushReplacementNamed(context, HomeRoute);
-      }else{
         Navigator.pushReplacementNamed(context, MainScreenRoute);
+      }else{
+        Navigator.pushReplacementNamed(context, LoginRoute);
       }
     }));
    }
