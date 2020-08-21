@@ -48,12 +48,9 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
         children: [
           Text(
             "Email Address",
-            style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-                fontSize: 14,
-                fontFamily: CircularBook),
+            style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),
           ),
-          StreamBuilder<String>(
+          StreamBuilder<bool>(
               stream: widget.stream,
               builder: (context, snapshot) {
                 return Container(
@@ -73,14 +70,16 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
                     keyboardType: TextInputType.text,
                     cursorColor: Primary,
                     decoration: InputDecoration(
-                      suffixIcon: Container(
-                        padding: EdgeInsets.symmetric(vertical: 18),
-                        child: SvgPicture.asset(
-                          'assets/icons/check.svg',
-                          height: 10,
-                          width: 10,
-                        ),
-                      ),
+                      suffixIcon: snapshot.data != null
+                          ? Container(
+                              padding: EdgeInsets.symmetric(vertical: 18),
+                              child: SvgPicture.asset(
+                                snapshot.data ? 'assets/icons/check.svg': 'assets/icons/x-circle.svg',
+                                height: 10,
+                                width: 10,
+                              ),
+                            )
+                          : null,
                       fillColor: _currentColor,
                       filled: true,
                       focusedBorder: OutlineInputBorder(

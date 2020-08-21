@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:dio/dio.dart';
 import 'package:play_hq/constants/token.dart';
@@ -21,9 +22,8 @@ class NetworkClient {
     dio.options.connectTimeout = 10000;
     dio.options.receiveTimeout = 5000;
     tokenDio.options = dio.options;
-    dio.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
-       print(options.path);
+    dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+      print(options.data);
       var accessToken = await SecureStorage.readValue(ACCESS_TOKEN);
       if (accessToken != null) {
         options.headers["Authorization"] = "Bearer " + accessToken;
@@ -36,20 +36,21 @@ class NetworkClient {
     }, onResponse: (Response response) async {
       return response; // continue
     }, onError: (DioError e) async {
-
       //Do something with response error
       if (e.response != null) {
         switch (e.response.statusCode) {
           case 401:
+            String accessToken = await SecureStorage.readValue(ACCESS_TOKEN);
+            if (accessToken==null) {
+                 throw Exception('Not Found Exception');
+            }
             dio.lock();
             dio.interceptors.responseLock.lock();
-            dio.interceptors.errorLock
-                .lock(); // lock dio to enqueue all requests
+            dio.interceptors.errorLock.lock(); // lock dio to enqueue all requests
             RequestOptions options = e.response.request;
-            var accessToken = await SecureStorage.readValue(REFRESH_TOKEN);
+            var refreshToken = await SecureStorage.readValue(REFRESH_TOKEN);
             //get new refresh and access token
-            var res = await tokenDio.post("/auth/getRefreshToken",
-                data: {"refreshToken": accessToken});
+            var res = await tokenDio.post("/auth/getRefreshToken", data: {"refreshToken": refreshToken});
             var tokens = Auth.fromJson(res.data);
             await SecureStorage.writeValue(ACCESS_TOKEN, tokens.accessToken);
             await SecureStorage.writeValue(REFRESH_TOKEN, tokens.refreshToken);
@@ -57,8 +58,7 @@ class NetworkClient {
             options.headers["Authorization"] = "Bearer " + tokens.accessToken;
             dio.unlock();
             dio.interceptors.responseLock.unlock();
-            dio.interceptors.errorLock
-                .unlock(); // unlock dio and return previous request
+            dio.interceptors.errorLock.unlock(); // unlock dio and return previous request
             return dio.request(options.path, options: options);
             break;
           case 404:
