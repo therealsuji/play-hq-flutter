@@ -24,7 +24,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if(state){
         Navigator.pushReplacementNamed(context, MainScreenRoute);
       }else{
-        Navigator.pushReplacementNamed(context, LoginRoute);
+        Navigator.pushReplacementNamed(context, MainScreenRoute);
       }
     }));
    }

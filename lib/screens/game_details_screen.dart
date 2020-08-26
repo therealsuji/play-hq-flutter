@@ -25,6 +25,7 @@ class GameDetailsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
+                    height: 1000,
                     padding: EdgeInsets.only(
                         left: 24, right: 24, bottom: 15, top: 10),
                      decoration: BoxDecoration(

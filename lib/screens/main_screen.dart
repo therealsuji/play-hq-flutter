@@ -7,14 +7,9 @@ import 'package:play_hq/screens/discover_screen.dart';
 import 'package:play_hq/screens/home_screen.dart';
 import 'package:play_hq/screens/messages_screen.dart';
 import 'package:play_hq/screens/profile_screen.dart';
-
-
-List<Widget> _children = [
-  HomeScreen(),
-  DiscoverScreen(),
-  MessagesScreen(),
-  ProfileScreen()
-];
+import 'package:play_hq/widgets/customNav/custom_animtion.dart';
+import 'package:play_hq/widgets/customNav/custom_navbar_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -23,52 +18,52 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  NavBloc _bloc = NavBloc();
+  NavBloc _navBloc;
+
+
+  @override
+  void didChangeDependencies() {
+
+    super.didChangeDependencies();
+
+    _navBloc = Provider.of<NavBloc>(context);
+
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-      bottomNavigationBar: StreamBuilder(
-        stream: _bloc.indexStream,
-        initialData: 0,
-        builder: (context, snapshot) {
-          return BottomNavigationBar(
-            currentIndex: snapshot.data?? 0,
-            type: BottomNavigationBarType.fixed,
-            backgroundColor: BottomNavColor,
-            items: [
-              BottomNavigationBarItem(
-                title: Text('Home'),
-                icon: SvgPicture.asset('assets/icons/home.svg', color: snapshot.data == 0 ? Primary : Unselected ,)
-              ),
-              BottomNavigationBarItem(
-                title: Text('Discover'),
-                icon: SvgPicture.asset('assets/icons/discover.svg' , color: snapshot.data == 1 ? Primary : Unselected)
-              ),
-              BottomNavigationBarItem(
-                title: Text('Messages'),
-                icon: SvgPicture.asset('assets/icons/message.svg' , color: snapshot.data == 2 ? Primary : Unselected)
-              ),
-              BottomNavigationBarItem(
-                title: Text('Profile'),
-                icon: SvgPicture.asset('assets/icons/profile.svg' , color: snapshot.data == 3 ? Primary : Unselected)
-              ),
-            ],
-            unselectedItemColor: Unselected,
-            onTap: (index)=> _bloc.indexSink.add(index),
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
-          );
-        }
-      ),
-      body: StreamBuilder(
-        initialData: 0,
-        stream: _bloc.indexStream,
-        builder: (context , snapshot){
-          return _children[snapshot.data];
+      bottomNavigationBar: CurvedNavigationBar(
+        items: <Widget>[
+          Icon(Icons.poll, size: 30),
+        ],
+        onTap: (index) {
+          //Handle button tap
         },
       ),
+      floatingActionButton:
+      Container(margin: EdgeInsets.only(bottom: 25), child: FancyFab()),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      body: StreamBuilder(
+          stream: _navBloc.pageChanged,
+          initialData: NavBar.Home,
+          builder: (context, AsyncSnapshot<NavBar> snapshot) {
+            switch (snapshot.data) {
+              case NavBar.Home:
+                return HomeScreen();
+              case NavBar.Discover:
+                return DiscoverScreen();
+              case NavBar.Messages:
+                return MessagesScreen();
+              case NavBar.Profile:
+                return Container(
+                  child: ProfileScreen()
+                );
+              default:
+                return Container();
+            }
+          }),
     );
   }
 }

@@ -25,7 +25,7 @@ class PlayHqHead extends StatelessWidget {
             accentColorBrightness: Brightness.light,
           ),
           debugShowCheckedModeBanner: false,
-          onGenerateRoute: MyRoutes.generateRoute,
+          onGenerateRoute: generateRoute,
           initialRoute: SplashScreenRoute),
     );
   }
