@@ -22,6 +22,7 @@ class PlayHqHead extends StatelessWidget {
           theme: ThemeData(
             //this is what you want
             accentColor: Primary,
+            backgroundColor: Background,
             accentColorBrightness: Brightness.light,
           ),
           debugShowCheckedModeBanner: false,

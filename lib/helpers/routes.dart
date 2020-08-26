@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:play_hq/blocs/nav_bloc.dart';
 import 'package:play_hq/constants/route_constants.dart';
+import 'package:play_hq/screens/create_trade_screen.dart';
 import 'package:play_hq/screens/game_details_screen.dart';
 import 'package:play_hq/screens/home_screen.dart';
 import 'package:play_hq/screens/login_screen.dart';
@@ -28,5 +30,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               Provider(create: (context) => _navBloc, child: MainScreen()));
     case GameDetailRoute:
       return MaterialPageRoute(builder: (context) => GameDetailsScreen());
+    case CreateTradeRoute:
+      return MaterialPageRoute(builder: (context) => CreateTradeScreen());
   }
 }

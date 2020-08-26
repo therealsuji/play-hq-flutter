@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/constants/route_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 
@@ -104,7 +105,7 @@ class _FancyFabState extends State<FancyFab>
   Widget add() {
     return GestureDetector(
       onTap: () {
-
+        Navigator.pushNamed(context, CreateTradeRoute);
       },
       child: Container(
         height: ScreenUtils.getDesignHeight(50),
