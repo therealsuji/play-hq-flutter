@@ -63,10 +63,7 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
               builder: (context, snapshot) {
 
                 return Container(
-                  padding: EdgeInsets.only(top: 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  ),
+                  margin: EdgeInsets.only(top: 15),
                   child: TextField(
                     onChanged: (val) {
                       widget.sink.add(val);
@@ -99,7 +96,7 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
                         borderRadius: BorderRadius.circular(6),
                         borderSide: BorderSide.none,
                       ),
-                      contentPadding: EdgeInsets.all(15.0),
+                      contentPadding: EdgeInsets.only(left: 12.0 , top: 20 , bottom: 20),
                     ),
                   ),
                 );

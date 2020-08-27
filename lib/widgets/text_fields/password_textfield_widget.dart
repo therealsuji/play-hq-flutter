@@ -107,7 +107,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
                       borderRadius: BorderRadius.circular(6),
                       borderSide: BorderSide.none,
                     ),
-                    contentPadding: EdgeInsets.all(15.0),
+                    contentPadding: EdgeInsets.only(left: 12.0 , top: 20 , bottom: 20),
                   ),
                 ),
               ),

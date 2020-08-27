@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'helpers/routes.dart';
 
 class PlayHqHead extends StatelessWidget {
+  static AuthBloc authBloc = new AuthBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +22,12 @@ class PlayHqHead extends StatelessWidget {
           theme: ThemeData(
             //this is what you want
             accentColor: Primary,
+            backgroundColor: Background,
             accentColorBrightness: Brightness.light,
           ),
           debugShowCheckedModeBanner: false,
-          onGenerateRoute: MyRoutes.generateRoute,
-          initialRoute: SplashScreenRoute,
-      ),
+          onGenerateRoute: generateRoute,
+          initialRoute: SplashScreenRoute),
     );
   }
 }

@@ -19,7 +19,7 @@ class DiscoverScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 25),
         // DO THE BOUNCY THANGG
-//        physics: BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
