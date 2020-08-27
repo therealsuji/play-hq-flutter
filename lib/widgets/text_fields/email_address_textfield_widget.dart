@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
+import 'package:play_hq/helpers/enums.dart';
 
 class EmailAddressTextField extends StatefulWidget {
   final Stream stream;
@@ -40,6 +41,12 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
   }
 
   @override
+  void dispose() {
+    _textFieldFocus.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 15),
@@ -50,9 +57,11 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
             "Email Address",
             style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),
           ),
-          StreamBuilder<bool>(
+          StreamBuilder<EmailValidType>(
               stream: widget.stream,
+              initialData:  EmailValidType.EMAIL_NOT_SET,
               builder: (context, snapshot) {
+
                 return Container(
                   padding: EdgeInsets.only(top: 10),
                   decoration: BoxDecoration(
@@ -70,16 +79,16 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
                     keyboardType: TextInputType.text,
                     cursorColor: Primary,
                     decoration: InputDecoration(
-                      suffixIcon: snapshot.data != null
+                      suffixIcon: snapshot.data != EmailValidType.EMAIL_NOT_SET
                           ? Container(
                               padding: EdgeInsets.symmetric(vertical: 18),
                               child: SvgPicture.asset(
-                                snapshot.data ? 'assets/icons/check.svg': 'assets/icons/x-circle.svg',
+                                snapshot.data == EmailValidType.EMAIL_VALID ? 'assets/icons/check.svg': 'assets/icons/x-circle.svg',
                                 height: 10,
                                 width: 10,
                               ),
                             )
-                          : null,
+                          : Container(),
                       fillColor: _currentColor,
                       filled: true,
                       focusedBorder: OutlineInputBorder(

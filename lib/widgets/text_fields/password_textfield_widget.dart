@@ -53,8 +53,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       child: StreamBuilder<bool>(
           stream: widget.stream,
           builder: (context, snapshot) {
-            print(snapshot.data);
-            return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+             return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 "Password",
                 style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),

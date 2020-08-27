@@ -23,26 +23,28 @@ class _LoginScreenState extends State<LoginScreen> {
   Stream _previousStream;
   StreamSubscription _streamSubscription;
 
-  void _listen(Stream<bool> stream) {
-    _streamSubscription = stream.listen((state) {
-      if (state) {
-        Navigator.pushReplacementNamed(context, MainScreenRoute);
-      }
-    }, onError: (e) {
-      print(e);
-    });
-  }
+
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _authBloc = Provider.of<AuthBloc>(context);
 
-    if (_authBloc.getLoginCredentialState != _previousStream) {
+    if (_authBloc.getLoginCredentialStateStream != _previousStream) {
       _streamSubscription?.cancel();
-      _previousStream = _authBloc.getLoginCredentialState;
-      _listen(_authBloc.getLoginCredentialState);
+      _previousStream = _authBloc.getLoginCredentialStateStream;
+      _listen(_authBloc.getLoginCredentialStateStream);
     }
+  }
+
+  void _listen(Stream<bool> stream) {
+    _streamSubscription = stream.listen((state) {
+      if (state) {
+        Navigator.pushReplacementNamed(context, MainScreenRoute);
+      }
+    }, onError: (e) {
+
+    });
   }
 
   @override
@@ -56,9 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
         resizeToAvoidBottomPadding: false,
         body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
+          onTap: () => FocusScope.of(context).unfocus(),
           child: Container(
             width: double.infinity,
             height: double.infinity,
@@ -88,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 29),
-                    child: EmailAddressTextField(stream: _authBloc.emailValid, sink: _authBloc.setUserName),
+                    child: EmailAddressTextField(stream: _authBloc.getEmailValid, sink: _authBloc.setUserName),
                   ),
-                  PasswordTextField(stream: _authBloc.getLoginCredentialState, sink: _authBloc.setPassword),
+                  PasswordTextField(stream: _authBloc.getLoginCredentialStateStream, sink: _authBloc.setPassword),
                   Container(
                       margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50)),
                       width: double.infinity,

@@ -1,33 +1,34 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
+
 import 'package:play_hq/constants/token.dart';
+import 'package:play_hq/helpers/enums.dart';
 import 'package:play_hq/helpers/network_client.dart';
 import 'package:play_hq/helpers/secure_storage.dart';
 import 'package:play_hq/models/user_model.dart';
 import 'package:rxdart/rxdart.dart';
 
 class AuthBloc extends Object {
-  StreamController<bool> _emailValidController = StreamController<bool>.broadcast();
+  //used to find authentication state in splash screen
+  BehaviorSubject<bool> _initialAuthStateSubject = BehaviorSubject<bool>();
 
-  Stream<bool> get emailValid => _emailValidController.stream;
+  //used for email validation from backend
+  PublishSubject<EmailValidType> _emailValidSubject = PublishSubject<EmailValidType>();
+  Stream<EmailValidType> get getEmailValid => _emailValidSubject.stream;
 
-  BehaviorSubject<String> _userName = BehaviorSubject<String>(); //this holds value
-  StreamController<String> _userNameController = StreamController();
+  // username sink and stream
+  BehaviorSubject<String> _userName = BehaviorSubject<String>();
+  StreamController<String> _userNameController = StreamController<String>();
+  Sink<String> get setUserName => _userNameController.sink;
 
-  Sink<String> get setUserName => _userNameController.sink; // sink is exposed and is used to add data
-
+  // password sink and stream
   BehaviorSubject<String> _password = BehaviorSubject<String>();
-
   Stream<String> get getPassword => _password.stream; // this gets value
-  StreamController<String> _passwordController = StreamController();
+  StreamController<String> _passwordController = StreamController<String>();
+  Sink<String> get setPassword => _passwordController.sink;
 
-  Sink<String> get setPassword => _passwordController.sink; // sink is exposed and is used to add data
-
-  BehaviorSubject<bool> _initialAuthState = BehaviorSubject<bool>();
-  PublishSubject<bool> _loginCredentialState = PublishSubject();
-
-  Stream<bool> get getLoginCredentialState => _loginCredentialState.stream;
+  //
+  PublishSubject<bool> _loginCredentialState = PublishSubject<bool>();
+  Stream<bool> get getLoginCredentialStateStream => _loginCredentialState.stream;
 
   AuthBloc() {
     _userNameController.stream.listen((event) {
@@ -36,11 +37,10 @@ class AuthBloc extends Object {
 
       if (event.length > 4) {
         userExists().then((value) {
-          print(value['status']);
-          _emailValidController.add(value['status']);
+          _emailValidSubject.add(value['status'] ? EmailValidType.EMAIL_VALID : EmailValidType.EMAIL_NOT_VALID);
         });
       } else {
-        _emailValidController.add(null);
+        _emailValidSubject.add(EmailValidType.EMAIL_NOT_SET);
       }
     });
 
@@ -51,9 +51,8 @@ class AuthBloc extends Object {
 
   Future<Stream<bool>> getAuthState() async {
     var state = await SecureStorage.readValue(ACCESS_TOKEN);
-
-    _initialAuthState.add(state != null ? true : false);
-    return _initialAuthState.stream;
+    _initialAuthStateSubject.add(state != null ? true : false);
+    return _initialAuthStateSubject.stream;
   }
 
   void login() async {
@@ -79,13 +78,7 @@ class AuthBloc extends Object {
     return res.data;
   }
 
-  void test() async {
-    try {
-      var res = await NetworkClient.dio.get('/auth');
-    } catch (e) {
-      print(e);
-    }
-  }
+
 
   void dispose() {
     _userName.close();
@@ -94,9 +87,11 @@ class AuthBloc extends Object {
     _password.close();
     _passwordController.close();
 
-    _initialAuthState.close();
+    _initialAuthStateSubject.close();
     _loginCredentialState.close();
 
-    _emailValidController.close();
+    _emailValidSubject.close();
   }
+
+
 }

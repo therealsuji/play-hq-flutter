@@ -150,8 +150,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: RaisedButton(
                   color: Primary,
                   child: Text("Logout"),
-                  onPressed: () async {
-                    await _authBloc.logOut();
+                  onPressed: () {
+                    _authBloc.logOut();
                     Navigator.pushNamedAndRemoveUntil(context, LoginRoute, (Route<dynamic> route) => false);
                   },
                 ),

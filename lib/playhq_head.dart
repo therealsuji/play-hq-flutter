@@ -7,14 +7,13 @@ import 'package:provider/provider.dart';
 import 'helpers/routes.dart';
 
 class PlayHqHead extends StatelessWidget {
-  static AuthBloc authBloc = new AuthBloc();
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        Provider(
-          create: (context) => authBloc,
+        Provider<AuthBloc>(
+          create: (context) => AuthBloc(),
           dispose: (_, authBloc) => authBloc.dispose(),
         )
       ],
@@ -26,7 +25,8 @@ class PlayHqHead extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           onGenerateRoute: MyRoutes.generateRoute,
-          initialRoute: SplashScreenRoute),
+          initialRoute: SplashScreenRoute,
+      ),
     );
   }
 }

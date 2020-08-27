@@ -12,3 +12,4 @@ const Unselected  =Color(0xff4D596E);
 const SubheadingText = Color(0xffBABABA);
 const InputFillColor = Color(0xff1B1D1F);
 
+const landingPageViewBodyColor = Color(0xffDEDFE1);
