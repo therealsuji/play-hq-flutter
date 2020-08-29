@@ -451,7 +451,7 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
       ],
     );
   }
-
+  // TODO: Implement location permission and no location container for map
   // location body
   Widget _locationBody() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -529,7 +529,7 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
       ),
     ]);
   }
-
+  // TODO create bloc related thing and username validation from backend
   Widget _usernameBody() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
       Padding(
@@ -568,6 +568,7 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
     ]);
   }
 
+  // TODO create bloc for password confirmation
   Widget _passwordBody() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
       Padding(
