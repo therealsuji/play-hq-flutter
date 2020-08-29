@@ -110,14 +110,6 @@ class CurvedNavigationBarState extends State<CurvedNavigationBar>
     );
   }
 
-  int _mapIndex() {
-    _bottomNav.map((val) {
-      int index = _bottomNav.indexOf(val);
-
-      return index;
-    });
-  }
-
   List<Widget> getBottomNavItems(int selectedIndex) {
     List<Widget> icons = [];
 

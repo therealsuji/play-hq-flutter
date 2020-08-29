@@ -40,7 +40,7 @@ class PlayHqHead extends StatelessWidget {
             platform: TargetPlatform.iOS,
           ),
           debugShowCheckedModeBanner: false,
-          onGenerateRoute: MyRoutes.generateRoute,
+          onGenerateRoute: generateRoute,
           initialRoute: SplashScreenRoute),
     );
   }
