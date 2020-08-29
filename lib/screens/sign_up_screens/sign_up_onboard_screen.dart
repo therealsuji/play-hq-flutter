@@ -12,12 +12,12 @@ import 'package:play_hq/models/genre_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:provider/provider.dart';
 
-class SignUpOnBoard extends StatefulWidget {
+class SignUpOnBoardScreen extends StatefulWidget {
   @override
-  _SignUpOnBoardState createState() => _SignUpOnBoardState();
+  _SignUpOnBoardScreenState createState() => _SignUpOnBoardScreenState();
 }
 
-class _SignUpOnBoardState extends State<SignUpOnBoard> {
+class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
   SignUpBloc _signUpBloc;
   PageController mainController = PageController(initialPage: 0);
   List<List<int>> genreIndexList;
@@ -61,7 +61,11 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
                 physics: NeverScrollableScrollPhysics(),
                 controller: mainController,
                 onPageChanged: (index) => _signUpBloc.setPagePosition.add(index),
-                children: [_genreBody(), _platformBody()],
+                children: [
+                  _genreBody(),
+                  _platformBody(),
+                  _locationBody(),
+                ],
               ),
             ),
           ),
@@ -102,6 +106,7 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
     );
   }
 
+  // Page top indicator
   Widget _pageIndicator(int position, int length) {
     var list = [];
     list.length = length;
@@ -123,6 +128,7 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
     );
   }
 
+  // Contains the genre body and inner page view
   Widget _genreBody() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,6 +162,8 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
                     onPageChanged: (index) {
                       _signUpBloc.setGenrePagination.add(index);
                     },
+                    // pass in a 4 genres to create a grid per page
+                    // structure is created in createGenreList
                     children: genreIndexList.map((list) => _genrePageViewBody(list)).toList()),
               );
             }),
@@ -184,111 +192,7 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
     );
   }
 
-  Widget _platformBody() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Favorite Platform',
-                style: Theme.of(context).primaryTextTheme.headline1,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 10),
-                child: Text(
-                  'Select your favorite platform from the following list',
-                  style: Theme.of(context).primaryTextTheme.subtitle1,
-                ),
-              ),
-            ],
-          ),
-        ),
-        StreamBuilder<List<int>>(
-            stream: _signUpBloc.getPlatformSelected,
-            initialData: [],
-            builder: (context, snapshot) {
-              return Container(
-                  height: ScreenUtils.getDesignHeight(380),
-                  child: PageView(
-                    onPageChanged: (index) => _signUpBloc.setPlatformPagination.add(index),
-                    children: platformList.map((platform) {
-
-
-                      return Stack(
-                        children: [
-                          Positioned.fill(
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                left: ScreenUtils.getDesignWidth(40),
-                                right: ScreenUtils.getDesignWidth(40),
-                              ),
-                              child: GestureDetector(
-                                  onTap:()=>_signUpBloc.setPlatformSelected.add(platform['id']),
-                                  child: Image.asset(platform['image_background'])),
-                            ),
-                          ),
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Container(
-                              margin: EdgeInsets.only(
-                                top: ScreenUtils.getDesignWidth(40),
-                                right: ScreenUtils.getDesignWidth(40),
-                              ),
-                              padding:EdgeInsets.all(8),
-                              height: ScreenUtils.getDesignWidth(30),
-                              width: ScreenUtils.getDesignHeight(30),
-                              decoration: BoxDecoration(
-                                color: Colors.black,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child:  snapshot.data.contains(platform['id']) ? SvgPicture.asset('assets/icons/check.svg') : Container(),
-                            ),
-                          ),
-                          Positioned(
-                            child: Align(
-                              child: Text(
-                                platform['name'],
-                                style: Theme.of(context).primaryTextTheme.headline1.copyWith(fontSize: 24),
-                              ),
-                              alignment: Alignment.bottomCenter,
-                            ),
-                          )
-                        ],
-                      );
-                    }).toList(),
-                  ));
-            }),
-        Container(
-          margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
-          alignment: Alignment.center,
-          child: StreamBuilder<int>(
-              stream: _signUpBloc.getPlatformPagination,
-              initialData: 0,
-              builder: (context, snapshot) {
-                return DotsIndicator(
-                  dotsCount: platformList.length,
-                  position: snapshot.data.toDouble(),
-                  decorator: DotsDecorator(
-                    size: Size(12, 12),
-                    spacing: EdgeInsets.all(4),
-                    color: Colors.transparent,
-                    activeSize: Size(12, 12),
-                    shape: CircleBorder(side: BorderSide(color: Primary, width: 2)),
-                    activeColor: Primary,
-                  ),
-                );
-              }),
-        ),
-      ],
-    );
-  }
-
+  // Body for inner page view in Genre
   Widget _genrePageViewBody(List<int> genrePos) {
     return Padding(
       padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(32)),
@@ -305,7 +209,7 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
                       .map((index) => GestureDetector(
                             onTap: () => _signUpBloc.setGenreSelected.add(index),
                             child: _gridTile(
-                              active: _isActive(snapshot.data, index),
+                              active: snapshot.data.contains(index),
                               name: genreList[index]['name'],
                               backgroundUrl: genreList[index]['image_background'],
                             ),
@@ -316,6 +220,7 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
     );
   }
 
+  // Genre grid tile
   Widget _gridTile({@required String name, @required String backgroundUrl, @required bool active}) {
     return Stack(
       children: [
@@ -388,18 +293,138 @@ class _SignUpOnBoardState extends State<SignUpOnBoard> {
     );
   }
 
-  bool _isActive(List<int> indexList, int currentIndex) {
-    bool flag = false;
-    for (int x = 0; indexList.length > x; x++) {
-      if (indexList[x] == currentIndex) {
-        flag = true;
-        break;
-      }
-      flag = false;
-    }
-    return flag;
+  // Contains the platform body and inner page view
+  Widget _platformBody() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Favorite Platform',
+                style: Theme.of(context).primaryTextTheme.headline1,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Text(
+                  'Select your favorite platform from the following list',
+                  style: Theme.of(context).primaryTextTheme.subtitle1,
+                ),
+              ),
+            ],
+          ),
+        ),
+        StreamBuilder<List<int>>(
+            stream: _signUpBloc.getPlatformSelected,
+            initialData: [],
+            builder: (context, snapshot) {
+              return Container(
+                  height: ScreenUtils.getDesignHeight(380),
+                  child: PageView(
+                    onPageChanged: (index) => _signUpBloc.setPlatformPagination.add(index),
+                    children: platformList.map((platform) {
+                      return Stack(
+                        children: [
+                          Positioned.fill(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: ScreenUtils.getDesignWidth(40),
+                                right: ScreenUtils.getDesignWidth(40),
+                              ),
+                              child: GestureDetector(
+                                  onTap: () => _signUpBloc.setPlatformSelected.add(platform['id']),
+                                  child: Image.asset(platform['image_background'])),
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Container(
+                              margin: EdgeInsets.only(
+                                top: ScreenUtils.getDesignWidth(40),
+                                right: ScreenUtils.getDesignWidth(40),
+                              ),
+                              padding: EdgeInsets.all(8),
+                              height: ScreenUtils.getDesignWidth(30),
+                              width: ScreenUtils.getDesignHeight(30),
+                              decoration: BoxDecoration(
+                                color: Colors.black,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: snapshot.data.contains(platform['id'])
+                                  ? SvgPicture.asset('assets/icons/check.svg')
+                                  : Container(),
+                            ),
+                          ),
+                          Positioned(
+                            child: Align(
+                              child: Text(
+                                platform['name'],
+                                style: Theme.of(context).primaryTextTheme.headline1.copyWith(fontSize: 24),
+                              ),
+                              alignment: Alignment.bottomCenter,
+                            ),
+                          )
+                        ],
+                      );
+                    }).toList(),
+                  ));
+            }),
+        Container(
+          margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
+          alignment: Alignment.center,
+          child: StreamBuilder<int>(
+              stream: _signUpBloc.getPlatformPagination,
+              initialData: 0,
+              builder: (context, snapshot) {
+                return DotsIndicator(
+                  dotsCount: platformList.length,
+                  position: snapshot.data.toDouble(),
+                  decorator: DotsDecorator(
+                    size: Size(12, 12),
+                    spacing: EdgeInsets.all(4),
+                    color: Colors.transparent,
+                    activeSize: Size(12, 12),
+                    shape: CircleBorder(side: BorderSide(color: Primary, width: 2)),
+                    activeColor: Primary,
+                  ),
+                );
+              }),
+        ),
+      ],
+    );
   }
 
+  // location body
+  Widget _locationBody() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Username & Email',
+              style: Theme.of(context).primaryTextTheme.headline1,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Please enter your email and a username you prefer',
+                style: Theme.of(context).primaryTextTheme.subtitle1,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  // create list structure for the grid
   List<List<int>> createGenreList(int genreLength) {
     // [[0,1,2,3],[4,5,6,7]]
     // return a list of indexes paginated by 4

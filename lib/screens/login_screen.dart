@@ -90,7 +90,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.only(top: 29),
                     child: EmailAddressTextField(stream: _authBloc.getEmailValid, sink: _authBloc.setUserName),
                   ),
-                  PasswordTextField(stream: _authBloc.getLoginCredentialStateStream, sink: _authBloc.setPassword),
+                  PasswordTextField(sink: _authBloc.setPassword),
+                  StreamBuilder<bool>(
+                    stream:_authBloc.getLoginCredentialStateStream,
+                    builder: (context, snapshot) {
+                      return snapshot.data == false
+                          ? Padding(
+                        padding: const EdgeInsets.only(top: 15),
+                        child: Text(
+                          'The password you entered is incorrect',
+                          style: TextStyle(color: Colors.red.withOpacity(0.8), fontSize: 16, fontFamily: CircularBook),
+                        ),
+                      )
+                          : Padding(padding: const EdgeInsets.only(top: 15));
+                    }
+                  ),
                   Container(
                       margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50)),
                       width: double.infinity,

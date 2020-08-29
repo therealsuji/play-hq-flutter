@@ -29,7 +29,7 @@ class SignUpScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(273)),
-                  child: CustomButton(buttonText: "Sign up with Email",onPressed: ()=>Navigator.pushNamed(context, SignUpOnboardRoute),),
+                  child: CustomButton(buttonText: "Sign up with Email",onPressed: ()=>Navigator.pushNamed(context, SignUpOnBoardRoute),),
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(54)),

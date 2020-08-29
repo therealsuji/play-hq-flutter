@@ -5,11 +5,9 @@ import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 
 class PasswordTextField extends StatefulWidget {
-  final Stream stream;
   final Sink sink;
 
   PasswordTextField({
-    @required this.stream,
     @required this.sink,
   });
 
@@ -50,78 +48,65 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 15),
-      child: StreamBuilder<bool>(
-          stream: widget.stream,
-          builder: (context, snapshot) {
-             return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text(
-                "Password",
-                style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                ),
-                child: TextField(
-                  onChanged: (val) {
-                    widget.sink.add(val);
-                  },
-                  style: TextStyle(
-                    color: Color(0xffDEDFE1),
-                    fontSize: 18,
-                  ),
-                  obscureText: _obscured,
-                  focusNode: _textFieldFocus,
-                  keyboardType: TextInputType.text,
-                  cursorColor: Primary,
-                  decoration: InputDecoration(
-                    suffixIcon: GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if (_obscured) {
-                            _currentIcon = _obscureOffIcon;
-                            _obscured = false;
-                          } else {
-                            _currentIcon = _obscureOnIcon;
-                            _obscured = true;
-                          }
-                        });
-                      },
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 18),
-                        child: SvgPicture.asset(
-                          _currentIcon,
-                          height: 10,
-                          width: 10,
-                        ),
-                      ),
-                    ),
-                    fillColor: _currentColor,
-                    filled: true,
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Primary),
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(6),
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: EdgeInsets.only(left: 12.0 , top: 20 , bottom: 20),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        Text(
+          "Password",
+          style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),
+        ),
+        Container(
+          padding: EdgeInsets.only(top: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10.0)),
+          ),
+          child: TextField(
+            onChanged: (val) {
+              widget.sink.add(val);
+            },
+            style: TextStyle(
+              color: Color(0xffDEDFE1),
+              fontSize: 18,
+            ),
+            obscureText: _obscured,
+            focusNode: _textFieldFocus,
+            keyboardType: TextInputType.text,
+            cursorColor: Primary,
+            decoration: InputDecoration(
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (_obscured) {
+                      _currentIcon = _obscureOffIcon;
+                      _obscured = false;
+                    } else {
+                      _currentIcon = _obscureOnIcon;
+                      _obscured = true;
+                    }
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                  child: SvgPicture.asset(
+                    _currentIcon,
+                    height: 10,
+                    width: 10,
                   ),
                 ),
               ),
-              snapshot.data == false
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Text(
-                        'The password you entered is incorrect',
-                        style: TextStyle(color: Colors.red.withOpacity(0.8), fontSize: 16, fontFamily: CircularBook),
-                      ),
-                    )
-                  : Padding(padding: const EdgeInsets.only(top: 15))
-            ]);
-          }),
+              fillColor: _currentColor,
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Primary),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(6),
+                borderSide: BorderSide.none,
+              ),
+              contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20),
+            ),
+          ),
+        ),
+      ]),
     );
   }
 }

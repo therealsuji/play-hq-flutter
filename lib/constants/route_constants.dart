@@ -6,4 +6,4 @@ const String MainScreenRoute = 'main';
 const String GameDetailRoute = 'gamedetails';
 const String LandingPageRoute = 'landingpage';
 const String CreateTradeRoute = 'createTrade';
-const String SignUpOnboardRoute = 'signuponboard';
+const String SignUpOnBoardRoute = 'signuponboard';

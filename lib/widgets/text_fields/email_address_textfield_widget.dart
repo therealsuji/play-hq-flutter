@@ -61,7 +61,6 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
               stream: widget.stream,
               initialData:  EmailValidType.EMAIL_NOT_SET,
               builder: (context, snapshot) {
-
                 return Container(
                   margin: EdgeInsets.only(top: 15),
                   child: TextField(
@@ -85,7 +84,7 @@ class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
                                 width: 10,
                               ),
                             )
-                          : Container(),
+                          : null ,
                       fillColor: _currentColor,
                       filled: true,
                       focusedBorder: OutlineInputBorder(
