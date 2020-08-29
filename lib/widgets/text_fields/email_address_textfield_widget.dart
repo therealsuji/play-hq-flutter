@@ -4,20 +4,20 @@ import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/enums.dart';
 
-class EmailAddressTextField extends StatefulWidget {
+class EmailAddressTextFieldWidget extends StatefulWidget {
   final Stream stream;
   final Sink sink;
 
-  EmailAddressTextField({
+  EmailAddressTextFieldWidget({
     @required this.stream,
     @required this.sink,
   });
 
   @override
-  _EmailAddressTextFieldState createState() => _EmailAddressTextFieldState();
+  _EmailAddressTextFieldWidgetState createState() => _EmailAddressTextFieldWidgetState();
 }
 
-class _EmailAddressTextFieldState extends State<EmailAddressTextField> {
+class _EmailAddressTextFieldWidgetState extends State<EmailAddressTextFieldWidget> {
   FocusNode _textFieldFocus = FocusNode();
   Color _focusColor = Primary.withOpacity(0.1);
   Color _fillColorColor = InputFillColor;

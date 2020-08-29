@@ -1,15 +1,13 @@
 import 'dart:async';
 
 import 'package:play_hq/helpers/network_client.dart';
-import 'package:play_hq/models/genre_model.dart';
-import 'package:rxdart/rxdart.dart';
+ import 'package:rxdart/rxdart.dart';
 
 class SignUpBloc {
-  // On-boarding page position
+  // On-boarding page position stream and sink
   BehaviorSubject<int> _pagePosition = BehaviorSubject<int>.seeded(0);
   Stream<int> get getPagePosition => _pagePosition.stream;
   Sink<int> get setPagePosition => _pagePosition.sink;
-
 
   // genre selected list
   List<int> genreSelectedIndexList = [];
@@ -18,22 +16,22 @@ class SignUpBloc {
   BehaviorSubject<List<int>> _genreSelectedSubject = BehaviorSubject<List<int>>();
   Stream<List<int>> get getGenresSelected => _genreSelectedSubject.stream;
 
-  //Genre select Controller and Sink
+  // Genre select Controller and Sink
   StreamController<int> _genreSelectedController = StreamController<int>();
   Sink<int> get setGenreSelected => _genreSelectedController.sink;
 
   // Genre Pagination Sink and Subject
-  PublishSubject<int> _genrePagination  = PublishSubject<int>();
-  Stream<int> get getGenrePagination =>_genrePagination.stream;
+  PublishSubject<int> _genrePagination = PublishSubject<int>();
+  Stream<int> get getGenrePagination => _genrePagination.stream;
   Sink<int> get setGenrePagination => _genrePagination.sink;
 
   // platform Pagination Sink and Subject
-  PublishSubject<int> _platformPagination  = PublishSubject<int>();
-  Stream<int> get getPlatformPagination =>_platformPagination.stream;
+  PublishSubject<int> _platformPagination = PublishSubject<int>();
+  Stream<int> get getPlatformPagination => _platformPagination.stream;
   Sink<int> get setPlatformPagination => _platformPagination.sink;
 
   // platform selected list
-  List<int>platformSelectedIndexList = [];
+  List<int> platformSelectedIndexList = [];
 
   // platform selected Stream and Subject
   BehaviorSubject<List<int>> _platformSelectedSubject = BehaviorSubject<List<int>>();
@@ -43,26 +41,39 @@ class SignUpBloc {
   StreamController<int> _platformSelectedController = StreamController<int>();
   Sink<int> get setPlatformSelected => _platformSelectedController.sink;
 
-  SignUpBloc(){
+  //email address
+  BehaviorSubject<String> _emailSubject = BehaviorSubject<String>();
+  StreamController<String> _emailController = StreamController<String>();
+  Sink<String> get setEmail => _emailController.sink;
+
+
+  SignUpBloc() {
     _genreSelectedController.stream.listen((index) {
-        // remove if already exist
-       if(genreSelectedIndexList.contains(index)){
+      // remove if already exist
+      if (genreSelectedIndexList.contains(index)) {
         genreSelectedIndexList.remove(index);
-      }else{
+      } else {
         genreSelectedIndexList.add(index);
       }
-       _genreSelectedSubject.add(genreSelectedIndexList);
+      _genreSelectedSubject.add(genreSelectedIndexList);
     });
 
     _platformSelectedController.stream.listen((index) {
-        // remove if already exist
-       if(platformSelectedIndexList.contains(index)){
-         platformSelectedIndexList.remove(index);
-      }else{
-         platformSelectedIndexList.add(index);
+      // remove if already exist
+      if (platformSelectedIndexList.contains(index)) {
+        platformSelectedIndexList.remove(index);
+      } else {
+        platformSelectedIndexList.add(index);
       }
-        _platformSelectedSubject.add(platformSelectedIndexList);
+      _platformSelectedSubject.add(platformSelectedIndexList);
     });
+
+
+  }
+
+  Future userExists(username) async {
+    var res = await NetworkClient.dio.get('api/auth/user-exists/${username}');
+    return res.data;
   }
 
   void dispose() {
@@ -73,5 +84,7 @@ class SignUpBloc {
     _platformPagination.close();
     _platformSelectedSubject.close();
     _platformSelectedController.close();
+    _emailSubject.close();
+    _emailController.close();
   }
 }

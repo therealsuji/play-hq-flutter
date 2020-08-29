@@ -35,8 +35,8 @@ class AuthBloc extends Object {
       event = event.trim();
       _userName.add(event);
 
-      if (event.length > 4) {
-        userExists().then((value) {
+      if (_userName.value.contains('@')) {
+        userExists(_userName.value).then((value) {
           _emailValidSubject.add(value['status'] ? EmailValidType.EMAIL_VALID : EmailValidType.EMAIL_NOT_VALID);
         });
       } else {
@@ -73,8 +73,8 @@ class AuthBloc extends Object {
     await SecureStorage.deleteAll();
   }
 
-  Future userExists() async {
-    var res = await NetworkClient.dio.get('api/auth/user-exists/${_userName.value}');
+  Future userExists(username) async {
+    var res = await NetworkClient.dio.get('api/auth/user-exists/${username}');
     return res.data;
   }
 

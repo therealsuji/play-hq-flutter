@@ -88,9 +88,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 29),
-                    child: EmailAddressTextField(stream: _authBloc.getEmailValid, sink: _authBloc.setUserName),
+                    child: EmailAddressTextFieldWidget(stream: _authBloc.getEmailValid, sink: _authBloc.setUserName),
                   ),
-                  PasswordTextField(sink: _authBloc.setPassword),
+                  PasswordTextFieldWidget(sink: _authBloc.setPassword),
                   StreamBuilder<bool>(
                     stream:_authBloc.getLoginCredentialStateStream,
                     builder: (context, snapshot) {

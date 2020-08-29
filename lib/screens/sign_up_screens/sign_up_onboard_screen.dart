@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:play_hq/blocs/sign_up_bloc.dart';
 import 'package:play_hq/constants/onboarding_genre_list.dart';
 import 'package:play_hq/constants/onboarding_platform_list.dart';
@@ -10,6 +13,9 @@ import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 import 'package:play_hq/models/genre_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
+import 'package:play_hq/widgets/text_fields/custom_textfield_widget.dart';
+import 'package:play_hq/widgets/text_fields/email_address_textfield_widget.dart';
+import 'package:play_hq/widgets/text_fields/password_textfield_widget.dart';
 import 'package:provider/provider.dart';
 
 class SignUpOnBoardScreen extends StatefulWidget {
@@ -21,6 +27,8 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
   SignUpBloc _signUpBloc;
   PageController mainController = PageController(initialPage: 0);
   List<List<int>> genreIndexList;
+
+  Completer<GoogleMapController> _controller = Completer();
 
   @override
   void didChangeDependencies() {
@@ -38,70 +46,115 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Background,
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(50),
-                left: ScreenUtils.getDesignWidth(24),
-                right: ScreenUtils.getDesignWidth(24)),
-            child: StreamBuilder<int>(
-                stream: _signUpBloc.getPagePosition,
-                initialData: 0,
-                builder: (context, snapshot) {
-                  return _pageIndicator(snapshot.data, 5);
-                }),
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(44),
-              ),
-              child: PageView(
-                physics: NeverScrollableScrollPhysics(),
-                controller: mainController,
-                onPageChanged: (index) => _signUpBloc.setPagePosition.add(index),
-                children: [
-                  _genreBody(),
-                  _platformBody(),
-                  _locationBody(),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                left: ScreenUtils.getDesignWidth(24),
-                right: ScreenUtils.getDesignWidth(24),
-                bottom: ScreenUtils.getDesignWidth(24)),
-            child: CustomButton(
-              buttonText: "NEXT",
-              onPressed: () {
-                mainController.nextPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-              },
-            ),
-          ),
-          StreamBuilder<int>(
-              stream: _signUpBloc.getPagePosition,
-              initialData: 0,
-              builder: (context, snapshot) {
-                return Padding(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Padding(
                   padding: EdgeInsets.only(
+                      top: ScreenUtils.getDesignHeight(50),
+                      left: ScreenUtils.getDesignWidth(24),
+                      right: ScreenUtils.getDesignWidth(24)),
+                  child: StreamBuilder<int>(
+                      stream: _signUpBloc.getPagePosition,
+                      initialData: 0,
+                      builder: (context, snapshot) {
+                        return _pageIndicator(snapshot.data, 5);
+                      }),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: ScreenUtils.getDesignHeight(44),
+                    ),
+                    child: PageView(
+                      physics: NeverScrollableScrollPhysics(),
+                      controller: mainController,
+                      onPageChanged: (index) => _signUpBloc.setPagePosition.add(index),
+                      children: [_genreBody(), _platformBody(), _locationBody(), _usernameBody(),_passwordBody()],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: EdgeInsets.only(
                       left: ScreenUtils.getDesignWidth(24),
                       right: ScreenUtils.getDesignWidth(24),
-                      bottom: ScreenUtils.getDesignWidth(24)),
-                  child: CustomButton(
-                    buttonColor: snapshot.data == 0 ? Unselected : Primary,
-                    buttonText: "Back",
-                    onPressed: snapshot.data == 0
-                        ? null
-                        : () {
-                            mainController.previousPage(duration: Duration(milliseconds: 500), curve: Curves.easeIn);
-                          },
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(bottom: ScreenUtils.getDesignWidth(24)),
+                          child: CustomButton(
+                            buttonText: "NEXT",
+                            onPressed: () {
+                              mainController.nextPage(
+                                duration: Duration(milliseconds: 500),
+                                curve: Curves.fastLinearToSlowEaseIn,
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              StreamBuilder<int>(
+                                  stream: _signUpBloc.getPagePosition,
+                                  initialData: 0,
+                                  builder: (context, snapshot) {
+                                    return snapshot.data == 0
+                                        ? Container()
+                                        : GestureDetector(
+                                            onTap: () => mainController.previousPage(
+                                              duration: Duration(milliseconds: 100),
+                                              curve: Curves.fastLinearToSlowEaseIn,
+                                            ),
+                                            child: Text(
+                                              'Back',
+                                              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(
+                                                    decoration: TextDecoration.underline,
+                                                  ),
+                                            ),
+                                          );
+                                  }),
+                              StreamBuilder<int>(
+                                  stream: _signUpBloc.getPagePosition,
+                                  initialData: 0,
+                                  builder: (context, snapshot) {
+                                    return snapshot.data == 2
+                                        ? GestureDetector(
+                                            onTap: () => mainController.nextPage(
+                                              duration: Duration(milliseconds: 100),
+                                              curve: Curves.fastLinearToSlowEaseIn,
+                                            ),
+                                            child: Text(
+                                              'Skip',
+                                              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(
+                                                    decoration: TextDecoration.underline,
+                                                  ),
+                                            ),
+                                          )
+                                        : Container();
+                                  }),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                );
-              }),
-        ],
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -408,6 +461,83 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
+              'Preferred Location',
+              style: Theme.of(context).primaryTextTheme.headline1,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Let us know your preferred location so we can filter games close to you',
+                style: Theme.of(context).primaryTextTheme.subtitle1,
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
+              height: ScreenUtils.getDesignHeight(170),
+              padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(10)),
+              decoration: BoxDecoration(color: BottomNavColor, borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AbsorbPointer(
+                    absorbing: true,
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: ScreenUtils.getDesignHeight(16)),
+                      height: ScreenUtils.getDesignHeight(92),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: GoogleMap(
+                          mapType: MapType.normal,
+                          zoomControlsEnabled: false,
+                          initialCameraPosition:
+                              CameraPosition(target: LatLng(37.42796133580664, -122.085749655962), zoom: 10),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset('assets/icons/location.svg'),
+                          Padding(
+                            padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
+                            child: Text(
+                              'No 2 6th Lane Colombo 2 ',
+                              style: Theme.of(context).primaryTextTheme.subtitle1,
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                          height: ScreenUtils.getDesignHeight(30),
+                          width: ScreenUtils.getDesignWidth(96),
+                          child: CustomButton(
+                            buttonText: "Set On Map",
+                            textFontSize: 14,
+                            onPressed: () {},
+                          ))
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  Widget _usernameBody() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
               'Username & Email',
               style: Theme.of(context).primaryTextTheme.headline1,
             ),
@@ -417,6 +547,56 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
                 'Please enter your email and a username you prefer',
                 style: Theme.of(context).primaryTextTheme.subtitle1,
               ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(56)),
+              child: CustomTextFieldWidget(
+                sink: _signUpBloc.setEmail,
+                textFieldName: "Email Address",
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(26)),
+              child: CustomTextFieldWidget(
+                sink: _signUpBloc.setEmail,
+                textFieldName: "Preferred Username",
+              ),
+            ),
+          ],
+        ),
+      ),
+    ]);
+  }
+
+  Widget _passwordBody() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Password',
+              style: Theme.of(context).primaryTextTheme.headline1,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10),
+              child: Text(
+                'Please enter your password and confirm it',
+                style: Theme.of(context).primaryTextTheme.subtitle1,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(56)),
+              child: PasswordTextFieldWidget(
+                sink: _signUpBloc.setEmail,
+               ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(26)),
+              child: PasswordTextFieldWidget(
+                sink: _signUpBloc.setEmail,
+               ),
             ),
           ],
         ),

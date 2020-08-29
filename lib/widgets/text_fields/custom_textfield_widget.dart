@@ -1,31 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
 
-class PasswordTextFieldWidget extends StatefulWidget {
+class CustomTextFieldWidget extends StatefulWidget {
   final Sink sink;
+  final String textFieldName;
 
-  PasswordTextFieldWidget({
+  CustomTextFieldWidget({
     @required this.sink,
+    @required this.textFieldName,
   });
 
   @override
-  _PasswordTextFieldWidgetState createState() => _PasswordTextFieldWidgetState();
+  _CustomTextFieldWidgetState createState() => _CustomTextFieldWidgetState();
 }
 
-class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
+class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   FocusNode _textFieldFocus = FocusNode();
   Color _focusColor = Primary.withOpacity(0.1);
   Color _fillColorColor = InputFillColor;
   Color _currentColor;
-
-  static String _obscureOffIcon = 'assets/icons/eye-off.svg';
-  static String _obscureOnIcon = 'assets/icons/eye.svg';
-  String _currentIcon = _obscureOnIcon;
-
-  bool _obscured = true;
 
   @override
   void initState() {
@@ -50,7 +44,7 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
       margin: EdgeInsets.only(top: 15),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
-          "Password",
+         widget.textFieldName,
           style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),
         ),
         Container(
@@ -66,32 +60,11 @@ class _PasswordTextFieldWidgetState extends State<PasswordTextFieldWidget> {
               color: Color(0xffDEDFE1),
               fontSize: 18,
             ),
-            obscureText: _obscured,
-            focusNode: _textFieldFocus,
+             focusNode: _textFieldFocus,
             keyboardType: TextInputType.text,
             cursorColor: Primary,
             decoration: InputDecoration(
-              suffixIcon: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (_obscured) {
-                      _currentIcon = _obscureOffIcon;
-                      _obscured = false;
-                    } else {
-                      _currentIcon = _obscureOnIcon;
-                      _obscured = true;
-                    }
-                  });
-                },
-                child: Container(
-                  padding: EdgeInsets.symmetric(vertical: 18),
-                  child: SvgPicture.asset(
-                    _currentIcon,
-                    height: 10,
-                    width: 10,
-                  ),
-                ),
-              ),
+
               fillColor: _currentColor,
               filled: true,
               focusedBorder: OutlineInputBorder(

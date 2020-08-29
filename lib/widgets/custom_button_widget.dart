@@ -7,9 +7,10 @@ class CustomButton extends StatelessWidget {
   final String buttonText;
   final Color buttonColor;
   final VoidCallback onPressed;
+  final double textFontSize;
 
 
-  CustomButton({this.buttonText,this.onPressed,this.buttonColor = Primary});
+  CustomButton({this.buttonText,this.onPressed,this.buttonColor = Primary,this.textFontSize = 18});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,7 +23,7 @@ class CustomButton extends StatelessWidget {
           color: buttonColor,
           child: Text(
             buttonText,
-            style: TextStyle(color: Colors.white, fontFamily: Neusa, fontSize: 18),
+            style: TextStyle(color: Colors.white, fontFamily: Neusa, fontSize: textFontSize),
           ),
           onPressed: onPressed,
       ),
