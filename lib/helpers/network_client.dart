@@ -13,7 +13,7 @@ class NetworkClient {
   factory NetworkClient() {
     return _instance;
   }
-
+  static final rawgDio = new Dio();
   static final dio = new Dio(); // this is used for app requests
   static final tokenDio = new Dio(); // this is used only for token refreshing
 
@@ -23,8 +23,7 @@ class NetworkClient {
     dio.options.receiveTimeout = 5000;
     tokenDio.options = dio.options;
     dio.interceptors.add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
-      print(options.data);
-      var accessToken = await SecureStorage.readValue(ACCESS_TOKEN);
+       var accessToken = await SecureStorage.readValue(ACCESS_TOKEN);
       if (accessToken != null) {
         options.headers["Authorization"] = "Bearer " + accessToken;
       }

@@ -62,6 +62,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     padding:  EdgeInsets.only(top: ScreenUtils.getDesignHeight(80)),
                     child: CustomButton(
                       buttonText: "Sign Up",
+                      onPressed: ()=>Navigator.pushNamed(context, SignUpRoute),
                     ),
                   ),
                   Padding(
