@@ -1,3 +1,5 @@
+import 'package:dotted_border/dotted_border.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -5,6 +7,8 @@ import 'package:play_hq/blocs/tradingBloc/create_trade_bloc.dart';
 import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/models/search_game_model.dart';
+import 'package:play_hq/widgets/custom_loading.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_container.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_item.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_list.dart';
@@ -153,7 +157,11 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                             fontSize: 18,
                             fontFamily: CircularBold,
                             color: Color(0xffB5BDD5).withOpacity(0.8)))),
-                TypaHeadSearch(),
+                Row(
+                  children: [
+                    SelectGameWidget(),
+                  ],
+                ),
                 GestureDetector(
                     onTap: () => _showScaffold(),
                     child: PlatformSelector(
@@ -208,51 +216,159 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
   }
 }
 
-class TypaHeadSearch extends StatelessWidget {
+class SelectGameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: ContainerColor,
-          borderRadius: BorderRadius.all(Radius.circular(6.0))),
-      child: StreamBuilder(builder: (context, snapshot) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Expanded(
-                child: Container(
-                  padding: EdgeInsets.only(left: 12, top: 5, bottom: 5),
-                  child: TypeAheadField(
-                    textFieldConfiguration: TextFieldConfiguration(
-                        autofocus: true,
-                        style: TextStyle(
-                            fontStyle: FontStyle.normal,
-                            color: Colors.white,
-                            decoration: TextDecoration.none,
-                            fontFamily: CircularBook,
-                            fontSize: 18),
-                        decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintStyle: TextStyle(fontSize: 18 , color: Color(0xffB5BDD5).withOpacity(0.4)),
-                            hintText: 'Enter Game')),
-                    suggestionsCallback: (pattern) async {},
-                    itemBuilder: (context, suggestion) {
-                      print(suggestion);
-                      return ListTile(
-                        title: Text("${suggestion.streetName}"),
-                      );
-                    },
-                    onSuggestionSelected: (suggestion) {
-                      Navigator.of(context).push(MaterialPageRoute());
-                    },
+    return DottedBorder(
+      strokeWidth: 2,
+      color: Color(0xff949AAE),
+      borderType: BorderType.RRect,
+      dashPattern: [10],
+      child: Container(
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0)),
+        child: GestureDetector(
+          onTap: () {
+            showSearch(context: context, delegate: DataSearch());
+          },
+          child: Container(
+            padding: EdgeInsets.only(
+                top: ScreenUtils.getDesignHeight(50),
+                bottom: ScreenUtils.getDesignHeight(50),
+                left: ScreenUtils.getDesignWidth(24),
+                right: ScreenUtils.getDesignWidth(24)),
+            child: Column(
+              children: [
+                Container(
+                  height: ScreenUtils.getDesignHeight(30),
+                  width: ScreenUtils.getDesignWidth(30),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Primary,
+                  ),
+                  child: Center(
+                    child: Icon(Icons.add, color: Colors.white),
                   ),
                 ),
-              ),
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  child: Text(
+                    'Select Game',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 14,
+                        fontFamily: Neusa),
+                  ),
+                )
+              ],
             ),
-          ],
-        );
-      }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DataSearch extends SearchDelegate<String> {
+
+  CreateTradeBloc _tradeBloc = CreateTradeBloc();
+
+  final cities = [
+    'Colombo',
+    'Dehiwala',
+    'Piliyandala',
+    'Mount Lavania',
+    'Kelaniya',
+    'Bokundara',
+    'Kollupitiya',
+    'Dampe',
+    'Pannipitiya',
+    'Wellawatta',
+    'Kalutara',
+    'Panadura',
+    'Kohuwala',
+    'Pepilyana',
+    'Thummulla',
+    'Ella',
+    'Gampola'
+  ];
+
+  final recentCities = [
+    'Mount Lavania',
+    'Kelaniya',
+    'Bokundara',
+  ];
+
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          icon: Icon(Icons.clear),
+          onPressed: () {
+            query = '';
+          })
+    ];
+  }
+
+  ThemeData appBarTheme(BuildContext context) {
+    assert(context != null);
+    final ThemeData theme = Theme.of(context);
+    assert(theme != null);
+    return theme.copyWith(
+        primaryColor: Color(0xff171B23),
+        primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
+        primaryTextTheme: theme.textTheme.copyWith(headline2: TextStyle(color: Colors.white)),
+        inputDecorationTheme: InputDecorationTheme(
+          hintStyle: Theme.of(context)
+              .textTheme
+              .title
+              .copyWith(color: Colors.white.withOpacity(0.6)),
+        ));
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+        icon: AnimatedIcon(
+          icon: AnimatedIcons.menu_arrow,
+          progress: transitionAnimation,
+        ),
+        onPressed: () {
+          close(context, null);
+        });
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    print('Query ' + query);
+    final suggestions = query.isEmpty
+        ? recentCities
+        : cities.where((element) => element.startsWith(query)).toList();
+
+    _tradeBloc.setGameName.add(query);
+
+    return StreamBuilder(
+      stream: _tradeBloc.getGameData,
+      builder: (context, snapshot) {
+        return snapshot.hasData ? Container(
+          color: Background,
+          child: ListView.builder(
+            itemBuilder: (context, index) {
+              return  ListTile(
+                  leading: Icon(Icons.videogame_asset , color: Colors.white,),
+                  title: Text(snapshot.data[index].name , style: TextStyle(fontSize: 16 , color: Colors.white),)
+              );
+            },
+            itemCount: snapshot.data.length,
+          ),
+        ) : LoadingBarrier();
+      }
     );
   }
 }
@@ -447,7 +563,7 @@ class PlatformSelector extends StatelessWidget {
                     color: Color(0xffB5BDD5).withOpacity(0.8)))),
         Container(
           margin: EdgeInsets.only(top: 20),
-          padding: EdgeInsets.only(top: 3 , bottom: 3),
+          padding: EdgeInsets.only(top: 3, bottom: 3),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0),
             color: SubContainerColor,

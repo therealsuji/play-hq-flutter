@@ -22,18 +22,21 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: 0.1.2
+  google_maps_flutter: 0.5.31
   provider: 4.1.2
   rxdart: 0.24.1
   dio: 3.0.9
   rect_getter: 0.1.0
   flutter_svg: 0.18.0
+  dotted_border: 1.0.6
   flutter_secure_storage: 3.3.3
   dots_indicator: 1.2.0
   flutter_typeahead: 1.8.8
+  http: 0.12.2
+  lottie: 0.6.0
   cached_network_image: 2.3.1
   carousel_slider: 2.2.1
-  google_maps_flutter: 0.5.30
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -51,6 +54,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/animations/
   #  - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
