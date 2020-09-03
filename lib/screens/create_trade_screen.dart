@@ -3,15 +3,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:play_hq/blocs/tradingBloc/create_trade_bloc.dart';
 import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 import 'package:play_hq/models/search_game_model.dart';
+import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_loading.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_container.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_item.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_list.dart';
+import 'package:play_hq/widgets/game_widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateTradeScreen extends StatefulWidget {
@@ -78,11 +81,12 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
         });
   }
 
+  CreateTradeBloc _tradeBloc;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
-    CreateTradeBloc _tradeBloc = Provider.of<CreateTradeBloc>(context);
+    _tradeBloc = Provider.of<CreateTradeBloc>(context);
 
     final appBar = PreferredSize(
         child: Container(
@@ -95,7 +99,9 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
               child: Container(
                 child: Row(
                   children: [
-                    SvgPicture.asset('assets/icons/back.svg'),
+                    GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: SvgPicture.asset('assets/icons/back.svg')),
                     Container(
                       margin: EdgeInsets.only(left: 15),
                       child: Text(
@@ -149,6 +155,10 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                         ),
                       );
                     }),
+                GestureDetector(
+                    onTap: () => _showScaffold(),
+                    child: PlatformSelector(
+                        data: _meals, label: "Select Game Platform")),
                 Container(
                     margin: EdgeInsets.only(top: 25, bottom: 25),
                     alignment: AlignmentDirectional.centerStart,
@@ -157,15 +167,112 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                             fontSize: 18,
                             fontFamily: CircularBold,
                             color: Color(0xffB5BDD5).withOpacity(0.8)))),
-                Row(
-                  children: [
-                    SelectGameWidget(),
-                  ],
+                Container(
+                  width: ScreenUtils.bodyWidth,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        Container(
+                            margin: EdgeInsets.only(right: 13),
+                            child: SelectGameWidget()),
+                        StreamBuilder(
+                          stream: _tradeBloc.getselectedGame,
+                          builder: (context, AsyncSnapshot <List<GameDetails>> snapshot) {
+                              return snapshot.hasData ? Container(
+                                child: Row(
+                                  children: snapshot.data.map((e) {
+                                    return GamesWidget(backgroundUrl: e.image,price: e.released,gameName : e.name);
+                                  }).toList(),
+                                ),
+                              ):Container();
+                          }
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-                GestureDetector(
-                    onTap: () => _showScaffold(),
-                    child: PlatformSelector(
-                        data: _meals, label: "Select Game Platform")),
+                Container(
+                    margin: EdgeInsets.only(top: 25, bottom: 25),
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text('Enter Meetup Location',
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontFamily: CircularBold,
+                            color: Color(0xffB5BDD5).withOpacity(0.8)))),
+                Container(
+                  height: ScreenUtils.getDesignHeight(170),
+                  padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(10)),
+                  decoration: BoxDecoration(color: BottomNavColor, borderRadius: BorderRadius.circular(10)),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AbsorbPointer(
+                        absorbing: true,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(vertical: ScreenUtils.getDesignHeight(16)),
+                          height: ScreenUtils.getDesignHeight(92),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(4),
+                            child: GoogleMap(
+                              mapType: MapType.normal,
+                              zoomControlsEnabled: false,
+                              initialCameraPosition:
+                              CameraPosition(target: LatLng(37.42796133580664, -122.085749655962), zoom: 10),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset('assets/icons/location.svg'),
+                              Padding(
+                                padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
+                                child: Text(
+                                  'No 2 6th Lane Colombo 2 ',
+                                  style: Theme.of(context).primaryTextTheme.subtitle1,
+                                ),
+                              )
+                            ],
+                          ),
+                          Container(
+                              height: ScreenUtils.getDesignHeight(30),
+                              width: ScreenUtils.getDesignWidth(96),
+                              child: CustomButton(
+                                buttonText: "Set On Map",
+                                textFontSize: 14,
+                                onPressed: () {},
+                              ))
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25) , bottom: ScreenUtils.getDesignHeight(25)),
+                    width: double.infinity,
+                    height: ScreenUtils.getDesignHeight(45),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6.0),
+                      gradient: LinearGradient(
+                        begin: Alignment.bottomLeft,
+                        end: Alignment.topRight,
+                        colors: [
+                          Color(0xff2DC8ED),
+                          Color(0xff548AF0)
+                        ]
+                      )
+                    ),
+                    child: Center(
+                      child: Text(
+                        'Create Trade Offer',
+                        style: TextStyle(color: Colors.white, fontFamily: Neusa, fontSize: 18),
+                      ),
+                    ))
               ],
             ),
           ),
@@ -173,6 +280,7 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
       ),
     );
   }
+
 
   List<Widget> getLibraryGames(int selectedIndex) {
     List<Widget> icons = [];
@@ -217,8 +325,11 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
 }
 
 class SelectGameWidget extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+
+    CreateTradeBloc _tradeBloc = Provider.of<CreateTradeBloc>(context);
     return DottedBorder(
       strokeWidth: 2,
       color: Color(0xff949AAE),
@@ -228,7 +339,7 @@ class SelectGameWidget extends StatelessWidget {
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0)),
         child: GestureDetector(
           onTap: () {
-            showSearch(context: context, delegate: DataSearch());
+            showSearch(context: context, delegate: DataSearch(_tradeBloc));
           },
           child: Container(
             padding: EdgeInsets.only(
@@ -270,34 +381,9 @@ class SelectGameWidget extends StatelessWidget {
 }
 
 class DataSearch extends SearchDelegate<String> {
+  final CreateTradeBloc _tradeBloc;
 
-  CreateTradeBloc _tradeBloc = CreateTradeBloc();
-
-  final cities = [
-    'Colombo',
-    'Dehiwala',
-    'Piliyandala',
-    'Mount Lavania',
-    'Kelaniya',
-    'Bokundara',
-    'Kollupitiya',
-    'Dampe',
-    'Pannipitiya',
-    'Wellawatta',
-    'Kalutara',
-    'Panadura',
-    'Kohuwala',
-    'Pepilyana',
-    'Thummulla',
-    'Ella',
-    'Gampola'
-  ];
-
-  final recentCities = [
-    'Mount Lavania',
-    'Kelaniya',
-    'Bokundara',
-  ];
+  DataSearch(this._tradeBloc);
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -346,11 +432,8 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    print('Query ' + query);
-    final suggestions = query.isEmpty
-        ? recentCities
-        : cities.where((element) => element.startsWith(query)).toList();
 
+    print('Query ' + query);
     _tradeBloc.setGameName.add(query);
 
     return StreamBuilder(
@@ -358,14 +441,23 @@ class DataSearch extends SearchDelegate<String> {
       builder: (context, snapshot) {
         return snapshot.hasData ? Container(
           color: Background,
-          child: ListView.builder(
-            itemBuilder: (context, index) {
-              return  ListTile(
-                  leading: Icon(Icons.videogame_asset , color: Colors.white,),
-                  title: Text(snapshot.data[index].name , style: TextStyle(fontSize: 16 , color: Colors.white),)
-              );
-            },
-            itemCount: snapshot.data.length,
+          child: Provider(
+            create: (context) => _tradeBloc,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return  GestureDetector(
+                  onTap: () {
+                    _tradeBloc.setSelectedGame.add(snapshot.data[index]);
+                    close(context, null);
+                  } ,
+                  child: ListTile(
+                      leading: Icon(Icons.videogame_asset , color: Colors.white,),
+                      title: Text(snapshot.data[index].name , style: TextStyle(fontSize: 16 , color: Colors.white),)
+                  ),
+                );
+              },
+              itemCount: snapshot.data.length,
+            ),
           ),
         ) : LoadingBarrier();
       }

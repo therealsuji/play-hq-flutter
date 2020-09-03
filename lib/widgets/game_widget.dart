@@ -12,16 +12,18 @@ class GamesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('Game Name ' + gameName);
     return Container(
       width: ScreenUtils.getDesignWidth(105),
       height: ScreenUtils.getDesignHeight(160),
+      margin: EdgeInsets.only(right: 13),
       child: Stack(
         children: [
           Container(
               height: ScreenUtils.getDesignHeight(160),
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(3.0),
-                  child: Image.asset(
+                  child: Image.network(
                     backgroundUrl,
                     fit: BoxFit.cover,
                   ))),

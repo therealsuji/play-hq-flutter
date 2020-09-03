@@ -27,17 +27,26 @@ class CreateTradeBloc{
   StreamController<String> _gameNameController = StreamController();
   Sink<String> get setGameName => _gameNameController.sink;
 
+  BehaviorSubject<List<GameDetails>> _selectedGame = BehaviorSubject<List<GameDetails>>();
+  Stream<List<GameDetails>> get getselectedGame => _selectedGame.stream;
+  StreamController<GameDetails> _selectedGameController = StreamController();
+  Sink<GameDetails> get setSelectedGame => _selectedGameController.sink;
 
   CreateTradeBloc(){
 
     _selectedIndexController.stream.listen((event) {
+      _gameData.add(null);
       _selectedItemIndex.add(event);
     });
     
-    _gameNameController.stream.debounceTime(Duration(milliseconds: 500)).listen((event) {
+    _gameNameController.stream.debounceTime(Duration(milliseconds: 800)).listen((event) {
       getStreet(event);
     });
-    
+
+    _selectedGameController.stream.listen((event) {
+      _tempList.add(event);
+      _selectedGame.add(_tempList);
+    });
 
 
   }
@@ -77,6 +86,8 @@ class CreateTradeBloc{
   void dispose(){
     _selectedItemIndex.close();
     _isLoading.close();
+    _selectedGameController.close();
+    _selectedGame.close();
     _selectedIndexController.close();
     _gameData.close();
     _gameNameController.close();
