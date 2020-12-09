@@ -96,23 +96,23 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                       left: ScreenUtils.getDesignWidth(_createSaleContainerPos),
                       top: _createSaleContainerTopPos,
                       child: Center(
-                        child: DottedBorder(
-                            strokeWidth: 2,
-                            radius: Radius.circular(6),
-                            color: _createSaleContainerBorder,
-                            borderType: BorderType.RRect,
-                            dashPattern: [10],padding: EdgeInsets.all(0),
-                            child: Container(
-                              height: _createSaleContainerHeight,
-                              width: _createSaleContainerWidth,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.only(topRight: Radius.circular(6),bottomRight: Radius.circular(6)), color: _createSaleContainerColor),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: GestureDetector(
-                                      onTap: () {},
+                        child: GestureDetector(
+                          onTap: (){print('something');},
+                          child: DottedBorder(
+                              strokeWidth: 2,
+                              radius: Radius.circular(6),
+                              color: _createSaleContainerBorder,
+                              borderType: BorderType.RRect,
+                              dashPattern: [10],padding: EdgeInsets.all(0),
+                              child: Container(
+                                height: _createSaleContainerHeight,
+                                width: _createSaleContainerWidth,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.only(topRight: Radius.circular(6),bottomRight: Radius.circular(6)), color: _createSaleContainerColor),
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.center,
                                       child: Container(
                                         width: ScreenUtils.getDesignWidth(46),
                                         height: ScreenUtils.getDesignWidth(46),
@@ -122,26 +122,26 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                                         child: SvgPicture.asset('assets/icons/plus.svg'),
                                       ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: Opacity(
-                                      opacity: _createSaleOpacity,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 80),
-                                        child: Text(
-                                          'Create Sale',
-                                          style: Theme.of(context)
-                                              .primaryTextTheme
-                                              .subtitle1
-                                              .copyWith(color: Colors.white),
+                                    Align(
+                                      alignment: Alignment.center,
+                                      child: Opacity(
+                                        opacity: _createSaleOpacity,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(top: 80),
+                                          child: Text(
+                                            'Create Sale',
+                                            style: Theme.of(context)
+                                                .primaryTextTheme
+                                                .subtitle1
+                                                .copyWith(color: Colors.white),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            )),
+                                    )
+                                  ],
+                                ),
+                              )),
+                        ),
                       ))
                 ],
               ),
