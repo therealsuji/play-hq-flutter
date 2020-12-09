@@ -4,6 +4,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:play_hq/constants/route_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 import 'package:play_hq/widgets/active_game_sale_widget.dart';
@@ -53,11 +54,8 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Background,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: CustomAppBarWidget(
-            title: "Your Games for sale",
-          ),
+        appBar: CustomAppBarWidget(
+          title: "Your Games for sale",
         ),
         body: SingleChildScrollView(
           padding: EdgeInsets.all(0),
@@ -98,18 +96,24 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                       top: _createSaleContainerTopPos,
                       child: Center(
                         child: GestureDetector(
-                          onTap: (){print('something');},
+                          onTap: () {
+                            Navigator.pushNamed(context, CreateSaleRoute);
+
+                           },
                           child: DottedBorder(
                               strokeWidth: 2,
                               radius: Radius.circular(6),
                               color: _createSaleContainerBorder,
                               borderType: BorderType.RRect,
-                              dashPattern: [10],padding: EdgeInsets.all(0),
+                              dashPattern: [10],
+                              padding: EdgeInsets.all(0),
                               child: Container(
                                 height: _createSaleContainerHeight,
                                 width: _createSaleContainerWidth,
                                 decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(topRight: Radius.circular(6),bottomRight: Radius.circular(6)), color: _createSaleContainerColor),
+                                    borderRadius: BorderRadius.only(
+                                        topRight: Radius.circular(6), bottomRight: Radius.circular(6)),
+                                    color: _createSaleContainerColor),
                                 child: Stack(
                                   children: [
                                     Align(
@@ -160,7 +164,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                       children: list.asMap().entries.map((entry) {
                     int idx = entry.key;
                     return CustomGameSaleWidget(
-                      title: "Fallout 4",
+                      title: "Ghost of Tshushima",
                       price: "4000",
                       soldTo: "Jake",
                       backgroundImage: "assets/images/tshushima.jpg",

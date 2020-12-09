@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/blocs/createSaleBloc.dart';
 import 'package:play_hq/blocs/nav_bloc.dart';
 import 'package:play_hq/blocs/sign_up_bloc.dart';
 import 'package:play_hq/blocs/sign_up_bloc.dart';
 import 'package:play_hq/blocs/tradingBloc/create_trade_bloc.dart';
 import 'package:play_hq/constants/route_constants.dart';
+import 'package:play_hq/screens/create_sale_screen.dart';
 import 'package:play_hq/screens/create_trade_screen.dart';
 import 'package:play_hq/screens/game_details_screen.dart';
 import 'package:play_hq/screens/games_for_sale_screen.dart';
@@ -50,9 +52,18 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => GameDetailsScreen());
     case CreateTradeRoute:
       return MaterialPageRoute(
-          builder: (context) => Provider(create: (context) => _tradeBloc, child: CreateTradeScreen()));
+          builder: (context) => Provider(
+                create: (context) => _tradeBloc,
+                child: CreateTradeScreen(),
+              ));
     case GamesForSaleRoute:
+      return MaterialPageRoute(builder: (context) => GamesForSaleScreen());
+    case CreateSaleRoute:
       return MaterialPageRoute(
-          builder: (context) => GamesForSaleScreen());
+          builder: (context) => Provider<CreateSaleBloc>(
+                create: (context) => CreateSaleBloc(),
+                dispose: (_, bloc) => bloc.dispose(),
+                child: CreateSaleScreen(),
+              ));
   }
 }

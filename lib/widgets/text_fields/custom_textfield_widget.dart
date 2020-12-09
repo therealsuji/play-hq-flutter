@@ -5,10 +5,11 @@ import 'package:play_hq/helpers/colors.dart';
 class CustomTextFieldWidget extends StatefulWidget {
   final Sink sink;
   final String textFieldName;
+  final Color backColor;
 
   CustomTextFieldWidget({
     @required this.sink,
-    @required this.textFieldName,
+    this.textFieldName, this.backColor = ContainerColor,
   });
 
   @override
@@ -41,11 +42,11 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 15),
+      margin: EdgeInsets.only(top: 20),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(
          widget.textFieldName,
-          style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 14, fontFamily: CircularBook),
+          style: Theme.of(context).primaryTextTheme.headline3,
         ),
         Container(
           padding: EdgeInsets.only(top: 10),
@@ -64,7 +65,6 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
             keyboardType: TextInputType.text,
             cursorColor: Primary,
             decoration: InputDecoration(
-
               fillColor: _currentColor,
               filled: true,
               focusedBorder: OutlineInputBorder(
@@ -75,7 +75,7 @@ class _CustomTextFieldWidgetState extends State<CustomTextFieldWidget> {
                 borderRadius: BorderRadius.circular(6),
                 borderSide: BorderSide.none,
               ),
-              contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20),
+              contentPadding: EdgeInsets.only(left: 12.0, top: 15, bottom: 15),
             ),
           ),
         ),

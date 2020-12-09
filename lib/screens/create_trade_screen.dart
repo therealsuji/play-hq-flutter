@@ -9,12 +9,14 @@ import 'package:play_hq/constants/font_string_constants.dart';
 import 'package:play_hq/helpers/colors.dart';
 import 'package:play_hq/helpers/screen_utils.dart';
 import 'package:play_hq/models/search_game_model.dart';
+import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_loading.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_container.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_item.dart';
 import 'package:play_hq/widgets/directSelect/direct_select_list.dart';
 import 'package:play_hq/widgets/game_widget.dart';
+import 'package:play_hq/widgets/platform_selector_widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateTradeScreen extends StatefulWidget {
@@ -26,7 +28,7 @@ class CreateTradeScreen extends StatefulWidget {
   _CreateTradeScreenState createState() => _CreateTradeScreenState();
 }
 
-List<String> _meals = [
+List<String> _platforms = [
   "PlayStation 4",
   "Xbox One",
   "Nintendo Switch",
@@ -44,22 +46,19 @@ final List<Map<String, dynamic>> _gameList = [
   },
   {
     "name": "Red Dead Redemption",
-    "imageUrl":
-        "https://images.firstpost.com/wp-content/uploads/large_file_plugin/2018/11/1541061542_redtitle.jpg",
+    "imageUrl": "https://images.firstpost.com/wp-content/uploads/large_file_plugin/2018/11/1541061542_redtitle.jpg",
     'genre': 'Action',
     'platform': 'PlayStation 4'
   },
   {
     "name": "Destiny 2",
-    "imageUrl":
-        "https://assets1.ignimgs.com/2019/09/05/destiny-2-shadowkeep-preorder-1567714014550.jpg?width=1280",
+    "imageUrl": "https://assets1.ignimgs.com/2019/09/05/destiny-2-shadowkeep-preorder-1567714014550.jpg?width=1280",
     'genre': 'Action',
     'platform': 'PlayStation 4'
   },
   {
     "name": "Marvels Spider-Man",
-    "imageUrl":
-        "https://www.purefandom.com/wp-content/uploads/2018/09/Spidey-PS4.jpg",
+    "imageUrl": "https://www.purefandom.com/wp-content/uploads/2018/09/Spidey-PS4.jpg",
     'genre': 'Action',
     'platform': 'PlayStation 4'
   },
@@ -88,41 +87,12 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
   Widget build(BuildContext context) {
     _tradeBloc = Provider.of<CreateTradeBloc>(context);
 
-    final appBar = PreferredSize(
-        child: Container(
-          margin: EdgeInsets.only(left: 24, right: 24, top: 40),
-          decoration: BoxDecoration(
-            color: Background,
-          ),
-          child: Padding(
-              padding: EdgeInsets.only(bottom: 20, top: 20),
-              child: Container(
-                child: Row(
-                  children: [
-                    GestureDetector(
-                        onTap: () => Navigator.pop(context),
-                        child: SvgPicture.asset('assets/icons/back.svg')),
-                    Container(
-                      margin: EdgeInsets.only(left: 15),
-                      child: Text(
-                        'Creat Trade Request',
-                        style: TextStyle(
-                            fontFamily: CircularBold,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.white),
-                      ),
-                    ),
-                    Spacer(),
-                    SvgPicture.asset('assets/icons/notification.svg'),
-                  ],
-                ),
-              )),
-        ),
-        preferredSize: Size.fromHeight(90));
+
 
     return Scaffold(
-      appBar: appBar,
+      appBar: CustomAppBarWidget(
+        title: 'Create Trade Request',
+      ),
       key: scaffoldKey,
       backgroundColor: Background,
       body: Container(
@@ -138,9 +108,7 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                     alignment: AlignmentDirectional.centerStart,
                     child: Text('Select Library Game',
                         style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: CircularBold,
-                            color: Color(0xffB5BDD5).withOpacity(0.8)))),
+                            fontSize: 18, fontFamily: CircularBold, color: Color(0xffB5BDD5).withOpacity(0.8)))),
                 StreamBuilder<Object>(
                     stream: _tradeBloc.getSelectedIndex,
                     initialData: 30,
@@ -156,38 +124,34 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                       );
                     }),
                 GestureDetector(
-                    onTap: () => _showScaffold(),
-                    child: PlatformSelector(
-                        data: _meals, label: "Select Game Platform")),
+                    onTap: () => _showScaffold(), child: PlatformSelector(data: _platforms, label: "Select Game Platform")),
                 Container(
                     margin: EdgeInsets.only(top: 25, bottom: 25),
                     alignment: AlignmentDirectional.centerStart,
                     child: Text('Select Preferred Games',
                         style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: CircularBold,
-                            color: Color(0xffB5BDD5).withOpacity(0.8)))),
+                            fontSize: 18, fontFamily: CircularBold, color: Color(0xffB5BDD5).withOpacity(0.8)))),
                 Container(
                   width: ScreenUtils.bodyWidth,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        Container(
-                            margin: EdgeInsets.only(right: 13),
-                            child: SelectGameWidget()),
+                        Container(margin: EdgeInsets.only(right: 13), child: SelectGameWidget()),
                         StreamBuilder(
-                          stream: _tradeBloc.getselectedGame,
-                          builder: (context, AsyncSnapshot <List<GameDetails>> snapshot) {
-                              return snapshot.hasData ? Container(
-                                child: Row(
-                                  children: snapshot.data.map((e) {
-                                    return GamesWidget(backgroundUrl: e.image,price: e.released,gameName : e.name);
-                                  }).toList(),
-                                ),
-                              ):Container();
-                          }
-                        )
+                            stream: _tradeBloc.getselectedGame,
+                            builder: (context, AsyncSnapshot<List<GameDetails>> snapshot) {
+                              return snapshot.hasData
+                                  ? Container(
+                                      child: Row(
+                                        children: snapshot.data.map((e) {
+                                          return GamesWidget(
+                                              backgroundUrl: e.image, price: e.released, gameName: e.name);
+                                        }).toList(),
+                                      ),
+                                    )
+                                  : Container();
+                            })
                       ],
                     ),
                   ),
@@ -197,9 +161,7 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                     alignment: AlignmentDirectional.centerStart,
                     child: Text('Enter Meetup Location',
                         style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: CircularBold,
-                            color: Color(0xffB5BDD5).withOpacity(0.8)))),
+                            fontSize: 18, fontFamily: CircularBold, color: Color(0xffB5BDD5).withOpacity(0.8)))),
                 Container(
                   height: ScreenUtils.getDesignHeight(170),
                   padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(10)),
@@ -219,7 +181,7 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                               mapType: MapType.normal,
                               zoomControlsEnabled: false,
                               initialCameraPosition:
-                              CameraPosition(target: LatLng(37.42796133580664, -122.085749655962), zoom: 10),
+                                  CameraPosition(target: LatLng(37.42796133580664, -122.085749655962), zoom: 10),
                             ),
                           ),
                         ),
@@ -253,20 +215,16 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                   ),
                 ),
                 Container(
-                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25) , bottom: ScreenUtils.getDesignHeight(25)),
+                    margin:
+                        EdgeInsets.only(top: ScreenUtils.getDesignHeight(25), bottom: ScreenUtils.getDesignHeight(25)),
                     width: double.infinity,
                     height: ScreenUtils.getDesignHeight(45),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(6.0),
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomLeft,
-                        end: Alignment.topRight,
-                        colors: [
-                          Color(0xff2DC8ED),
-                          Color(0xff548AF0)
-                        ]
-                      )
-                    ),
+                        borderRadius: BorderRadius.circular(6.0),
+                        gradient: LinearGradient(
+                            begin: Alignment.bottomLeft,
+                            end: Alignment.topRight,
+                            colors: [Color(0xff2DC8ED), Color(0xff548AF0)])),
                     child: Center(
                       child: Text(
                         'Create Trade Offer',
@@ -281,18 +239,12 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
     );
   }
 
-
   List<Widget> getLibraryGames(int selectedIndex) {
     List<Widget> icons = [];
 
     for (int i = 0, j = _gameList.length; i < j; i++) {
-      icons.add(GameSelector(
-          _gameList[i]['name'],
-          _gameList[i]['genre'],
-          _gameList[i]['imageUrl'],
-          _gameList[i]['platform'],
-          i,
-          selectedIndex));
+      icons.add(GameSelector(_gameList[i]['name'], _gameList[i]['genre'], _gameList[i]['imageUrl'],
+          _gameList[i]['platform'], i, selectedIndex));
     }
 
     return icons;
@@ -325,10 +277,8 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
 }
 
 class SelectGameWidget extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     CreateTradeBloc _tradeBloc = Provider.of<CreateTradeBloc>(context);
     return DottedBorder(
       strokeWidth: 2,
@@ -364,11 +314,7 @@ class SelectGameWidget extends StatelessWidget {
                   margin: EdgeInsets.only(top: 10),
                   child: Text(
                     'Select Game',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 14,
-                        fontFamily: Neusa),
+                    style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 14, fontFamily: Neusa),
                   ),
                 )
               ],
@@ -405,10 +351,7 @@ class DataSearch extends SearchDelegate<String> {
         primaryIconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
         primaryTextTheme: theme.textTheme.copyWith(headline2: TextStyle(color: Colors.white)),
         inputDecorationTheme: InputDecorationTheme(
-          hintStyle: Theme.of(context)
-              .textTheme
-              .title
-              .copyWith(color: Colors.white.withOpacity(0.6)),
+          hintStyle: Theme.of(context).textTheme.title.copyWith(color: Colors.white.withOpacity(0.6)),
         ));
   }
 
@@ -432,36 +375,41 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-
     print('Query ' + query);
     _tradeBloc.setGameName.add(query);
 
     return StreamBuilder(
-      stream: _tradeBloc.getGameData,
-      builder: (context, snapshot) {
-        return snapshot.hasData ? Container(
-          color: Background,
-          child: Provider(
-            create: (context) => _tradeBloc,
-            child: ListView.builder(
-              itemBuilder: (context, index) {
-                return  GestureDetector(
-                  onTap: () {
-                    _tradeBloc.setSelectedGame.add(snapshot.data[index]);
-                    close(context, null);
-                  } ,
-                  child: ListTile(
-                      leading: Icon(Icons.videogame_asset , color: Colors.white,),
-                      title: Text(snapshot.data[index].name , style: TextStyle(fontSize: 16 , color: Colors.white),)
+        stream: _tradeBloc.getGameData,
+        builder: (context, snapshot) {
+          return snapshot.hasData
+              ? Container(
+                  color: Background,
+                  child: Provider(
+                    create: (context) => _tradeBloc,
+                    child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            _tradeBloc.setSelectedGame.add(snapshot.data[index]);
+                            close(context, null);
+                          },
+                          child: ListTile(
+                              leading: Icon(
+                                Icons.videogame_asset,
+                                color: Colors.white,
+                              ),
+                              title: Text(
+                                snapshot.data[index].name,
+                                style: TextStyle(fontSize: 16, color: Colors.white),
+                              )),
+                        );
+                      },
+                      itemCount: snapshot.data.length,
+                    ),
                   ),
-                );
-              },
-              itemCount: snapshot.data.length,
-            ),
-          ),
-        ) : LoadingBarrier();
-      }
-    );
+                )
+              : LoadingBarrier();
+        });
   }
 }
 
@@ -474,8 +422,7 @@ class GameSelector extends StatelessWidget {
   final int index;
   final int selectedIndex;
 
-  GameSelector(this.gameName, this.genre, this.imageUrl, this.platform,
-      this.index, this.selectedIndex);
+  GameSelector(this.gameName, this.genre, this.imageUrl, this.platform, this.index, this.selectedIndex);
 
   @override
   Widget build(BuildContext context) {
@@ -484,8 +431,7 @@ class GameSelector extends StatelessWidget {
       margin: EdgeInsets.only(top: 15, right: 15),
       width: ScreenUtils.getDesignWidth(290),
       height: ScreenUtils.getDesignHeight(180),
-      decoration: BoxDecoration(
-          color: ContainerColor, borderRadius: BorderRadius.circular(5.0)),
+      decoration: BoxDecoration(color: ContainerColor, borderRadius: BorderRadius.circular(5.0)),
       child: Column(
         children: [
           Container(
@@ -494,9 +440,7 @@ class GameSelector extends StatelessWidget {
             child: Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(5.0),
-                      topRight: Radius.circular(5.0)),
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0), topRight: Radius.circular(5.0)),
                   child: Container(
                     width: ScreenUtils.bodyWidth,
                     child: Image.network(
@@ -562,10 +506,7 @@ class GameSelector extends StatelessWidget {
                         child: Text(
                           genre,
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              fontFamily: CircularBook,
-                              color: Colors.white),
+                              fontWeight: FontWeight.w600, fontSize: 14, fontFamily: CircularBook, color: Colors.white),
                         ),
                       ),
                     ],
@@ -591,10 +532,7 @@ class GameSelector extends StatelessWidget {
                         child: Text(
                           platform,
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              fontFamily: CircularBook,
-                              color: Colors.white),
+                              fontWeight: FontWeight.w600, fontSize: 14, fontFamily: CircularBook, color: Colors.white),
                         ),
                       ),
                     ],
@@ -606,18 +544,14 @@ class GameSelector extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3.0),
-                        color: index != selectedIndex ? Unselected : Primary),
+                        borderRadius: BorderRadius.circular(3.0), color: index != selectedIndex ? Unselected : Primary),
                     child: Container(
                       margin: EdgeInsets.all(10),
                       child: Text(
                         // TODO : checks if the selected index is equal to the current and makes the text selected or not
                         index != selectedIndex ? 'SELECT GAME' : 'SELECTED',
                         style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Neusa),
+                            fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: Neusa),
                       ),
                     ),
                   ),
@@ -628,104 +562,6 @@ class GameSelector extends StatelessWidget {
           Spacer()
         ],
       ),
-    );
-  }
-}
-
-// TODO : Widget for the hold and drag drop-down button
-class PlatformSelector extends StatelessWidget {
-  final buttonPadding = const EdgeInsets.fromLTRB(0, 8, 0, 0);
-
-  final List<String> data;
-  final String label;
-
-  PlatformSelector({@required this.data, @required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-            margin: EdgeInsets.only(top: 25),
-            alignment: AlignmentDirectional.centerStart,
-            child: Text(label,
-                style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: CircularBold,
-                    color: Color(0xffB5BDD5).withOpacity(0.8)))),
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          padding: EdgeInsets.only(top: 3, bottom: 3),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5.0),
-            color: SubContainerColor,
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Container(
-                child: Expanded(
-                    // TODO : Custom List widget
-                    // TODO : have to add left radius to container
-                    child: DirectSelectList<String>(
-                  values: data,
-                  defaultItemIndex: 0,
-                  itemBuilder: (String value) => getDropDownMenuItem(value),
-                  focusedItemDecoration: _getDslDecoration(),
-                )),
-              ),
-              Container(
-                  margin: EdgeInsets.only(right: 10), child: _getDropdownIcon())
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  DirectSelectItem<String> getDropDownMenuItem(String value) {
-    return DirectSelectItem<String>(
-        itemHeight: 56,
-        value: value,
-        itemBuilder: (context, value) {
-          return Container(
-              margin: EdgeInsets.only(left: 10),
-              child: Text(
-                value,
-                style: TextStyle(
-                    fontFamily: CircularBook,
-                    fontSize: 16,
-                    color: Colors.white),
-              ));
-        });
-  }
-
-  _getDslDecoration() {
-    return BoxDecoration(
-      border: BorderDirectional(
-        bottom: BorderSide(width: 1, color: Primary),
-        top: BorderSide(width: 1, color: Primary),
-      ),
-    );
-  }
-
-  BoxDecoration _getShadowDecoration() {
-    return BoxDecoration(
-      boxShadow: <BoxShadow>[
-        new BoxShadow(
-          color: Colors.black.withOpacity(0.06),
-          spreadRadius: 4,
-          offset: new Offset(0.0, 0.0),
-          blurRadius: 15.0,
-        ),
-      ],
-    );
-  }
-
-  Icon _getDropdownIcon() {
-    return Icon(
-      Icons.unfold_more,
-      color: Primary,
     );
   }
 }

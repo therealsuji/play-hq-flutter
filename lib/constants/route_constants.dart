@@ -8,3 +8,4 @@ const String LandingPageRoute = 'landingpage';
 const String CreateTradeRoute = 'createTrade';
 const String SignUpOnBoardRoute = 'signuponboard';
 const String GamesForSaleRoute = 'gamesforsale';
+const String CreateSaleRoute = 'createsale';
