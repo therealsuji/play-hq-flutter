@@ -101,7 +101,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                             radius: Radius.circular(6),
                             color: _createSaleContainerBorder,
                             borderType: BorderType.RRect,
-                            dashPattern: [10],
+                            dashPattern: [10],padding: EdgeInsets.all(0),
                             child: Container(
                               height: _createSaleContainerHeight,
                               width: _createSaleContainerWidth,
