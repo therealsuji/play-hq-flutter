@@ -271,15 +271,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       Spacer(),
-                      Container(
-                        height: ScreenUtils.getDesignHeight(30),
-                        width: ScreenUtils.getDesignWidth(80),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: Primary),
-                        child: Center(
-                          child: Text(
-                            'VIEW ALL',
-                            style: TextStyle(
-                                fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: Neusa),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, GamesForSaleRoute);
+                        },
+                        child: Container(
+                          height: ScreenUtils.getDesignHeight(30),
+                          width: ScreenUtils.getDesignWidth(80),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: Primary),
+                          child: Center(
+                            child: Text(
+                              'VIEW ALL',
+                              style: TextStyle(
+                                  fontSize: 10, color: Colors.white, fontWeight: FontWeight.bold, fontFamily: Neusa),
+                            ),
                           ),
                         ),
                       )

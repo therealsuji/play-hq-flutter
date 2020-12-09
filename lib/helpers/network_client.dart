@@ -18,7 +18,7 @@ class NetworkClient {
   static final tokenDio = new Dio(); // this is used only for token refreshing
 
   NetworkClient._internal() {
-    dio.options.baseUrl = 'http://192.168.1.7:3000/';
+    dio.options.baseUrl = 'http://192.168.1.6:3000/';
     dio.options.connectTimeout = 10000;
     dio.options.receiveTimeout = 5000;
     tokenDio.options = dio.options;

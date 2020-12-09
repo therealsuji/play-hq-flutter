@@ -452,6 +452,7 @@ class _SignUpOnBoardScreenState extends State<SignUpOnBoardScreen> {
     );
   }
   // TODO: Implement location permission and no location container for map
+  // TODO: Implement set on map function
   // location body
   Widget _locationBody() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start, children: [

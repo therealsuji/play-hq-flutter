@@ -21,22 +21,33 @@ class PlayHqHead extends StatelessWidget {
       ],
       child: MaterialApp(
           theme: ThemeData(
-              //this is what you want
-              accentColor: Primary,
-              backgroundColor: Background,
-              accentColorBrightness: Brightness.light,
-              primaryTextTheme: TextTheme(
+            //this is what you want
+            accentColor: Primary,
+            backgroundColor: Background,
+            accentColorBrightness: Brightness.light,
+            primaryTextTheme: TextTheme(
                 headline1: TextStyle(
                   fontSize: 22,
                   color: Colors.white,
                   fontFamily: Neusa,
+                ),
+                headline2: TextStyle(
+                  fontSize: 18,
+                  color: Colors.white.withOpacity(0.6),
+                  fontFamily: CircularBook,
                 ),
                 subtitle1: TextStyle(
                   fontSize: 16,
                   color: Colors.white.withOpacity(0.6),
                   fontFamily: CircularBook,
                 ),
-              ),
+                subtitle2: TextStyle(
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontFamily: CircularBook,
+                ),
+
+            ),
             platform: TargetPlatform.iOS,
           ),
           debugShowCheckedModeBanner: false,
