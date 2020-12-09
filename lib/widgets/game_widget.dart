@@ -24,25 +24,28 @@ class GamesWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(3.0),
         child: Stack(
           children: [
-            Container(
-              width: ScreenUtils.getDesignWidth(105),
-              height: ScreenUtils.getDesignHeight(160),
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: environment == Environment.LIVE
-                          ? NetworkImage(
-                              backgroundUrl,
-                            )
-                          : ExactAssetImage(
-                              backgroundUrl,
-                            ))),
+            Positioned.fill(
+               child: Container(
+                width: ScreenUtils.getDesignWidth(105),
+                height: ScreenUtils.getDesignHeight(160),
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: environment == Environment.LIVE
+                            ? NetworkImage(
+                                backgroundUrl,
+                              )
+                            : ExactAssetImage(
+                                backgroundUrl,
+                              ))),
+              ),
             ),
             Positioned(
               bottom: 0,
               child: Container(
                 width: ScreenUtils.getDesignWidth(105),
-                height: ScreenUtils.getDesignHeight(140),
+                height: ScreenUtils.getDesignHeight(160),
+                padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                       colors: [Color(0xff091015), Colors.transparent],
@@ -55,7 +58,7 @@ class GamesWidget extends StatelessWidget {
               bottom: 0,
               child: Container(
                 width: ScreenUtils.getDesignWidth(105),
-                margin: EdgeInsets.only(left: 9, bottom: 10),
+                padding: EdgeInsets.only(left: 9, bottom: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

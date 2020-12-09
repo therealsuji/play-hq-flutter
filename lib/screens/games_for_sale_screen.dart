@@ -54,12 +54,13 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
     return Scaffold(
         backgroundColor: Background,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(50),
+          preferredSize: Size.fromHeight(60),
           child: CustomAppBarWidget(
             title: "Your Games for sale",
           ),
         ),
         body: SingleChildScrollView(
+          padding: EdgeInsets.all(0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
