@@ -12,253 +12,164 @@ class GameDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Background,
-        body: CustomScrollView(
-          slivers: [
-            SliverPersistentHeader(
-              pinned: true,
-              floating: true,
-              delegate: GameDetailsHeader(
-                  maxHeight: ScreenUtils.getDesignHeight(270), minHeight: 100),
-            ),
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Column(
-                children: [
-                  Container(
-                    height: 1000,
-                    padding: EdgeInsets.only(
-                        left: 24, right: 24, bottom: 15, top: 10),
-                     decoration: BoxDecoration(
-                        color: Background,
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(15),
-                            topLeft: Radius.circular(15))),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: ScreenUtils.getDesignWidth(250),
-                              child: Wrap(
-                                spacing: 15,
-                                runSpacing: 10,
-                                children: [
-                                  pillContainer(isPlatform: true, name: "PS4"),
-                                ],
-                              ),
+        body: SafeArea(
+          child: Container(
+            child: Column(
+              children: [
+                Container(
+                  width: ScreenUtils.bodyWidth,
+                  height: ScreenUtils.getDesignHeight(240),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: ScreenUtils.bodyWidth,
+                        child: Image.asset('assets/images/ghost.png',
+                            fit: BoxFit.fill),
+                      ),
+                      Container(
+                        width: ScreenUtils.bodyWidth,
+                        color: Colors.black.withOpacity(0.5),
+                      ),
+                      Container()
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(
+                      top: ScreenUtils.getDesignHeight(30), left: 24),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            child: Text(
+                              'Ghost of Tsushima',
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: Neusa,
+                                  color: Colors.white),
                             ),
-                            Container(
-                              height: 70,
-                              width: 70,
-                              decoration: BoxDecoration(
-                                  color: Primary,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.4),
-                                      blurRadius: 5.0,
-                                      spreadRadius: 4.0,
-                                      offset: Offset(
-                                        0.0,
-                                        4.0, // vertical, move down 10
-                                      ),
-                                    )
-                                  ]),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "9.3/10",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 3),
+                            child: Text(
+                              '25th July 2020',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
                                   fontFamily: CircularBold,
-                                ),
+                                  color: Colors.white.withOpacity(0.4)),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 3),
+                            child: Text(
+                              'Sucker Punch Productions',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: CircularBold,
+                                  color: Colors.white.withOpacity(0.4)),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Container(
+                        height: ScreenUtils.getDesignHeight(45),
+                        width: ScreenUtils.getDesignWidth(90),
+                        decoration: BoxDecoration(
+                          color: Primary,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0) , bottomLeft: Radius.circular(5.0))
+                        ),
+                        child: Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                child: Text('8/10' , style: TextStyle(fontSize: 20 , fontWeight: FontWeight.bold , color: Colors.white , fontFamily: CircularBold),),
                               ),
-                            )
+                              Icon(Icons.star , color: Color(0xffFFC107),)
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 15 , left: 24 , right: 24),
+                  child: Row(
+                    children: [
+                      // Widget to hold the platform
+                      Container(
+                        height: ScreenUtils.getDesignHeight(40),
+                        width: ScreenUtils.getDesignWidth(55),
+                        decoration: BoxDecoration(
+                          color: Color(0xff171B23),
+                          borderRadius: BorderRadius.circular(5.0)
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset('assets/icons/playstation_logo.svg',),
+                            Container(child: Text('PS4' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Color(0xff9290B1)),),)
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15),
-                          child: Wrap(
-                            spacing: 15,
-                            runSpacing: 10,
-                            children: [
-                              pillContainer(name: "Adventure"),
-                              pillContainer(name: "Stealth "),
-                              pillContainer(name: "Action"),
-                            ],
-                          ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 15 , left: 24 , right: 24),
+                  child: Row(
+                    children: [
+                      Container(
+                        height: ScreenUtils.getDesignHeight(25),
+                        width: ScreenUtils.getDesignWidth(95),
+                        decoration: BoxDecoration(
+                            color: Color(0xff171B23),
+                            borderRadius: BorderRadius.circular(3.0)
                         ),
-                        Container(
-                          height: 40,
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                          padding: EdgeInsets.symmetric(horizontal: 15),
-                          decoration: BoxDecoration(
-                              color: BottomNavColor,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 4.0,
-                                  offset: Offset(
-                                    0.0,
-                                    4.0, // vertical, move down 10
-                                  ),
-                                )
-                              ]),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text('Add to Game Library',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Primary,
-                                        fontFamily: CircularBook,
-                                      )),
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  color: Colors.white,
-                                  width: 2,
-                                  height: 20,
-                                ),
-                              ),
-                              Expanded(
-                                child: Container(
-                                  alignment: Alignment.centerRight,
-                                  child: Text('Add to Wishlist',
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        color: Headertext,
-                                        fontFamily: CircularBook,
-                                      )),
-                                ),
-                              ),
-                            ],
-                          ),
+                        child: Center(
+                          child: Text('Action' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Color(0xff9290B1)
+                          ),),
                         ),
-                        Text("Best Deals",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Headertext,
-                              fontFamily: CircularBook,
-                            )),
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          decoration: BoxDecoration(
-                              color: BottomNavColor,
-                              borderRadius: BorderRadius.circular(5),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  blurRadius: 5.0,
-                                  spreadRadius: 4.0,
-                                  offset: Offset(
-                                    0.0,
-                                    4.0, // vertical, move down 10
-                                  ),
-                                )
-                              ]),
-                          child: Row(
-                            children: [
-                              Container(
-                                height: 80,
-                                width: 80,
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.transparent,
-                                  backgroundImage: ExactAssetImage(
-                                      'assets/images/download.jpg'),
-                                ),
-                              ),
-                              Expanded(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 15),
-                                      child: Column(
-                                        children: [
-                                          Text('Jeremy Harper',
-                                              style: TextStyle(
-                                                fontSize: 18,
-                                                color: Headertext,
-                                                fontFamily: CircularBook,
-                                              )),
-                                          Padding(
-                                            padding: EdgeInsets.only(top: 5),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '4.6',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 5),
-                                                  child: SvgPicture.asset(
-                                                    'assets/icons/star.svg',
-                                                    height: 15,
-                                                    width: 15,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  '(30)',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Text(
-                                      'LKR 5000',
-                                      style: TextStyle(
-                                          color: Pricetext,
-                                          fontSize: 18,
-                                          fontFamily: Neusa),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(left: 15),
+                        height: ScreenUtils.getDesignHeight(25),
+                        width: ScreenUtils.getDesignWidth(95),
+                        decoration: BoxDecoration(
+                            color: Color(0xff171B23),
+                            borderRadius: BorderRadius.circular(3.0)
                         ),
-                        Text("Description",
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Headertext,
-                              fontFamily: CircularBook,
-                            )),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text(
-                            "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat",
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Headertext.withOpacity(0.4),
-                              fontFamily: CircularBook,
-                            ),
-                          ),
+                        child: Center(
+                          child: Text('Strategy' , style: TextStyle(fontSize: 14 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Color(0xff9290B1)
+                          ),),
                         ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 24 , right: 24 , top: 15),
+                  child: Container(
+                    height: ScreenUtils.getDesignHeight(35),
+                    child: Row(
+                      children: [
+
                       ],
                     ),
                   ),
-                ],
-              ),
-            )
-          ],
+                )
+              ],
+            ),
+          ),
         ));
   }
 }
@@ -453,5 +364,4 @@ class GameDetailsHeader implements SliverPersistentHeaderDelegate {
 
   @override
   OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
-
 }
