@@ -102,10 +102,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       price: '2500 LKR',
                       backgroundUrl: 'assets/images/warzone.jpg',
                     ),
-                    GamesWidget(
-                      gameName: 'Cyberpunk',
-                      price: '2500 LKR',
-                      backgroundUrl: 'assets/images/cyberpunk.jpg',
+                    GestureDetector(
+                      onTap: () => Navigator.pushNamed(context, SaleDetailsRoute),
+                      child: GamesWidget(
+                        gameName: 'Cyberpunk',
+                        price: '2500 LKR',
+                        backgroundUrl: 'assets/images/cyberpunk.jpg',
+                      ),
                     ),
                   ],
                 ),
