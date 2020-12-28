@@ -176,7 +176,7 @@ class SaleDetails extends StatelessWidget {
                       //Widgets for the Game cover with name and price
                       GamesWidget(
                         gameName: 'Ghost of Tsushima',
-                        price: '4000 LKR',
+                        price: '4200 LKR',
                         backgroundUrl: 'assets/images/tshushima.jpg',
                       ),
                       GamesWidget(
