@@ -181,7 +181,7 @@ class SaleDetails extends StatelessWidget {
                       ),
                       GamesWidget(
                         gameName: 'COD Warzone',
-                        price: '2500 LKR',
+                        price: '2900 LKR',
                         backgroundUrl: 'assets/images/warzone.jpg',
                       ),
                       GamesWidget(
