@@ -13,11 +13,6 @@ class CustomMapSetterWidget extends StatelessWidget {
     return Column(
       children: [
         Container(
-            margin: EdgeInsets.only(top: 20, bottom: 10),
-            alignment: AlignmentDirectional.centerStart,
-            child: Text('Enter Meetup Location',
-                style: TextStyle(fontSize: 18, fontFamily: CircularBold, color: Color(0xffB5BDD5).withOpacity(0.8)))),
-        Container(
           height: ScreenUtils.getDesignHeight(170),
           padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(10)),
           decoration: BoxDecoration(color: BottomNavColor, borderRadius: BorderRadius.circular(10)),
