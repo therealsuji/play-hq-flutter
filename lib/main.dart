@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/playhq_head.dart';
 
+import 'helpers/app-service-locator.dart';
 
-void main() => runApp(PlayHqHead());
+
+void main() {
+  setupLocator();
+  runApp(PlayHqHead());
+}
 

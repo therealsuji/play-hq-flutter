@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-strings.dart';
+import 'package:play_hq/services/nav-service.dart';
 import 'helpers/app-fonts.dart';
 import 'helpers/app-routes.dart';
+import 'helpers/app-service-locator.dart';
 
 class PlayHqHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        navigatorKey: locator<NavigationService>().navigatorKey,
         theme: ThemeData(
           //this is what you want
           accentColor: PRIMARY_COLOR,
@@ -45,6 +48,6 @@ class PlayHqHead extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
-        initialRoute: MAIN_SCREEN);
+        initialRoute: SPLASH_SCREEN);
   }
 }

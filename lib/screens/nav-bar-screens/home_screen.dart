@@ -6,9 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/carousal_widget.dart';
-import 'package:play_hq/widgets/game_widget.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,9 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
       body: Container(
-        child: Center(
-          child: Text('This is the home screen'),
-        ),
+        margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
+        child: Text('This is the home screen'),
       )
     );
   }
