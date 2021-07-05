@@ -20,136 +20,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
-      body: SingleChildScrollView(
-        // DO THE BOUNCY THANGG
-//        physics: BouncingScrollPhysics(),
-        child: Container(
-          margin: EdgeInsets.only(left: 24, right: 24, top: 51),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Home',
-                    style: TextStyle(fontSize: 25, color: Colors.white, fontFamily: CircularBold),
-                  ),
-                  Spacer(),
-                  SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: SvgPicture.asset(
-                        'assets/icons/search.svg',
-                        color: Colors.white,
-                      )),
-                  Container(width: ScreenUtils.getDesignWidth(40)),
-                  SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: SvgPicture.asset(
-                        'assets/icons/notification.svg',
-                        color: Colors.white,
-                      )),
-                ],
-              ),
-              Container(
-                  margin: EdgeInsets.only(top: 10),
-                  child: Text(
-                    'Get the best deals on the latest games',
-                    style: TextStyle(fontFamily: CircularBook, fontSize: 14, color: Colors.white.withOpacity(0.7)),
-                  )),
-              //Custom Widget for the carousal Slider
-              CarousalWidget(
-                gameName: 'Fortnite',
-                price: 'LKR 2000',
-                location: 'Colombo 07',
-                backgroundUrl: 'assets/images/Fortnite.jpg',
-                characterUrl: 'assets/images/fortnite.png',
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 25),
-                child: Text(
-                  'From your Wishlist',
-                  style: TextStyle(fontSize: 18, fontFamily: CircularBold, color: Colors.white),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 15),
-                height: ScreenUtils.getDesignHeight(160),
-                width: ScreenUtils.bodyWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //Widgets for the Game cover with name and price
-                    GamesWidget(
-                      gameName: 'Ghost of Tsushima',
-                      price: '4000 LKR',
-                      backgroundUrl: 'assets/images/tshushima.jpg',
-                    ),
-                    GamesWidget(
-                      gameName: 'COD Warzone',
-                      price: '2500 LKR',
-                      backgroundUrl: 'assets/images/warzone.jpg',
-                    ),
-                    GestureDetector(
-                      child: GamesWidget(
-                        gameName: 'Cyberpunk',
-                        price: '2500 LKR',
-                        backgroundUrl: 'assets/images/cyberpunk.jpg',
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              _myGameForSale(),
-              Container(
-                margin: EdgeInsets.only(top: 25),
-                child: Text(
-                  'Suggested for you',
-                  style: TextStyle(fontSize: 18, fontFamily: CircularBold, color: Colors.white),
-                ),
-              ),
-              Container(
-                margin: EdgeInsets.only(top: 15, bottom: ScreenUtils.getDesignHeight(30)),
-                height: ScreenUtils.getDesignHeight(160),
-                width: ScreenUtils.bodyWidth,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    //Widgets for the Game cover with name and price
-                    GamesWidget(
-                      gameName: 'Ghost of Tsushima',
-                      price: '4000 LKR',
-                      backgroundUrl: 'assets/images/tshushima.jpg',
-                    ),
-                    GamesWidget(
-                      gameName: 'COD Warzone',
-                      price: '2500 LKR',
-                      backgroundUrl: 'assets/images/warzone.jpg',
-                    ),
-                    GamesWidget(
-                      gameName: 'Cyberpunk',
-                      price: '2500 LKR',
-                      backgroundUrl: 'assets/images/cyberpunk.jpg',
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(bottom: 50),
-                width: double.infinity,
-                child: RaisedButton(
-                  color: Primary,
-                  child: Text("Logout"),
-                  onPressed: () {
-                  },
-                ),
-              )
-            ],
-          ),
+      body: Container(
+        child: Center(
+          child: Text('This is the home screen'),
         ),
-      ),
+      )
     );
   }
 
@@ -230,7 +105,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Game Title',
                               style: TextStyle(
-                                  fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: Primary),
+                                  fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
                             ),
                             Container(
                                 margin: EdgeInsets.only(top: 8),
@@ -249,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Text(
                               'Impressions',
                               style: TextStyle(
-                                  fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: Primary),
+                                  fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
                             ),
                             Container(
                                 margin: EdgeInsets.only(top: 8),
@@ -267,7 +142,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           height: ScreenUtils.getDesignHeight(30),
                           width: ScreenUtils.getDesignWidth(80),
-                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: Primary),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: PRIMARY_COLOR),
                           child: Center(
                             child: Text(
                               'VIEW ALL',

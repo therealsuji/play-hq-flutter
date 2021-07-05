@@ -11,7 +11,7 @@ class PlayHqHead extends StatelessWidget {
     return MaterialApp(
         theme: ThemeData(
           //this is what you want
-          accentColor: Primary,
+          accentColor: PRIMARY_COLOR,
           backgroundColor: BACKGROUND_COLOR,
           accentColorBrightness: Brightness.light,
           primaryTextTheme: TextTheme(

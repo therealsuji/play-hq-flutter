@@ -85,7 +85,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                             ),
                           )
                         ],
-                        color: Primary),
+                        color: PRIMARY_COLOR),
                     height: 50,
                     width: 50,
                     alignment: Alignment.center,
@@ -115,7 +115,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                   child: Text(
                     "View Details",
                     style: TextStyle(
-                        color: Primary, fontSize: 16, fontFamily: CircularBold),
+                        color: PRIMARY_COLOR, fontSize: 16, fontFamily: CircularBold),
                   ),
                 )
               ],

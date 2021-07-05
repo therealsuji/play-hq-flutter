@@ -62,7 +62,7 @@ class ActiveGameSaleWidget extends StatelessWidget {
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
                           "LKR ${price}",
-                          style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(color: Primary),
+                          style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(color: PRIMARY_COLOR),
                         )),
                     Padding(
                         padding: EdgeInsets.only(top: 5),

@@ -72,7 +72,7 @@ class GamesWidget extends StatelessWidget {
                         child: Text(
                           price,
                           style:
-                              TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: Primary),
+                              TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
                         ))
                   ],
                 ),

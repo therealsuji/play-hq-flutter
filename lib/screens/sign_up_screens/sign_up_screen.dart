@@ -84,7 +84,7 @@ class SignUpScreen extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(65)),
                   child: CustomButton(
-                    buttonColor: Primary,
+                    buttonColor: PRIMARY_COLOR,
                     buttonText: 'I want to Explore',
                   ),
                 ),
@@ -98,7 +98,7 @@ class SignUpScreen extends StatelessWidget {
                           fontSize: 12 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Colors.white
                         )),
                         TextSpan(text: ' Play HQ\'s' , style: TextStyle(
-                            fontSize: 12 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Primary
+                            fontSize: 12 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: PRIMARY_COLOR
                         ))
                       ]
                     ),

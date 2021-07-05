@@ -63,7 +63,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
                 child: Text(title , style: TextStyle(fontSize: 18 , fontFamily: CircularBold , color: Colors.white , fontWeight: FontWeight.bold),),
               ),
               Spacer(),
-              Container(height: 22,width: 22,decoration: BoxDecoration(color: Primary , shape: BoxShape.circle),child: Padding(
+              Container(height: 22,width: 22,decoration: BoxDecoration(color: PRIMARY_COLOR , shape: BoxShape.circle),child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5 , vertical: 5),
                   child: SvgPicture.asset('assets/icons/arrow-up.svg' , color: Colors.white)) ,)
             ],
@@ -91,7 +91,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
                 child: Text(title , style: TextStyle(fontSize: 18 , fontFamily: CircularBold , color: Colors.white , fontWeight: FontWeight.bold),),
               ),
               Spacer(),
-              Container(height: 22,width: 22,decoration: BoxDecoration(color: Primary , shape: BoxShape.circle),child: Padding(
+              Container(height: 22,width: 22,decoration: BoxDecoration(color: PRIMARY_COLOR , shape: BoxShape.circle),child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5 , vertical: 5),
                   child: SvgPicture.asset('assets/icons/arrow-down.svg' , color: Colors.white)) ,)
             ],

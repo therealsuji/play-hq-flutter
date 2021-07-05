@@ -89,7 +89,7 @@ class GameDetailsScreen extends StatelessWidget {
                           height: ScreenUtils.getDesignHeight(45),
                           width: ScreenUtils.getDesignWidth(90),
                           decoration: BoxDecoration(
-                            color: Primary,
+                            color: PRIMARY_COLOR,
                             borderRadius: BorderRadius.only(topLeft: Radius.circular(5.0) , bottomLeft: Radius.circular(5.0))
                           ),
                           child: Container(
@@ -172,7 +172,7 @@ class GameDetailsScreen extends StatelessWidget {
                           width: ScreenUtils.getDesignWidth(155),
                           height: ScreenUtils.getDesignHeight(35),
                           decoration: BoxDecoration(
-                            color: Primary,
+                            color: PRIMARY_COLOR,
                             borderRadius: BorderRadius.circular(3.0)
                           ),
                           child: Center(child: Text('Add to Library' , style: TextStyle(fontWeight: FontWeight.bold , color: Colors.white , fontSize: 14),)),
@@ -353,7 +353,7 @@ Widget _myGameForSale() {
                           Text(
                             'Seller Name',
                             style: TextStyle(
-                                fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: Primary),
+                                fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
                           ),
                           Container(
                               margin: EdgeInsets.only(top: 8),
@@ -372,7 +372,7 @@ Widget _myGameForSale() {
                           Text(
                             'Price',
                             style: TextStyle(
-                                fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: Primary),
+                                fontFamily: Neusa, fontSize: 14, fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
                           ),
                           Container(
                               margin: EdgeInsets.only(top: 8),
@@ -391,7 +391,7 @@ Widget _myGameForSale() {
                       child: Container(
                         height: ScreenUtils.getDesignHeight(30),
                         width: ScreenUtils.getDesignWidth(80),
-                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: Primary),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: PRIMARY_COLOR),
                         child: Center(
                           child: Text(
                             'VIEW ALL',
@@ -503,7 +503,7 @@ class GameDetailsHeader implements SliverPersistentHeaderDelegate {
                           height: 8,
                           width: 8,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Primary),
+                              shape: BoxShape.circle, color: PRIMARY_COLOR),
                         ),
                       ],
                     ),
@@ -553,7 +553,7 @@ class GameDetailsHeader implements SliverPersistentHeaderDelegate {
                         child: Text('Watch Trailer',
                             style: TextStyle(
                               fontSize: 18,
-                              color: Primary,
+                              color: PRIMARY_COLOR,
                               fontFamily: CircularBold,
                               shadows: <Shadow>[
                                 Shadow(

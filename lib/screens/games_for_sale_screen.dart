@@ -41,7 +41,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
       var _t = (_activeSlideController.position.pixels.clamp(0, 200) / 2) / 100;
       _createSaleContainerPos = lerpDouble(20, 0, _t);
       _createSaleOpacity = lerpDouble(1, 0, _t);
-      _createSaleContainerColor = Color.lerp(BACKGROUND_COLOR, Primary, _t);
+      _createSaleContainerColor = Color.lerp(BACKGROUND_COLOR, PRIMARY_COLOR, _t);
       _createSaleContainerBorder = Color.lerp(Color(0xff949AAE), Colors.transparent, _t);
       _createSaleContainerWidth = lerpDouble(ScreenUtils.getDesignWidth(150), ScreenUtils.getDesignWidth(50), _t);
       _createSaleContainerHeight = lerpDouble(ScreenUtils.getDesignHeight(195), ScreenUtils.getDesignHeight(80), _t);
@@ -120,7 +120,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                                         height: ScreenUtils.getDesignWidth(46),
                                         padding: EdgeInsets.all(15),
                                         decoration:
-                                            BoxDecoration(borderRadius: BorderRadius.circular(50), color: Primary),
+                                            BoxDecoration(borderRadius: BorderRadius.circular(50), color: PRIMARY_COLOR),
                                         child: SvgPicture.asset('assets/icons/plus.svg'),
                                       ),
                                     ),

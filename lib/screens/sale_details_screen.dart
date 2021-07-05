@@ -42,7 +42,7 @@ class SaleDetails extends StatelessWidget {
                             Container(child: Text('Cyperpunk 2077' , style: TextStyle(fontSize: 33 , fontWeight: FontWeight.bold , color: Colors.white , fontFamily: CircularBold),),),
                             Container(
                               margin: EdgeInsets.only(top: 5),
-                              child: Text('GAME DETAILS' , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold , color: Primary , fontFamily: Neusa),),)
+                              child: Text('GAME DETAILS' , style: TextStyle(fontSize: 16 , fontWeight: FontWeight.bold , color: PRIMARY_COLOR , fontFamily: Neusa),),)
                           ],
                         ),
                       )
@@ -161,7 +161,7 @@ class SaleDetails extends StatelessWidget {
                     width: ScreenUtils.bodyWidth,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(3.0),
-                      color: Primary,
+                      color: PRIMARY_COLOR,
                     ),
                     child: Center(child: Text('BUY NOW (LKR 2500)' , style: TextStyle(fontSize: 16, fontFamily: Neusa , color: Colors.white),)),
                   ),
@@ -256,7 +256,7 @@ class SaleDetails extends StatelessWidget {
                               ),
                               Spacer(),
                               Container(
-                                child: Text('MESSAGE' , style: TextStyle(fontSize: 18 , fontFamily: Neusa , color: Primary , fontWeight: FontWeight.bold),),
+                                child: Text('MESSAGE' , style: TextStyle(fontSize: 18 , fontFamily: Neusa , color: PRIMARY_COLOR , fontWeight: FontWeight.bold),),
                               )
                             ],
                           ),
@@ -427,7 +427,7 @@ class SaleDetails extends StatelessWidget {
                               ),
                               Spacer(),
                               Container(
-                                child: Text('SEE ALL' , style: TextStyle(fontSize: 16 , fontFamily: Neusa , color: Primary , fontWeight: FontWeight.bold),),
+                                child: Text('SEE ALL' , style: TextStyle(fontSize: 16 , fontFamily: Neusa , color: PRIMARY_COLOR , fontWeight: FontWeight.bold),),
                               )
                             ],
                           ),
@@ -496,7 +496,7 @@ class SaleDetails extends StatelessWidget {
                             width: ScreenUtils.bodyWidth,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(3.0),
-                              color: Primary,
+                              color: PRIMARY_COLOR,
                             ),
                             child: Center(child: Text('SEE FULL PROFILE' , style: TextStyle(fontSize: 16, fontFamily: Neusa , color: Colors.white),)),
                           ),

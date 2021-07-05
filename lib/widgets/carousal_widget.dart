@@ -102,7 +102,7 @@ class CarousalWidget extends StatelessWidget {
                             price,
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Primary,
+                                color: PRIMARY_COLOR,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: Neusa),
                           ),
@@ -151,7 +151,7 @@ class CarousalWidget extends StatelessWidget {
                                   ),
                                 )
                               ],
-                              color: Primary
+                              color: PRIMARY_COLOR
                           ),
                           child: Center(
                             child: Text(
