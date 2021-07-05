@@ -2,11 +2,10 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/constants/route_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
-import 'package:play_hq/widgets/carousal_widget.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/widgets/discover_carousel_widget.dart';
 import 'package:play_hq/widgets/game_widget.dart';
 
@@ -15,7 +14,7 @@ class DiscoverScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      backgroundColor: Background,
+      backgroundColor: BACKGROUND_COLOR,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 25),
         // DO THE BOUNCY THANGG
@@ -131,7 +130,7 @@ class DiscoverScreen extends StatelessWidget {
                     return Padding(
                       padding: EdgeInsets.only(right: 15),
                       child: GestureDetector(
-                        onTap: (){Navigator.pushNamed(context, GameDetailRoute);},
+                        onTap: (){Navigator.pushNamed(context, GAME_DETAILS_SCREEN);},
                         child: GamesWidget(
                           gameName: 'Ghost of Tsushima',
                           price: '4000 LKR',

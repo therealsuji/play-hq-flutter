@@ -1,10 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
-import 'package:play_hq/helpers/util.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class GamesWidget extends StatelessWidget {
   final String backgroundUrl;
@@ -15,7 +14,7 @@ class GamesWidget extends StatelessWidget {
   GamesWidget({this.gameName, this.price, this.backgroundUrl});
 
   @override
-  Widget build(BuildContext context) {print(environment);
+  Widget build(BuildContext context) {
     print('Game Name ' + gameName);
     return Container(
       width: ScreenUtils.getDesignWidth(105),
@@ -31,13 +30,9 @@ class GamesWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: environment == Environment.LIVE
-                            ? NetworkImage(
-                                backgroundUrl,
-                              )
-                            : ExactAssetImage(
-                                backgroundUrl,
-                              ))),
+                        image: NetworkImage(
+                          backgroundUrl,
+                        ))),
               ),
             ),
             Positioned(

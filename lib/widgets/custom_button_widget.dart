@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomButton extends StatelessWidget {
   final String buttonText;
@@ -9,24 +9,24 @@ class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final double textFontSize;
 
+  CustomButton(
+      {this.buttonText,
+      this.onPressed,
+      this.buttonColor,
+      this.textFontSize = 18});
 
-  CustomButton({this.buttonText,this.onPressed,this.buttonColor = Primary,this.textFontSize = 18});
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: ScreenUtils.getDesignHeight(45),
-      child: RaisedButton(
-        elevation: 0,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(6.0), side: BorderSide(color: buttonColor)),
-          color: buttonColor,
-          child: Text(
-            buttonText,
-            style: TextStyle(color: Colors.white, fontFamily: Neusa, fontSize: textFontSize),
-          ),
-          onPressed: onPressed,
-      ),
+        margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
+        child: Container(
+          width: double.infinity,
+          height: ScreenUtils.getDesignHeight(45),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0), color: buttonColor),
+          child: Center(child: Text(buttonText , style: TextStyle(fontFamily: CircularBold , color: Colors.white , fontWeight: FontWeight.bold , fontSize: 18),)),
+        )
+
     );
   }
 }

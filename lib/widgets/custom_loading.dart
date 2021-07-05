@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class LoadingBarrier extends StatelessWidget {
   @override
@@ -10,7 +10,7 @@ class LoadingBarrier extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-              child: const ModalBarrier(dismissible: false, color: Background,)),
+              child: const ModalBarrier(dismissible: false, color: BACKGROUND_COLOR,)),
           Center(
             child: Container(
                 height: ScreenUtils.getDesignHeight(120),

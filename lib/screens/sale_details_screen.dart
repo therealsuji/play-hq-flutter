@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/custom_map_setter_widget.dart';
 import 'package:play_hq/widgets/game_widget.dart';
 
@@ -11,7 +11,7 @@ class SaleDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Background,
+      backgroundColor: BACKGROUND_COLOR,
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(

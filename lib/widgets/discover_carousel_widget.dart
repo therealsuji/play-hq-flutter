@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class DiscoverCarouselWidget extends StatelessWidget {
   final String gameName;
@@ -58,10 +58,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                         Colors.white.withOpacity(0.0),
                         Colors.black.withOpacity(0.9),
                       ],
-                      stops: [
-                        0.0,
-                        1.0
-                      ])),
+                      )),
             ),
           ),
         ),

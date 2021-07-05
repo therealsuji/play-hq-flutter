@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CarousalWidget extends StatelessWidget {
 

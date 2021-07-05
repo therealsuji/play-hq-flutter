@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
-import 'package:play_hq/helpers/util.dart';
-
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'custom_button_widget.dart';
 
 class ActiveGameSaleWidget extends StatelessWidget {
@@ -40,13 +37,9 @@ class ActiveGameSaleWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: environment == Environment.LIVE
-                          ? NetworkImage(
-                              backgroundUrl,
-                            )
-                          : ExactAssetImage(
-                              backgroundUrl,
-                            ))),
+                      image: NetworkImage(
+                        backgroundUrl,
+                      ))),
             ),
             Positioned.fill(
               child: Container(

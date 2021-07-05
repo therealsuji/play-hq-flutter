@@ -99,15 +99,5 @@ class Network {
     }
   }
 
-  ////////Expose methods to get the network request for desired operation///////
-
-
-  //authenticate user from email and password
- /* authenticateUser(Map<String, String> body) {
-    print(body);
-    return _performWebRequest<>(RequestType.post, ConfigData.login, body: body);
-  }*/
-
-  //Get otp from phone number
 
 }

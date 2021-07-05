@@ -3,11 +3,9 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/blocs/auth_bloc.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/constants/route_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/carousal_widget.dart';
 import 'package:play_hq/widgets/game_widget.dart';
 import 'package:provider/provider.dart';
@@ -18,18 +16,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  AuthBloc _authBloc;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _authBloc = Provider.of<AuthBloc>(context);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Background,
+      backgroundColor: BACKGROUND_COLOR,
       body: SingleChildScrollView(
         // DO THE BOUNCY THANGG
 //        physics: BouncingScrollPhysics(),
@@ -103,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       backgroundUrl: 'assets/images/warzone.jpg',
                     ),
                     GestureDetector(
-                      onTap: () => Navigator.pushNamed(context, SaleDetailsRoute),
                       child: GamesWidget(
                         gameName: 'Cyberpunk',
                         price: '2500 LKR',
@@ -154,8 +143,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: Primary,
                   child: Text("Logout"),
                   onPressed: () {
-                    _authBloc.logOut();
-                    Navigator.pushNamedAndRemoveUntil(context, LoginRoute, (Route<dynamic> route) => false);
                   },
                 ),
               )
@@ -276,7 +263,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, GamesForSaleRoute);
                         },
                         child: Container(
                           height: ScreenUtils.getDesignHeight(30),

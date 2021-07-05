@@ -1,9 +1,8 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/constants/route_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -17,7 +16,7 @@ class _LandingScreenState extends State<LandingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Background,
+      backgroundColor: BACKGROUND_COLOR,
       body: Column(
         children: [
           Expanded(
@@ -62,15 +61,13 @@ class _LandingScreenState extends State<LandingScreen> {
                     padding:  EdgeInsets.only(top: ScreenUtils.getDesignHeight(80)),
                     child: CustomButton(
                       buttonText: "Sign Up",
-                      onPressed: ()=>Navigator.pushNamed(context, SignUpRoute),
                     ),
                   ),
                   Padding(
                     padding:  EdgeInsets.only(top: ScreenUtils.getDesignHeight(10)),
                     child: CustomButton(
                       buttonText: "Login",
-                      buttonColor: Background,
-                      onPressed: ()=>Navigator.pushNamed(context, LoginRoute),
+                      buttonColor: BACKGROUND_COLOR,
                     ),
                   ),
                 ],

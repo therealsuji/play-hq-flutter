@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/blocs/sign_up_bloc.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/constants/route_constants.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:provider/provider.dart';
 
 
 
@@ -14,65 +13,118 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Container(
           width: double.infinity,
           height: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: ExactAssetImage('assets/images/login-bg.png'),
-                  fit: BoxFit.cover,
-                  alignment: Alignment.topCenter)),
+          color: BACKGROUND_COLOR,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
             child: Column(
               children: [
-                Padding(
-                  padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(273)),
-                  child: CustomButton(buttonText: "Sign up with Email",onPressed: ()=>Navigator.pushNamed(context, SignUpOnBoardRoute),),
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100)),
+                  width: ScreenUtils.getDesignWidth(186),
+                  child: Image.asset('assets/images/logo.png'),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(54)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                          child: Divider(
-                        color: Colors.white,
-                        thickness: 2,
-                        height: 2,
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Text(
-                          'OR',
-                          style: TextStyle(color: Colors.white, fontSize: 18),
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(130)),
+                  child: Container(
+                    width: double.infinity,
+                    height: ScreenUtils.getDesignHeight(45),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      color: CONTAINER_COLOR
+                    ),
+                    child: Container(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: SvgPicture.asset('assets/icons/facebook.svg'),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
+                            child: Text('Continue with Facebook' , style: TextStyle(fontSize: 16  , fontWeight: FontWeight.bold , color: Colors.white , fontFamily: CircularBold),),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  child: Container(
+                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
+                    child: Container(
+                      width: double.infinity,
+                      height: ScreenUtils.getDesignHeight(45),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: CONTAINER_COLOR
+                      ),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: SvgPicture.asset('assets/icons/Google.svg'),
+                            ),
+                            Container(
+                              margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
+                              child: Text('Continue with Google' , style: TextStyle(fontSize: 16  , fontWeight: FontWeight.bold , color: Colors.white , fontFamily: CircularBold),),
+                            )
+                          ],
                         ),
                       ),
-                      Expanded(
-                          child: Divider(
-                        color: Colors.white,
-                        thickness: 2,
-                        height: 2,
-                      )),
-                    ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding:  EdgeInsets.only(top: ScreenUtils.getDesignHeight(40)),
-                  child: _customSocialButton(
-                      buttonColor: Color(0xff1877F2),
-                      buttonText: "Sign up with Facebook",
-                      logoPath: 'assets/images/facebook-logo.png'),
-                ),Padding(
-                  padding:  EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-                  child: _customSocialButton(
-                      buttonColor: Colors.white,
-                      buttonText: "Sign up with Google",
-                      logoPath: 'assets/images/google-logo.png',
-                  textColor: Colors.black
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(65)),
+                  child: CustomButton(
+                    buttonColor: Primary,
+                    buttonText: 'I want to Explore',
                   ),
                 ),
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(bottom: 10),
+                  child: RichText(
+                    text: TextSpan(
+                      children:[
+                        TextSpan(text: 'By signing up you indicate that you agree with' , style: TextStyle(
+                          fontSize: 12 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Colors.white
+                        )),
+                        TextSpan(text: ' Play HQ\'s' , style: TextStyle(
+                            fontSize: 12 , fontWeight: FontWeight.bold , fontFamily: CircularBold , color: Primary
+                        ))
+                      ]
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: 20),
+                  child: IntrinsicHeight(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          child: Text('Terms of use' , style: TextStyle(fontSize: 11 , fontFamily: CircularBold , fontWeight: FontWeight.bold , color: Color(0xff474E59)),),
+                        ),
+                        VerticalDivider(color: Color(0xff474E59),thickness: 1, ),
+                        Container(
+                          child: Text('Privacy Policy' , style: TextStyle(fontSize: 11 , fontFamily: CircularBold , fontWeight: FontWeight.bold , color: Color(0xff474E59)),),
+                        ),
+                        VerticalDivider(color: Color(0xff474E59),thickness: 1,),
+                        Container(
+                          child: Text('Subscription Policy' , style: TextStyle(fontSize: 11 , fontFamily: CircularBold , fontWeight: FontWeight.bold , color: Color(0xff474E59)),),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
           ),

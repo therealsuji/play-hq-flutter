@@ -4,9 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/rendering/sliver_persistent_header.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/constants/font_string_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-fonts.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'dart:math' as math;
 
 import 'package:play_hq/widgets/game_widget.dart';
@@ -15,7 +15,7 @@ class GameDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Background,
+        backgroundColor: BACKGROUND_COLOR,
         body: SafeArea(
           child: Container(
             child: SingleChildScrollView(
@@ -577,7 +577,7 @@ class GameDetailsHeader implements SliverPersistentHeaderDelegate {
               height: 25,
               width: ScreenUtils.bodyWidth,
               decoration: BoxDecoration(
-                  color: Background,
+                  color: BACKGROUND_COLOR,
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(15),
                       topLeft: Radius.circular(15)))),

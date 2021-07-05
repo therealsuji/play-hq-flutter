@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
-import 'package:play_hq/helpers/util.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomGameSaleWidget extends StatelessWidget {
   final String title;
@@ -32,11 +31,7 @@ class CustomGameSaleWidget extends StatelessWidget {
                     borderRadius: BorderRadius.circular(6),
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: environment == Environment.LIVE
-                            ? NetworkImage(
-                          backgroundImage,
-                        )
-                            : ExactAssetImage(
+                        image:NetworkImage(
                           backgroundImage,
                         ))),
               ),

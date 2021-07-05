@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:play_hq/blocs/nav_bloc.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/my_flutter_app_icons.dart';
-import 'package:play_hq/screens/discover_screen.dart';
-import 'package:play_hq/screens/home_screen.dart';
-import 'package:play_hq/screens/messages_screen.dart';
-import 'package:play_hq/screens/profile_screen.dart';
-import 'package:play_hq/widgets/customNav/custom_animtion.dart';
-import 'package:play_hq/widgets/customNav/custom_navbar_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:play_hq/helpers/app-colors.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -18,52 +9,31 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
-  NavBloc _navBloc;
-
-
-  @override
-  void didChangeDependencies() {
-
-    super.didChangeDependencies();
-
-    _navBloc = Provider.of<NavBloc>(context);
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Background,
-      bottomNavigationBar: CurvedNavigationBar(
-        items: <Widget>[
-          Icon(Icons.poll, size: 30),
-        ],
-        onTap: (index) {
-          //Handle button tap
-        },
-      ),
-      floatingActionButton:
-      Container(margin: EdgeInsets.only(bottom: 25), child: FancyFab()),
+      backgroundColor: BACKGROUND_COLOR,
+      floatingActionButton: FloatingActionButton(onPressed: () => null , child: Icon(Icons.add , size: 30,),),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      body: StreamBuilder(
-          stream: _navBloc.pageChanged,
-          initialData: NavBar.Home,
-          builder: (context, AsyncSnapshot<NavBar> snapshot) {
-            switch (snapshot.data) {
-              case NavBar.Home:
-                return HomeScreen();
-              case NavBar.Discover:
-                return DiscoverScreen();
-              case NavBar.Messages:
-                return MessagesScreen();
-              case NavBar.Profile:
-                return Container(
-                  child: ProfileScreen()
-                );
-              default:
-                return Container();
-            }
-          }),
+      bottomNavigationBar: Theme(
+        data: ThemeData(
+          splashColor: Colors.transparent,
+        ),
+        child: BottomNavigationBar(
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          backgroundColor: CONTAINER_COLOR,
+          items: [
+            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home.svg') , label: ''),
+            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/discover.svg') , label: ''),
+            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/transparent.svg') , label: ''),
+            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/orders.svg') , label: ''),
+            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/profile.svg') , label: ''),
+          ],
+          type: BottomNavigationBarType.fixed,
+        ),
+      ),
+      body: Container()
     );
   }
 }

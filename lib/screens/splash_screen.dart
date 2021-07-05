@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:play_hq/blocs/auth_bloc.dart';
-import 'package:play_hq/constants/route_constants.dart';
-import 'package:play_hq/helpers/network_client.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -12,21 +9,11 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  AuthBloc _authBloc;
 
   @override
   void didChangeDependencies(){
     super.didChangeDependencies();
     ScreenUtils.setScreenSizes(context);
-    NetworkClient(); // initialize the network client before doing any requests
-    _authBloc = Provider.of<AuthBloc>(context);
-    _authBloc.getAuthState().then((value) => value.listen((state) {
-      if(state){
-        Navigator.pushReplacementNamed(context, MainScreenRoute);
-      }else{
-        Navigator.pushReplacementNamed(context, MainScreenRoute);
-      }
-    }));
    }
 
 

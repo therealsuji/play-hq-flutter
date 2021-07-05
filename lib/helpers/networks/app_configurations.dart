@@ -13,7 +13,7 @@ class AppConfig extends InheritedWidget {
 
   //
   static AppConfig of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(AppConfig);
+    return context.dependOnInheritedWidgetOfExactType<AppConfig>();
   }
 
   @override

@@ -4,9 +4,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/constants/route_constants.dart';
-import 'package:play_hq/helpers/colors.dart';
-import 'package:play_hq/helpers/screen_utils.dart';
+import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/active_game_sale_widget.dart';
 import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_game_sale_widget.dart';
@@ -26,7 +25,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
   double _createSaleContainerTopPos = 0;
   double _createSaleContainerWidth = ScreenUtils.getDesignWidth(150);
   double _createSaleContainerHeight = ScreenUtils.getDesignHeight(195);
-  Color _createSaleContainerColor = Background;
+  Color _createSaleContainerColor = BACKGROUND_COLOR;
   Color _createSaleContainerBorder = Color(0xff949AAE);
   bool labelVisible = true;
 
@@ -42,7 +41,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
       var _t = (_activeSlideController.position.pixels.clamp(0, 200) / 2) / 100;
       _createSaleContainerPos = lerpDouble(20, 0, _t);
       _createSaleOpacity = lerpDouble(1, 0, _t);
-      _createSaleContainerColor = Color.lerp(Background, Primary, _t);
+      _createSaleContainerColor = Color.lerp(BACKGROUND_COLOR, Primary, _t);
       _createSaleContainerBorder = Color.lerp(Color(0xff949AAE), Colors.transparent, _t);
       _createSaleContainerWidth = lerpDouble(ScreenUtils.getDesignWidth(150), ScreenUtils.getDesignWidth(50), _t);
       _createSaleContainerHeight = lerpDouble(ScreenUtils.getDesignHeight(195), ScreenUtils.getDesignHeight(80), _t);
@@ -53,7 +52,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Background,
+        backgroundColor: BACKGROUND_COLOR,
         appBar: CustomAppBarWidget(
           title: "Your Games for sale",
         ),
@@ -97,8 +96,6 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(context, CreateSaleRoute);
-
                            },
                           child: DottedBorder(
                               strokeWidth: 2,
@@ -152,7 +149,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
               ),
               StickyHeader(
                 header: Container(
-                  color: Background,
+                  color: BACKGROUND_COLOR,
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Text("Completed Sales",
