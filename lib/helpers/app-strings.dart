@@ -3,6 +3,7 @@
 const String SPLASH_SCREEN = '/';
 const String HOME_SCREEN = 'home';
 const String SIGN_UP_SCREEN = 'signup';
+const String GAME_TYPE_SCREEN = 'game type';
 const String MAIN_SCREEN = 'main';
 const String GAME_DETAILS_SCREEN = 'gamedetails';
 const String LANDING_PAGE_SCREEN = 'landingpage';

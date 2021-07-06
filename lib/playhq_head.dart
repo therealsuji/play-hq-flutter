@@ -44,10 +44,9 @@ class PlayHqHead extends StatelessWidget {
               fontFamily: CircularBold,
             ),
           ),
-          platform: TargetPlatform.iOS,
         ),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
-        initialRoute: SPLASH_SCREEN);
+        initialRoute: '/');
   }
 }

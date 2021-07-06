@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/helpers/app-strings.dart';
+import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 
 
@@ -54,6 +57,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
+                  onTap: () => locator<NavigationService>().pushReplacement(GAME_TYPE_SCREEN),
                   child: Container(
                     margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
                     child: Container(

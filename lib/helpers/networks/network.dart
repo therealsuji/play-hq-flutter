@@ -2,7 +2,7 @@ import 'package:http/http.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
-import '../secure_storage.dart';
+import '../app-secure-storage.dart';
 import 'config.dart';
 import 'connectivity.dart';
 import 'initialize_models.dart';

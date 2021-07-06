@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 const BACKGROUND_COLOR = Color(0xff14131C);
 const CONTAINER_COLOR = Color(0xff252836);
-const Titletext = Color(0xffFFFFFF);
+const HEADER_TEXT_COLOR = Color(0xffFFFFFF);
 const Headertext = Color(0xffB5BDD5);
 const BodyText = Color(0xffB5BDD5);
 const Pricetext = Color(0xff4EB947);

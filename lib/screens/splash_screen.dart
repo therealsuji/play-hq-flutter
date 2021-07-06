@@ -6,10 +6,17 @@ import 'package:provider/provider.dart';
 
 class SplashScreen extends StatelessWidget {
 
+
+
+
   @override
   Widget build(BuildContext context) {
-    ScreenUtils.setScreenSizes(context);
-    Provider.of<SplashScreenModel>(context, listen: false).changeScreen();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ScreenUtils.setScreenSizes(context);
+      Provider.of<SplashScreenModel>(context, listen: false).changeScreen();
+    });
+
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
       body: Container(

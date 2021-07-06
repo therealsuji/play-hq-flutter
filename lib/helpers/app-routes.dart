@@ -4,6 +4,7 @@ import 'package:play_hq/screens/create_trade_screen.dart';
 import 'package:play_hq/screens/game_details_screen.dart';
 import 'package:play_hq/screens/main_screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/home_screen.dart';
+import 'package:play_hq/screens/sign_up_screens/onboarding/select-game-type-screen.dart';
 import 'package:play_hq/screens/sign_up_screens/sign_up_screen.dart';
 import 'package:play_hq/screens/splash_screen.dart';
 import 'package:play_hq/view-models/navigation/impl_tab_navigation.dart';
@@ -20,19 +21,25 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => HomeScreen());
     case SIGN_UP_SCREEN:
       return MaterialPageRoute(builder: (context) => SignUpScreen());
-    case SPLASH_SCREEN:
-      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
-          create: (context) => ImplSplash(),
-          child: SplashScreen()));
+
     case MAIN_SCREEN:
       return MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<TabNavigationModel>(
               create: (context) => ImplTabNavigation(),
               child: MainScreen()));
+
     case GAME_DETAILS_SCREEN:
       return MaterialPageRoute(builder: (context) => GameDetailsScreen());
+
     case CREATE_TRADE_SCREEN:
-      return MaterialPageRoute(
-          builder: (context) => CreateTradeScreen());
+      return MaterialPageRoute(builder: (context) => CreateTradeScreen());
+
+    case GAME_TYPE_SCREEN:
+      return MaterialPageRoute(builder: (context) => GameTypes());
+
+    default:
+      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
+          create: (context) => ImplSplash(),
+          child: SplashScreen()));
   }
 }
