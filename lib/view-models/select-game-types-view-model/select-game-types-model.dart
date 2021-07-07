@@ -8,4 +8,8 @@ abstract class SelectGameTypesModel with ChangeNotifier{
 
   void changeState(bool state);
 
+  List<bool> get selectedItems;
+
+  void addSelectedItems(index);
+
 }

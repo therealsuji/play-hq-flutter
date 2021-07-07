@@ -87,9 +87,17 @@ Widget _genreListWidget() {
         },
         itemCount: genreList.length,
         itemBuilder: (BuildContext context, index) {
-          return SelectGameItem(
-            titleText: genreList[index]['name'],
-            imageURL: genreList[index]['image_background'],
+          return GestureDetector(
+            onTap: () => Provider.of<SelectGameTypesModel>(context , listen: false).addSelectedItems(index),
+            child: Consumer<SelectGameTypesModel>(
+              builder: (_ , val , __){
+                return SelectGameItem(
+                  isSelected: val.selectedItems.isEmpty ? false : val.selectedItems[index],
+                  titleText: genreList[index]['name'],
+                  imageURL: genreList[index]['image_background'],
+                );
+              }
+            ),
           );
         }),
   );

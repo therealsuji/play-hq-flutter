@@ -19,7 +19,8 @@ class SelectGameItem extends StatelessWidget {
       width: ScreenUtils.getDesignWidth(102),
       height: ScreenUtils.getDesignHeight(130),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.0)
+        borderRadius: BorderRadius.circular(5.0),
+        border: isSelected ? Border.all(color: PRIMARY_COLOR , width: 2) : Border.all(width: 0)
       ),
       child: Stack(
         children: [
@@ -40,7 +41,7 @@ class SelectGameItem extends StatelessWidget {
           ),
           Container(
             decoration: BoxDecoration(
-              color: BACKGROUND_COLOR.withOpacity(0.7),
+              color: isSelected ? PRIMARY_COLOR.withOpacity(0.7) : BACKGROUND_COLOR.withOpacity(0.7),
               borderRadius: BorderRadius.circular(5.0)
             ),
           ),
