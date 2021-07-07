@@ -13,7 +13,7 @@ class ImplSplash extends SplashScreenModel{
   @override
   void changeScreen() {
     Timer(
-        Duration(seconds: 3), () => locator<NavigationService>().pushReplacement(MAIN_SCREEN)
+        Duration(seconds: 3), () => locator<NavigationService>().pushReplacement(SIGN_UP_SCREEN)
     );
     notifyListeners();
   }
