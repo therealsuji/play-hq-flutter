@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:play_hq/models/genre_model.dart';
 
 abstract class SelectGameTypesModel with ChangeNotifier{
 
@@ -8,7 +9,9 @@ abstract class SelectGameTypesModel with ChangeNotifier{
 
   void changeState(bool state);
 
-  List<bool> get selectedItems;
+  List<int> get selectedItems;
+
+  List<GenreModel> get selectedList;
 
   void addSelectedItems(index);
 

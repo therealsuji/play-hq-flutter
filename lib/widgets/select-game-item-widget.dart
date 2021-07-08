@@ -36,12 +36,13 @@ class SelectGameItem extends StatelessWidget {
                     child: CircularProgressIndicator()),
               ),
               imageUrl: imageURL,
+
               fit: BoxFit.fill,
             ),
           ),
           Container(
             decoration: BoxDecoration(
-              color: isSelected ? PRIMARY_COLOR.withOpacity(0.7) : BACKGROUND_COLOR.withOpacity(0.7),
+              color: isSelected ? PRIMARY_COLOR.withOpacity(0.6) : BACKGROUND_COLOR.withOpacity(0.7),
               borderRadius: BorderRadius.circular(5.0)
             ),
           ),
