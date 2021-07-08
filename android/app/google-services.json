@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "777207950583",
+    "project_id": "play-hq-285011",
+    "storage_bucket": "play-hq-285011.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777207950583:android:f69847ee1eb450303d37f2",
+        "android_client_info": {
+          "package_name": "com.playhq.play_hq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777207950583-k9gltshou0267rdeguuuuv7737lc5ovc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.playhq.play_hq",
+            "certificate_hash": "d61f96ee35298ea052edfdf430faa4e7d09e081e"
+          }
+        },
+        {
+          "client_id": "777207950583-3f2sr0i9kpr7f0del6g2mvpo5hf73pn6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIdyuSal8R3ksUILAW6PShtS-3iz1NCLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777207950583-3f2sr0i9kpr7f0del6g2mvpo5hf73pn6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
