@@ -8,15 +8,6 @@ import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 
 class ImplSplash extends SplashScreenModel {
   @override
-  void startAuthentication() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      navigateMainScreen();
-    } else {
-      navigateSignUpScreen();
-    }
-  }
-
-  @override
   void navigateMainScreen() {
     Timer(Duration(seconds: 3), () => locator<NavigationService>().pushReplacement(MAIN_SCREEN));
   }
@@ -24,5 +15,14 @@ class ImplSplash extends SplashScreenModel {
   @override
   void navigateSignUpScreen() {
     Timer(Duration(seconds: 3), () => locator<NavigationService>().pushReplacement(SIGN_UP_SCREEN));
+  }
+
+  @override
+  void startAuthentication() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      navigateMainScreen();
+    } else {
+      navigateSignUpScreen();
+    }
   }
 }

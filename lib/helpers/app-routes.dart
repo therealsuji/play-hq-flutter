@@ -9,6 +9,8 @@ import 'package:play_hq/screens/sign_up_screens/sign_up_screen.dart';
 import 'package:play_hq/screens/splash_screen.dart';
 import 'package:play_hq/view-models/navigation/impl_tab_navigation.dart';
 import 'package:play_hq/view-models/navigation/tab_navigation_model.dart';
+import 'package:play_hq/view-models/select-game-types-view-model/impl-select-game-types.dart';
+import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-impl.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 import 'package:provider/provider.dart';
@@ -35,7 +37,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => CreateTradeScreen());
 
     case GAME_TYPE_SCREEN:
-      return MaterialPageRoute(builder: (context) => GameTypes());
+      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
+          create: (context) => ImplSelectGameTypes(),
+          child: GameTypes()));
 
     default:
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
