@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
+import 'package:play_hq/widgets/custom-button-widget.dart';
 
 class LandingScreen extends StatefulWidget {
   @override

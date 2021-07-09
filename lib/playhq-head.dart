@@ -15,6 +15,7 @@ class PlayHqHead extends StatelessWidget {
         theme: ThemeData(
           //this is what you want
           accentColor: PRIMARY_COLOR,
+          canvasColor: Colors.transparent,
           backgroundColor: BACKGROUND_COLOR,
           accentColorBrightness: Brightness.light,
           primaryTextTheme: TextTheme(

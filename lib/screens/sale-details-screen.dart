@@ -4,8 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/custom_map_setter_widget.dart';
-import 'package:play_hq/widgets/game_widget.dart';
+import 'package:play_hq/widgets/custom-map-setter-widget.dart';
+import 'package:play_hq/widgets/game-widget.dart';
 
 class SaleDetails extends StatelessWidget {
   @override

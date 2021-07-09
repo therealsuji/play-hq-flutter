@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import '../app-secure-storage.dart';
-import 'config.dart';
-import 'connectivity.dart';
-import 'initialize_models.dart';
+import 'app-config.dart';
+import 'app-connectivity.dart';
+import 'app-initialize-models.dart';
 
 
 //Network request models

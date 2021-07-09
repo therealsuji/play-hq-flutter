@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
-import 'custom_button_widget.dart';
+import 'custom-button-widget.dart';
 
 class CustomMapSetterWidget extends StatelessWidget {
   @override

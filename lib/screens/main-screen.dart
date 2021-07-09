@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
-import 'package:play_hq/screens/nav-bar-screens/discover_screen.dart';
+import 'package:play_hq/screens/nav-bar-screens/discover-screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/orders-screen.dart';
-import 'package:play_hq/view-models/navigation/tab_navigation_model.dart';
+import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
 import 'package:provider/provider.dart';
 
-import 'nav-bar-screens/home_screen.dart';
-import 'nav-bar-screens/profile_screen.dart';
+import 'nav-bar-screens/home-screen.dart';
+import 'nav-bar-screens/profile-screen.dart';
 
 class MainScreen extends StatefulWidget {
   @override

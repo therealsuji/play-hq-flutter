@@ -17,16 +17,14 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
-        child: Container(
-          width: double.infinity,
-          height: ScreenUtils.getDesignHeight(45),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0), color: buttonColor),
-          child: Center(child: Text(buttonText , style: TextStyle(fontFamily: CircularBold , color: Colors.white , fontWeight: FontWeight.bold , fontSize: 18),)),
-        )
-
+    return GestureDetector(
+      child: Container(
+        width: double.infinity,
+        height: ScreenUtils.getDesignHeight(40),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(5.0), color: buttonColor),
+        child: Center(child: Text(buttonText , style: TextStyle(fontFamily: Neusa , color: Colors.white , fontWeight: FontWeight.bold , fontSize: textFontSize),)),
+      ),
     );
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'custom_button_widget.dart';
+import 'custom-button-widget.dart';
 
 class ActiveGameSaleWidget extends StatelessWidget {
   final String backgroundUrl;

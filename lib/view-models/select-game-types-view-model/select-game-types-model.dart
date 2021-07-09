@@ -1,18 +1,24 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:play_hq/models/genre_model.dart';
+import 'package:play_hq/models/app-genre-model.dart';
 
 abstract class SelectGameTypesModel with ChangeNotifier{
 
-  bool get currentState;
+  bool get currentGenreState;
 
-  void changeState(bool state);
+  void changeGenreState(bool state);
 
-  List<int> get selectedItems;
+  bool get currentPlatFormState;
 
-  List<GenreModel> get selectedList;
+  void changePlatformState(bool state);
 
-  void addSelectedItems(index);
+  List<int> get selectedGenres;
+
+  void addSelectedGenres(index);
+
+  List<int> get selectedPlatforms;
+
+  void addSelectedPlatforms(index);
 
 }

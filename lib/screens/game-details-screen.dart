@@ -9,7 +9,7 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'dart:math' as math;
 
-import 'package:play_hq/widgets/game_widget.dart';
+import 'package:play_hq/widgets/game-widget.dart';
 
 class GameDetailsScreen extends StatelessWidget {
   @override

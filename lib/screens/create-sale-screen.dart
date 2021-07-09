@@ -3,10 +3,10 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/custom_app_bar_widget.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/custom_map_setter_widget.dart';
-import 'package:play_hq/widgets/rasied_gradient_button_widget.dart';
+import 'package:play_hq/widgets/custom-app-bar-widget.dart';
+import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/widgets/custom-map-setter-widget.dart';
+import 'package:play_hq/widgets/rasied-gradient-button-widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateSaleScreen extends StatefulWidget {

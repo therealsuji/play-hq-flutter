@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
-import 'package:provider/provider.dart';
 
 class CustomExpanderWidget extends StatelessWidget {
 
@@ -12,9 +10,10 @@ class CustomExpanderWidget extends StatelessWidget {
   final IconData iconData;
   final String titleText;
   final String selectedText;
+  final VoidCallback onTap;
   final bool state;
 
-  CustomExpanderWidget({this.height , this.iconData , this.widget , this.titleText , this.state, this.selectedText});
+  CustomExpanderWidget({this.height , this.iconData , this.widget , this.titleText , this.state, this.selectedText , this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,7 @@ class CustomExpanderWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: () => Provider.of<SelectGameTypesModel>(context,
-                  listen: false)
-                  .changeState(Provider.of<SelectGameTypesModel>(context , listen: false).currentState == false ? true : false),
+              onTap: onTap,
               child: Row(
                 children: [
                   Container(

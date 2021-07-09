@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/active_game_sale_widget.dart';
-import 'package:play_hq/widgets/custom_app_bar_widget.dart';
-import 'package:play_hq/widgets/custom_game_sale_widget.dart';
+import 'package:play_hq/widgets/active-game-sale-widget.dart';
+import 'package:play_hq/widgets/custom-app-bar-widget.dart';
+import 'package:play_hq/widgets/custom-game-sale-widget.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
 
 class GamesForSaleScreen extends StatefulWidget {

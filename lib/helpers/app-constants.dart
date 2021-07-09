@@ -1,3 +1,15 @@
+const List<String> playStationPlatforms = [
+  "PlayStation 5",
+  "PlayStation 4",
+  "PlayStation 3",
+  "PlayStation 2",
+  "PSP GO",
+  "PSP 3000"
+];
+
+
+
+
 const List<Map<String, dynamic>> genreList = [
   {
     "id": 4,

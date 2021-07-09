@@ -1,41 +1,62 @@
 
 
-import 'package:play_hq/models/genre_model.dart';
+import 'package:play_hq/models/app-genre-model.dart';
 import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
 
 class ImplSelectGameTypes extends SelectGameTypesModel{
 
-  bool _currentState = false;
-  List<int> _selectedItems = [];
-  List<GenreModel> _selectedGenres= [];
+  bool _currentGenreState = false;
+  bool _currentPlatformState = false;
+  List<int> _selectedGenres = [];
+  List<int> _selectedPlatforms = [];
 
 
   @override
-  void changeState(bool state) {
-    _currentState = state;
+  void changeGenreState(bool state) {
+    _currentGenreState = state;
     notifyListeners();
   }
 
   @override
   // TODO: implement currentState
-  bool get currentState => _currentState;
+  bool get currentGenreState => _currentGenreState;
 
   @override
-  void addSelectedItems(index) {
-    if(_selectedItems.contains(index)) {
-      _selectedItems.remove(index);
+  void addSelectedGenres(index) {
+    if(_selectedGenres.contains(index)) {
+      _selectedGenres.remove(index);
     }else{
-      _selectedItems.add(index);
+      _selectedGenres.add(index);
     }
     notifyListeners();
   }
 
   @override
   // TODO: implement selectedItems
-  List<int> get selectedItems => _selectedItems;
+  List<int> get selectedGenres => _selectedGenres;
 
   @override
-  // TODO: implement selectedList
-  List<GenreModel> get selectedList => throw UnimplementedError();
+  void changePlatformState(bool state) {
+    _currentPlatformState = state;
+    notifyListeners();
+  }
+
+  @override
+  // TODO: implement currentPlatFormState
+  bool get currentPlatFormState => _currentPlatformState;
+
+  @override
+  void addSelectedPlatforms(index) {
+    if(_selectedPlatforms.contains(index)) {
+      _selectedPlatforms.remove(index);
+    }else{
+      _selectedPlatforms.add(index);
+    }
+    notifyListeners();
+  }
+
+  @override
+  // TODO: implement selectedPlatforms
+  List<int> get selectedPlatforms => _selectedPlatforms;
 
 }

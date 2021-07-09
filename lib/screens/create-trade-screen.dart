@@ -6,11 +6,11 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/models/search_game_model.dart';
-import 'package:play_hq/widgets/custom_app_bar_widget.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/custom_loading.dart';
-import 'package:play_hq/widgets/game_widget.dart';
+import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/widgets/custom-app-bar-widget.dart';
+import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/widgets/custom-loading-widget.dart';
+import 'package:play_hq/widgets/game-widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateTradeScreen extends StatefulWidget {

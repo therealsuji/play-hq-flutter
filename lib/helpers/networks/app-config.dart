@@ -1,4 +1,4 @@
-import 'package:play_hq/helpers/networks/app_configurations.dart';
+import 'package:play_hq/helpers/networks/app-configurations.dart';
 class ConfigData {
 
   //Base url and version are private and not exposed

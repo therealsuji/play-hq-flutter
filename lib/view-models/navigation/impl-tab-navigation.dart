@@ -1,4 +1,4 @@
-import 'package:play_hq/view-models/navigation/tab_navigation_model.dart';
+import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
 
 class ImplTabNavigation extends TabNavigationModel {
   var _currentPage = 0;
