@@ -19,6 +19,6 @@ abstract class SelectGameTypesModel with ChangeNotifier{
 
   List<int> get selectedPlatforms;
 
-  void addSelectedPlatforms(index);
+  void addSelectedPlatforms(int index);
 
 }

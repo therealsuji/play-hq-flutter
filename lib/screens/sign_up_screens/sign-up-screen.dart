@@ -67,7 +67,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () =>
-                      locator<AuthService>().login(LOGIN_PROVIDER.GOOGLE),
+                      locator<NavigationService>().pushNamed(GAME_TYPE_SCREEN),
                   child: Container(
                     margin:
                         EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
@@ -78,6 +78,7 @@ class SignUpScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(5.0),
                           color: CONTAINER_COLOR),
                       child: Container(
+
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,

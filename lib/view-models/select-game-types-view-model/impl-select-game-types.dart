@@ -10,7 +10,6 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
 
-
   @override
   void changeGenreState(bool state) {
     _currentGenreState = state;
@@ -46,11 +45,13 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   bool get currentPlatFormState => _currentPlatformState;
 
   @override
-  void addSelectedPlatforms(index) {
+  void addSelectedPlatforms(int index) {
     if(_selectedPlatforms.contains(index)) {
       _selectedPlatforms.remove(index);
+      print('Removed');
     }else{
       _selectedPlatforms.add(index);
+      print('Added');
     }
     notifyListeners();
   }
