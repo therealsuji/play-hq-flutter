@@ -76,7 +76,7 @@ class _GameTypesState extends State<GameTypes> {
                                 false
                             ? true
                             : false),
-                    titleText: 'Genre',
+                    titleText: 'Select Preferred Genre',
                     selectedText: 'None Selected',
                     widget: _genreListWidget(),
                   ),
@@ -102,7 +102,7 @@ class _GameTypesState extends State<GameTypes> {
                                 false
                             ? true
                             : false),
-                    titleText: 'Platform',
+                    titleText: 'Choose your Platform',
                     selectedText: 'None Selected',
                     widget: Container(
                       margin: EdgeInsets.only(bottom: 20),
@@ -126,7 +126,50 @@ class _GameTypesState extends State<GameTypes> {
                       ),
                     ));
               },
-            )
+            ),
+            Consumer<SelectGameTypesModel>(
+              builder: (_, val, __) {
+                return CustomExpanderWidget(
+                    height: val.currentReleaseDateState == false
+                        ? ScreenUtils.getDesignHeight(50)
+                        : ScreenUtils.getDesignHeight(160),
+                    iconData: val.currentReleaseDateState == false
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    state: val.currentReleaseDateState,
+                    onTap: () => Provider.of<SelectGameTypesModel>(context,
+                        listen: false)
+                        .changeReleaseDateState(Provider.of<SelectGameTypesModel>(
+                        context,
+                        listen: false)
+                        .currentReleaseDateState ==
+                        false
+                        ? true
+                        : false),
+                    titleText: 'Choose Release Date',
+                    selectedText: 'None Selected',
+                    widget: Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      height: ScreenUtils.getDesignHeight(70),
+                      child: Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          spacing: 15,
+                          runSpacing: 20,
+                          children: releaseDates.map((e) {
+                            return GestureDetector(
+                              onTap: () =>  Provider.of<SelectGameTypesModel>(context, listen: false)
+                                  .addReleaseDates(releaseDates.indexOf(e)),
+                              child: CustomSelectingWidget(
+                                titleText: e,
+                                active: val.selectedReleaseDates.contains(releaseDates.indexOf(e)),
+                              ),
+                            );
+                          }).toList()
+                      ),
+                    ));
+              },
+            ),
           ],
         ),
       ),

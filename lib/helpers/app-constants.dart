@@ -7,8 +7,12 @@ const List<String> playStationPlatforms = [
   "PSP 3000"
 ];
 
-
-
+const List<String> releaseDates = [
+  "2015-2017",
+  "2017-2019",
+  "2019-Present",
+  "Old Classics"
+];
 
 const List<Map<String, dynamic>> genreList = [
   {

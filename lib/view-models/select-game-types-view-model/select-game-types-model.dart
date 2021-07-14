@@ -13,6 +13,10 @@ abstract class SelectGameTypesModel with ChangeNotifier{
 
   void changePlatformState(bool state);
 
+  bool get currentReleaseDateState;
+
+  void changeReleaseDateState(bool state);
+
   List<int> get selectedGenres;
 
   void addSelectedGenres(index);
@@ -20,5 +24,9 @@ abstract class SelectGameTypesModel with ChangeNotifier{
   List<int> get selectedPlatforms;
 
   void addSelectedPlatforms(int index);
+
+  List<int> get selectedReleaseDates;
+
+  void addReleaseDates(int index);
 
 }

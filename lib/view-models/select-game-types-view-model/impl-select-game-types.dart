@@ -7,8 +7,10 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
 
   bool _currentGenreState = false;
   bool _currentPlatformState = false;
+  bool _currentReleaseDateState = false;
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
+  List<int> _selectedReleaseDates = [];
 
   @override
   void changeGenreState(bool state) {
@@ -48,10 +50,8 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   void addSelectedPlatforms(int index) {
     if(_selectedPlatforms.contains(index)) {
       _selectedPlatforms.remove(index);
-      print('Removed');
     }else{
       _selectedPlatforms.add(index);
-      print('Added');
     }
     notifyListeners();
   }
@@ -59,5 +59,29 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   @override
   // TODO: implement selectedPlatforms
   List<int> get selectedPlatforms => _selectedPlatforms;
+
+  @override
+  void changeReleaseDateState(bool state) {
+    _currentReleaseDateState = state;
+    notifyListeners();
+  }
+
+  @override
+  // TODO: implement currentReleaseDateState
+  bool get currentReleaseDateState => _currentReleaseDateState;
+
+  @override
+  void addReleaseDates(int index) {
+    if(_selectedReleaseDates.contains(index)) {
+      _selectedReleaseDates.remove(index);
+    }else{
+      _selectedReleaseDates.add(index);
+    }
+    notifyListeners();
+  }
+
+  @override
+  // TODO: implement selectedReleaseDates
+  List<int> get selectedReleaseDates => _selectedReleaseDates;
 
 }
