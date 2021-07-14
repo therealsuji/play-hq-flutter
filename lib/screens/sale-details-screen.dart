@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/custom-map-setter-widget.dart';
-import 'package:play_hq/widgets/game-widget.dart';
+import 'package:play_hq/widgets/custom-game-widget.dart';
 
 class SaleDetails extends StatelessWidget {
   @override
@@ -180,17 +180,17 @@ class SaleDetails extends StatelessWidget {
                       //Widgets for the Game cover with name and price
                       GamesWidget(
                         gameName: 'Ghost of Tsushima',
-                        price: '4200 LKR',
+                        details: '4200 LKR',
                         backgroundUrl: 'assets/images/tshushima.jpg',
                       ),
                       GamesWidget(
                         gameName: 'COD Warzone',
-                        price: '2900 LKR',
+                        details: '2900 LKR',
                         backgroundUrl: 'assets/images/warzone.jpg',
                       ),
                       GamesWidget(
                         gameName: 'Cyberpunk',
-                        price: '2500 LKR',
+                        details: '2500 LKR',
                         backgroundUrl: 'assets/images/cyberpunk.jpg',
                       ),
                     ],

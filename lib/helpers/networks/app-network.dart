@@ -96,4 +96,6 @@ class Network {
   Future<UserModel> loginUser(token) async {
     return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login, body: {"token": token});
   }
+
+
 }

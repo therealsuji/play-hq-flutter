@@ -1,3 +1,4 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
@@ -138,14 +139,14 @@ class _GameTypesState extends State<GameTypes> {
                         : Icons.keyboard_arrow_up_rounded,
                     state: val.currentReleaseDateState,
                     onTap: () => Provider.of<SelectGameTypesModel>(context,
-                        listen: false)
-                        .changeReleaseDateState(Provider.of<SelectGameTypesModel>(
-                        context,
-                        listen: false)
-                        .currentReleaseDateState ==
-                        false
-                        ? true
-                        : false),
+                            listen: false)
+                        .changeReleaseDateState(
+                            Provider.of<SelectGameTypesModel>(context,
+                                            listen: false)
+                                        .currentReleaseDateState ==
+                                    false
+                                ? true
+                                : false),
                     titleText: 'Choose Release Date',
                     selectedText: 'None Selected',
                     widget: Container(
@@ -158,18 +159,43 @@ class _GameTypesState extends State<GameTypes> {
                           runSpacing: 20,
                           children: releaseDates.map((e) {
                             return GestureDetector(
-                              onTap: () =>  Provider.of<SelectGameTypesModel>(context, listen: false)
+                              onTap: () => Provider.of<SelectGameTypesModel>(
+                                      context,
+                                      listen: false)
                                   .addReleaseDates(releaseDates.indexOf(e)),
                               child: CustomSelectingWidget(
                                 titleText: e,
-                                active: val.selectedReleaseDates.contains(releaseDates.indexOf(e)),
+                                active: val.selectedReleaseDates
+                                    .contains(releaseDates.indexOf(e)),
                               ),
                             );
-                          }).toList()
-                      ),
+                          }).toList()),
                     ));
               },
             ),
+            Container(
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(30), left: 24),
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: 'Choose the games you want',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: CircularBook,
+                          color: Colors.white,
+                          fontSize: 16)),
+                  TextSpan(
+                      text: ' (Wishlist Games)',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontFamily: CircularBook,
+                          color: PRIMARY_COLOR,
+                          fontSize: 16)),
+                ]),
+              ),
+            ),
+            _wishlistGames()
           ],
         ),
       ),
@@ -188,6 +214,47 @@ class _GameTypesState extends State<GameTypes> {
             child: _bottomSheet(title, list),
           );
         });
+  }
+
+  Widget _wishlistGames() {
+    return Container(
+      margin: EdgeInsets.only(top: 20, left: 24, right: 24),
+      child: Row(
+        children: [
+          DottedBorder(
+              borderType: BorderType.RRect,
+              radius: Radius.circular(5),
+              color: CONTAINER_COLOR,
+              dashPattern: [10, 6],
+              strokeWidth: 3,
+              child: Container(
+                width: ScreenUtils.getDesignWidth(100),
+                height: ScreenUtils.getDesignHeight(140),
+                color: Colors.transparent,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: PRIMARY_COLOR
+                        ),
+                        child: Icon(Icons.add , color: Colors.white , size: 25,),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text('Select Game' , style: TextStyle(fontSize: 15 , fontFamily: CircularBook , fontWeight: FontWeight.w700 , color: Colors.white),),
+                      )
+                    ],
+                  ),
+                ),
+              )),
+        ],
+      ),
+    );
   }
 
   Widget _platformItem(String title, Color color, String image_path) {

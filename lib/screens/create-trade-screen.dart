@@ -10,7 +10,7 @@ import 'package:play_hq/models/app-search-game-model.dart';
 import 'package:play_hq/widgets/custom-app-bar-widget.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-loading-widget.dart';
-import 'package:play_hq/widgets/game-widget.dart';
+import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateTradeScreen extends StatefulWidget {

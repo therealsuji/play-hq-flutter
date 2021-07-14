@@ -8,14 +8,14 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 class GamesWidget extends StatelessWidget {
   final String backgroundUrl;
   final String gameName;
-  final String price;
+  final String details;
+  final Color color;
 
   //for local testing
-  GamesWidget({this.gameName, this.price, this.backgroundUrl});
+  GamesWidget({this.gameName, this.details, this.backgroundUrl , this.color});
 
   @override
   Widget build(BuildContext context) {
-    print('Game Name ' + gameName);
     return Container(
       width: ScreenUtils.getDesignWidth(105),
       height: ScreenUtils.getDesignHeight(160),
@@ -70,9 +70,9 @@ class GamesWidget extends StatelessWidget {
                     Container(
                         margin: EdgeInsets.only(top: 5),
                         child: Text(
-                          price,
+                          details,
                           style:
-                              TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: PRIMARY_COLOR),
+                              TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: color),
                         ))
                   ],
                 ),
