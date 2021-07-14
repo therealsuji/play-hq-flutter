@@ -25,7 +25,8 @@ class Network {
   //http client
   Client client = Client();
 
-  Map<String, String> _headers = {
+  Map<String ,  String> _headers = {
+    "User-Agent": 'PlayHQ',
     'Content-type': 'application/json',
     'Accept': 'application/json',
   };
