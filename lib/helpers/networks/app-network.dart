@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:play_hq/models/app-search-game-model.dart';
 import 'package:play_hq/models/app-user-model.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -95,6 +96,10 @@ class Network {
 
   Future<UserModel> loginUser(token) async {
     return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login, body: {"token": token});
+  }
+
+  Future<SearchGame> searchGame (String params) async {
+    return await _performWebRequest<SearchGame>(RequestType.get, ConfigData.getSearchResults(params));
   }
 
 

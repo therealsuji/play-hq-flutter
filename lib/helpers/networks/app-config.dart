@@ -31,5 +31,8 @@ class ConfigData {
   static String login = '$_baseUrl' + "/firebase/auth";
 
   static String getGenres = '$_rawgAPI' + '/genres?ordering=&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
-  
+
+  static String getSearchResults(String params){
+    return '$_rawgAPI' + '/games?page=1&search=$params' + 'key=$_RAWG_API_KEY';
+  }
 }
