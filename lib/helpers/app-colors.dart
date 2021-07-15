@@ -7,6 +7,7 @@ const PLAYSTATION_COLOR = Color(0xff2E6DB4);
 const XBOX_COLOR = Color(0xff107C10);
 const NINTENDO_COLOR = Color(0xffE60012);
 const UNSELECTED_ITEM_COLOR = Color(0xff787794);
+const TEXT_COLOR = Color(0xff9290B1);
 const Headertext = Color(0xffB5BDD5);
 const BodyText = Color(0xffB5BDD5);
 const Pricetext = Color(0xff4EB947);

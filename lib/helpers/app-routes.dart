@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/create-trade-screen.dart';
+import 'package:play_hq/screens/custom-search-screen.dart';
 import 'package:play_hq/screens/game-details-screen.dart';
 import 'package:play_hq/screens/main-screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/home-screen.dart';
@@ -40,6 +42,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
           create: (context) => ImplSelectGameTypes(),
           child: GameTypes()));
+
+    case SEARCH_SCREEN:
+      return MaterialPageRoute(builder: (context) => CustomSearchScreen());
 
     default:
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(

@@ -5,6 +5,9 @@ import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-constants.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/helpers/app-strings.dart';
+import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-expander-widget.dart';
@@ -231,24 +234,27 @@ class _GameTypesState extends State<GameTypes> {
                 width: ScreenUtils.getDesignWidth(100),
                 height: ScreenUtils.getDesignHeight(140),
                 color: Colors.transparent,
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 45,
-                        width: 45,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: PRIMARY_COLOR
+                child: GestureDetector(
+                  onTap: () => locator<NavigationService>().pushReplacement(SEARCH_SCREEN),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 45,
+                          width: 45,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: PRIMARY_COLOR
+                          ),
+                          child: Icon(Icons.add , color: Colors.white , size: 25,),
                         ),
-                        child: Icon(Icons.add , color: Colors.white , size: 25,),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: 10),
-                        child: Text('Select Game' , style: TextStyle(fontSize: 15 , fontFamily: CircularBook , fontWeight: FontWeight.w700 , color: Colors.white),),
-                      )
-                    ],
+                        Container(
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text('Select Game' , style: TextStyle(fontSize: 15 , fontFamily: CircularBook , fontWeight: FontWeight.w700 , color: Colors.white),),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               )),

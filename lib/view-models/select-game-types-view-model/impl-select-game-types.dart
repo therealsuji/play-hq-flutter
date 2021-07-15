@@ -11,6 +11,7 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   bool _currentGenreState = false;
   bool _currentPlatformState = false;
   bool _currentReleaseDateState = false;
+  SearchGame value;
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
@@ -96,7 +97,8 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   void searchGames(String name) async{
     _searchedGames.clear();
     try{
-      var value = await _networkCalls.searchGame(name);
+      value = await _networkCalls.searchGame(name);
+      print(value.data.length);
     }catch (error){
       print(error);
     }
