@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/models/app-genre-model.dart';
+import 'package:play_hq/models/app-search-game-model.dart';
 
 abstract class SelectGameTypesModel with ChangeNotifier{
 
@@ -28,5 +29,9 @@ abstract class SelectGameTypesModel with ChangeNotifier{
   List<int> get selectedReleaseDates;
 
   void addReleaseDates(int index);
+
+  List<GameDetails> get gameList;
+
+  void searchGames(String name);
 
 }
