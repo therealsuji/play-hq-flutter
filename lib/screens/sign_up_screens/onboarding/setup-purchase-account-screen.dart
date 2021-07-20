@@ -8,19 +8,20 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
-import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
+import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-expander-widget.dart';
+import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:play_hq/widgets/custom-selecting-widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:provider/provider.dart';
 
-class GameTypes extends StatefulWidget {
+class SetupPurchaseAccount extends StatefulWidget {
   @override
-  _GameTypesState createState() => _GameTypesState();
+  _SetupPurchaseAccountState createState() => _SetupPurchaseAccountState();
 }
 
-class _GameTypesState extends State<GameTypes> {
+class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,7 +199,11 @@ class _GameTypesState extends State<GameTypes> {
                 ]),
               ),
             ),
-            _wishlistGames()
+            _wishlistGames(),
+            Spacer(),
+            Container(
+                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
+                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16,))
           ],
         ),
       ),
@@ -220,44 +225,91 @@ class _GameTypesState extends State<GameTypes> {
   }
 
   Widget _wishlistGames() {
+    final model = Provider.of<SelectGameTypesModel>(context);
+
     return Container(
       margin: EdgeInsets.only(top: 20, left: 24, right: 24),
+      height: ScreenUtils.getDesignHeight(160),
       child: Row(
         children: [
-          DottedBorder(
-              borderType: BorderType.RRect,
-              radius: Radius.circular(5),
-              color: CONTAINER_COLOR,
-              dashPattern: [10, 6],
-              strokeWidth: 3,
-              child: Container(
-                width: ScreenUtils.getDesignWidth(100),
-                height: ScreenUtils.getDesignHeight(140),
-                color: Colors.transparent,
-                child: GestureDetector(
-                  onTap: () => locator<NavigationService>().pushReplacement(SEARCH_SCREEN),
-                  child: Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 45,
-                          width: 45,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: PRIMARY_COLOR
+          Container(
+            margin: EdgeInsets.only(right: 15),
+            child: DottedBorder(
+                borderType: BorderType.RRect,
+                radius: Radius.circular(5),
+                color: CONTAINER_COLOR,
+                dashPattern: [10, 6],
+                strokeWidth: 3,
+                child: Container(
+                  width: ScreenUtils.getDesignWidth(100),
+                  color: Colors.transparent,
+                  child: GestureDetector(
+                    onTap: () =>
+                        locator<NavigationService>().pushNamed(SEARCH_SCREEN),
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 45,
+                            width: 45,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle, color: PRIMARY_COLOR),
+                            child: Icon(
+                              Icons.add,
+                              color: Colors.white,
+                              size: 25,
+                            ),
                           ),
-                          child: Icon(Icons.add , color: Colors.white , size: 25,),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          child: Text('Select Game' , style: TextStyle(fontSize: 15 , fontFamily: CircularBook , fontWeight: FontWeight.w700 , color: Colors.white),),
-                        )
-                      ],
+                          Container(
+                            margin: EdgeInsets.only(top: 10),
+                            child: Text(
+                              'Select Game',
+                              style: TextStyle(
+                                  fontSize: 15,
+                                  fontFamily: CircularBook,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              )),
+                )),
+          ),
+          ChangeNotifierProvider.value(
+            value: model,
+            child: Consumer<SelectGameTypesModel>(
+              builder: (_, val, __) {
+                print(val.selectedGameList);
+                return val.selectedGameList.isEmpty
+                    ? Container()
+                    : Expanded(
+                        child: ListView.separated(
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                width: 15,
+                              );
+                            },
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: val.selectedGameList.length,
+                            itemBuilder: (context, index) {
+                              return GamesWidget(
+                                gameName: val.selectedGameList[index].name,
+                                color: PRIMARY_COLOR,
+                                backgroundUrl:
+                                    val.selectedGameList[index].image,
+                                releaseDate:
+                                    val.selectedGameList[index].released,
+                              );
+                            }),
+                      );
+              },
+            ),
+          )
         ],
       ),
     );

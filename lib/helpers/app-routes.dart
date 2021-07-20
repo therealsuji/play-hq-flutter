@@ -6,19 +6,19 @@ import 'package:play_hq/screens/custom-search-screen.dart';
 import 'package:play_hq/screens/game-details-screen.dart';
 import 'package:play_hq/screens/main-screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/home-screen.dart';
-import 'package:play_hq/screens/sign_up_screens/onboarding/select-game-type-screen.dart';
+import 'package:play_hq/screens/sign_up_screens/onboarding/setup-purchase-account-screen.dart';
 import 'package:play_hq/screens/sign_up_screens/sign-up-screen.dart';
 import 'package:play_hq/screens/splash-screen.dart';
 import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
 import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
-import 'package:play_hq/view-models/select-game-types-view-model/impl-select-game-types.dart';
-import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
+import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/impl-purchase-account.dart';
+import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-impl.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 import 'package:provider/provider.dart';
 
+ImplSelectGameTypes _implSelectGameTypes = ImplSelectGameTypes();
 
-// ignore: missing_return
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case HOME_SCREEN:
@@ -40,11 +40,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case GAME_TYPE_SCREEN:
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
-          create: (context) => ImplSelectGameTypes(),
-          child: GameTypes()));
+          create: (context) => _implSelectGameTypes,
+          child: SetupPurchaseAccount()));
 
     case SEARCH_SCREEN:
-      return MaterialPageRoute(builder: (context) => CustomSearchScreen());
+      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
+          create: (context) => _implSelectGameTypes,
+          child: CustomSearchScreen()));
 
     default:
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(

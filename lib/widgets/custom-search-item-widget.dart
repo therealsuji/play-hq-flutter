@@ -8,9 +8,9 @@ class SearchGameItem extends StatelessWidget {
 
   final String imageUrl;
   final String title;
-  final String gameCompany;
+  final String releaseDate;
 
-  SearchGameItem({this.title, this.gameCompany , this.imageUrl});
+  SearchGameItem({this.title, this.releaseDate , this.imageUrl});
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,10 @@ class SearchGameItem extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(child: Text(title , style: TextStyle(fontWeight: FontWeight.w700 , color: TEXT_COLOR , fontFamily: CircularBook , fontSize: 16),),),
-                    Container(child: Text(gameCompany , style: TextStyle(fontWeight: FontWeight.w700 , color: PRIMARY_COLOR , fontFamily: Neusa , fontSize: 16),),)
+                    Container(
+                      width: ScreenUtils.getDesignWidth(230),
+                      child: Text(title , style: TextStyle(fontWeight: FontWeight.w700 , color: TEXT_COLOR , fontFamily: CircularBook , fontSize: 16),),),
+                    Container(child: Text(releaseDate == null ? 'Not Mentioned' : releaseDate , style: TextStyle(fontWeight: FontWeight.w700 , color: PRIMARY_COLOR , fontFamily: Neusa , fontSize: 16),),)
                   ],
                 ),
               ),

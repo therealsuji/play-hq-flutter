@@ -1,9 +1,14 @@
 
 
+import 'dart:async';
+
+import 'package:play_hq/helpers/app-enums.dart';
+import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/app-genre-model.dart';
 import 'package:play_hq/models/app-search-game-model.dart';
-import 'package:play_hq/view-models/select-game-types-view-model/select-game-types-model.dart';
+import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 
 class ImplSelectGameTypes extends SelectGameTypesModel{
 
@@ -16,6 +21,10 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
   List<GameDetails> _searchedGames = [];
+  List<GameDetails> _selectedGames = [];
+  SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
+  Timer _debounce;
+
 
   @override
   void changeGenreState(bool state) {
@@ -95,13 +104,41 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
 
   @override
   void searchGames(String name) async{
-    _searchedGames.clear();
-    try{
-      value = await _networkCalls.searchGame(name);
-      print(value.data.length);
-    }catch (error){
-      print(error);
-    }
+      _screenStates = SearchScreenStates.LOADING;
+      if (_debounce?.isActive ?? false) _debounce.cancel();
+      _debounce = Timer(const Duration(milliseconds: 500), () async{
+        try{
+          _searchedGames.clear();
+          value = await _networkCalls.searchGame(name);
+          if(value.data.isEmpty){
+            _screenStates = SearchScreenStates.NOTHING;
+          }else{
+            value.data.forEach((element) {
+              _searchedGames.add(element);
+            });
+            _screenStates = SearchScreenStates.SUCCESS;
+          }
+        }catch (error){
+          _screenStates = SearchScreenStates.FAILED;
+        }
+        notifyListeners();
+      });
+      notifyListeners();
   }
+
+  @override
+  void addSelectedGame(GameDetails game) {
+    _selectedGames.add(game);
+    notifyListeners();
+  }
+
+
+  @override
+  // TODO: implement states
+  SearchScreenStates get states => _screenStates;
+
+  @override
+  // TODO: implement selectedGameList
+  List<GameDetails> get selectedGameList => _selectedGames;
 
 }

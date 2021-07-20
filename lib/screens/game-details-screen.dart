@@ -251,17 +251,17 @@ class GameDetailsScreen extends StatelessWidget {
                         //Widgets for the Game cover with name and price
                         GamesWidget(
                           gameName: 'Ghost of Tsushima',
-                          details: '4000 LKR',
+                          releaseDate: '4000 LKR',
                           backgroundUrl: 'assets/images/tshushima.jpg',
                         ),
                         GamesWidget(
                           gameName: 'COD Warzone',
-                          details: '2500 LKR',
+                          releaseDate: '2500 LKR',
                           backgroundUrl: 'assets/images/warzone.jpg',
                         ),
                         GamesWidget(
                           gameName: 'Cyberpunk',
-                          details: '2500 LKR',
+                          releaseDate: '2500 LKR',
                           backgroundUrl: 'assets/images/cyberpunk.jpg',
                         ),
                       ],
