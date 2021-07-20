@@ -10,7 +10,7 @@ import 'package:play_hq/models/app-genre-model.dart';
 import 'package:play_hq/models/app-search-game-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 
-class ImplSelectGameTypes extends SelectGameTypesModel{
+class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
 
   final _networkCalls = Network.shared;
   bool _currentGenreState = false;
@@ -99,43 +99,10 @@ class ImplSelectGameTypes extends SelectGameTypesModel{
   List<int> get selectedReleaseDates => _selectedReleaseDates;
 
   @override
-  // TODO: implement gameList
-  List<GameDetails> get gameList => _searchedGames;
-
-  @override
-  void searchGames(String name) async{
-      _screenStates = SearchScreenStates.LOADING;
-      if (_debounce?.isActive ?? false) _debounce.cancel();
-      _debounce = Timer(const Duration(milliseconds: 500), () async{
-        try{
-          _searchedGames.clear();
-          value = await _networkCalls.searchGame(name);
-          if(value.data.isEmpty){
-            _screenStates = SearchScreenStates.NOTHING;
-          }else{
-            value.data.forEach((element) {
-              _searchedGames.add(element);
-            });
-            _screenStates = SearchScreenStates.SUCCESS;
-          }
-        }catch (error){
-          _screenStates = SearchScreenStates.FAILED;
-        }
-        notifyListeners();
-      });
-      notifyListeners();
-  }
-
-  @override
   void addSelectedGame(GameDetails game) {
     _selectedGames.add(game);
     notifyListeners();
   }
-
-
-  @override
-  // TODO: implement states
-  SearchScreenStates get states => _screenStates;
 
   @override
   // TODO: implement selectedGameList

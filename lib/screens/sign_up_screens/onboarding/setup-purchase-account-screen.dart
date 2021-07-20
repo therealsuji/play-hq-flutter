@@ -2,26 +2,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-constants.dart';
+import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
+import 'package:play_hq/widgets/custom-alert-button.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
 import 'package:play_hq/widgets/custom-expander-widget.dart';
 import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:play_hq/widgets/custom-selecting-widget.dart';
+import 'package:play_hq/widgets/custom-smaller-button-widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:provider/provider.dart';
 
-class SetupPurchaseAccount extends StatefulWidget {
+class SetupPurchaseAccountScreen extends StatefulWidget {
   @override
-  _SetupPurchaseAccountState createState() => _SetupPurchaseAccountState();
+  _SetupPurchaseAccountScreenState createState() => _SetupPurchaseAccountScreenState();
 }
 
-class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
+class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,7 +63,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                 ],
               ),
             ),
-            Consumer<SelectGameTypesModel>(
+            Consumer<SetupPurchaseAccountModel>(
               builder: (_, value, __) {
                 return Container(
                   margin: EdgeInsets.only(top: 10),
@@ -72,9 +75,9 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: value.currentGenreState,
-                    onTap: () => Provider.of<SelectGameTypesModel>(context,
+                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
-                        .changeGenreState(Provider.of<SelectGameTypesModel>(
+                        .changeGenreState(Provider.of<SetupPurchaseAccountModel>(
                                         context,
                                         listen: false)
                                     .currentGenreState ==
@@ -88,7 +91,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                 );
               },
             ),
-            Consumer<SelectGameTypesModel>(
+            Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
                 return CustomExpanderWidget(
                     height: val.currentPlatFormState == false
@@ -98,9 +101,9 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: val.currentPlatFormState,
-                    onTap: () => Provider.of<SelectGameTypesModel>(context,
+                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
-                        .changePlatformState(Provider.of<SelectGameTypesModel>(
+                        .changePlatformState(Provider.of<SetupPurchaseAccountModel>(
                                         context,
                                         listen: false)
                                     .currentPlatFormState ==
@@ -132,7 +135,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                     ));
               },
             ),
-            Consumer<SelectGameTypesModel>(
+            Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
                 return CustomExpanderWidget(
                     height: val.currentReleaseDateState == false
@@ -142,10 +145,10 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: val.currentReleaseDateState,
-                    onTap: () => Provider.of<SelectGameTypesModel>(context,
+                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
                         .changeReleaseDateState(
-                            Provider.of<SelectGameTypesModel>(context,
+                            Provider.of<SetupPurchaseAccountModel>(context,
                                             listen: false)
                                         .currentReleaseDateState ==
                                     false
@@ -163,7 +166,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                           runSpacing: 20,
                           children: releaseDates.map((e) {
                             return GestureDetector(
-                              onTap: () => Provider.of<SelectGameTypesModel>(
+                              onTap: () => Provider.of<SetupPurchaseAccountModel>(
                                       context,
                                       listen: false)
                                   .addReleaseDates(releaseDates.indexOf(e)),
@@ -203,7 +206,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
             Spacer(),
             Container(
                 margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
-                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () =>  customAlert(context: context , title: 'Something' , contentBody: 'Something with content'),))
+                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () =>  customAlert(context: context , title: 'Okay this is Weird......' , contentBody: 'You didn’t really setup your purchase account. Are you seriously not planning on buying any games at all? '),))
           ],
         ),
       ),
@@ -225,17 +228,17 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
   }
 
   Widget _wishlistGames() {
-    final model = Provider.of<SelectGameTypesModel>(context);
+    final model = Provider.of<SetupPurchaseAccountModel>(context);
 
     return Container(
       margin: EdgeInsets.only(top: 20, left: 24, right: 24),
       height: ScreenUtils.getDesignHeight(160),
       child: Row(
         children: [
-          CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN) ,),
+          CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN , args: SearchGameScreens.SetupPurchase) ,),
           ChangeNotifierProvider.value(
             value: model,
-            child: Consumer<SelectGameTypesModel>(
+            child: Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
                 print(val.selectedGameList);
                 return val.selectedGameList.isEmpty
@@ -320,9 +323,9 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
           itemBuilder: (BuildContext context, index) {
             return GestureDetector(
               onTap: () =>
-                  Provider.of<SelectGameTypesModel>(context, listen: false)
+                  Provider.of<SetupPurchaseAccountModel>(context, listen: false)
                       .addSelectedGenres(index),
-              child: Consumer<SelectGameTypesModel>(builder: (_, val, __) {
+              child: Consumer<SetupPurchaseAccountModel>(builder: (_, val, __) {
                 return SelectGameItem(
                   isSelected: val.selectedGenres.contains(index),
                   titleText: genreList[index]['name'],
@@ -361,12 +364,12 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
               children: list.map((e) {
                 return GestureDetector(
                   onTap: () {
-                    Provider.of<SelectGameTypesModel>(context, listen: false)
+                    Provider.of<SetupPurchaseAccountModel>(context, listen: false)
                         .addSelectedPlatforms(list.indexOf(e));
                   },
                   child: ChangeNotifierProvider.value(
-                    value: Provider.of<SelectGameTypesModel>(context),
-                    child: Consumer<SelectGameTypesModel>(
+                    value: Provider.of<SetupPurchaseAccountModel>(context),
+                    child: Consumer<SetupPurchaseAccountModel>(
                       builder: (_, val, __) {
                         return CustomSelectingWidget(
                           titleText: e,
@@ -408,16 +411,17 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   content: Container(
+                    margin: EdgeInsets.symmetric(vertical: ScreenUtils.getDesignHeight(15)),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Container(
-                          margin: EdgeInsets.only(top: 30),
                           height: ScreenUtils.getDesignHeight(60),
                           width: ScreenUtils.getDesignWidth(60),
                           child: Image.asset('assets/images/confused-emoji.png'),
                         ),
                         Container(
+                          margin: EdgeInsets.only(top: 25),
                           child: Text(
                             title,
                             style: TextStyle(
@@ -433,16 +437,23 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
                           child: Text(
                             contentBody,
                             style: TextStyle(
-                                color: Colors.black,
-                                fontFamily: 'Nunito',
-                                fontSize: 20,
+                                color: Colors.white.withOpacity(0.6),
+                                fontFamily: CircularBook,
+                                fontSize: 18,
                                 fontWeight: FontWeight.w500),
                             textAlign: TextAlign.center,
                           ),
                         ),
                         Container(
-                          height: ScreenUtils.getDesignHeight(286),
-                          child: Container()
+                          width: ScreenUtils.bodyWidth,
+                          margin: EdgeInsets.only(top: 25),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomAlertButton(buttonColor: UNSELECTED_ITEM_COLOR,buttonText: 'I only Sell',),
+                              CustomAlertButton(buttonColor: PRIMARY_COLOR,buttonText: 'I wanna Buy!',),
+                            ],
+                          )
                         ),
                       ],
                     ),

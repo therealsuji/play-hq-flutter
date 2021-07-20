@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/models/app-genre-model.dart';
 import 'package:play_hq/models/app-search-game-model.dart';
 
-abstract class SelectGameTypesModel with ChangeNotifier{
+abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   bool get currentGenreState;
 
@@ -30,12 +30,6 @@ abstract class SelectGameTypesModel with ChangeNotifier{
   List<int> get selectedReleaseDates;
 
   void addReleaseDates(int index);
-
-  List<GameDetails> get gameList;
-
-  void searchGames(String name);
-
-  SearchScreenStates get states;
 
   List<GameDetails> get selectedGameList;
 
