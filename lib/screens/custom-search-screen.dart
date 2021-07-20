@@ -5,11 +5,18 @@ import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
+import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/widgets/custom-loading-barrier-widget.dart';
 import 'package:play_hq/widgets/custom-search-item-widget.dart';
 import 'package:provider/provider.dart';
 
 class CustomSearchScreen extends StatefulWidget {
+
+  final SearchGameScreens values;
+
+  CustomSearchScreen({this.values});
+
+
   @override
   _CustomSearchScreenState createState() => _CustomSearchScreenState();
 }
@@ -30,7 +37,7 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
             child: Column(
               children: [
                 _customSearchTextfield(),
-                Consumer<SelectGameTypesModel>(
+                Consumer<SearchGameModel>(
                   builder: (_, val, __) {
                     switch (val.states) {
                       case SearchScreenStates.EMPTY:
@@ -47,8 +54,14 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    Provider.of<SelectGameTypesModel>(context , listen: false).addSelectedGame(val.gameList[index]);
-                                    locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
+                                    switch(widget.values){
+                                      case SearchGameScreens.SetupPurchase:
+                                        Provider.of<SetupPurchaseAccountModel>(context , listen: false).addSelectedGame(val.gameList[index]);
+                                        locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
+                                        break;
+                                      default:
+                                        print('Something went wrong');
+                                    }
                                   },
                                   child: SearchGameItem(
                                     releaseDate: val.gameList[index].released,
@@ -81,6 +94,13 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
     );
   }
 
+  void _checkWhichScreen(){
+    switch (widget.values){
+      case SearchGameScreens.SetupPurchase:
+
+    }
+  }
+
   Widget _customSearchTextfield() {
     return TextFormField(
       style: TextStyle(
@@ -91,8 +111,7 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
       focusNode: FocusScopeNode().focusedChild,
       keyboardType: TextInputType.name,
       onChanged: (val) =>
-          Provider.of<SelectGameTypesModel>(context, listen: false)
-              .searchGames(val),
+          Provider.of<SearchGameModel>(context, listen: false).searchGames(val),
       cursorColor: PRIMARY_COLOR,
       decoration: InputDecoration(
         prefixIcon: Container(

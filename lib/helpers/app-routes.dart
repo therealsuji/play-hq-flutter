@@ -17,11 +17,13 @@ import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
 import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/impl-purchase-account.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
+import 'package:play_hq/view-models/search-game/impl-search-game.dart';
+import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-impl.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 import 'package:provider/provider.dart';
 
-ImplSelectGameTypes _implSelectGameTypes = ImplSelectGameTypes();
+ImplSetupPurchaseAccount _implSetupPurchaseAccount = ImplSetupPurchaseAccount();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -43,13 +45,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case PURCHASE_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
-              create: (context) => _implSelectGameTypes, child: SetupPurchaseAccount()));
+          builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
+              create: (context) => _implSetupPurchaseAccount, child: SetupPurchaseAccountScreen()));
 
     case SEARCH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
-              create: (context) => _implSelectGameTypes, child: CustomSearchScreen()));
+          builder: (context) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider<SearchGameModel>(
+                  create: (context) => ImplSearchGames()),
+              ChangeNotifierProvider<SetupPurchaseAccountModel>(
+                  create: (context) => _implSetupPurchaseAccount),
+            ],
+              child: CustomSearchScreen(values: settings.arguments)
+          ));
 
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
