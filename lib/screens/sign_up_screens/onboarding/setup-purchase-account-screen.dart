@@ -1,4 +1,3 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
@@ -204,7 +203,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
             Spacer(),
             Container(
                 margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
-                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () => locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),))
+                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () =>  customAlert(context: context , title: 'Something' , contentBody: 'Something with content'),))
           ],
         ),
       ),
@@ -392,5 +391,71 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
         ],
       ),
     );
+  }
+
+  Future<void> customAlert(
+      {@required BuildContext context, String title, String contentBody}) {
+
+    return showGeneralDialog<void>(
+        barrierColor: Colors.black.withOpacity(0.5),
+        transitionBuilder: (context, a1, a2, widget) {
+          return Transform.scale(
+            scale: a1.value,
+            child: Opacity(
+              opacity: a1.value,
+              child: AlertDialog(
+                backgroundColor: CONTAINER_COLOR,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  content: Container(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(top: 30),
+                          height: ScreenUtils.getDesignHeight(60),
+                          width: ScreenUtils.getDesignWidth(60),
+                          child: Image.asset('assets/images/confused-emoji.png'),
+                        ),
+                        Container(
+                          child: Text(
+                            title,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: Neusa,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ),
+                        Container(
+                          width: ScreenUtils.bodyWidth,
+                          margin: EdgeInsets.only(top: 10),
+                          child: Text(
+                            contentBody,
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'Nunito',
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Container(
+                          height: ScreenUtils.getDesignHeight(286),
+                          child: Container()
+                        ),
+                      ],
+                    ),
+                  )),
+            ),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 200),
+        barrierDismissible: true,
+        barrierLabel: '',
+        context: context,
+        pageBuilder: (context, animation1, animation2) {
+          return;
+        });
   }
 }
