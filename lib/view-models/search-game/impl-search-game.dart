@@ -38,6 +38,7 @@ class ImplSearchGames extends SearchGameModel{
         }
       }catch (error){
         _screenStates = SearchScreenStates.FAILED;
+        print(error);
       }
       notifyListeners();
     });

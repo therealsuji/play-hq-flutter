@@ -14,7 +14,7 @@ class GameDetails {
   String _name;
   String _released;
   String _image;
-  String _id;
+  int _id;
 
   GameDetails.fromJson(Map<String, dynamic> json) {
     _name = json['name'] == null ? null : json['name'];
@@ -29,5 +29,5 @@ class GameDetails {
 
   String get name => _name;
 
-  String get id => _id;
+  int get id => _id;
 }
