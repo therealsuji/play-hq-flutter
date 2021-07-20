@@ -7,7 +7,6 @@ import 'helpers/app-routes.dart';
 import 'helpers/app-service-locator.dart';
 
 class PlayHqHead extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,6 +41,11 @@ class PlayHqHead extends StatelessWidget {
             headline3: TextStyle(
               fontSize: 18,
               color: Color(0xffB5BDD5).withOpacity(0.8),
+              fontFamily: CircularBold,
+            ),
+            headline6: TextStyle(
+              fontSize: 25,
+              color: Colors.white,
               fontFamily: CircularBold,
             ),
           ),
