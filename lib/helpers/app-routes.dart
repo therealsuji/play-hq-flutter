@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-strings.dart';
+import 'package:play_hq/screens/create-sale-screen.dart';
 import 'package:play_hq/screens/create-trade-screen.dart';
 import 'package:play_hq/screens/custom-search-screen.dart';
 import 'package:play_hq/screens/game-details-screen.dart';
@@ -10,6 +11,8 @@ import 'package:play_hq/screens/sign_up_screens/onboarding/setup-purchase-accoun
 import 'package:play_hq/screens/sign_up_screens/onboarding/setup-sales-account-screen.dart';
 import 'package:play_hq/screens/sign_up_screens/sign-up-screen.dart';
 import 'package:play_hq/screens/splash-screen.dart';
+import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
+import 'package:play_hq/view-models/create-sale/impl-create-sale.dart';
 import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
 import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/impl-purchase-account.dart';
@@ -30,8 +33,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case MAIN_SCREEN:
       return MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<TabNavigationModel>(
-              create: (context) => ImplTabNavigation(),
-              child: MainScreen()));
+              create: (context) => ImplTabNavigation(), child: MainScreen()));
 
     case GAME_DETAILS_SCREEN:
       return MaterialPageRoute(builder: (context) => GameDetailsScreen());
@@ -40,21 +42,36 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => CreateTradeScreen());
 
     case PURCHASE_ACCOUNT_SCREEN:
-      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
-          create: (context) => _implSelectGameTypes,
-          child: SetupPurchaseAccount()));
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
+              create: (context) => _implSelectGameTypes, child: SetupPurchaseAccount()));
 
     case SEARCH_SCREEN:
-      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
-          create: (context) => _implSelectGameTypes,
-          child: CustomSearchScreen()));
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
+              create: (context) => _implSelectGameTypes, child: CustomSearchScreen()));
+
+    case CREATE_SALE_ROUTE:
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
+              create: (context) => ImplCreateSale(), child: CreateSaleScreen()));
 
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(builder: (context) => SetupSalesAccountScreen());
 
+    case SPLASH_SCREEN:
+      return MaterialPageRoute(
+          builder: (context) =>
+              ChangeNotifierProvider<SplashScreenModel>(create: (context) => ImplSplash(), child: SplashScreen()));
+
     default:
-      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
-          create: (context) => ImplSplash(),
-          child: SplashScreen()));
+      return MaterialPageRoute(
+          builder: (context) => Scaffold(
+              backgroundColor: Colors.white,
+              body: Container(
+                child: Center(
+                  child: Text("ERROR", style: TextStyle(color: Colors.red)),
+                ),
+              )));
   }
 }
