@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 
 class CustomTextfieldWidget extends StatelessWidget {
-
   final IconData iconData;
   final bool hideText;
   final Function(String) onChanged;
   final String errorText;
   final TextInputType type;
 
-  CustomTextfieldWidget({this.iconData , this.hideText  , this.onChanged , this.errorText , this.type});
+  CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +29,15 @@ class CustomTextfieldWidget extends StatelessWidget {
         onChanged: onChanged,
         cursorColor: PRIMARY_COLOR,
         decoration: InputDecoration(
-          prefixIcon: Container(
-            padding: EdgeInsets.symmetric(vertical: 18),
-            child: Icon(iconData , color: UNSELECTED_ITEM_COLOR,),
-          ),
+          prefixIcon: iconData != null
+              ? Container(
+                  padding: EdgeInsets.symmetric(vertical: 18),
+                  child: Icon(
+                    iconData,
+                    color: UNSELECTED_ITEM_COLOR,
+                  ),
+                )
+              : null,
           errorText: errorText,
           fillColor: CONTAINER_COLOR,
           filled: true,
@@ -41,7 +45,7 @@ class CustomTextfieldWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.only(left: 12.0 , top: 20 , bottom: 20),
+          contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20),
         ),
       ),
     );
