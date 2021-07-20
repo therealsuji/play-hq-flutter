@@ -4,12 +4,11 @@ import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
-
 class CustomDottedSelectorWidget extends StatelessWidget {
-
   final VoidCallback onPressed;
+  final bool filled;
 
-  CustomDottedSelectorWidget({this.onPressed});
+  CustomDottedSelectorWidget({this.onPressed, this.filled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -18,41 +17,42 @@ class CustomDottedSelectorWidget extends StatelessWidget {
       child: DottedBorder(
           borderType: BorderType.RRect,
           radius: Radius.circular(5),
-          color: CONTAINER_COLOR,
+          color: filled ? Colors.transparent : CONTAINER_COLOR,
           dashPattern: [10, 6],
           strokeWidth: 3,
-          child: Container(
-            width: ScreenUtils.getDesignWidth(100),
-            color: Colors.transparent,
-            child: GestureDetector(
-              onTap: onPressed,
-              child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 45,
-                      width: 45,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: PRIMARY_COLOR),
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                        size: 25,
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
+            ),
+            child: Container(
+              width: ScreenUtils.getDesignWidth(100),
+              color: filled ? CONTAINER_COLOR : Colors.transparent,
+              child: GestureDetector(
+                onTap: onPressed,
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 45,
+                        width: 45,
+                        decoration: BoxDecoration(shape: BoxShape.circle, color: PRIMARY_COLOR),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 25,
+                        ),
                       ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 10),
-                      child: Text(
-                        'Select Game',
-                        style: TextStyle(
-                            fontSize: 15,
-                            fontFamily: CircularBook,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Text(
+                          'Select Game',
+                          style: TextStyle(
+                              fontSize: 15, fontFamily: CircularBook, fontWeight: FontWeight.w700, color: Colors.white),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
