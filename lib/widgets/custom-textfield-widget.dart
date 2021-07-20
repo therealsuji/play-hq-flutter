@@ -26,6 +26,8 @@ class CustomTextfieldWidget extends StatelessWidget {
         focusNode: FocusNode(),
         obscureText: hideText,
         keyboardType: type,
+        maxLines: null,
+        minLines: type == TextInputType.multiline ? 4 : null,
         onChanged: onChanged,
         cursorColor: PRIMARY_COLOR,
         decoration: InputDecoration(
