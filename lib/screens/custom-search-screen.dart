@@ -48,7 +48,7 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                                 return GestureDetector(
                                   onTap: () {
                                     Provider.of<SelectGameTypesModel>(context , listen: false).addSelectedGame(val.gameList[index]);
-                                    locator<NavigationService>().pushNamed(GAME_TYPE_SCREEN);
+                                    locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
                                   },
                                   child: SearchGameItem(
                                     releaseDate: val.gameList[index].released,

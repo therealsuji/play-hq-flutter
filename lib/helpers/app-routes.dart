@@ -7,6 +7,7 @@ import 'package:play_hq/screens/game-details-screen.dart';
 import 'package:play_hq/screens/main-screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/home-screen.dart';
 import 'package:play_hq/screens/sign_up_screens/onboarding/setup-purchase-account-screen.dart';
+import 'package:play_hq/screens/sign_up_screens/onboarding/setup-sales-account-screen.dart';
 import 'package:play_hq/screens/sign_up_screens/sign-up-screen.dart';
 import 'package:play_hq/screens/splash-screen.dart';
 import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
@@ -38,7 +39,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CREATE_TRADE_SCREEN:
       return MaterialPageRoute(builder: (context) => CreateTradeScreen());
 
-    case GAME_TYPE_SCREEN:
+    case PURCHASE_ACCOUNT_SCREEN:
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
           create: (context) => _implSelectGameTypes,
           child: SetupPurchaseAccount()));
@@ -47,6 +48,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SelectGameTypesModel>(
           create: (context) => _implSelectGameTypes,
           child: CustomSearchScreen()));
+
+    case SALES_ACCOUNT_SCREEN:
+      return MaterialPageRoute(builder: (context) => SetupSalesAccountScreen());
 
     default:
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SplashScreenModel>(

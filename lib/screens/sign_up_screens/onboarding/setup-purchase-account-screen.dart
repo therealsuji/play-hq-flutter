@@ -10,6 +10,7 @@ import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
 import 'package:play_hq/widgets/custom-expander-widget.dart';
 import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:play_hq/widgets/custom-selecting-widget.dart';
@@ -203,7 +204,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
             Spacer(),
             Container(
                 margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
-                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16,))
+                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () => locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),))
           ],
         ),
       ),
@@ -232,52 +233,7 @@ class _SetupPurchaseAccountState extends State<SetupPurchaseAccount> {
       height: ScreenUtils.getDesignHeight(160),
       child: Row(
         children: [
-          Container(
-            margin: EdgeInsets.only(right: 15),
-            child: DottedBorder(
-                borderType: BorderType.RRect,
-                radius: Radius.circular(5),
-                color: CONTAINER_COLOR,
-                dashPattern: [10, 6],
-                strokeWidth: 3,
-                child: Container(
-                  width: ScreenUtils.getDesignWidth(100),
-                  color: Colors.transparent,
-                  child: GestureDetector(
-                    onTap: () =>
-                        locator<NavigationService>().pushNamed(SEARCH_SCREEN),
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 45,
-                            width: 45,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle, color: PRIMARY_COLOR),
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 25,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(top: 10),
-                            child: Text(
-                              'Select Game',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: CircularBook,
-                                  fontWeight: FontWeight.w700,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                )),
-          ),
+          CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN) ,),
           ChangeNotifierProvider.value(
             value: model,
             child: Consumer<SelectGameTypesModel>(

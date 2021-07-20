@@ -67,7 +67,7 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 GestureDetector(
                   onTap: () =>
-                      locator<NavigationService>().pushNamed(GAME_TYPE_SCREEN),
+                      locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN),
                   child: Container(
                     margin:
                         EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
