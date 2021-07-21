@@ -206,7 +206,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             Spacer(),
             Container(
                 margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
-                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () =>  customAlert(context: context , title: 'Okay this is Weird......' , contentBody: 'You didn’t really setup your purchase account. Are you seriously not planning on buying any games at all? '),))
+                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () =>  locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),))
           ],
         ),
       ),
@@ -322,9 +322,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
           itemCount: genreList.length,
           itemBuilder: (BuildContext context, index) {
             return GestureDetector(
-              onTap: () =>
-                  Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                      .addSelectedGenres(index),
+              onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).addSelectedGenres(index),
               child: Consumer<SetupPurchaseAccountModel>(builder: (_, val, __) {
                 return SelectGameItem(
                   isSelected: val.selectedGenres.contains(index),

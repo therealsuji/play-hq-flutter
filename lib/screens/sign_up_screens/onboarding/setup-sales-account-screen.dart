@@ -1,18 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
+import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
+import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
+import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:play_hq/widgets/custom-smaller-button-widget.dart';
 import 'package:play_hq/widgets/custom-textfield-widget.dart';
+import 'package:provider/provider.dart';
 
-class SetupSalesAccountScreen extends StatelessWidget {
+class SetupSalesAccountScreen extends StatefulWidget {
 
+  @override
+  _SetupSalesAccountScreenState createState() => _SetupSalesAccountScreenState();
+}
+
+class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,11 +60,7 @@ class SetupSalesAccountScreen extends StatelessWidget {
                   width: ScreenUtils.bodyWidth,
                   height: ScreenUtils.getDesignHeight(150),
                   margin: EdgeInsets.only(top: 20),
-                child: Row(
-                  children: [
-                    CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN)),
-                  ],
-                ),
+                child: _libraryGames(),
               ),
               Container(
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
@@ -105,4 +111,50 @@ class SetupSalesAccountScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _libraryGames() {
+    final model = Provider.of<SetupSalesModel>(context);
+
+    return Container(
+      height: ScreenUtils.getDesignHeight(160),
+      child: Row(
+        children: [
+          CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN , args: SearchGameScreens.SetupSales) ,),
+          ChangeNotifierProvider.value(
+            value: model,
+            child: Consumer<SetupSalesModel>(
+              builder: (_, val, __) {
+                print(val.selectedGameList);
+                return val.selectedGameList.isEmpty
+                    ? Container()
+                    : Expanded(
+                  child: ListView.separated(
+                      separatorBuilder:
+                          (BuildContext context, int index) {
+                        return SizedBox(
+                          width: 15,
+                        );
+                      },
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: val.selectedGameList.length,
+                      itemBuilder: (context, index) {
+                        return GamesWidget(
+                          gameName: val.selectedGameList[index].name,
+                          color: PRIMARY_COLOR,
+                          backgroundUrl:
+                          val.selectedGameList[index].image,
+                          releaseDate:
+                          val.selectedGameList[index].released,
+                        );
+                      }),
+                );
+              },
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
 }

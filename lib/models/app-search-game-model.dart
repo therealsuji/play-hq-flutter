@@ -1,3 +1,5 @@
+import 'package:hive/hive.dart';
+
 class SearchGame {
   List<GameDetails> _data;
 
@@ -10,10 +12,19 @@ class SearchGame {
   List<GameDetails> get data => _data;
 }
 
-class GameDetails {
+@HiveType(typeId: 0)
+class GameDetails extends HiveObject{
+
+  @HiveField(0)
   String _name;
+
+  @HiveField(1)
   String _released;
+
+  @HiveField(2)
   String _image;
+  
+  @HiveField(3)
   int _id;
 
   GameDetails.fromJson(Map<String, dynamic> json) {

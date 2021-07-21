@@ -5,6 +5,7 @@ import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
+import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/widgets/custom-loading-barrier-widget.dart';
 import 'package:play_hq/widgets/custom-search-item-widget.dart';
@@ -58,6 +59,10 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                                       case SearchGameScreens.SetupPurchase:
                                         Provider.of<SetupPurchaseAccountModel>(context , listen: false).addSelectedGame(val.gameList[index]);
                                         locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
+                                        break;
+                                      case SearchGameScreens.SetupSales:
+                                        Provider.of<SetupSalesModel>(context , listen: false).addSelectedGame(val.gameList[index]);
+                                        locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN);
                                         break;
                                       default:
                                         print('Something went wrong');

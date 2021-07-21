@@ -17,6 +17,8 @@ import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
 import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/impl-purchase-account.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
+import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/impl-sales-account.dart';
+import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
 import 'package:play_hq/view-models/search-game/impl-search-game.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-impl.dart';
@@ -24,6 +26,7 @@ import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 import 'package:provider/provider.dart';
 
 ImplSetupPurchaseAccount _implSetupPurchaseAccount = ImplSetupPurchaseAccount();
+ImplSetupSales _implSetupSales = ImplSetupSales();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -56,6 +59,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                   create: (context) => ImplSearchGames()),
               ChangeNotifierProvider<SetupPurchaseAccountModel>(
                   create: (context) => _implSetupPurchaseAccount),
+              ChangeNotifierProvider<SetupSalesModel>(
+                  create: (context) => _implSetupSales),
             ],
               child: CustomSearchScreen(values: settings.arguments)
           ));
@@ -66,7 +71,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => ImplCreateSale(), child: CreateSaleScreen()));
 
     case SALES_ACCOUNT_SCREEN:
-      return MaterialPageRoute(builder: (context) => SetupSalesAccountScreen());
+      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
+          create: (context) => _implSetupSales,
+          child: SetupSalesAccountScreen()));
 
     case SPLASH_SCREEN:
       return MaterialPageRoute(

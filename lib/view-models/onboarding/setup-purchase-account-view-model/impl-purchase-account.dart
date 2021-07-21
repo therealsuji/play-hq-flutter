@@ -25,7 +25,6 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
   Timer _debounce;
 
-
   @override
   void changeGenreState(bool state) {
     _currentGenreState = state;
