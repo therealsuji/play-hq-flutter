@@ -10,6 +10,10 @@ class ImplSetupSales extends SetupSalesModel{
 
   @override
   void addSelectedGame(GameDetails game) async{
+    var box = await Hive.openBox('libraryGames');
+
+    box.add(game);
+    print("Selected Game Details" + box.getAt(0));
     _selectedGames.add(game);
     notifyListeners();
   }

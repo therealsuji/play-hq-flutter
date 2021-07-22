@@ -6,7 +6,7 @@ class SearchGame {
   SearchGame.fromJson(Map<String, dynamic> json) {
     _data = json['results'] == null
         ? null
-        : List<GameDetails>.from(json['results'].map((street) => GameDetails.fromJson(street)));
+        : List<GameDetails>.from(json['results'].map((games) => GameDetails.fromJson(games)));
   }
 
   List<GameDetails> get data => _data;
@@ -27,11 +27,16 @@ class GameDetails extends HiveObject{
   @HiveField(3)
   int _id;
 
+  @HiveField(4)
+  List<Genres> _genres;
+
+
   GameDetails.fromJson(Map<String, dynamic> json) {
     _name = json['name'] == null ? null : json['name'];
     _released = json['released'] == null ? null : json['released'];
     _image = json['background_image'] == null ? null : json['background_image'];
     _id = json['id'] == null ? null : json['id'];
+    _genres = json['results'] == null ? null : List<Genres>.from(json['results'].map((games) => Genres.fromJson(games)));
   }
 
   String get image => _image;
@@ -41,4 +46,18 @@ class GameDetails extends HiveObject{
   String get name => _name;
 
   int get id => _id;
+
+  List<Genres> get genres => _genres;
+}
+
+class Genres{
+
+  String _name;
+
+  Genres.fromJson(Map<String , dynamic> json){
+    _name = json['name'] == null ? null : json['name'];
+  }
+
+  String get name => _name;
+
 }

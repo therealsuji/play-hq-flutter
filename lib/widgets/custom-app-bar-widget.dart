@@ -25,7 +25,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
                   Navigator.pop(context);
                 },
                 child: Padding(
-                  padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(52), bottom: 10, left: 15, right: 15),
+                  padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(52), bottom: 10, left: 24, right: 24),
                   child: Container(
                       height: 20,
                       width: 20,
@@ -38,7 +38,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
               Padding(
                 padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(52), bottom: 10),
                 child: Text(
-                  this.title,
+                  '',
                   style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.white),
                 ),
               )

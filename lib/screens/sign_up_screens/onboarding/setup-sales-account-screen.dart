@@ -104,7 +104,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
               Spacer(),
               Container(
                   margin: EdgeInsets.only(bottom: 25),
-                  child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Game on!',textFontSize: 18,))
+                  child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Game on!',textFontSize: 18,onPressed: () => locator<NavigationService>().pushNamed(CREATE_TRADE_SCREEN),))
             ],
           ),
         ),

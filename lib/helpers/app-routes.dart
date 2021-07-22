@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/create-sale-screen.dart';
-import 'package:play_hq/screens/create-trade-screen.dart';
+import 'package:play_hq/screens/trades/create-trade-screen.dart';
 import 'package:play_hq/screens/custom-search-screen.dart';
 import 'package:play_hq/screens/game-details-screen.dart';
 import 'package:play_hq/screens/main-screen.dart';
@@ -74,6 +73,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
           create: (context) => _implSetupSales,
           child: SetupSalesAccountScreen()));
+
+    case CREATE_TRADE_SCREEN:
+      return MaterialPageRoute(builder: (context) => CreateTradeScreen());
 
     case SPLASH_SCREEN:
       return MaterialPageRoute(
