@@ -50,46 +50,32 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                             path: 'assets/animations/search.json');
                         break;
                       case SearchScreenStates.SUCCESS:
-                        return FutureBuilder(
-                          future: Hive.openBox('libraryGames'),
-                          builder: (BuildContext context , AsyncSnapshot snapshot){
-                            if(snapshot.connectionState == ConnectionState.done){
-                              if(snapshot.hasError){
-                                return Text(snapshot.error.toString());
-                              }else{
-                                return Expanded(
-                                  child: ListView.builder(
-                                      itemCount: val.gameList.length,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            switch(widget.values){
-                                              case SearchGameScreens.SetupPurchase:
-                                                Provider.of<SetupPurchaseAccountModel>(context , listen: false).addSelectedGame(val.gameList[index]);
-                                                locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
-                                                break;
-                                              case SearchGameScreens.SetupSales:
-                                                Provider.of<SetupSalesModel>(context , listen: false).addSelectedGame(val.gameList[index]);
-                                                locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN);
-                                                Hive.box('libraryGames');
-                                                break;
-                                              default:
-                                                print('Something went wrong');
-                                            }
-                                          },
-                                          child: SearchGameItem(
-                                            releaseDate: val.gameList[index].released,
-                                            title: val.gameList[index].name,
-                                            imageUrl: val.gameList[index].image,
-                                          ),
-                                        );
-                                      }),
+                        return Expanded(
+                          child: ListView.builder(
+                              itemCount: val.gameList.length,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    switch(widget.values){
+                                      case SearchGameScreens.SetupPurchase:
+                                        Provider.of<SetupPurchaseAccountModel>(context , listen: false).addSelectedGame(val.gameList[index]);
+                                        locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
+                                        break;
+                                      case SearchGameScreens.SetupSales:
+                                        Provider.of<SetupSalesModel>(context , listen: false).addSelectedGame(val.gameList[index]);
+                                        locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN);
+                                        break;
+                                      default:
+                                        print('Something went wrong');
+                                    }
+                                  },
+                                  child: SearchGameItem(
+                                    releaseDate: val.gameList[index].released,
+                                    title: val.gameList[index].name,
+                                    imageUrl: val.gameList[index].image,
+                                  ),
                                 );
-                              }
-                            }else{
-                              return Container();
-                            }
-                          },
+                              }),
                         );
                       case SearchScreenStates.NOTHING:
                         return CustomLoadingBarrier(
