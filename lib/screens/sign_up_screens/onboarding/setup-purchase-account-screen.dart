@@ -25,6 +25,7 @@ class SetupPurchaseAccountScreen extends StatefulWidget {
 }
 
 class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,7 @@
 import 'package:hive/hive.dart';
 
+part 'app-search-game-model.g.dart';
+
 class SearchGame {
   List<GameDetails> _data;
 
@@ -16,38 +18,30 @@ class SearchGame {
 class GameDetails extends HiveObject{
 
   @HiveField(0)
-  String _name;
+  String name;
 
   @HiveField(1)
-  String _released;
+  String released;
 
   @HiveField(2)
-  String _image;
+  String image;
   
   @HiveField(3)
-  int _id;
+  int id;
 
   @HiveField(4)
-  List<Genres> _genres;
+  List<Genres> genres;
 
 
   GameDetails.fromJson(Map<String, dynamic> json) {
-    _name = json['name'] == null ? null : json['name'];
-    _released = json['released'] == null ? null : json['released'];
-    _image = json['background_image'] == null ? null : json['background_image'];
-    _id = json['id'] == null ? null : json['id'];
-    _genres = json['results'] == null ? null : List<Genres>.from(json['results'].map((games) => Genres.fromJson(games)));
+    name = json['name'] == null ? null : json['name'];
+    released = json['released'] == null ? null : json['released'];
+    image = json['background_image'] == null ? null : json['background_image'];
+    id = json['id'] == null ? null : json['id'];
+    genres = json['results'] == null ? null : List<Genres>.from(json['results'].map((games) => Genres.fromJson(games)));
   }
 
-  String get image => _image;
-
-  String get released => _released;
-
-  String get name => _name;
-
-  int get id => _id;
-
-  List<Genres> get genres => _genres;
+  GameDetails({this.name, this.released, this.image , this.id  , this.genres});
 }
 
 class Genres{

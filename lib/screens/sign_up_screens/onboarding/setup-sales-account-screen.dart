@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
@@ -114,47 +115,46 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
 
   Widget _libraryGames() {
     final model = Provider.of<SetupSalesModel>(context);
-
     return Container(
-      height: ScreenUtils.getDesignHeight(160),
-      child: Row(
-        children: [
-          CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN , args: SearchGameScreens.SetupSales) ,),
-          ChangeNotifierProvider.value(
-            value: model,
-            child: Consumer<SetupSalesModel>(
-              builder: (_, val, __) {
-                print(val.selectedGameList);
-                return val.selectedGameList.isEmpty
-                    ? Container()
-                    : Expanded(
-                  child: ListView.separated(
-                      separatorBuilder:
-                          (BuildContext context, int index) {
-                        return SizedBox(
-                          width: 15,
-                        );
-                      },
-                      physics: BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: val.selectedGameList.length,
-                      itemBuilder: (context, index) {
-                        return GamesWidget(
-                          gameName: val.selectedGameList[index].name,
-                          color: PRIMARY_COLOR,
-                          backgroundUrl:
-                          val.selectedGameList[index].image,
-                          releaseDate:
-                          val.selectedGameList[index].released,
-                        );
-                      }),
-                );
-              },
-            ),
-          )
-        ],
-      ),
-    );
+        height: ScreenUtils.getDesignHeight(160),
+        child: Row(
+          children: [
+            CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN , args: SearchGameScreens.SetupSales) ,),
+            ChangeNotifierProvider.value(
+              value: model,
+              child: Consumer<SetupSalesModel>(
+                builder: (_, val, __) {
+                  print(val.selectedGameList);
+                  return val.selectedGameList.isEmpty
+                      ? Container()
+                      : Expanded(
+                    child: ListView.separated(
+                        separatorBuilder:
+                            (BuildContext context, int index) {
+                          return SizedBox(
+                            width: 15,
+                          );
+                        },
+                        physics: BouncingScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        itemCount: val.selectedGameList.length,
+                        itemBuilder: (context, index) {
+                          return GamesWidget(
+                            gameName: val.selectedGameList[index].name,
+                            color: PRIMARY_COLOR,
+                            backgroundUrl:
+                            val.selectedGameList[index].image,
+                            releaseDate:
+                            val.selectedGameList[index].released,
+                          );
+                        }),
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      );
   }
 
 }

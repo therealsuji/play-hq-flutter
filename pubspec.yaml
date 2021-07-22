@@ -45,6 +45,9 @@ dependencies:
   path_provider: 2.0.2
   skeleton_text: 3.0.0
   hive: 2.0.4
+  hive_generator: ^1.1.0
+  build_runner:
+  analyzer: 1.7.1
 
 
 flutter_icons:

@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:hive/hive.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/models/app-search-game-model.dart';
 import 'package:play_hq/widgets/custom-app-bar-widget.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/widgets/custom-game-selector.dart';
 import 'package:play_hq/widgets/custom-loading-widget.dart';
 import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +26,6 @@ class CreateTradeScreen extends StatefulWidget {
 }
 
 class _CreateTradeScreenState extends State<CreateTradeScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,18 +47,51 @@ class _CreateTradeScreenState extends State<CreateTradeScreen> {
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
                 child: Text('Select Library Game' , style: TextStyle(fontSize: 18 , fontWeight: FontWeight.bold , color: Colors.white),),
               ),
-
+              FutureBuilder(
+                future: Hive.openBox('libraryGames'),
+                builder: (BuildContext context , AsyncSnapshot snapshot){
+                  if (snapshot.connectionState == ConnectionState.done){
+                    if(snapshot.hasError){
+                      return Text(snapshot.error.toString());
+                    }else{
+                      final libraryGamesBox = Hive.box('libraryGames');
+                      return Container(
+                        height: ScreenUtils.getDesignHeight(190),
+                        child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          itemCount: libraryGamesBox.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index){
+                            final libraryGame = libraryGamesBox.getAt(index) as GameDetails;
+                            return CustomGameSelector(
+                              gameName: libraryGame.name,
+                              releaseDate: libraryGame.released,
+                              imageUrl: libraryGame.image,
+                            );
+                        }, separatorBuilder: (BuildContext context , int index){
+                          return SizedBox(width: 15,);
+                        },
+                        ),
+                      );
+                    }
+                  }else{
+                    return Text(snapshot.connectionState.toString());
+                  }
+                },
+              )
             ],
           ),
         )
     );
   }
 
-  Widget _libraryList(){
-    return Container(
-
-    );
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    Hive.close();
+    super.dispose();
   }
+
 }
 
 

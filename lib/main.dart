@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:play_hq/models/app-search-game-model.dart';
 import 'package:play_hq/playhq-head.dart';
 import 'helpers/app-service-locator.dart';
 import 'helpers/networks/app-config.dart';
@@ -14,6 +15,6 @@ void main() async {
   Hive.init(appDocumentaryDirectory.path);
   setupLocator();
   ConfigData.setBaseUrl(Environment.DEV);
-  final libraryGames = await Hive.openBox('libraryGames');
+  Hive.registerAdapter(GameDetailsAdapter());
   runApp(PlayHqHead());
 }
