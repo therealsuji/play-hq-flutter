@@ -91,11 +91,14 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(65)),
-                  child: CustomButton(
-                    buttonColor: PRIMARY_COLOR,
-                    buttonText: 'I want to Explore',
+                GestureDetector(
+                  onTap: () => locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN),
+                  child: Container(
+                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(65)),
+                    child: CustomButton(
+                      buttonColor: PRIMARY_COLOR,
+                      buttonText: 'I want to Explore',
+                    ),
                   ),
                 ),
                 Spacer(),

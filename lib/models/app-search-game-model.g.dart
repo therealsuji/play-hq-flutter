@@ -21,7 +21,6 @@ class GameDetailsAdapter extends TypeAdapter<GameDetails> {
       released: fields[1] as String,
       image: fields[2] as String,
       id: fields[3] as int,
-      genres: (fields[4] as List)?.cast<Genres>(),
     );
   }
 
@@ -36,9 +35,7 @@ class GameDetailsAdapter extends TypeAdapter<GameDetails> {
       ..writeByte(2)
       ..write(obj.image)
       ..writeByte(3)
-      ..write(obj.id)
-      ..writeByte(4)
-      ..write(obj.genres);
+      ..write(obj.id);
   }
 
   @override
