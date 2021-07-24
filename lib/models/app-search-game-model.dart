@@ -15,8 +15,7 @@ class SearchGame {
 }
 
 @HiveType(typeId: 0)
-class GameDetails extends HiveObject{
-
+class GameDetails extends HiveObject {
   @HiveField(0)
   String name;
 
@@ -25,33 +24,30 @@ class GameDetails extends HiveObject{
 
   @HiveField(2)
   String image;
-  
+
   @HiveField(3)
   int id;
 
-  @HiveField(4)
-  List<Genres> genres;
-
+  // @HiveField(4)
+  // List<Genres> genres;
 
   GameDetails.fromJson(Map<String, dynamic> json) {
     name = json['name'] == null ? null : json['name'];
     released = json['released'] == null ? null : json['released'];
     image = json['background_image'] == null ? null : json['background_image'];
     id = json['id'] == null ? null : json['id'];
-    genres = json['results'] == null ? null : List<Genres>.from(json['results'].map((games) => Genres.fromJson(games)));
+    // genres = json['results'] == null ? null : List<Genres>.from(json['results'].map((games) => Genres.fromJson(games)));
   }
 
-  GameDetails({this.name, this.released, this.image , this.id  , this.genres});
+  GameDetails({this.name, this.released, this.image, this.id});
 }
 
-class Genres{
-
+class Genres {
   String _name;
 
-  Genres.fromJson(Map<String , dynamic> json){
+  Genres.fromJson(Map<String, dynamic> json) {
     _name = json['name'] == null ? null : json['name'];
   }
 
   String get name => _name;
-
 }
