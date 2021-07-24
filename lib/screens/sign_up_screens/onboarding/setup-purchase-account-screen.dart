@@ -21,10 +21,12 @@ import 'package:provider/provider.dart';
 
 class SetupPurchaseAccountScreen extends StatefulWidget {
   @override
-  _SetupPurchaseAccountScreenState createState() => _SetupPurchaseAccountScreenState();
+  _SetupPurchaseAccountScreenState createState() =>
+      _SetupPurchaseAccountScreenState();
 }
 
-class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen> {
+class _SetupPurchaseAccountScreenState
+    extends State<SetupPurchaseAccountScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -76,17 +78,22 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: value.currentGenreState,
-                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
+                    onTap: () =>
+                        Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
-                        .changeGenreState(Provider.of<SetupPurchaseAccountModel>(
-                                        context,
-                                        listen: false)
-                                    .currentGenreState ==
-                                false
+                            .changeGenreState(Provider
+                            .of<SetupPurchaseAccountModel>(
+                            context,
+                            listen: false)
+                            .currentGenreState ==
+                            false
                             ? true
                             : false),
                     titleText: 'Select Preferred Genre',
-                    selectedText: 'None Selected',
+                    selectedText: value.genreCount == null ||
+                        value.genreCount == 0 ? 'None Selected' : value
+                        .genreCount == 5 ? 'Max Selected' : value.genreCount
+                        .toString() + ' Selected',
                     widget: _genreListWidget(),
                   ),
                 );
@@ -102,35 +109,46 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: val.currentPlatFormState,
-                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
-                            listen: false)
-                        .changePlatformState(Provider.of<SetupPurchaseAccountModel>(
-                                        context,
-                                        listen: false)
-                                    .currentPlatFormState ==
-                                false
-                            ? true
-                            : false),
+                    onTap: () {
+                      Provider.of<SetupPurchaseAccountModel>(context,
+                          listen: false)
+                          .changePlatformState(Provider
+                          .of<SetupPurchaseAccountModel>(
+                          context,
+                          listen: false)
+                          .currentPlatFormState ==
+                          false
+                          ? true
+                          : false);
+                    },
                     titleText: 'Choose your Platform',
-                    selectedText: 'None Selected',
+                    selectedText: val.totalPlatformCount == null ||
+                        val.totalPlatformCount == 0 ? 'None Selected' : val
+                        .totalPlatformCount == 5 ? 'Max Selected' : val.totalPlatformCount
+                        .toString() + ' Selected',
                     widget: Container(
                       margin: EdgeInsets.only(bottom: 20),
                       height: ScreenUtils.getDesignHeight(70),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          GestureDetector(
-                              onTap: () => showPlatformBottomSheet(
+                          _platformItem(
+                              'PlayStation',
+                              PLAYSTATION_COLOR,
+                              'assets/images/playstation-controller.png',
+                              () => showPlatformBottomSheet(
                                   'Select your PlayStation Console',
-                                  playStationPlatforms),
-                              child: _platformItem(
-                                  'PlayStation',
-                                  PLAYSTATION_COLOR,
-                                  'assets/images/playstation-controller.png')),
+                                  playStationPlatforms , PlatformSelection.PlayStation)),
                           _platformItem('Xbox', XBOX_COLOR,
-                              'assets/images/xbox-controller.png'),
+                              'assets/images/xbox-controller.png',
+                              () => showPlatformBottomSheet(
+                                  'Select your Xbox Console',
+                                  xboxPlatforms , PlatformSelection.Xbox)),
                           _platformItem('Nintendo', NINTENDO_COLOR,
-                              'assets/images/switch-controller.png'),
+                              'assets/images/switch-controller.png',
+                              () => showPlatformBottomSheet(
+                                  'Select your Nintendo Console',
+                                  nintendoConsoles , PlatformSelection.Nintendo)),
                         ],
                       ),
                     ));
@@ -146,13 +164,15 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: val.currentReleaseDateState,
-                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
+                    onTap: () =>
+                        Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
-                        .changeReleaseDateState(
-                            Provider.of<SetupPurchaseAccountModel>(context,
-                                            listen: false)
-                                        .currentReleaseDateState ==
-                                    false
+                            .changeReleaseDateState(
+                            Provider
+                                .of<SetupPurchaseAccountModel>(context,
+                                listen: false)
+                                .currentReleaseDateState ==
+                                false
                                 ? true
                                 : false),
                     titleText: 'Choose Release Date',
@@ -167,10 +187,11 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                           runSpacing: 20,
                           children: releaseDates.map((e) {
                             return GestureDetector(
-                              onTap: () => Provider.of<SetupPurchaseAccountModel>(
+                              onTap: () =>
+                                  Provider.of<SetupPurchaseAccountModel>(
                                       context,
                                       listen: false)
-                                  .addReleaseDates(releaseDates.indexOf(e)),
+                                      .addReleaseDates(releaseDates.indexOf(e)),
                               child: CustomSelectingWidget(
                                 titleText: e,
                                 active: val.selectedReleaseDates
@@ -206,15 +227,22 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             _wishlistGames(),
             Spacer(),
             Container(
-                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
-                child: CustomButton(buttonColor: PRIMARY_COLOR,buttonText: 'Setup Sales',textFontSize: 16, onPressed: () =>  locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),))
+                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30),
+                    left: 24,
+                    right: 24),
+                child: CustomButton(buttonColor: PRIMARY_COLOR,
+                  buttonText: 'Setup Sales',
+                  textFontSize: 16,
+                  onPressed: () =>
+                      locator<NavigationService>().pushNamed(
+                          SALES_ACCOUNT_SCREEN),))
           ],
         ),
       ),
     );
   }
 
-  showPlatformBottomSheet(String title, List<String> list) async {
+  showPlatformBottomSheet(String title, List<Map<String, dynamic>> list , PlatformSelection platform) async {
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -223,7 +251,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             decoration: BoxDecoration(
                 color: CONTAINER_COLOR,
                 borderRadius: BorderRadius.circular(15.0)),
-            child: _bottomSheet(title, list),
+            child: _bottomSheet(title, list , platform),
           );
         });
   }
@@ -236,7 +264,9 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
       height: ScreenUtils.getDesignHeight(160),
       child: Row(
         children: [
-          CustomDottedSelectorWidget(onPressed:() => locator<NavigationService>().pushNamed(SEARCH_SCREEN , args: SearchGameScreens.SetupPurchase) ,),
+          CustomDottedSelectorWidget(onPressed: () =>
+              locator<NavigationService>().pushNamed(
+                  SEARCH_SCREEN, args: SearchGameScreens.SetupPurchase),),
           ChangeNotifierProvider.value(
             value: model,
             child: Consumer<SetupPurchaseAccountModel>(
@@ -245,27 +275,27 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                 return val.selectedGameList.isEmpty
                     ? Container()
                     : Expanded(
-                        child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 15,
-                              );
-                            },
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: val.selectedGameList.length,
-                            itemBuilder: (context, index) {
-                              return GamesWidget(
-                                gameName: val.selectedGameList[index].name,
-                                color: PRIMARY_COLOR,
-                                backgroundUrl:
-                                    val.selectedGameList[index].image,
-                                releaseDate:
-                                    val.selectedGameList[index].released,
-                              );
-                            }),
-                      );
+                  child: ListView.separated(
+                      separatorBuilder:
+                          (BuildContext context, int index) {
+                        return SizedBox(
+                          width: 15,
+                        );
+                      },
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: val.selectedGameList.length,
+                      itemBuilder: (context, index) {
+                        return GamesWidget(
+                          gameName: val.selectedGameList[index].name,
+                          color: PRIMARY_COLOR,
+                          backgroundUrl:
+                          val.selectedGameList[index].image,
+                          releaseDate:
+                          val.selectedGameList[index].released,
+                        );
+                      }),
+                );
               },
             ),
           )
@@ -274,36 +304,40 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
     );
   }
 
-  Widget _platformItem(String title, Color color, String image_path) {
-    return Container(
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: color),
-      width: ScreenUtils.getDesignWidth(100),
-      child: Stack(
-        children: [
-          Container(
-              height: ScreenUtils.getDesignHeight(70),
-              width: ScreenUtils.getDesignWidth(100),
-              child: Image.asset(
-                image_path,
-                fit: BoxFit.cover,
-              )),
-          Container(
-            decoration: BoxDecoration(
-                color: BACKGROUND_COLOR.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(3.0)),
-          ),
-          Center(
-            child: Text(
-              title,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: Neusa,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+  Widget _platformItem(String title, Color color, String image_path,
+      VoidCallback onPressed) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        decoration:
+        BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: color),
+        width: ScreenUtils.getDesignWidth(100),
+        child: Stack(
+          children: [
+            Container(
+                height: ScreenUtils.getDesignHeight(70),
+                width: ScreenUtils.getDesignWidth(100),
+                child: Image.asset(
+                  image_path,
+                  fit: BoxFit.cover,
+                )),
+            Container(
+              decoration: BoxDecoration(
+                  color: BACKGROUND_COLOR.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(3.0)),
             ),
-          ),
-        ],
+            Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontFamily: Neusa,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -323,7 +357,9 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
           itemCount: genreList.length,
           itemBuilder: (BuildContext context, index) {
             return GestureDetector(
-              onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).addSelectedGenres(index),
+              onTap: () =>
+                  Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                      .addSelectedGenres(index),
               child: Consumer<SetupPurchaseAccountModel>(builder: (_, val, __) {
                 return SelectGameItem(
                   isSelected: val.selectedGenres.contains(index),
@@ -336,7 +372,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
     );
   }
 
-  Widget _bottomSheet(String title, List<String> list) {
+  Widget _bottomSheet(String title, List<Map<String, dynamic>> list , PlatformSelection platform) {
     return Container(
       margin: EdgeInsets.only(
           top: ScreenUtils.getDesignHeight(40), left: 24, right: 24),
@@ -363,17 +399,18 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
               children: list.map((e) {
                 return GestureDetector(
                   onTap: () {
-                    Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                        .addSelectedPlatforms(list.indexOf(e));
+                    Provider.of<SetupPurchaseAccountModel>(
+                        context, listen: false)
+                        .addSelectedPlatforms(list.indexOf(e) , platform);
                   },
                   child: ChangeNotifierProvider.value(
                     value: Provider.of<SetupPurchaseAccountModel>(context),
                     child: Consumer<SetupPurchaseAccountModel>(
                       builder: (_, val, __) {
                         return CustomSelectingWidget(
-                          titleText: e,
-                          active:
-                              val.selectedPlatforms.contains(list.indexOf(e)),
+                          titleText: e['name'],
+                          active: platform == PlatformSelection.PlayStation ? val.selectedPlaystationPlatforms.contains(list.indexOf(e)) : platform == PlatformSelection.Xbox ? val.selectedXboxPlatforms.contains(list.indexOf(e)) :
+                          val.selectedNintendoPlatforms.contains(list.indexOf(e))
                         );
                       },
                     ),
@@ -397,7 +434,6 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
 
   Future<void> customAlert(
       {@required BuildContext context, String title, String contentBody}) {
-
     return showGeneralDialog<void>(
         barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
@@ -406,18 +442,20 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             child: Opacity(
               opacity: a1.value,
               child: AlertDialog(
-                backgroundColor: CONTAINER_COLOR,
+                  backgroundColor: CONTAINER_COLOR,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   content: Container(
-                    margin: EdgeInsets.symmetric(vertical: ScreenUtils.getDesignHeight(15)),
+                    margin: EdgeInsets.symmetric(
+                        vertical: ScreenUtils.getDesignHeight(15)),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Container(
                           height: ScreenUtils.getDesignHeight(60),
                           width: ScreenUtils.getDesignWidth(60),
-                          child: Image.asset('assets/images/confused-emoji.png'),
+                          child: Image.asset(
+                              'assets/images/confused-emoji.png'),
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 25),
@@ -444,15 +482,18 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                           ),
                         ),
                         Container(
-                          width: ScreenUtils.bodyWidth,
-                          margin: EdgeInsets.only(top: 25),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomAlertButton(buttonColor: UNSELECTED_ITEM_COLOR,buttonText: 'I only Sell',),
-                              CustomAlertButton(buttonColor: PRIMARY_COLOR,buttonText: 'I wanna Buy!',),
-                            ],
-                          )
+                            width: ScreenUtils.bodyWidth,
+                            margin: EdgeInsets.only(top: 25),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CustomAlertButton(
+                                  buttonColor: UNSELECTED_ITEM_COLOR,
+                                  buttonText: 'I only Sell',),
+                                CustomAlertButton(buttonColor: PRIMARY_COLOR,
+                                  buttonText: 'I wanna Buy!',),
+                              ],
+                            )
                         ),
                       ],
                     ),

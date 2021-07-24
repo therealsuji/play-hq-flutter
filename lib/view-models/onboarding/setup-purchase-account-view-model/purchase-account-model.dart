@@ -23,9 +23,13 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   void addSelectedGenres(index);
 
-  List<int> get selectedPlatforms;
+  List<int> get selectedPlaystationPlatforms;
 
-  void addSelectedPlatforms(int index);
+  List<int> get selectedXboxPlatforms;
+
+  List<int> get selectedNintendoPlatforms;
+
+  void addSelectedPlatforms(int index,  PlatformSelection platformSelection);
 
   List<int> get selectedReleaseDates;
 
@@ -34,5 +38,9 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
   List<GameDetails> get selectedGameList;
 
   void addSelectedGame(GameDetails game);
+
+  int get genreCount;
+
+  int get totalPlatformCount;
 
 }
