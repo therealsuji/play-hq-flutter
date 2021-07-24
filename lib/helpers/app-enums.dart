@@ -5,3 +5,5 @@ enum LOGIN_PROVIDER { GOOGLE, APPLE, FACEBOOK }
 enum SearchScreenStates {EMPTY , SUCCESS , NOTHING , LOADING , FAILED}
 
 enum SearchGameScreens {SetupPurchase , SetupSales , CreateSales}
+
+enum PlatformSelection {PlayStation , Xbox , Nintendo}
