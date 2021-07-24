@@ -20,37 +20,30 @@ class SignUpScreen extends StatelessWidget {
           height: double.infinity,
           color: BACKGROUND_COLOR,
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtils.getDesignWidth(24)),
+            padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
             child: Column(
               children: [
                 Container(
-                  margin:
-                      EdgeInsets.only(top: ScreenUtils.getDesignHeight(100)),
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100)),
                   width: ScreenUtils.getDesignWidth(186),
                   child: Image.asset('assets/images/logo.png'),
                 ),
                 Container(
-                  margin:
-                      EdgeInsets.only(top: ScreenUtils.getDesignHeight(130)),
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(130)),
                   child: Container(
                     width: double.infinity,
                     height: ScreenUtils.getDesignHeight(45),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        color: CONTAINER_COLOR),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: CONTAINER_COLOR),
                     child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            child:
-                                SvgPicture.asset('assets/icons/facebook.svg'),
+                            child: SvgPicture.asset('assets/icons/facebook.svg'),
                           ),
                           Container(
-                            margin: EdgeInsets.only(
-                                left: ScreenUtils.getDesignWidth(20)),
+                            margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
                             child: Text(
                               'Continue with Facebook',
                               style: TextStyle(
@@ -66,30 +59,23 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () =>
-                      locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN),
+                  onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.GOOGLE),
                   child: Container(
-                    margin:
-                        EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
+                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
                     child: Container(
                       width: double.infinity,
                       height: ScreenUtils.getDesignHeight(45),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5.0),
-                          color: CONTAINER_COLOR),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: CONTAINER_COLOR),
                       child: Container(
-
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              child:
-                                  SvgPicture.asset('assets/icons/Google.svg'),
+                              child: SvgPicture.asset('assets/icons/Google.svg'),
                             ),
                             Container(
-                              margin: EdgeInsets.only(
-                                  left: ScreenUtils.getDesignWidth(20)),
+                              margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
                               child: Text(
                                 'Continue with Google',
                                 style: TextStyle(
@@ -118,8 +104,7 @@ class SignUpScreen extends StatelessWidget {
                   child: RichText(
                     text: TextSpan(children: [
                       TextSpan(
-                          text:
-                              'By signing up you indicate that you agree with',
+                          text: 'By signing up you indicate that you agree with',
                           style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
@@ -200,9 +185,7 @@ class SignUpScreen extends StatelessWidget {
       height: ScreenUtils.getDesignHeight(45),
       child: RaisedButton(
         elevation: 0,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(6.0),
-            side: BorderSide(color: buttonColor)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6.0), side: BorderSide(color: buttonColor)),
         color: buttonColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -214,8 +197,7 @@ class SignUpScreen extends StatelessWidget {
                 child: Image.asset(logoPath)),
             Text(
               buttonText,
-              style:
-                  TextStyle(color: textColor, fontFamily: Neusa, fontSize: 18),
+              style: TextStyle(color: textColor, fontFamily: Neusa, fontSize: 18),
             ),
           ],
         ),
