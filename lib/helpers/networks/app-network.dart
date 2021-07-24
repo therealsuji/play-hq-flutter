@@ -25,20 +25,20 @@ class Network {
   //http client
   Client client = Client();
 
-  Map<String ,  String> _headers = {
+  Map<String, String> _headers = {
     "User-Agent": 'PlayHQ',
     'Content-type': 'application/json',
     'Accept': 'application/json',
   };
 
-  Future<T> _performWebRequest<T>(RequestType type, String url, {dynamic body}) async {
+  Future<T> _performWebRequest<T>(RequestType type, String url, {dynamic body, bool noToken = false}) async {
     //Response initialization
     Response response;
 
     //Get the jwtToken from secure storage and if existing, add to the header
     String bearerToken = await SecureStorage.readValue("jwtToken");
-
-    if (bearerToken != null) {
+    print(bearerToken);
+    if (bearerToken != null && !noToken) {
       _headers.addAll({'Authorization': 'Bearer $bearerToken'});
     }
 
@@ -96,12 +96,11 @@ class Network {
   }
 
   Future<UserModel> loginUser(token) async {
-    return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login, body: {"token": token});
+    return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login,
+        body: {"token": token}, noToken: true);
   }
 
-  Future<SearchGame> searchGame (String params) async {
+  Future<SearchGame> searchGame(String params) async {
     return await _performWebRequest<SearchGame>(RequestType.get, ConfigData.getSearchResults(params));
   }
-
-
 }

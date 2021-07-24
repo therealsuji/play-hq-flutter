@@ -2,15 +2,14 @@ import 'dart:collection';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/custom-app-bar-widget.dart';
+import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
-import 'package:play_hq/widgets/custom-map-setter-widget.dart';
 import 'package:play_hq/widgets/custom-textfield-widget.dart';
-import 'package:play_hq/widgets/rasied-gradient-button-widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:provider/provider.dart';
 
@@ -67,17 +66,36 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                 height: ScreenUtils.getDesignHeight(124.0),
                 child: Row(
                   children: [
-                    CustomDottedSelectorWidget(
-                      filled: true,
-                    ),
-                    SelectGameItem(
-                      imageURL:
-                          "https://i.pinimg.com/236x/3a/02/68/3a02685be25e504ea6bd2848e2a9715c--jeux-ps-ps-games.jpg",
-                      titleText: "Uncharted",
-                      isSelected: false,
-                      isDismisable: true,
-                      dismissPressed: () => {print('JESSUS')},
-                    )
+                    Consumer<CreateSaleModel>(builder: (_, model, __) {
+                      return Expanded(
+                        child: ListView.separated(
+                          itemCount: model.gameList.length + 1,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, idx) {
+                            if (idx == 0) {
+                              return CustomDottedSelectorWidget(
+                                filled: true,
+                              );
+                            }
+                            return SelectGameItem(
+                              imageURL: model.gameList[idx - 1].image,
+                              titleText: model.gameList[idx - 1].name,
+                              isSelected: false,
+                              isDismisable: true,
+                              dismissPressed: () => {
+                                Provider.of<CreateSaleModel>(context, listen: false).removeGame(model.gameList[idx - 1])
+                              },
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            if (index == 0) return Container();
+                            return SizedBox(
+                              width: ScreenUtils.getDesignWidth(15.0),
+                            );
+                          },
+                        ),
+                      );
+                    }),
                   ],
                 ),
               ),
@@ -93,13 +111,17 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                             fontFamily: Neusa,
                           ),
                     ),
-                    Text(
-                      "x2 Games",
-                      style: Theme.of(context).primaryTextTheme.headline2.copyWith(
-                            color: PRIMARY_COLOR,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: Neusa,
-                          ),
+                    Consumer<CreateSaleModel>(
+                      builder: (_, model, __) {
+                        return Text(
+                          model.gameList.length <= 1 ? 'of Game' : "${model.gameList.length}x Games",
+                          style: Theme.of(context).primaryTextTheme.headline2.copyWith(
+                                color: PRIMARY_COLOR,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: Neusa,
+                              ),
+                        );
+                      },
                     )
                   ],
                 ),

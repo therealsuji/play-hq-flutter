@@ -1,5 +1,3 @@
-
-
 import 'app-configurations.dart';
 
 class ConfigData {
@@ -14,7 +12,7 @@ class ConfigData {
     switch (environment) {
       case Environment.DEV:
         _rawgAPI = "https://api.rawg.io/api";
-        _baseUrl = "http://localhost:1337";
+        _baseUrl = "http://192.168.1.7:1337";
         break;
       case Environment.QA:
         _rawgAPI = "https://api.rawg.io/api";
@@ -30,9 +28,11 @@ class ConfigData {
   //authenticate user
   static String login = '$_baseUrl' + "/firebase/auth";
 
+  static String createSale = '$_baseUrl' + "/sell-games";
+
   static String getGenres = '$_rawgAPI' + '/genres?ordering=&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
 
-  static String getSearchResults(String params){
+  static String getSearchResults(String params) {
     return '$_rawgAPI' + '/games?page=1&search=$params' + '&key=$_RAWG_API_KEY';
   }
 }
