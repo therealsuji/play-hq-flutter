@@ -5,6 +5,7 @@ import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
+import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
@@ -13,11 +14,9 @@ import 'package:play_hq/widgets/custom-search-item-widget.dart';
 import 'package:provider/provider.dart';
 
 class CustomSearchScreen extends StatefulWidget {
-
   final SearchGameScreens values;
 
   CustomSearchScreen({this.values});
-
 
   @override
   _CustomSearchScreenState createState() => _CustomSearchScreenState();
@@ -46,8 +45,7 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                         return Container();
                         break;
                       case SearchScreenStates.LOADING:
-                        return CustomLoadingBarrier(
-                            path: 'assets/animations/search.json');
+                        return CustomLoadingBarrier(path: 'assets/animations/search.json');
                         break;
                       case SearchScreenStates.SUCCESS:
                         return Expanded(
@@ -56,14 +54,21 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
-                                    switch(widget.values){
+                                    switch (widget.values) {
                                       case SearchGameScreens.SetupPurchase:
-                                        Provider.of<SetupPurchaseAccountModel>(context , listen: false).addSelectedGame(val.gameList[index]);
+                                        Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                                            .addSelectedGame(val.gameList[index]);
                                         locator<NavigationService>().pushNamed(PURCHASE_ACCOUNT_SCREEN);
                                         break;
                                       case SearchGameScreens.SetupSales:
-                                        Provider.of<SetupSalesModel>(context , listen: false).addSelectedGame(val.gameList[index]);
+                                        Provider.of<SetupSalesModel>(context, listen: false)
+                                            .addSelectedGame(val.gameList[index]);
                                         locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN);
+                                        break;
+                                      case SearchGameScreens.CreateSales:
+                                        // Provider.of<CreateSaleModel>(context, listen: false)
+                                        //     .addGame(val.gameList[index]);
+                                        locator<NavigationService>().pop(args: val.gameList[index]);
                                         break;
                                       default:
                                         print('Something went wrong');
@@ -109,8 +114,7 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
       obscureText: false,
       focusNode: FocusScopeNode().focusedChild,
       keyboardType: TextInputType.name,
-      onChanged: (val) =>
-          Provider.of<SearchGameModel>(context, listen: false).searchGames(val),
+      onChanged: (val) => Provider.of<SearchGameModel>(context, listen: false).searchGames(val),
       cursorColor: PRIMARY_COLOR,
       decoration: InputDecoration(
         prefixIcon: Container(
@@ -131,12 +135,5 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
         contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-    Hive.close();
   }
 }

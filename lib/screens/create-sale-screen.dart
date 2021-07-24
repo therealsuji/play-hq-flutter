@@ -4,8 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/helpers/app-strings.dart';
+import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
@@ -73,8 +77,17 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, idx) {
                             if (idx == 0) {
-                              return CustomDottedSelectorWidget(
-                                filled: true,
+                              return GestureDetector(
+                                onTap: () async {
+                                  var game = await locator<NavigationService>()
+                                      .pushNamed(SEARCH_SCREEN, args: SearchGameScreens.CreateSales);
+                                  if (game != null) {
+                                    Provider.of<CreateSaleModel>(context, listen: false).addGame(game.first);
+                                  }
+                                },
+                                child: CustomDottedSelectorWidget(
+                                  filled: true,
+                                ),
                               );
                             }
                             return SelectGameItem(
