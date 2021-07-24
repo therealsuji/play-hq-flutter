@@ -1,6 +1,6 @@
 //Decide on the initialization data model based on the return response
 
-import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/models/app-user-model.dart';
 
 class InitializeData {

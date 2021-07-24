@@ -5,7 +5,7 @@ import 'dart:async';
 
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
-import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 
 class ImplSearchGames extends SearchGameModel{

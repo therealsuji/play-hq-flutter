@@ -7,7 +7,8 @@ import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/app-genre-model.dart';
-import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/models/onboarding-models/setup-purchase-model.dart';
+import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 
 class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
@@ -18,6 +19,9 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
 
   int _genreCount;
   int _platformCount = 0;
+
+  ReleaseDatesModel _releaseDates = ReleaseDatesModel();
+  List<ReleaseDatesModel> _releaseDatesList = [];
 
   List<int> _selectedGenres = [];
   List<int> _selectedPlaystationPlatforms = [];
@@ -67,7 +71,6 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
 
   @override
   void addSelectedPlatforms(int index , PlatformSelection platformSelection) {
-
       switch (platformSelection) {
         case PlatformSelection.PlayStation:
           if(_selectedPlaystationPlatforms.contains(index)) {
@@ -124,13 +127,18 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   bool get currentReleaseDateState => _currentReleaseDateState;
 
   @override
-  void addReleaseDates(int index) {
+  void addReleaseDates(int index , String releaseDates) {
+    _releaseDates.id = index.toString();
+
     if(_selectedReleaseDates.contains(index)) {
       _selectedReleaseDates.remove(index);
+      _releaseDatesList.remove(_releaseDates);
     }else{
       _selectedReleaseDates.add(index);
+      _releaseDatesList.add(_releaseDates);
     }
     notifyListeners();
+    print(_releaseDatesList[2].id);
   }
 
   @override

@@ -30,6 +30,7 @@ class _SetupPurchaseAccountScreenState
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
       body: SafeArea(
@@ -191,9 +192,9 @@ class _SetupPurchaseAccountScreenState
                                   Provider.of<SetupPurchaseAccountModel>(
                                       context,
                                       listen: false)
-                                      .addReleaseDates(releaseDates.indexOf(e)),
+                                      .addReleaseDates(releaseDates.indexOf(e) , e['name']),
                               child: CustomSelectingWidget(
-                                titleText: e,
+                                titleText: e['name'],
                                 active: val.selectedReleaseDates
                                     .contains(releaseDates.indexOf(e)),
                               ),

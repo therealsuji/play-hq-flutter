@@ -3,7 +3,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/models/app-genre-model.dart';
-import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/models/onboarding-models/setup-purchase-model.dart';
+import 'package:play_hq/models/search-model/app-search-game-model.dart';
 
 abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
@@ -33,7 +34,7 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   List<int> get selectedReleaseDates;
 
-  void addReleaseDates(int index);
+  void addReleaseDates(int index , String releaseDate);
 
   List<GameDetails> get selectedGameList;
 

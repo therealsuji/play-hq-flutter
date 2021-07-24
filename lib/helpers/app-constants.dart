@@ -1,3 +1,5 @@
+
+
 const List<Map<String , dynamic>> playStationPlatforms = [
   {
     'id': 187,
@@ -71,11 +73,23 @@ const List<Map<String , dynamic>> nintendoConsoles =[
   },
 ];
 
-const List<String> releaseDates = [
-  "2015-2017",
-  "2017-2019",
-  "2019-Present",
-  "Old Classics"
+const List<Map<String , dynamic>> releaseDates = [
+  {
+    'id':0,
+    'name':'2015-2017'
+  },
+  {
+    'id':1,
+    'name': '2017-2019'
+  },
+  {
+    'id':2,
+    'name':'2019-Present'
+  },
+  {
+    'id':3,
+    'name':'Old Classics'
+  }
 ];
 
 const List<Map<String, dynamic>> genreList = [

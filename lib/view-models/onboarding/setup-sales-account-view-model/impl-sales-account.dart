@@ -1,7 +1,7 @@
 
 
 import 'package:hive/hive.dart';
-import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
 
 class ImplSetupSales extends SetupSalesModel{

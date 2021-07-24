@@ -8,7 +8,7 @@ import 'package:hive/hive.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/models/app-search-game-model.dart';
+import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/widgets/custom-app-bar-widget.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-game-selector.dart';
