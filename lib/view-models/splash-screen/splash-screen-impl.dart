@@ -10,7 +10,7 @@ import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 class ImplSplash extends SplashScreenModel {
   @override
   void navigateMainScreen() {
-    locator<NavigationService>().pushReplacement(CREATE_SALE_ROUTE);
+    locator<NavigationService>().pushReplacement(MAIN_SCREEN);
   }
 
   @override

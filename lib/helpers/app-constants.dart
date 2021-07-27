@@ -1,95 +1,41 @@
-
-
-const List<Map<String , dynamic>> playStationPlatforms = [
-  {
-    'id': 187,
-    'name': 'PlayStation 5'
-  },
-  {
-    'id': 18,
-    'name': 'PlayStation 4'
-  },
-  {
-    'id': 16,
-    'name': 'PlayStation 3'
-  },
-  {
-    'id':15,
-    'name': 'PlayStation 2'
-  },
-  {
-    'id': 19,
-    'name' : 'PS Vita'
-  },
-  {
-    'id': 17,
-    'name' : 'PSP'
-  }
+const List<Map<String, dynamic>> playStationPlatforms = [
+  {'id': 187, 'name': 'PlayStation 5'},
+  {'id': 18, 'name': 'PlayStation 4'},
+  {'id': 16, 'name': 'PlayStation 3'},
+  {'id': 15, 'name': 'PlayStation 2'},
+  {'id': 19, 'name': 'PS Vita'},
+  {'id': 17, 'name': 'PSP'}
 ];
 
-const List<Map<String , dynamic>> xboxPlatforms = [
-  {
-    'id':186,
-    'name':'Xbox Series S/X'
-  },
-  {
-    'id':1,
-    'name':'Xbox One'
-  },
-  {
-    'id':14,
-    'name': 'Xbox 360'
-  },
-  {
-    'id':80,
-    'name':'Xbox'
-  }
+const List<Map<String, dynamic>> xboxPlatforms = [
+  {'id': 186, 'name': 'Xbox Series S/X'},
+  {'id': 1, 'name': 'Xbox One'},
+  {'id': 14, 'name': 'Xbox 360'},
+  {'id': 80, 'name': 'Xbox'}
 ];
 
-const List<Map<String , dynamic>> nintendoConsoles =[
-  {
-    'id' : 7,
-    'name' : 'Nintendo Switch'
-  },
-  {
-    'id' : 8,
-    'name' : 'Nintendo 3DS'
-  },
-  {
-    'id' : 9,
-    'name' : 'Nintendo DS'
-  },
-  {
-    'id' : 13,
-    'name' : 'Nintendo DSi'
-  },
-  {
-    'id' : 11,
-    'name' : 'Wii'
-  },
-  {
-    'id' : 10,
-    'name' : 'Wii U'
-  },
+const List<Map<String, dynamic>> nintendoConsoles = [
+  {'id': 7, 'name': 'Nintendo Switch'},
+  {'id': 8, 'name': 'Nintendo 3DS'},
+  {'id': 9, 'name': 'Nintendo DS'},
+  {'id': 13, 'name': 'Nintendo DSi'},
+  {'id': 11, 'name': 'Wii'},
+  {'id': 10, 'name': 'Wii U'},
 ];
 
-const List<Map<String , dynamic>> releaseDates = [
-  {
-    'id':0,
-    'name':'2015-2017'
-  },
-  {
-    'id':1,
-    'name': '2017-2019'
-  },
-  {
-    'id':2,
-    'name':'2019-Present'
-  },
-  {
-    'id':3,
-    'name':'Old Classics'
-  }
+const List<Map<String, dynamic>> popularConsoles = [
+  {'id': 187, 'name': 'PlayStation 5'},
+  {'id': 186, 'name': 'Xbox Series S/X'},
+  {'id': 18, 'name': 'PlayStation 4'},
+  {'id': 7, 'name': 'Nintendo Switch'},
+  {'id': 1, 'name': 'Xbox One'},
+];
+
+const List<Map<String, dynamic>> releaseDates = [
+  {'id': 0, 'name': '2015-2017'},
+  {'id': 1, 'name': '2017-2019'},
+  {'id': 2, 'name': '2019-Present'},
+  {'id': 3, 'name': 'Old Classics'}
 ];
 
 const List<Map<String, dynamic>> genreList = [
@@ -189,4 +135,3 @@ const List<Map<String, dynamic>> genreList = [
     "image_background": "https://media.rawg.io/media/screenshots/ca2/ca257e3481af0b2c8149d6600440aa85.jpeg",
   }
 ];
-

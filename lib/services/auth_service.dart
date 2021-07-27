@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:play_hq/helpers/app-enums.dart';
@@ -26,6 +28,7 @@ class AuthService {
         return null;
     }
     if (token != null) {
+      log(token);
       var strapi_token = await _getUserToken(token);
       SecureStorage.writeValue("jwtToken", token);
       locator<NavigationService>().pushReplacement(MAIN_SCREEN);

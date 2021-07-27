@@ -1,12 +1,31 @@
 import 'package:flutter/cupertino.dart';
-import 'package:play_hq/models/search-model/app-search-game-model.dart';
+import 'package:play_hq/helpers/app-enums.dart';
+import 'package:play_hq/models/create-sale-model.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
-  List<GameDetails> _selectedGameList = [];
+  List<SaleGame> get gameList;
 
-  List<GameDetails> get gameList => _selectedGameList;
+  void addGame(int id, String name, String image);
 
-  addGame(GameDetails game);
+  void removeGame(int id);
 
-  removeGame(GameDetails id);
+  Future<bool> createSale();
+
+  dynamic get selectedPlatform;
+
+  void setSelectedPlatform(dynamic id);
+
+  GameCondition get selectedGameCondition;
+
+  void setSelectedGameCondition(GameCondition condition);
+
+  bool get sheetSaved;
+
+  void setSheetSaved(bool isSaved);
+
+  bool get platformIsExpanded;
+
+  void setPlatformIsExpanded(bool expanded);
+
+  Set<Map<String, dynamic>> get consoleList;
 }

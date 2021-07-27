@@ -1,6 +1,7 @@
 import 'package:http/http.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/models/app-user-model.dart';
+import 'package:play_hq/models/create-sale-model.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
@@ -98,6 +99,10 @@ class Network {
   Future<UserModel> loginUser(token) async {
     return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login,
         body: {"token": token}, noToken: true);
+  }
+
+  Future<UserModel> createSale(CreateSalePayload payload) async {
+    return await _performWebRequest<UserModel>(RequestType.post, ConfigData.createSale, body: payload);
   }
 
   Future<SearchGame> searchGame(String params) async {

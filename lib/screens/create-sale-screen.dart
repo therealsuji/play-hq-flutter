@@ -1,6 +1,8 @@
 import 'dart:collection';
 
+import 'package:analyzer/dart/ast/ast.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:play_hq/helpers/app-colors.dart';
@@ -9,11 +11,13 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
+import 'package:play_hq/helpers/app-utils.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
 import 'package:play_hq/widgets/custom-textfield-widget.dart';
+import 'package:play_hq/widgets/sale-bottom-sheet-widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:provider/provider.dart';
 
@@ -22,21 +26,8 @@ class CreateSaleScreen extends StatefulWidget {
   _CreateSaleScreenState createState() => _CreateSaleScreenState();
 }
 
-List<String> _platforms = [
-  "PlayStation 4",
-  "Xbox One",
-  "Nintendo Switch",
-  "Playstation 3",
-  "Xbox 360",
-];
-
 class _CreateSaleScreenState extends State<CreateSaleScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-  List<Map<String, dynamic>> _gameCondition = [
-    {"name": 'Used', "status": true},
-    {"name": 'New', "status": false},
-    {"name": 'Mint', "status": false},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -79,10 +70,12 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                             if (idx == 0) {
                               return GestureDetector(
                                 onTap: () async {
-                                  var game = await locator<NavigationService>()
+                                  var gameDetails = await locator<NavigationService>()
                                       .pushNamed(SEARCH_SCREEN, args: SearchGameScreens.CreateSales);
-                                  if (game != null) {
-                                    Provider.of<CreateSaleModel>(context, listen: false).addGame(game.first);
+                                  if (gameDetails != null) {
+                                    await showSalesBottomSheet();
+                                    Provider.of<CreateSaleModel>(context, listen: false)
+                                        .addGame(gameDetails['id'], gameDetails['name'], gameDetails['price']);
                                   }
                                 },
                                 child: CustomDottedSelectorWidget(
@@ -91,12 +84,13 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                               );
                             }
                             return SelectGameItem(
-                              imageURL: model.gameList[idx - 1].image,
-                              titleText: model.gameList[idx - 1].name,
+                              imageURL: model.gameList[idx - 1].boxImage,
+                              titleText: model.gameList[idx - 1].title,
                               isSelected: false,
                               isDismisable: true,
                               dismissPressed: () => {
-                                Provider.of<CreateSaleModel>(context, listen: false).removeGame(model.gameList[idx - 1])
+                                Provider.of<CreateSaleModel>(context, listen: false)
+                                    .removeGame(int.parse(model.gameList[idx - 1].id))
                               },
                             );
                           },
@@ -140,7 +134,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                 ),
               ),
               CustomTextfieldWidget(
-                type: TextInputType.text,
+                type: TextInputType.number,
                 hideText: false,
               ),
               Padding(
@@ -178,15 +172,29 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 40.0),
                 child: CustomButton(
+                  onPressed: () {},
                   buttonText: "Create Sale",
                   buttonColor: LIME_COLOR,
-                  onPressed: () {},
                 ),
               )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> showSalesBottomSheet() async {
+    CreateSaleModel model = Provider.of<CreateSaleModel>(context, listen: false);
+    await showModalBottomSheet<void>(
+      isDismissible: false,
+      context: context,
+      builder: (context) {
+        return ChangeNotifierProvider.value(
+          value: model,
+          child: SaleBottomSheetWidget(),
+        );
+      },
     );
   }
 }

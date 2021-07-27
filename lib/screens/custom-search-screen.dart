@@ -68,7 +68,8 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
                                       case SearchGameScreens.CreateSales:
                                         // Provider.of<CreateSaleModel>(context, listen: false)
                                         //     .addGame(val.gameList[index]);
-                                        locator<NavigationService>().pop(args: val.gameList[index]);
+                                        var game = val.gameList[index];
+                                        Navigator.pop(context, {"id": game.id, "image": game.image, "name": game.name});
                                         break;
                                       default:
                                         print('Something went wrong');
