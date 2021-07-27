@@ -67,7 +67,7 @@ class User {
         genres: new List<Genre>.from(json["genres"].map((x) => Genre.fromJson(x))),
         releaseDates: new List<dynamic>.from(json["releaseDates"].map((x) => x)),
         platforms: new List<dynamic>.from(json["platforms"].map((x) => x)),
-        location: Location.fromJson(json["location"]),
+        location: json["location"] == null ? null : Location.fromJson(json["location"]),
       );
 
   Map<String, dynamic> toJson() => {
