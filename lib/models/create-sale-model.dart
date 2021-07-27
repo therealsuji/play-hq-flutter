@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 class CreateSalePayload {
-  int price;
-  String remarks;
-  String status;
-  bool negotiable;
-  Location location;
-  List<SaleGame> games;
+  int? price;
+  String? remarks;
+  String? status;
+  bool? negotiable;
+  Location? location;
+  List<SaleGame>? games;
 
   CreateSalePayload({
     this.price,
@@ -31,17 +31,17 @@ class CreateSalePayload {
         "remarks": remarks,
         "status": status,
         "negotiable": negotiable,
-        "location": location.toJson(),
-        "games": new List<dynamic>.from(games.map((x) => x.toJson())),
+        "location": location!.toJson(),
+        "games": new List<dynamic>.from(games!.map((x) => x.toJson())),
       };
 }
 
 class SaleGame {
-  String id;
-  String gameCondition;
-  String boxImage;
-  Platform platform;
-  String title;
+  String? id;
+  String? gameCondition;
+  String? boxImage;
+  Platform? platform;
+  String? title;
 
   SaleGame({
     this.id,
@@ -63,15 +63,15 @@ class SaleGame {
         "id": id,
         "gameCondition": gameCondition,
         "box_image": boxImage,
-        "platform": platform.toJson(),
+        "platform": platform!.toJson(),
         "title": title,
       };
 }
 
 class Platform {
-  String id;
-  int apiId;
-  String name;
+  String? id;
+  int? apiId;
+  String? name;
 
   Platform({
     this.id,
@@ -93,10 +93,10 @@ class Platform {
 }
 
 class Location {
-  String id;
-  int lat;
-  int long;
-  String address;
+  String? id;
+  int? lat;
+  int? long;
+  String? address;
 
   Location({
     this.id,

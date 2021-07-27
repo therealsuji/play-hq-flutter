@@ -9,7 +9,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
   @override
   final Size preferredSize = Size.fromHeight(80);
 
-  CustomAppBarWidget({@required this.title});
+  CustomAppBarWidget({required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
                 padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(52), bottom: 10),
                 child: Text(
                   '',
-                  style: Theme.of(context).primaryTextTheme.headline2.copyWith(color: Colors.white),
+                  style: Theme.of(context).primaryTextTheme.headline2!.copyWith(color: Colors.white),
                 ),
               )
             ],

@@ -4,12 +4,12 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomGameSelector extends StatelessWidget {
-  final String gameName;
+  final String? gameName;
   final String genre;
-  final String imageUrl;
-  final String releaseDate;
-  final int index;
-  final int selectedIndex;
+  final String? imageUrl;
+  final String? releaseDate;
+  final int? index;
+  final int? selectedIndex;
 
   CustomGameSelector(
       {this.gameName, this.genre = 'Action', this.imageUrl, this.releaseDate, this.index, this.selectedIndex});
@@ -35,7 +35,7 @@ class CustomGameSelector extends StatelessWidget {
                   child: Container(
                     width: ScreenUtils.bodyWidth,
                     child: Image.network(
-                      imageUrl,
+                      imageUrl!,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -47,7 +47,7 @@ class CustomGameSelector extends StatelessWidget {
                 Container(
                     alignment: Alignment.centerLeft,
                     margin: EdgeInsets.only(left: 15),
-                    child: Text(gameName,
+                    child: Text(gameName!,
                         style: TextStyle(
                             fontSize: 25,
                             fontFamily: Neusa,
@@ -143,7 +143,7 @@ class CustomGameSelector extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(top: 3),
                         child: Text(
-                          releaseDate,
+                          releaseDate!,
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,

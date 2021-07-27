@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/create-sale-screen.dart';
 import 'package:play_hq/screens/trades/create-trade-screen.dart';
@@ -52,17 +53,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case SEARCH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => MultiProvider(
-            providers: [
-              ChangeNotifierProvider<SearchGameModel>(
-                  create: (context) => ImplSearchGames()),
-              ChangeNotifierProvider<SetupPurchaseAccountModel>(
-                  create: (context) => _implSetupPurchaseAccount),
-              ChangeNotifierProvider<SetupSalesModel>(
-                  create: (context) => _implSetupSales),
-            ],
-              child: CustomSearchScreen(values: settings.arguments)
-          ));
+          builder: (context) => MultiProvider(providers: [
+                ChangeNotifierProvider<SearchGameModel>(create: (context) => ImplSearchGames()),
+                ChangeNotifierProvider<SetupPurchaseAccountModel>(create: (context) => _implSetupPurchaseAccount),
+                ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales),
+              ], child: CustomSearchScreen(values: settings.arguments as SearchGameScreens)));
 
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
@@ -70,9 +65,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => ImplCreateSale(), child: CreateSaleScreen()));
 
     case SALES_ACCOUNT_SCREEN:
-      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
-          create: (context) => _implSetupSales,
-          child: SetupSalesAccountScreen()));
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
+              create: (context) => _implSetupSales, child: SetupSalesAccountScreen()));
 
     case CREATE_TRADE_SCREEN:
       return MaterialPageRoute(builder: (context) => CreateTradeScreen());

@@ -6,9 +6,9 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class SearchGameItem extends StatelessWidget {
 
-  final String imageUrl;
-  final String title;
-  final String releaseDate;
+  final String? imageUrl;
+  final String? title;
+  final String? releaseDate;
 
   SearchGameItem({this.title, this.releaseDate , this.imageUrl});
 
@@ -30,7 +30,7 @@ class SearchGameItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5.0),
                   child: CachedNetworkImage(
-                    imageUrl: imageUrl,
+                    imageUrl: imageUrl!,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -42,8 +42,8 @@ class SearchGameItem extends StatelessWidget {
                   children: [
                     Container(
                       width: ScreenUtils.getDesignWidth(230),
-                      child: Text(title , style: TextStyle(fontWeight: FontWeight.w700 , color: TEXT_COLOR , fontFamily: CircularBook , fontSize: 16),),),
-                    Container(child: Text(releaseDate == null ? 'Not Mentioned' : releaseDate , style: TextStyle(fontWeight: FontWeight.w700 , color: PRIMARY_COLOR , fontFamily: Neusa , fontSize: 16),),)
+                      child: Text(title! , style: TextStyle(fontWeight: FontWeight.w700 , color: TEXT_COLOR , fontFamily: CircularBook , fontSize: 16),),),
+                    Container(child: Text(releaseDate == null ? 'Not Mentioned' : releaseDate! , style: TextStyle(fontWeight: FontWeight.w700 , color: PRIMARY_COLOR , fontFamily: Neusa , fontSize: 16),),)
                   ],
                 ),
               ),

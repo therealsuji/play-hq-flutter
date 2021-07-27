@@ -4,7 +4,7 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomLoadingBarrier extends StatelessWidget {
 
-  final String path;
+  final String? path;
 
   CustomLoadingBarrier({this.path});
 
@@ -18,7 +18,7 @@ class CustomLoadingBarrier extends StatelessWidget {
                 child: const ModalBarrier(dismissible: false, color: Color.fromRGBO(0, 0, 0, 0.5),)),
             Center(
               child: Container(
-                  child: Lottie.asset(path)),
+                  child: Lottie.asset(path!)),
             )
           ],
         ),

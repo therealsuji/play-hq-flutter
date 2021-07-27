@@ -26,7 +26,7 @@ const List<Map<String, dynamic>> _game_condtion = [
 ];
 
 class SaleBottomSheetWidget extends StatelessWidget {
-  const SaleBottomSheetWidget({Key key}) : super(key: key);
+  const SaleBottomSheetWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class SaleBottomSheetWidget extends StatelessWidget {
         children: [
           Text(
             "Platform",
-            style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(
+            style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(
                   fontWeight: FontWeight.bold,
                   fontFamily: Neusa,
                   color: Colors.white,
@@ -82,7 +82,7 @@ class SaleBottomSheetWidget extends StatelessWidget {
             padding: const EdgeInsets.only(top: 20.0),
             child: Text(
               "Gmae Condition",
-              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(
+              style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(
                     fontWeight: FontWeight.bold,
                     fontFamily: Neusa,
                     color: Colors.white,

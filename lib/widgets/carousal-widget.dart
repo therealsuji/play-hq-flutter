@@ -5,11 +5,11 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CarousalWidget extends StatelessWidget {
 
-  final String gameName;
-  final String price;
-  final String location;
-  final String backgroundUrl;
-  final String characterUrl;
+  final String? gameName;
+  final String? price;
+  final String? location;
+  final String? backgroundUrl;
+  final String? characterUrl;
 
   CarousalWidget({this.gameName, this.price, this.location, this.backgroundUrl, this.characterUrl});
 
@@ -36,7 +36,7 @@ class CarousalWidget extends StatelessWidget {
                         child: ClipRRect(
                             borderRadius: BorderRadius.circular(5.0),
                             child: Image.asset(
-                              backgroundUrl,
+                              backgroundUrl!,
                               fit: BoxFit.cover,
                             ))),
                   ),
@@ -73,7 +73,7 @@ class CarousalWidget extends StatelessWidget {
                             ],
                           ),
                           child: Text(
-                            gameName,
+                            gameName!,
                             style: TextStyle(
                                 fontSize: 33,
                                 color: Colors.white,
@@ -99,7 +99,7 @@ class CarousalWidget extends StatelessWidget {
                             ],
                           ),
                           child: Text(
-                            price,
+                            price!,
                             style: TextStyle(
                                 fontSize: 20,
                                 color: PRIMARY_COLOR,
@@ -125,7 +125,7 @@ class CarousalWidget extends StatelessWidget {
                             ],
                           ),
                           child: Text(
-                            location,
+                            location!,
                             style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.white.withOpacity(0.7),
@@ -174,7 +174,7 @@ class CarousalWidget extends StatelessWidget {
           Align(
             alignment: Alignment.bottomRight,
             child: Container(
-              child: Image.asset(characterUrl),
+              child: Image.asset(characterUrl!),
             ),
           )
         ],

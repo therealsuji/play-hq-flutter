@@ -2,8 +2,8 @@ import 'app-configurations.dart';
 
 class ConfigData {
   //Base url and version are private and not exposed
-  static String _rawgAPI;
-  static String _baseUrl;
+  static String? _rawgAPI;
+  static String? _baseUrl;
   static String _RAWG_API_KEY = 'be9f8d00d9d04aa6b1b3f6ee26f305b4';
 
   // static const _VERSION = "api-version=1";

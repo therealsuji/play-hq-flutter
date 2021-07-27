@@ -12,9 +12,9 @@ class ListGenreModel{
 
 class GenreModel {
 
-  int id;
-  String name;
-  String imageBackground;
+  int? id;
+  String? name;
+  String? imageBackground;
 
   GenreModel(key) {
     id = key["id"];

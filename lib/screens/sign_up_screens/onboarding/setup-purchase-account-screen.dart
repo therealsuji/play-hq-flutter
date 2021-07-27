@@ -434,7 +434,7 @@ class _SetupPurchaseAccountScreenState
   }
 
   Future<void> customAlert(
-      {@required BuildContext context, String title, String contentBody}) {
+      {required BuildContext context, String? title, String? contentBody}) {
     return showGeneralDialog<void>(
         barrierColor: Colors.black.withOpacity(0.5),
         transitionBuilder: (context, a1, a2, widget) {
@@ -461,7 +461,7 @@ class _SetupPurchaseAccountScreenState
                         Container(
                           margin: EdgeInsets.only(top: 25),
                           child: Text(
-                            title,
+                            title!,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: Neusa,
@@ -473,7 +473,7 @@ class _SetupPurchaseAccountScreenState
                           width: ScreenUtils.bodyWidth,
                           margin: EdgeInsets.only(top: 10),
                           child: Text(
-                            contentBody,
+                            contentBody!,
                             style: TextStyle(
                                 color: Colors.white.withOpacity(0.6),
                                 fontFamily: CircularBook,
@@ -508,6 +508,6 @@ class _SetupPurchaseAccountScreenState
         context: context,
         pageBuilder: (context, animation1, animation2) {
           return;
-        });
+        } as Widget Function(BuildContext, Animation<double>, Animation<double>));
   }
 }

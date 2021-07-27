@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomDottedSelectorWidget extends StatelessWidget {
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final bool filled;
 
   CustomDottedSelectorWidget({this.onPressed, this.filled = false});

@@ -17,9 +17,9 @@ import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateTradeScreen extends StatefulWidget {
-  CreateTradeScreen({Key key, this.title}) : super(key: key);
+  CreateTradeScreen({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _CreateTradeScreenState createState() => _CreateTradeScreenState();

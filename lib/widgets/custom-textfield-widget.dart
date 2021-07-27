@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 
 class CustomTextfieldWidget extends StatelessWidget {
-  final IconData iconData;
-  final bool hideText;
-  final Function(String) onChanged;
-  final String errorText;
-  final TextInputType type;
+  final IconData? iconData;
+  final bool? hideText;
+  final Function(String)? onChanged;
+  final String? errorText;
+  final TextInputType? type;
 
   CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type});
 
@@ -24,7 +24,7 @@ class CustomTextfieldWidget extends StatelessWidget {
           fontSize: 16,
         ),
         focusNode: FocusNode(),
-        obscureText: hideText,
+        obscureText: hideText!,
         keyboardType: type,
         maxLines: type == TextInputType.multiline ? 4 : null,
         minLines: type == TextInputType.multiline ? 4 : null,

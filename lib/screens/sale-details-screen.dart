@@ -212,7 +212,7 @@ class SaleDetails extends StatelessWidget {
         backgroundColor: Colors.transparent,
         builder: (builder){
           return new Container(
-            height: ScreenUtils.totalBodyHeight*0.75,
+            height: ScreenUtils.totalBodyHeight!*0.75,
             color: Colors.transparent, //could change this to Color(0xFF737373),
             //so you don't have to change MaterialApp canvasColor
             child: new Container(

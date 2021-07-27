@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 class UserModel {
-  User user;
-  String jwt;
+  User? user;
+  String? jwt;
 
   UserModel({
     this.user,
@@ -15,26 +15,26 @@ class UserModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "user": user.toJson(),
+        "user": user!.toJson(),
         "jwt": jwt,
       };
 }
 
 class User {
-  int id;
-  String username;
-  String email;
+  int? id;
+  String? username;
+  String? email;
   dynamic provider;
-  bool confirmed;
+  bool? confirmed;
   dynamic blocked;
-  Role role;
+  Role? role;
   dynamic phoneNumber;
-  String createdAt;
-  String updatedAt;
-  List<Genre> genres;
-  List<dynamic> releaseDates;
-  List<dynamic> platforms;
-  Location location;
+  String? createdAt;
+  String? updatedAt;
+  List<Genre>? genres;
+  List<dynamic>? releaseDates;
+  List<dynamic>? platforms;
+  Location? location;
 
   User({
     this.id,
@@ -77,21 +77,21 @@ class User {
         "provider": provider,
         "confirmed": confirmed,
         "blocked": blocked,
-        "role": role.toJson(),
+        "role": role!.toJson(),
         "phoneNumber": phoneNumber,
         "created_at": createdAt,
         "updated_at": updatedAt,
-        "genres": new List<dynamic>.from(genres.map((x) => x.toJson())),
-        "releaseDates": new List<dynamic>.from(releaseDates.map((x) => x)),
-        "platforms": new List<dynamic>.from(platforms.map((x) => x)),
-        "location": location.toJson(),
+        "genres": new List<dynamic>.from(genres!.map((x) => x.toJson())),
+        "releaseDates": new List<dynamic>.from(releaseDates!.map((x) => x)),
+        "platforms": new List<dynamic>.from(platforms!.map((x) => x)),
+        "location": location!.toJson(),
       };
 }
 
 class Genre {
-  int id;
-  String name;
-  int apiId;
+  int? id;
+  String? name;
+  int? apiId;
 
   Genre({
     this.id,
@@ -113,9 +113,9 @@ class Genre {
 }
 
 class Location {
-  int id;
-  int lat;
-  int long;
+  int? id;
+  int? lat;
+  int? long;
 
   Location({
     this.id,
@@ -137,10 +137,10 @@ class Location {
 }
 
 class Role {
-  int id;
-  String name;
-  String description;
-  String type;
+  int? id;
+  String? name;
+  String? description;
+  String? type;
 
   Role({
     this.id,

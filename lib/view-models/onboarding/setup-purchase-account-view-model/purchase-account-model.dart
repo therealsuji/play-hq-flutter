@@ -34,13 +34,13 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   List<int> get selectedReleaseDates;
 
-  void addReleaseDates(int index , String releaseDate);
+  void addReleaseDates(int index , String? releaseDate);
 
   List<GameDetails> get selectedGameList;
 
   void addSelectedGame(GameDetails game);
 
-  int get genreCount;
+  int? get genreCount;
 
   int get totalPlatformCount;
 

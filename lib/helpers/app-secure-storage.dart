@@ -7,7 +7,7 @@ class SecureStorage {
     await _storage.write(key: key, value: value);
   }
 
-  static Future<String> readValue(String key) async {
+  static Future<String?> readValue(String key) async {
     return await _storage.read(key: key);
   }
 

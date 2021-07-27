@@ -4,11 +4,11 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class RaisedGradientButton extends StatelessWidget {
 
-  final Gradient gradient;
-  final String buttonText;
-  final VoidCallback onPressed;
+  final Gradient? gradient;
+  final String? buttonText;
+  final VoidCallback? onPressed;
   final double textFontSize;
-  const RaisedGradientButton({Key key, this.gradient, this.buttonText, this.onPressed, this.textFontSize = 18}) : super(key: key);
+  const RaisedGradientButton({Key? key, this.gradient, this.buttonText, this.onPressed, this.textFontSize = 18}) : super(key: key);
 
 
   @override
@@ -26,7 +26,7 @@ class RaisedGradientButton extends StatelessWidget {
             onTap: onPressed,
             child: Center(
                 child: Text(
-              buttonText,
+              buttonText!,
               style: TextStyle(color: Colors.white, fontFamily: Neusa, fontSize: textFontSize),
             )),
           ),

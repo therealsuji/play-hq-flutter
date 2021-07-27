@@ -11,8 +11,6 @@ class SelectGamesScreen extends StatefulWidget {
 }
 
 class _SelectGamesScreenState extends State<SelectGamesScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,28 +22,43 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(90) , left: ScreenUtils.getDesignWidth(24) , right: ScreenUtils.getDesignWidth(24)),
-              child: Text('Let\'s get Started' , style: TextStyle(fontWeight: FontWeight.w500 , color: Colors.white , fontSize: 30 , fontFamily: Neusa),),
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(90),
+                  left: ScreenUtils.getDesignWidth(24),
+                  right: ScreenUtils.getDesignWidth(24)),
+              child: Text(
+                'Let\'s get Started',
+                style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white, fontSize: 30, fontFamily: Neusa),
+              ),
             ),
             Container(
-              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(5) , left: ScreenUtils.getDesignWidth(24) , right: ScreenUtils.getDesignWidth(24)),
-              child: Text('Select what kind of games you like' , style: TextStyle(fontWeight: FontWeight.w500 , color: Colors.white.withOpacity(0.6) , fontSize: 18 , fontFamily: CircularBook),),
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(5),
+                  left: ScreenUtils.getDesignWidth(24),
+                  right: ScreenUtils.getDesignWidth(24)),
+              child: Text(
+                'Select what kind of games you like',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white.withOpacity(0.6),
+                    fontSize: 18,
+                    fontFamily: CircularBook),
+              ),
             ),
             StreamBuilder<Object>(
-              initialData: false,
-              builder: (context, snapshot) {
-                return snapshot.data ? _selectedGameContainer('Genre' , 35)  : _selectingGamesContainer('Genre' , 35);
-              }
-            ),
-            _selectingGamesContainer('Platform' , 20),
-            _selectingGamesContainer('Year' , 20),
+                initialData: false,
+                builder: (context, snapshot) {
+                  return snapshot.hasData ? _selectedGameContainer('Genre', 35) : _selectingGamesContainer('Genre', 35);
+                }),
+            _selectingGamesContainer('Platform', 20),
+            _selectingGamesContainer('Year', 20),
           ],
         ),
       ),
     );
   }
 
-  Widget _selectedGameContainer(String title , double margin){
+  Widget _selectedGameContainer(String title, double margin) {
     return Container(
       margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(margin)),
       height: ScreenUtils.getDesignHeight(200),
@@ -55,17 +68,29 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
       ),
       child: GestureDetector(
         child: Container(
-          margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24) , right: ScreenUtils.getDesignWidth(24) , top: ScreenUtils.getDesignHeight(15)),
+          margin: EdgeInsets.only(
+              left: ScreenUtils.getDesignWidth(24),
+              right: ScreenUtils.getDesignWidth(24),
+              top: ScreenUtils.getDesignHeight(15)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                child: Text(title , style: TextStyle(fontSize: 18 , fontFamily: CircularBold , color: Colors.white , fontWeight: FontWeight.bold),),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 18, fontFamily: CircularBold, color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
               Spacer(),
-              Container(height: 22,width: 22,decoration: BoxDecoration(color: PRIMARY_COLOR , shape: BoxShape.circle),child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5 , vertical: 5),
-                  child: SvgPicture.asset('assets/icons/arrow-up.svg' , color: Colors.white)) ,)
+              Container(
+                height: 22,
+                width: 22,
+                decoration: BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    child: SvgPicture.asset('assets/icons/arrow-up.svg', color: Colors.white)),
+              )
             ],
           ),
         ),
@@ -73,7 +98,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
     );
   }
 
-  Widget _selectingGamesContainer(String title , double margin){
+  Widget _selectingGamesContainer(String title, double margin) {
     return Container(
       margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(margin)),
       height: ScreenUtils.getDesignHeight(50),
@@ -84,16 +109,25 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
       ),
       child: GestureDetector(
         child: Container(
-          margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24) , right: ScreenUtils.getDesignWidth(24)),
+          margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24), right: ScreenUtils.getDesignWidth(24)),
           child: Row(
             children: [
               Container(
-                child: Text(title , style: TextStyle(fontSize: 18 , fontFamily: CircularBold , color: Colors.white , fontWeight: FontWeight.bold),),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                      fontSize: 18, fontFamily: CircularBold, color: Colors.white, fontWeight: FontWeight.bold),
+                ),
               ),
               Spacer(),
-              Container(height: 22,width: 22,decoration: BoxDecoration(color: PRIMARY_COLOR , shape: BoxShape.circle),child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5 , vertical: 5),
-                  child: SvgPicture.asset('assets/icons/arrow-down.svg' , color: Colors.white)) ,)
+              Container(
+                height: 22,
+                width: 22,
+                decoration: BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
+                child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    child: SvgPicture.asset('assets/icons/arrow-down.svg', color: Colors.white)),
+              )
             ],
           ),
         ),

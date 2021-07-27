@@ -13,7 +13,7 @@ import 'package:play_hq/services/nav-service.dart';
 
 class AuthService {
   void login(LOGIN_PROVIDER authProvider) async {
-    String token;
+    String? token;
     switch (authProvider) {
       case LOGIN_PROVIDER.GOOGLE:
         token = await locator<GoogleAuthService>().login();

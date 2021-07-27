@@ -412,7 +412,7 @@ Widget _myGameForSale() {
   );
 }
 
-Widget pillContainer({String name, bool isPlatform = false}) {
+Widget pillContainer({required String name, bool isPlatform = false}) {
   return Container(
     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
     decoration: BoxDecoration(boxShadow: [
@@ -439,8 +439,8 @@ Widget pillContainer({String name, bool isPlatform = false}) {
 
 class GameDetailsHeader implements SliverPersistentHeaderDelegate {
   GameDetailsHeader({
-    @required this.minHeight,
-    @required this.maxHeight,
+    required this.minHeight,
+    required this.maxHeight,
   });
 
   final double minHeight;
@@ -598,10 +598,10 @@ class GameDetailsHeader implements SliverPersistentHeaderDelegate {
   }
 
   @override
-  FloatingHeaderSnapConfiguration get snapConfiguration => null;
+  FloatingHeaderSnapConfiguration? get snapConfiguration => null;
 
   @override
-  OverScrollHeaderStretchConfiguration get stretchConfiguration => null;
+  OverScrollHeaderStretchConfiguration? get stretchConfiguration => null;
 
   @override
   // TODO: implement showOnScreenConfiguration

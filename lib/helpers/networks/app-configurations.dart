@@ -4,11 +4,11 @@ enum Environment { DEV, QA, STAGE }
 
 //Inherited widget to enforce the environment variables
 class AppConfig extends InheritedWidget {
-  AppConfig({this.environment, Widget child}) : super(child: child);
+  AppConfig({this.environment, required Widget child}) : super(child: child);
 
-  final Environment environment;
+  final Environment? environment;
 
-  static AppConfig of(BuildContext context) {
+  static AppConfig? of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<AppConfig>();
   }
 

@@ -17,28 +17,28 @@ class GamesForSaleScreen extends StatefulWidget {
 }
 
 class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
-  List<int> list = new List(25);
-  List<int> list2 = new List(25);
-  ScrollController _activeSlideController;
-  double _createSaleOpacity = 1;
-  double _createSaleContainerPos = ScreenUtils.getDesignWidth(20);
-  double _createSaleContainerTopPos = 0;
-  double _createSaleContainerWidth = ScreenUtils.getDesignWidth(150);
-  double _createSaleContainerHeight = ScreenUtils.getDesignHeight(195);
-  Color _createSaleContainerColor = BACKGROUND_COLOR;
-  Color _createSaleContainerBorder = Color(0xff949AAE);
+  List<int?> list = new List.filled(25, null, growable: false);
+  List<int?> list2 = new List.filled(25, null, growable: false);
+  ScrollController? _activeSlideController;
+  double? _createSaleOpacity = 1;
+  double? _createSaleContainerPos = ScreenUtils.getDesignWidth(20);
+  double? _createSaleContainerTopPos = 0;
+  double? _createSaleContainerWidth = ScreenUtils.getDesignWidth(150);
+  double? _createSaleContainerHeight = ScreenUtils.getDesignHeight(195);
+  Color? _createSaleContainerColor = BACKGROUND_COLOR;
+  Color? _createSaleContainerBorder = Color(0xff949AAE);
   bool labelVisible = true;
 
   @override
   void initState() {
     _activeSlideController = ScrollController();
-    _activeSlideController.addListener(_scrollListener);
+    _activeSlideController!.addListener(_scrollListener);
     super.initState();
   }
 
   _scrollListener() {
     setState(() {
-      var _t = (_activeSlideController.position.pixels.clamp(0, 200) / 2) / 100;
+      var _t = (_activeSlideController!.position.pixels.clamp(0, 200) / 2) / 100;
       _createSaleContainerPos = lerpDouble(20, 0, _t);
       _createSaleOpacity = lerpDouble(1, 0, _t);
       _createSaleContainerColor = Color.lerp(BACKGROUND_COLOR, PRIMARY_COLOR, _t);
@@ -64,7 +64,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                 child: Text("Active Sales",
-                    style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white)),
+                    style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white)),
               ),
               Stack(
                 children: [
@@ -95,12 +95,11 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                       top: _createSaleContainerTopPos,
                       child: Center(
                         child: GestureDetector(
-                          onTap: () {
-                           },
+                          onTap: () {},
                           child: DottedBorder(
                               strokeWidth: 2,
                               radius: Radius.circular(6),
-                              color: _createSaleContainerBorder,
+                              color: _createSaleContainerBorder!,
                               borderType: BorderType.RRect,
                               dashPattern: [10],
                               padding: EdgeInsets.all(0),
@@ -119,22 +118,22 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                                         width: ScreenUtils.getDesignWidth(46),
                                         height: ScreenUtils.getDesignWidth(46),
                                         padding: EdgeInsets.all(15),
-                                        decoration:
-                                            BoxDecoration(borderRadius: BorderRadius.circular(50), color: PRIMARY_COLOR),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(50), color: PRIMARY_COLOR),
                                         child: SvgPicture.asset('assets/icons/plus.svg'),
                                       ),
                                     ),
                                     Align(
                                       alignment: Alignment.center,
                                       child: Opacity(
-                                        opacity: _createSaleOpacity,
+                                        opacity: _createSaleOpacity!,
                                         child: Padding(
                                           padding: const EdgeInsets.only(top: 80),
                                           child: Text(
                                             'Create Sale',
                                             style: Theme.of(context)
                                                 .primaryTextTheme
-                                                .subtitle1
+                                                .subtitle1!
                                                 .copyWith(color: Colors.white),
                                           ),
                                         ),
@@ -153,7 +152,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Text("Completed Sales",
-                      style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white)),
+                      style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white)),
                 ),
                 content: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),

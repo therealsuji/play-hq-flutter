@@ -3,7 +3,7 @@ import 'package:hive/hive.dart';
 part 'app-search-game-model.g.dart';
 
 class SearchGame {
-  List<GameDetails> _data;
+  List<GameDetails>? _data;
 
   SearchGame.fromJson(Map<String, dynamic> json) {
     _data = json['results'] == null
@@ -11,22 +11,22 @@ class SearchGame {
         : List<GameDetails>.from(json['results'].map((games) => GameDetails.fromJson(games)));
   }
 
-  List<GameDetails> get data => _data;
+  List<GameDetails>? get data => _data;
 }
 
 @HiveType(typeId: 0)
 class GameDetails extends HiveObject {
   @HiveField(0)
-  String name;
+  String? name;
 
   @HiveField(1)
-  String released;
+  String? released;
 
   @HiveField(2)
-  String image;
+  String? image;
 
   @HiveField(3)
-  int id;
+  int? id;
 
   // @HiveField(4)
   // List<Genres> genres;
@@ -43,11 +43,11 @@ class GameDetails extends HiveObject {
 }
 
 class Genres {
-  String _name;
+  String? _name;
 
   Genres.fromJson(Map<String, dynamic> json) {
     _name = json['name'] == null ? null : json['name'];
   }
 
-  String get name => _name;
+  String? get name => _name;
 }

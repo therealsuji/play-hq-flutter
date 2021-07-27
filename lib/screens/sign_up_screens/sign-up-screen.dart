@@ -178,10 +178,10 @@ class SignUpScreen extends StatelessWidget {
   }
 
   Widget _customSocialButton(
-      {@required Color buttonColor,
-      @required String logoPath,
-      @required String buttonText,
-      VoidCallback onPressed,
+      {required Color buttonColor,
+      required String logoPath,
+      required String buttonText,
+      VoidCallback? onPressed,
       Color textColor = Colors.white}) {
     return Container(
       width: double.infinity,

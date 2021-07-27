@@ -20,7 +20,7 @@ class Network {
   static Network get shared => _instance;
 
   //check connection status
-  var connectionStatus;
+  late var connectionStatus;
   var _connect = ConnectionCheck.getInstance();
 
   //http client
@@ -34,10 +34,10 @@ class Network {
 
   Future<T> _performWebRequest<T>(RequestType type, String url, {dynamic body, bool noToken = false}) async {
     //Response initialization
-    Response response;
+    late Response response;
 
     //Get the jwtToken from secure storage and if existing, add to the header
-    String bearerToken = await SecureStorage.readValue("jwtToken");
+    String? bearerToken = await SecureStorage.readValue("jwtToken");
     print(bearerToken);
     if (bearerToken != null && !noToken) {
       _headers.addAll({'Authorization': 'Bearer $bearerToken'});

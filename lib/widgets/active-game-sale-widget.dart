@@ -5,16 +5,16 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'custom-button-widget.dart';
 
 class ActiveGameSaleWidget extends StatelessWidget {
-  final String backgroundUrl;
-  final String gameName;
-  final String price;
-  final String location;
-  final String impressions;
-  final String impressionsUp;
-  final String messages;
+  final String? backgroundUrl;
+  final String? gameName;
+  final String? price;
+  final String? location;
+  final String? impressions;
+  final String? impressionsUp;
+  final String? messages;
 
   const ActiveGameSaleWidget(
-      {Key key,
+      {Key? key,
       this.backgroundUrl,
       this.gameName,
       this.price,
@@ -38,7 +38,7 @@ class ActiveGameSaleWidget extends StatelessWidget {
                   image: DecorationImage(
                       fit: BoxFit.cover,
                       image: NetworkImage(
-                        backgroundUrl,
+                        backgroundUrl!,
                       ))),
             ),
             Positioned.fill(
@@ -54,7 +54,7 @@ class ActiveGameSaleWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      gameName,
+                      gameName!,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).primaryTextTheme.subtitle1,
                     ),
@@ -62,12 +62,12 @@ class ActiveGameSaleWidget extends StatelessWidget {
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
                           "LKR ${price}",
-                          style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(color: PRIMARY_COLOR),
+                          style: Theme.of(context).primaryTextTheme.subtitle2!.copyWith(color: PRIMARY_COLOR),
                         )),
                     Padding(
                         padding: EdgeInsets.only(top: 5),
                         child: Text(
-                          location,
+                          location!,
                           style: Theme.of(context).primaryTextTheme.subtitle1,
                         )),
                   ],
@@ -91,13 +91,13 @@ class ActiveGameSaleWidget extends StatelessWidget {
                           children: [
                             Text(
                               'Impressions',
-                              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white),
+                              style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white),
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 15),
                               child: Text(
-                                impressions,
-                                style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white),
+                                impressions!,
+                                style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white),
                               ),
                             ),
                             Padding(
@@ -109,8 +109,8 @@ class ActiveGameSaleWidget extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              impressionsUp,
-                              style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white),
+                              impressionsUp!,
+                              style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white),
                             ),
                           ],
                         ),
@@ -120,13 +120,13 @@ class ActiveGameSaleWidget extends StatelessWidget {
                             children: [
                               Text(
                                 'Messages',
-                                style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white),
+                                style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(left: 15),
                                 child: Text(
-                                  messages,
-                                  style: Theme.of(context).primaryTextTheme.subtitle1.copyWith(color: Colors.white),
+                                  messages!,
+                                  style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(color: Colors.white),
                                 ),
                               ),
                             ],

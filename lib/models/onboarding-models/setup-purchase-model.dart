@@ -2,9 +2,9 @@
 
 class SetupPurchaseModel{
 
-  List<GenreModel> _genreList;
-  List<ReleaseDatesModel> _releaseDateList;
-  List<PlatformModel> _platformList;
+  List<GenreModel>? _genreList;
+  List<ReleaseDatesModel>? _releaseDateList;
+  List<PlatformModel>? _platformList;
 
 
   SetupPurchaseModel.fromJson(Map<String, dynamic> json) {
@@ -21,18 +21,18 @@ class SetupPurchaseModel{
         : List<PlatformModel>.from(json['platforms'].map((dates) => PlatformModel.fromJson(dates)));
   }
 
-  List<GenreModel> get genres => _genreList;
+  List<GenreModel>? get genres => _genreList;
 
-  List<ReleaseDatesModel> get releaseDates => _releaseDateList;
+  List<ReleaseDatesModel>? get releaseDates => _releaseDateList;
 
-  List<PlatformModel> get platforms => _platformList;
+  List<PlatformModel>? get platforms => _platformList;
 
 }
 
 class GenreModel {
 
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   GenreModel.fromJson(Map<String, dynamic> json) {
     name = json['name'] == null ? null : json['name'];
@@ -45,7 +45,7 @@ class GenreModel {
 
 class ReleaseDatesModel {
 
-  String id;
+  String? id;
 
   ReleaseDatesModel.fromJson(Map<String,dynamic> json){
     id = json['id'] == null ? null : json['id'];
@@ -57,8 +57,8 @@ class ReleaseDatesModel {
 
 class PlatformModel{
 
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   PlatformModel.fromJson(Map<String, dynamic> json) {
     name = json['name'] == null ? null : json['name'];

@@ -4,9 +4,9 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomButton extends StatelessWidget {
-  final String buttonText;
-  final Color buttonColor;
-  final VoidCallback onPressed;
+  final String? buttonText;
+  final Color? buttonColor;
+  final VoidCallback? onPressed;
   final double textFontSize;
 
   CustomButton(
@@ -24,7 +24,7 @@ class CustomButton extends StatelessWidget {
         height: ScreenUtils.getDesignHeight(40),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5.0), color: buttonColor),
-        child: Center(child: Text(buttonText , style: TextStyle(fontFamily: Neusa , color: Colors.white , fontWeight: FontWeight.bold , fontSize: textFontSize),)),
+        child: Center(child: Text(buttonText! , style: TextStyle(fontFamily: Neusa , color: Colors.white , fontWeight: FontWeight.bold , fontSize: textFontSize),)),
       ),
     );
   }

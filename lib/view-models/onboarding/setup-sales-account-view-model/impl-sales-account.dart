@@ -6,7 +6,7 @@ import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sa
 
 class ImplSetupSales extends SetupSalesModel{
 
-  var box;
+  late var box;
 
   List<GameDetails> _selectedGames = [];
 

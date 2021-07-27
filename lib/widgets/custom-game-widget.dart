@@ -6,10 +6,10 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class GamesWidget extends StatelessWidget {
-  final String backgroundUrl;
-  final String gameName;
-  final String releaseDate;
-  final Color color;
+  final String? backgroundUrl;
+  final String? gameName;
+  final String? releaseDate;
+  final Color? color;
 
   //for local testing
   GamesWidget({this.gameName, this.releaseDate, this.backgroundUrl , this.color});
@@ -31,7 +31,7 @@ class GamesWidget extends StatelessWidget {
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image: NetworkImage(
-                          backgroundUrl,
+                          backgroundUrl!,
                         ))),
               ),
             ),
@@ -58,7 +58,7 @@ class GamesWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      gameName,
+                      gameName!,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontFamily: CircularBook,
@@ -70,7 +70,7 @@ class GamesWidget extends StatelessWidget {
                     Container(
                         margin: EdgeInsets.only(top: 5),
                         child: Text(
-                          releaseDate == null ? 'Not mentioned' : releaseDate,
+                          releaseDate == null ? 'Not mentioned' : releaseDate!,
                           style:
                               TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: color),
                         ))

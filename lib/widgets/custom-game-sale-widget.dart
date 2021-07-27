@@ -4,12 +4,12 @@ import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomGameSaleWidget extends StatelessWidget {
-  final String title;
-  final String price;
-  final String soldTo;
-  final String backgroundImage;
+  final String? title;
+  final String? price;
+  final String? soldTo;
+  final String? backgroundImage;
 
-  const CustomGameSaleWidget({Key key, this.title, this.price, this.soldTo, this.backgroundImage}) : super(key: key);
+  const CustomGameSaleWidget({Key? key, this.title, this.price, this.soldTo, this.backgroundImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class CustomGameSaleWidget extends StatelessWidget {
                     image: DecorationImage(
                         fit: BoxFit.cover,
                         image:NetworkImage(
-                          backgroundImage,
+                          backgroundImage!,
                         ))),
               ),
               Padding(
@@ -41,17 +41,17 @@ class CustomGameSaleWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(title, style: Theme
+                    Text(title!, style: Theme
                         .of(context)
                         .primaryTextTheme
                         .subtitle2, overflow: TextOverflow.ellipsis),
                     Padding(
                       padding: const EdgeInsets.only(top: 2),
-                      child: Text(price,
+                      child: Text(price!,
                           style: Theme
                               .of(context)
                               .primaryTextTheme
-                              .subtitle2
+                              .subtitle2!
                               .copyWith(color: Pricetext, fontSize: 12)),
                     ),
                     Padding(

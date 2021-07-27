@@ -11,10 +11,10 @@ import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 class ImplSearchGames extends SearchGameModel{
 
   final _networkCalls = Network.shared;
-  SearchGame value;
+  late SearchGame value;
   List<GameDetails> _searchedGames = [];
   SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
-  Timer _debounce;
+  Timer? _debounce;
 
   @override
   // TODO: implement gameList
@@ -23,15 +23,15 @@ class ImplSearchGames extends SearchGameModel{
   @override
   void searchGames(String name) async{
     _screenStates = SearchScreenStates.LOADING;
-    if (_debounce?.isActive ?? false) _debounce.cancel();
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
     _debounce = Timer(const Duration(milliseconds: 500), () async{
       try{
         _searchedGames.clear();
         value = await _networkCalls.searchGame(name);
-        if(value.data.isEmpty){
+        if(value.data!.isEmpty){
           _screenStates = SearchScreenStates.NOTHING;
         }else{
-          value.data.forEach((element) {
+          value.data!.forEach((element) {
             _searchedGames.add(element);
           });
           _screenStates = SearchScreenStates.SUCCESS;

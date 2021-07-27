@@ -17,7 +17,7 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   bool _currentPlatformState = false;
   bool _currentReleaseDateState = false;
 
-  int _genreCount;
+  int? _genreCount;
   int _platformCount = 0;
 
   ReleaseDatesModel _releaseDates = ReleaseDatesModel();
@@ -127,7 +127,7 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   bool get currentReleaseDateState => _currentReleaseDateState;
 
   @override
-  void addReleaseDates(int index , String releaseDates) {
+  void addReleaseDates(int index , String? releaseDates) {
     _releaseDates.id = index.toString();
 
     if(_selectedReleaseDates.contains(index)) {
@@ -154,7 +154,7 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   List<GameDetails> get selectedGameList => _selectedGames;
 
   @override
-  int get genreCount => _genreCount;
+  int? get genreCount => _genreCount;
 
   @override
   // TODO: implement totalPlatformCount

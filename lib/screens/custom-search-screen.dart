@@ -14,7 +14,7 @@ import 'package:play_hq/widgets/custom-search-item-widget.dart';
 import 'package:provider/provider.dart';
 
 class CustomSearchScreen extends StatefulWidget {
-  final SearchGameScreens values;
+  final SearchGameScreens? values;
 
   CustomSearchScreen({this.values});
 

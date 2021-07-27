@@ -80,9 +80,9 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 
   Widget middleContainer({
-    @required String illustrationPath,
-    @required String title,
-    @required String body,
+    required String illustrationPath,
+    required String title,
+    required String body,
   }) {
     return Column(
       children: [

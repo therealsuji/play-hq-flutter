@@ -5,11 +5,11 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class DiscoverCarouselWidget extends StatelessWidget {
-  final String gameName;
-  final String gameId;
-  final String trailerUrl;
-  final String backgroundUrl;
-  final String characterUrl;
+  final String? gameName;
+  final String? gameId;
+  final String? trailerUrl;
+  final String? backgroundUrl;
+  final String? characterUrl;
 
   DiscoverCarouselWidget(
       {this.gameName,
@@ -35,7 +35,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                 image: DecorationImage(
                   fit: BoxFit.fill,
                   image: AssetImage(
-                    backgroundUrl,
+                    backgroundUrl!,
                   ),
                 ),
               ),
@@ -102,7 +102,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Text(
-                    gameName,
+                    gameName!,
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
@@ -131,7 +131,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
               // custom clipper used to cut off the left side of the character because stack overflow visible is needed for the top of the character
               clipper: CharacterClipper(rightClipAmount: -30),
               child: Image.asset(
-                characterUrl,
+                characterUrl!,
                 height: ScreenUtils.getDesignHeight(210),
                 fit: BoxFit.cover,
               )),
@@ -151,7 +151,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
 // |0. size.height       size.width - 30, 0           |
 // |__________________________________________________|
 class CharacterClipper extends CustomClipper<Path> {
-  final int rightClipAmount;
+  final int? rightClipAmount;
 
   CharacterClipper({this.rightClipAmount});
 
@@ -160,8 +160,8 @@ class CharacterClipper extends CustomClipper<Path> {
     final path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);
-    path.lineTo(size.width + rightClipAmount, size.height);
-    path.lineTo(size.width + rightClipAmount, 0);
+    path.lineTo(size.width + rightClipAmount!, size.height);
+    path.lineTo(size.width + rightClipAmount!, 0);
     path.close();
     return path;
   }

@@ -51,7 +51,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                 padding: const EdgeInsets.only(top: 5.0),
                 child: Text(
                   "Create a sale so you can sell your game super fast",
-                  style: Theme.of(context).primaryTextTheme.subtitle2.copyWith(
+                  style: Theme.of(context).primaryTextTheme.subtitle2!.copyWith(
                         color: Color(0xffB5BDD5).withOpacity(0.8),
                       ),
                 ),
@@ -90,7 +90,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                               isDismisable: true,
                               dismissPressed: () => {
                                 Provider.of<CreateSaleModel>(context, listen: false)
-                                    .removeGame(int.parse(model.gameList[idx - 1].id))
+                                    .removeGame(int.parse(model.gameList[idx - 1].id!))
                               },
                             );
                           },
@@ -112,7 +112,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                   children: [
                     Text(
                       "Sale Price ",
-                      style: Theme.of(context).primaryTextTheme.headline2.copyWith(
+                      style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                             fontFamily: Neusa,
@@ -122,7 +122,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                       builder: (_, model, __) {
                         return Text(
                           model.gameList.length <= 1 ? 'of Game' : "${model.gameList.length}x Games",
-                          style: Theme.of(context).primaryTextTheme.headline2.copyWith(
+                          style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
                                 color: PRIMARY_COLOR,
                                 fontWeight: FontWeight.bold,
                                 fontFamily: Neusa,
@@ -144,7 +144,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text("Price Negotaible?",
-                        style: Theme.of(context).primaryTextTheme.headline2.copyWith(
+                        style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontFamily: Neusa,
