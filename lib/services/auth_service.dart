@@ -28,9 +28,8 @@ class AuthService {
         return null;
     }
     if (token != null) {
-      log(token);
       var strapi_token = await _getUserToken(token);
-      SecureStorage.writeValue("jwtToken", token);
+      SecureStorage.writeValue("jwtToken", strapi_token);
       locator<NavigationService>().pushReplacement(MAIN_SCREEN);
     }
   }
@@ -41,6 +40,7 @@ class AuthService {
   }
 
   void logOut() async {
+    SecureStorage.deleteKey("jwtToken");
     // add other providers
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
