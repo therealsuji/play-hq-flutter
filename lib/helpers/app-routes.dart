@@ -31,60 +31,88 @@ ImplSetupSales _implSetupSales = ImplSetupSales();
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
     case HOME_SCREEN:
-      return MaterialPageRoute(builder: (context) => HomeScreen());
+      return MaterialPageRoute(
+        builder: (context) => HomeScreen(),
+      );
     case SIGN_UP_SCREEN:
-      return MaterialPageRoute(builder: (context) => SignUpScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => SignUpScreen(),
+      );
     case MAIN_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<TabNavigationModel>(
-              create: (context) => ImplTabNavigation(), child: MainScreen()));
-
+        builder: (context) => ChangeNotifierProvider<TabNavigationModel>(
+          create: (context) => ImplTabNavigation(),
+          child: MainScreen(),
+        ),
+      );
     case GAME_DETAILS_SCREEN:
-      return MaterialPageRoute(builder: (context) => GameDetailsScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => GameDetailsScreen(),
+      );
     case CREATE_TRADE_SCREEN:
-      return MaterialPageRoute(builder: (context) => CreateTradeScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => CreateTradeScreen(),
+      );
     case PURCHASE_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
-              create: (context) => _implSetupPurchaseAccount, child: SetupPurchaseAccountScreen()));
-
+        builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
+          create: (context) => _implSetupPurchaseAccount,
+          child: SetupPurchaseAccountScreen(),
+        ),
+      );
     case SEARCH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => MultiProvider(providers: [
-                ChangeNotifierProvider<SearchGameModel>(create: (context) => ImplSearchGames()),
-                ChangeNotifierProvider<SetupPurchaseAccountModel>(create: (context) => _implSetupPurchaseAccount),
-                ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales),
-              ], child: CustomSearchScreen(values: settings.arguments as SearchGameScreens)));
-
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<SearchGameModel>(
+              create: (context) => ImplSearchGames(),
+            ),
+            ChangeNotifierProvider<SetupPurchaseAccountModel>(
+              create: (context) => _implSetupPurchaseAccount,
+            ),
+            ChangeNotifierProvider<SetupSalesModel>(
+              create: (context) => _implSetupSales,
+            ),
+          ],
+          child: CustomSearchScreen(
+              values: settings.arguments as SearchGameScreens),
+        ),
+      );
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
-              create: (context) => ImplCreateSale(), child: CreateSaleScreen()));
-
+        builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
+          create: (context) => ImplCreateSale(),
+          child: CreateSaleScreen(),
+        ),
+      );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
-              create: (context) => _implSetupSales, child: SetupSalesAccountScreen()));
-
+        builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
+          create: (context) => _implSetupSales,
+          child: SetupSalesAccountScreen(),
+        ),
+      );
     case CREATE_TRADE_SCREEN:
-      return MaterialPageRoute(builder: (context) => CreateTradeScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => CreateTradeScreen(),
+      );
     case SPLASH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) =>
-              ChangeNotifierProvider<SplashScreenModel>(create: (context) => ImplSplash(), child: SplashScreen()));
-
+        builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
+          create: (context) => ImplSplash(),
+          child: SplashScreen(),
+        ),
+      );
     default:
       return MaterialPageRoute(
-          builder: (context) => Scaffold(
-              backgroundColor: Colors.white,
-              body: Container(
-                child: Center(
-                  child: Text("ERROR", style: TextStyle(color: Colors.red)),
-                ),
-              )));
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.white,
+          body: Container(
+            child: Center(
+              child: Text("ERROR", style: TextStyle(color: Colors.red)),
+            ),
+          ),
+        ),
+      );
   }
 }
