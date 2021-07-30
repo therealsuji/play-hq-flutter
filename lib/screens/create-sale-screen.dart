@@ -1,8 +1,4 @@
-import 'dart:collection';
-
-import 'package:analyzer/dart/ast/ast.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:play_hq/helpers/app-colors.dart';
@@ -11,7 +7,6 @@ import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
-import 'package:play_hq/helpers/app-utils.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
@@ -87,7 +82,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                               imageURL: model.gameList[idx - 1].boxImage,
                               titleText: model.gameList[idx - 1].title,
                               isSelected: false,
-                              isDismisable: true,
+                              isDismissible: true,
                               dismissPressed: () => {
                                 Provider.of<CreateSaleModel>(context, listen: false)
                                     .removeGame(model.gameList[idx - 1].id)
