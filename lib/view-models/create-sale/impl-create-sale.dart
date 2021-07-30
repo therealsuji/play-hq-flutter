@@ -35,22 +35,24 @@ class ImplCreateSale extends CreateSaleModel {
   bool get platformIsExpanded => _platformsIsExpanded;
 
   @override
-  addGame(int? id, String? name, String? image) {
-    if (_gameList.length >= 2) return;
+  addGame(int id, String name, String image) {
+    if (_gameList.length >= 3) return;
     if (!sheetSaved) return;
-    _gameList.toSet().add(
-          SaleGame(
-              id: id.toString(),
-              boxImage: image,
-              title: name,
-              gameCondition: describeEnum(selectedGameCondition!),
-              platform: Platform(apiId: selectedPlatform, name: "")),
-        ); // add a new game
-    notifyListeners();
+    var game = SaleGame(
+        id: id,
+        boxImage: image,
+        title: name,
+        gameCondition: describeEnum(selectedGameCondition!),
+        platform: Platform(id: selectedPlatform));
+    if (_gameList.where((game) => game.id == id).isEmpty) {
+      _gameList.add(game);
+      notifyListeners();
+    }
   }
 
   @override
   removeGame(int id) {
+    _gameList.removeWhere((game) => game.id == id);
     notifyListeners();
   }
 

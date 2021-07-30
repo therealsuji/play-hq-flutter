@@ -1,20 +1,20 @@
 import 'dart:convert';
 
 class CreateSalePayload {
-  int? price;
-  String? remarks;
-  String? status;
-  bool? negotiable;
-  Location? location;
-  List<SaleGame>? games;
+  int price;
+  String remarks;
+  String status;
+  bool negotiable;
+  Location location;
+  List<SaleGame> games;
 
   CreateSalePayload({
-    this.price,
-    this.remarks,
-    this.status,
-    this.negotiable,
-    this.location,
-    this.games,
+    required this.price,
+    required this.remarks,
+    required this.status,
+    required this.negotiable,
+    required this.location,
+    required this.games,
   });
 
   factory CreateSalePayload.fromJson(Map<String, dynamic> json) => new CreateSalePayload(
@@ -31,89 +31,77 @@ class CreateSalePayload {
         "remarks": remarks,
         "status": status,
         "negotiable": negotiable,
-        "location": location!.toJson(),
-        "games": new List<dynamic>.from(games!.map((x) => x.toJson())),
+        "location": location.toJson(),
+        "games": new List<dynamic>.from(games.map((x) => x.toJson())),
       };
 }
 
 class SaleGame {
-  String? id;
-  String? gameCondition;
-  String? boxImage;
-  Platform? platform;
-  String? title;
+  int id;
+  String gameCondition;
+  String boxImage;
+  String title;
+  Platform platform;
 
   SaleGame({
-    this.id,
-    this.gameCondition,
-    this.boxImage,
-    this.platform,
-    this.title,
+    required this.id,
+    required this.gameCondition,
+    required this.boxImage,
+    required this.title,
+    required this.platform,
   });
 
   factory SaleGame.fromJson(Map<String, dynamic> json) => new SaleGame(
         id: json["id"],
-        gameCondition: json["gameCondition"],
+        gameCondition: json["game_condition"],
         boxImage: json["box_image"],
-        platform: Platform.fromJson(json["platform"]),
         title: json["title"],
+        platform: Platform.fromJson(json["platform"]),
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "gameCondition": gameCondition,
+        "game_condition": gameCondition,
         "box_image": boxImage,
-        "platform": platform!.toJson(),
         "title": title,
+        "platform": platform.toJson(),
       };
 }
 
 class Platform {
-  String? id;
-  int? apiId;
-  String? name;
+  int id;
 
   Platform({
-    this.id,
-    this.apiId,
-    this.name,
+    required this.id,
   });
 
   factory Platform.fromJson(Map<String, dynamic> json) => new Platform(
         id: json["id"],
-        apiId: json["api_id"],
-        name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "api_id": apiId,
-        "name": name,
       };
 }
 
 class Location {
-  String? id;
-  int? lat;
-  int? long;
-  String? address;
+  int lat;
+  int long;
+  String address;
 
   Location({
-    this.id,
-    this.lat,
-    this.long,
-    this.address,
+    required this.lat,
+    required this.long,
+    required this.address,
   });
 
   factory Location.fromJson(Map<String, dynamic> json) => new Location(
-        id: json["id"],
         lat: json["lat"],
         long: json["long"],
         address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "lat": lat,
         "long": long,
         "address": address,

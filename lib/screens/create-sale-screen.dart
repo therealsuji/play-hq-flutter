@@ -75,7 +75,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                                   if (gameDetails != null) {
                                     await showSalesBottomSheet();
                                     Provider.of<CreateSaleModel>(context, listen: false)
-                                        .addGame(gameDetails['id'], gameDetails['name'], gameDetails['price']);
+                                        .addGame(gameDetails['id'], gameDetails['name'], gameDetails['image']);
                                   }
                                 },
                                 child: CustomDottedSelectorWidget(
@@ -90,7 +90,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                               isDismisable: true,
                               dismissPressed: () => {
                                 Provider.of<CreateSaleModel>(context, listen: false)
-                                    .removeGame(int.parse(model.gameList[idx - 1].id!))
+                                    .removeGame(model.gameList[idx - 1].id)
                               },
                             );
                           },

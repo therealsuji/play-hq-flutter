@@ -5,7 +5,7 @@ import 'package:play_hq/models/create-sale-model.dart';
 abstract class CreateSaleModel with ChangeNotifier {
   List<SaleGame> get gameList;
 
-  void addGame(int? id, String? name, String? image);
+  void addGame(int id, String name, String image);
 
   void removeGame(int id);
 
@@ -17,7 +17,7 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   GameCondition? get selectedGameCondition;
 
-  void setSelectedGameCondition(GameCondition? condition);
+  void setSelectedGameCondition(GameCondition condition);
 
   bool get sheetSaved;
 
