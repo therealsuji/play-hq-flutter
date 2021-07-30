@@ -28,8 +28,8 @@ class AuthService {
         return null;
     }
     if (token != null) {
-      var strapi_token = await _getUserToken(token);
-      SecureStorage.writeValue("jwtToken", strapi_token);
+      var strapiToken = await _getUserToken(token);
+      SecureStorage.writeValue("jwtToken", strapiToken);
       locator<NavigationService>().pushReplacement(MAIN_SCREEN);
     }
   }
