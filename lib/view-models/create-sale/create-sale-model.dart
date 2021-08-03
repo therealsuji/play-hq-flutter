@@ -3,13 +3,29 @@ import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/models/create-sale-model.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
+  double get price;
+
+  bool get isNegotiable;
+
+  String get remarks;
+
+  bool get isFormValid;
+
+  void validateForm();
+
+  void setPrice(double value);
+
+  void setIsNegotiable(bool value);
+
+  void setRemarks(String value);
+
   List<SaleGame> get gameList;
 
   void addGame(int id, String name, String image);
 
   void removeGame(int id);
 
-  Future<bool> createSale();
+  void createSale();
 
   dynamic get selectedPlatform;
 

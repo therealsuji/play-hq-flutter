@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app-constants.dart';
 import 'package:play_hq/helpers/app-enums.dart';
+import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/create-sale-model.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
@@ -12,6 +13,10 @@ class ImplCreateSale extends CreateSaleModel {
   GameCondition? _selectedGameCondition;
   bool _sheetSaved = false;
   bool _platformsIsExpanded = false;
+  bool _isNegotiable = false;
+  double _price = 0;
+  String _remarks = '';
+  bool _isFormValid = false;
 
   Set<Map<String, dynamic>> _allConsoles =
       [...popularConsoles, ...nintendoConsoles, ...playStationPlatforms, ...xboxPlatforms].toSet();
@@ -35,6 +40,15 @@ class ImplCreateSale extends CreateSaleModel {
   bool get platformIsExpanded => _platformsIsExpanded;
 
   @override
+  bool get isNegotiable => _isNegotiable;
+
+  @override
+  double get price => _price;
+
+  @override
+  String get remarks => _remarks;
+
+  @override
   addGame(int id, String name, String image) {
     if (_gameList.length >= 3) return;
     if (!sheetSaved) return;
@@ -46,6 +60,7 @@ class ImplCreateSale extends CreateSaleModel {
         platform: Platform(id: selectedPlatform));
     if (_gameList.where((game) => game.id == id).isEmpty) {
       _gameList.add(game);
+      validateForm();
       notifyListeners();
     }
   }
@@ -53,12 +68,13 @@ class ImplCreateSale extends CreateSaleModel {
   @override
   removeGame(int id) {
     _gameList.removeWhere((game) => game.id == id);
+    validateForm();
     notifyListeners();
   }
 
   @override
-  Future<bool> createSale() async {
-    return false;
+  void createSale() async {
+    // CreateSalePayload payload = CreateSalePayload(price: price, remarks: remarks, status: status, negotiable: negotiable, location: location, games: games)
     // Network.shared.createSale();
   }
 
@@ -90,5 +106,37 @@ class ImplCreateSale extends CreateSaleModel {
   void setSheetSaved(bool isSaved) {
     _sheetSaved = isSaved;
     notifyListeners();
+  }
+
+  @override
+  void setIsNegotiable(bool value) {
+    _isNegotiable = value;
+    notifyListeners();
+  }
+
+  @override
+  void setPrice(double value) {
+    _price = value;
+    validateForm();
+    notifyListeners();
+  }
+
+  @override
+  void setRemarks(String value) {
+    _remarks = value;
+    validateForm();
+    notifyListeners();
+  }
+
+  @override
+  bool get isFormValid => _isFormValid;
+
+  @override
+  void validateForm() {
+    if (price != 0 && gameList.length != 0) {
+      _isFormValid = true;
+      return;
+    }
+    _isFormValid = false;
   }
 }
