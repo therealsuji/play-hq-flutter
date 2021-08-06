@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:play_hq/helpers/app-assets.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
@@ -26,7 +27,7 @@ class SignUpScreen extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100)),
                   width: ScreenUtils.getDesignWidth(186),
-                  child: Image.asset('assets/images/logo.png'),
+                  child: Image.asset(LOGO_IMAGE),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(130)),
@@ -40,7 +41,7 @@ class SignUpScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Container(
-                            child: SvgPicture.asset('assets/icons/facebook.svg'),
+                            child: SvgPicture.asset(FACEBOOK_LOGO),
                           ),
                           Container(
                             margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
@@ -72,7 +73,7 @@ class SignUpScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              child: SvgPicture.asset('assets/icons/Google.svg'),
+                              child: SvgPicture.asset(GOOGLE_LOGO),
                             ),
                             Container(
                               margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
