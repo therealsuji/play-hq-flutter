@@ -1,34 +1,60 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app-colors.dart';
-import 'package:play_hq/helpers/app-fonts.dart';
-import 'package:play_hq/helpers/app-screen-utils.dart';
 
 class CustomButton extends StatelessWidget {
-  final String? buttonText;
+  final String buttonText;
   final Color? buttonColor;
   final LinearGradient? gradient;
   final VoidCallback? onPressed;
-  final double textFontSize;
+  final double? textFontSize;
+  final double? height;
+  final double? width;
 
-  CustomButton({this.buttonText, this.onPressed, this.buttonColor, this.textFontSize = 18, this.gradient});
+  CustomButton({
+    required this.buttonText,
+    this.onPressed,
+    this.buttonColor,
+    this.textFontSize = 18,
+    this.gradient,
+    this.width = double.infinity,
+    this.height = 50,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        width: double.infinity,
-        height: ScreenUtils.getDesignHeight(50),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: buttonColor,
-          gradient: gradient,
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: buttonColor,
+        gradient: gradient,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            offset: Offset(4, 4),
+            blurRadius: 6.0,
+          ),
+        ],
+      ),
+      child: ElevatedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+          ),
+          backgroundColor: MaterialStateProperty.all(Colors.transparent),
+          elevation: MaterialStateProperty.all(0.0),
+          shadowColor: MaterialStateProperty.all(Colors.transparent),
         ),
-        child: Center(
-            child: Text(
-          buttonText!,
-          style: TextStyle(fontFamily: Neusa, color: Colors.white, fontWeight: FontWeight.bold, fontSize: textFontSize),
-        )),
+        child: Text(
+          buttonText,
+          style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
+            fontSize: textFontSize,
+            color: Colors.white,
+          ),
+        ),
+        onPressed: onPressed ?? () {},
       ),
     );
   }
