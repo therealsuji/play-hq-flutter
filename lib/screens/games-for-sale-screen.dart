@@ -91,7 +91,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                         }).toList()),
                   ),
                   Positioned(
-                      left: ScreenUtils.getDesignWidth(_createSaleContainerPos),
+                      left: ScreenUtils.getDesignWidth(_createSaleContainerPos!),
                       top: _createSaleContainerTopPos,
                       child: Center(
                         child: GestureDetector(

@@ -1,33 +1,22 @@
 import 'package:flutter/material.dart';
 
-class ScreenUtils{
-  //Call these variables to get initialized screen sizes//
+class ScreenUtils {
 
-  static final double appBarHeight = AppBar().preferredSize.height;  //app bar height
-  static late double statusBarHeight; //status bar height
-  static double? totalBodyHeight;  //total screen height without appbar or status bar
-  static late double reducedBodyHeight;  //body height with appbar and status bar reduced
-  static double? contentBodyHeight;  //body height with appbar and status bar and bottom navigation bar reduced
-  static double? bodyWidth;  //total screen width
+  static late double statusBarHeight;
+  static late double totalBodyHeight;
+  static late double bodyWidth;
 
-  //Set once in splash screen
-  static setScreenSizes (BuildContext context){
-
+  static void setScreenSizes(BuildContext context){
     statusBarHeight = MediaQuery.of(context).padding.top;
-    bodyWidth = MediaQuery.of(context).size.width;
     totalBodyHeight = MediaQuery.of(context).size.height;
-
-    reducedBodyHeight = totalBodyHeight! - appBarHeight - statusBarHeight;
-    contentBodyHeight = reducedBodyHeight * 0.866;
-
+    bodyWidth = MediaQuery.of(context).size.width;
   }
 
-  static getDesignWidth(designMargin){
+  static getDesignWidth(double designMargin){
     return (designMargin / 375) * bodyWidth ;
   }
 
-  static getDesignHeight(designMargin){
+  static getDesignHeight(double designMargin){
     return (designMargin / 812) * totalBodyHeight;
   }
-
 }
