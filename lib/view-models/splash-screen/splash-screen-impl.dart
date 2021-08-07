@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:play_hq/helpers/app-secure-storage.dart';
@@ -10,7 +11,7 @@ import 'package:play_hq/view-models/splash-screen/splash-screen-model.dart';
 class ImplSplash extends SplashScreenModel {
   @override
   void navigateMainScreen() {
-    locator<NavigationService>().pushReplacement(MAIN_SCREEN);
+    locator<NavigationService>().pushReplacement(CREATE_SALE_ROUTE);
   }
 
   @override

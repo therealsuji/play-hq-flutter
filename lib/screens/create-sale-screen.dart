@@ -9,10 +9,12 @@ import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
+import 'package:play_hq/widgets/create-sale-confirm-bottom-sheet-widget.dart';
+import 'package:play_hq/widgets/custom-body.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-dotted-selector-widget.dart';
 import 'package:play_hq/widgets/custom-textfield-widget.dart';
-import 'package:play_hq/widgets/sale-bottom-sheet-widget.dart';
+import 'package:play_hq/widgets/create-sale-bottom-sheet-widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:provider/provider.dart';
 
@@ -29,31 +31,38 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: BACKGROUND_COLOR,
-      body: SingleChildScrollView(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: ScreenUtils.getDesignWidth(24.0),
-              vertical: ScreenUtils.getDesignHeight(45.0),
-            ),
+      body: CustomBody(
+        paddingLeft: 0.0,
+        paddingRight: 0.0,
+        body: [
+          GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Create a Sale",
-                  style: Theme.of(context).primaryTextTheme.headline6,
-                ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 5.0),
-                  child: Text(
-                    "Create a sale so you can sell your game super fast",
-                    style: Theme.of(context).primaryTextTheme.subtitle2!.copyWith(
-                          color: Color(0xffB5BDD5).withOpacity(0.8),
+                  padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Create a Sale",
+                        style: Theme.of(context).primaryTextTheme.headline6?.copyWith(fontFamily: Neusa),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(
+                          "Create a sale so you can sell your game super fast",
+                          style: Theme.of(context).primaryTextTheme.subtitle2!.copyWith(
+                                color: Color(0xffB5BDD5).withOpacity(0.8),
+                              ),
                         ),
+                      ),
+                    ],
                   ),
                 ),
                 Container(
+                  padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24)),
                   margin: const EdgeInsets.only(top: 25.0),
                   height: ScreenUtils.getDesignHeight(124.0),
                   child: Row(
@@ -80,15 +89,19 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                                   ),
                                 );
                               }
-                              return SelectGameItem(
-                                imageURL: model.gameList[idx - 1].boxImage,
-                                titleText: model.gameList[idx - 1].title,
-                                isSelected: false,
-                                isDismissible: true,
-                                dismissPressed: () => {
-                                  Provider.of<CreateSaleModel>(context, listen: false)
-                                      .removeGame(model.gameList[idx - 1].id)
+                              return GestureDetector(
+                                onTap: () async {
+                                  // set the selected game so the bottom sheet knows that it should be in the update state
+                                  model.setSelectedGame(idx - 1);
+                                  await showSalesBottomSheet();
+                                  // once the update is completed set clear bottomsheets state
+                                  model.setSelectedGame(null);
                                 },
+                                child: SelectGameItem(
+                                  imageURL: model.gameList[idx - 1].boxImage,
+                                  titleText: model.gameList[idx - 1].title,
+                                  isSelected: (idx - 1) == model.selectedGame,
+                                ),
                               );
                             },
                             separatorBuilder: (BuildContext context, int index) {
@@ -103,96 +116,106 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-                  child: Row(
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Sale Price ",
-                        style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: Neusa,
+                      Container(
+                        margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Sale Price ",
+                              style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontFamily: Neusa,
+                                  ),
                             ),
+                            Consumer<CreateSaleModel>(
+                              builder: (_, model, __) {
+                                return Text(
+                                  model.gameList.length > 0 ? "${model.gameList.length}x Games" : '',
+                                  style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
+                                        color: PRIMARY_COLOR,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: Neusa,
+                                      ),
+                                );
+                              },
+                            )
+                          ],
+                        ),
                       ),
-                      Consumer<CreateSaleModel>(
-                        builder: (_, model, __) {
-                          return Text(
-                            model.gameList.length <= 1 ? 'of Game' : "${model.gameList.length}x Games",
-                            style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                                  color: PRIMARY_COLOR,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: Neusa,
-                                ),
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                Consumer<CreateSaleModel>(builder: (_, model, __) {
-                  return CustomTextfieldWidget(
-                    type: TextInputType.number,
-                    hideText: false,
-                    onChanged: (value) => value != "" ? model.setPrice(double.parse(value)) : model.setPrice(0),
-                  );
-                }),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("Price Negotaible?",
-                          style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: Neusa,
-                              )),
-                      Consumer<CreateSaleModel>(
-                        builder: (_, model, __) {
-                          return CupertinoSwitch(
-                            activeColor: PRIMARY_COLOR,
-                            onChanged: (bool value) => model.setIsNegotiable(value),
-                            value: model.isNegotiable,
-                          );
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-                  child: Text(
-                    'Other remarks',
-                    style: TextStyle(
-                        fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: CircularBook),
-                  ),
-                ),
-                CustomTextfieldWidget(
-                  type: TextInputType.multiline,
-                  hideText: false,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 40.0),
-                  child: Selector<CreateSaleModel, bool>(
-                      selector: (_, provider) => provider.isFormValid,
-                      builder: (_, formValid, __) {
-                        return CustomButton(
-                          onPressed: () {
-                            if (formValid) {
-                              Provider.of<CreateSaleModel>(context, listen: false).createSale();
-                            }
-                          },
-                          buttonText: "Create Sale",
-                          buttonColor: formValid ? LIME_COLOR : Colors.grey,
+                      Consumer<CreateSaleModel>(builder: (_, model, __) {
+                        return CustomTextfieldWidget(
+                          type: TextInputType.number,
+                          hideText: false,
+                          onChanged: (value) => value != "" ? model.setPrice(double.parse(value)) : model.setPrice(0),
                         );
                       }),
-                )
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text("Price Negotaible?",
+                                style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      fontFamily: Neusa,
+                                    )),
+                            Consumer<CreateSaleModel>(
+                              builder: (_, model, __) {
+                                return CupertinoSwitch(
+                                  activeColor: PRIMARY_COLOR,
+                                  onChanged: (bool value) => model.setIsNegotiable(value),
+                                  value: model.isNegotiable,
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
+                        child: Text(
+                          'Other remarks',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: CircularBook),
+                        ),
+                      ),
+                      CustomTextfieldWidget(
+                        type: TextInputType.multiline,
+                        hideText: false,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 40.0),
+                        child: Selector<CreateSaleModel, bool>(
+                            selector: (_, provider) => provider.isFormValid,
+                            builder: (_, formValid, __) {
+                              return CustomButton(
+                                onPressed: () {
+                                  if (formValid) {
+                                    showSalesConfirmBottomSheet();
+                                  }
+                                },
+                                buttonText: "Create Sale",
+                                buttonColor: formValid ? null : Colors.grey,
+                                gradient: formValid ? GREEN_GRADIENT : null,
+                              );
+                            }),
+                      )
+                    ],
+                  ),
+                ),
               ],
             ),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }
@@ -205,7 +228,21 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
       builder: (context) {
         return ChangeNotifierProvider.value(
           value: model,
-          child: SaleBottomSheetWidget(),
+          child: CreateSaleBottomSheetWidget(),
+        );
+      },
+    );
+  }
+
+  Future<void> showSalesConfirmBottomSheet() async {
+    CreateSaleModel model = Provider.of<CreateSaleModel>(context, listen: false);
+    await showModalBottomSheet<void>(
+      isDismissible: false,
+      context: context,
+      builder: (context) {
+        return ChangeNotifierProvider.value(
+          value: model,
+          child: CreateSaleConfirmBottomSheet(),
         );
       },
     );

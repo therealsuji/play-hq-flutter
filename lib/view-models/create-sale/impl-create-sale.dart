@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app-constants.dart';
 import 'package:play_hq/helpers/app-enums.dart';
@@ -5,6 +7,7 @@ import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/create-sale-model.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
+import 'package:play_hq/helpers/app-utils.dart';
 
 class ImplCreateSale extends CreateSaleModel {
   List<SaleGame> _gameList = [];
@@ -17,6 +20,7 @@ class ImplCreateSale extends CreateSaleModel {
   double _price = 0;
   String _remarks = '';
   bool _isFormValid = false;
+  dynamic _selectedGame = null;
 
   Set<Map<String, dynamic>> _allConsoles =
       [...popularConsoles, ...nintendoConsoles, ...playStationPlatforms, ...xboxPlatforms].toSet();
@@ -51,29 +55,41 @@ class ImplCreateSale extends CreateSaleModel {
   @override
   addGame(int id, String name, String image) {
     if (_gameList.length >= 3) return;
-    if (!sheetSaved) return;
-    var game = SaleGame(
-        id: id,
-        boxImage: image,
-        title: name,
-        gameCondition: describeEnum(selectedGameCondition!),
-        platform: Platform(id: selectedPlatform));
-    if (_gameList.where((game) => game.id == id).isEmpty) {
-      _gameList.add(game);
-      validateForm();
-      notifyListeners();
+    if (sheetSaved) {
+      var game = SaleGame(
+          id: id,
+          boxImage: image,
+          title: name,
+          gameCondition: describeEnum(selectedGameCondition!),
+          platform: Platform(id: selectedPlatform));
+      if (_gameList.where((game) => game.id == id).isEmpty) {
+        _gameList.add(game);
+        validateForm();
+        notifyListeners();
+      }
     }
+    setSheetSaved(false);
+    setSelectedGameCondition(null);
+    setSelectedPlatform(null);
+  }
+
+  @override
+  void updateGame(int id) {
+    _gameList[id].gameCondition = describeEnum(selectedGameCondition!);
+    _gameList[id].platform.id = selectedPlatform;
+    notifyListeners();
   }
 
   @override
   removeGame(int id) {
-    _gameList.removeWhere((game) => game.id == id);
+    _gameList.removeAt(id);
     validateForm();
     notifyListeners();
   }
 
   @override
   void createSale() async {
+    print("CREATE SALE");
     // CreateSalePayload payload = CreateSalePayload(price: price, remarks: remarks, status: status, negotiable: negotiable, location: location, games: games)
     // Network.shared.createSale();
   }
@@ -132,11 +148,27 @@ class ImplCreateSale extends CreateSaleModel {
   bool get isFormValid => _isFormValid;
 
   @override
+  get selectedGame => _selectedGame;
+
+  @override
   void validateForm() {
     if (price != 0 && gameList.length != 0) {
       _isFormValid = true;
       return;
     }
     _isFormValid = false;
+  }
+
+  @override
+  void setSelectedGame(dynamic value) {
+    _selectedGame = value;
+    if (value != null) {
+      setSelectedGameCondition(GameCondition.values.enumFromString(_gameList[value].gameCondition));
+      setSelectedPlatform(_gameList[value].platform.id);
+    } else {
+      setSelectedGameCondition(null);
+      setSelectedPlatform(null);
+    }
+    notifyListeners();
   }
 }
