@@ -20,7 +20,13 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
-      floatingActionButton: FloatingActionButton(onPressed: () => null , child: Icon(Icons.add , size: 30,),),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          Icons.add,
+          size: 30,
+        ),
+        onPressed: () => null,
+      ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Theme(
         data: ThemeData(
@@ -33,11 +39,51 @@ class _MainScreenState extends State<MainScreen> {
           onTap: (index) => Provider.of<TabNavigationModel>(context, listen: false).changeTab(index),
           currentIndex: Provider.of<TabNavigationModel>(context).currentPage,
           items: [
-            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/home.svg') , label: '' , activeIcon: SvgPicture.asset('assets/icons/home.svg' , color: PRIMARY_COLOR,)),
-            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/discover.svg') , label: '' , activeIcon: SvgPicture.asset('assets/icons/discover.svg' , color: PRIMARY_COLOR,)),
-            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/transparent.svg') , label: ''),
-            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/orders.svg') , label: '' , activeIcon: SvgPicture.asset('assets/icons/orders.svg' , color: PRIMARY_COLOR,)),
-            BottomNavigationBarItem(icon: SvgPicture.asset('assets/icons/profile.svg') , label: '' , activeIcon: SvgPicture.asset('assets/icons/profile.svg' , color: PRIMARY_COLOR,)),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/icons/home.svg',
+              ),
+              label: '',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/home.svg',
+                color: PRIMARY_COLOR,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/icons/discover.svg',
+              ),
+              label: '',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/discover.svg',
+                color: PRIMARY_COLOR,
+              ),
+            ),
+            BottomNavigationBarItem(
+                icon: SvgPicture.asset(
+                  'assets/icons/transparent.svg',
+                ),
+                label: ''),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/icons/orders.svg',
+              ),
+              label: '',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/orders.svg',
+                color: PRIMARY_COLOR,
+              ),
+            ),
+            BottomNavigationBarItem(
+              icon: SvgPicture.asset(
+                'assets/icons/profile.svg',
+              ),
+              label: '',
+              activeIcon: SvgPicture.asset(
+                'assets/icons/profile.svg',
+                color: PRIMARY_COLOR,
+              ),
+            ),
           ],
           type: BottomNavigationBarType.fixed,
         ),
@@ -47,16 +93,12 @@ class _MainScreenState extends State<MainScreen> {
           switch (value.currentPage) {
             case 0:
               return HomeScreen();
-              break;
             case 1:
               return DiscoverScreen();
-              break;
             case 3:
               return OrdersScreen();
-              break;
             case 4:
               return ProfileScreen();
-              break;
             default:
               return Container();
           }
