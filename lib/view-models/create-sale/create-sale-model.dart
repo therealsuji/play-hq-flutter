@@ -17,9 +17,15 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void setIsNegotiable(bool value);
 
+  dynamic get selectedGame;
+
+  void setSelectedGame(dynamic value);
+
   void setRemarks(String value);
 
   List<SaleGame> get gameList;
+
+  void updateGame(int id);
 
   void addGame(int id, String name, String image);
 
