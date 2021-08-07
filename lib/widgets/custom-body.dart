@@ -11,7 +11,7 @@ class CustomBody extends StatelessWidget {
 
   CustomBody(
       {required this.body,
-      this.paddingTop = 45.0,
+      this.paddingTop = 20.0,
       this.paddingLeft = 24.0,
       this.paddingRight = 24.0,
       this.paddingBottom = 45.0});
@@ -32,7 +32,7 @@ class CustomBody extends StatelessWidget {
             width: ScreenUtils.bodyWidth,
             child: Padding(
               padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(paddingTop),
+                top: ScreenUtils.statusBarHeight + ScreenUtils.getDesignHeight(paddingTop),
                 left: ScreenUtils.getDesignWidth(paddingLeft),
                 right: ScreenUtils.getDesignWidth(paddingRight),
                 bottom: ScreenUtils.getDesignWidth(paddingBottom),
