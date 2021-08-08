@@ -9,3 +9,5 @@ enum SearchGameScreens { SetupPurchase, SetupSales, CreateSales }
 enum PlatformSelection { PlayStation, Xbox, Nintendo }
 
 enum GameCondition { MINT_SEALED, VERY_NEW, KINDA_USED, PLAYABLE }
+
+enum OrderTrack { AWAITING, DELIVERING, RECEIVED }

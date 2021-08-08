@@ -14,5 +14,6 @@ const String CREATE_SALE_ROUTE = 'createsale';
 const String SaleDetailsRoute = 'saleDetails';
 const String SetupPurchaseAccountRoute = 'setupPurchase';
 const String SetupSalesAccountRoute = 'setupSales';
+const String ORDER_TRACKING_SCREEN = 'orderTrackingScreen';
 
 // TODO make all route names simillar
