@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 class CreateSalePayload {
-  int price;
+  double price;
   String remarks;
-  String status;
+  String? status;
   bool negotiable;
   Location location;
   List<SaleGame> games;
@@ -11,14 +11,14 @@ class CreateSalePayload {
   CreateSalePayload({
     required this.price,
     required this.remarks,
-    required this.status,
+    this.status,
     required this.negotiable,
     required this.location,
     required this.games,
   });
 
   factory CreateSalePayload.fromJson(Map<String, dynamic> json) => new CreateSalePayload(
-        price: json["price"],
+        price: (json['price'] as num).toDouble(),
         remarks: json["remarks"],
         status: json["status"],
         negotiable: json["negotiable"],
@@ -41,7 +41,7 @@ class SaleGame {
   String gameCondition;
   String boxImage;
   String title;
-  Platform platform;
+  Platform? platform;
 
   SaleGame({
     required this.id,
@@ -56,7 +56,7 @@ class SaleGame {
         gameCondition: json["game_condition"],
         boxImage: json["box_image"],
         title: json["title"],
-        platform: Platform.fromJson(json["platform"]),
+        platform: (json['platform'] as Map).isEmpty ? null : Platform.fromJson(json["platform"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -64,7 +64,7 @@ class SaleGame {
         "game_condition": gameCondition,
         "box_image": boxImage,
         "title": title,
-        "platform": platform.toJson(),
+        "platform": platform!.toJson(),
       };
 }
 

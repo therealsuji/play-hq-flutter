@@ -82,7 +82,7 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                             imageURL: model.gameList[idx].boxImage,
                             centerText: model.gameList[idx].title,
                             titleText: model.consoleList
-                                .firstWhere((console) => console['id'] == model.gameList[idx].platform.id)['name'],
+                                .firstWhere((console) => console['id'] == model.gameList[idx].platform!.id)['name'],
                             subtitleText: model.gameList[idx].gameCondition.replaceAll("_", " ").capitalize(),
                           );
                         }),

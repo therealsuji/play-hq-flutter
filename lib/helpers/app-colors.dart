@@ -4,6 +4,7 @@ const BACKGROUND_COLOR = Color(0xff14131C);
 const CONTAINER_COLOR = Color(0xff1B1A26);
 const HEADER_TEXT_COLOR = Color(0xffFFFFFF);
 const PLAYSTATION_COLOR = Color(0xff2E6DB4);
+const TURQUOISE_BLUE_COLOR = Color(0xff32BEA6);
 const XBOX_COLOR = Color(0xff107C10);
 const NINTENDO_COLOR = Color(0xffE60012);
 const UNSELECTED_ITEM_COLOR = Color(0xff787794);
@@ -22,14 +23,10 @@ const SubContainerColor = Color(0xff171B23);
 const landingPageViewBodyColor = Color(0xffDEDFE1);
 
 // Gradients
-const PRIMARY_GRADIENT = LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [
-      Color(0xFFF84592),
-      Color(0xFFD23163),
-    ]
-);
+const PRIMARY_GRADIENT = LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
+  Color(0xFFF84592),
+  Color(0xFFD23163),
+]);
 
 const GREEN_GRADIENT = LinearGradient(
   begin: Alignment.topCenter,
@@ -42,4 +39,3 @@ const LIGHT_GREEN_GRADIENT = LinearGradient(
   end: Alignment.bottomCenter,
   colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(54, 248, 62, 1)],
 );
-

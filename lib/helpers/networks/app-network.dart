@@ -101,8 +101,8 @@ class Network {
         body: {"token": token}, noToken: true);
   }
 
-  Future<UserModel> createSale(CreateSalePayload payload) async {
-    return await _performWebRequest<UserModel>(RequestType.post, ConfigData.createSale, body: payload);
+  Future<CreateSalePayload> createSale(CreateSalePayload payload) async {
+    return await _performWebRequest<CreateSalePayload>(RequestType.post, ConfigData.createSale, body: payload);
   }
 
   Future<SearchGame> searchGame(String params) async {

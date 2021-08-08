@@ -79,7 +79,7 @@ class ImplCreateSale extends CreateSaleModel {
   @override
   void updateGame(int id) {
     _gameList[id].gameCondition = describeEnum(selectedGameCondition!);
-    _gameList[id].platform.id = selectedPlatform;
+    _gameList[id].platform!.id = selectedPlatform;
     notifyListeners();
   }
 
@@ -92,13 +92,16 @@ class ImplCreateSale extends CreateSaleModel {
 
   @override
   void createSale() async {
-    print("CREATE SALE");
     locator<EventBus>().fire(LoadingEvent.show());
-    Future.delayed(Duration(seconds: 2)).then((_) {
-      locator<EventBus>().fire(LoadingEvent.hide());
-    });
-    // CreateSalePayload payload = CreateSalePayload(price: price, remarks: remarks, status: status, negotiable: negotiable, location: location, games: games)
-    // Network.shared.createSale();
+    Location location = Location(address: "SOMETIHING", lat: 123, long: 123);
+    CreateSalePayload payload = CreateSalePayload(
+        price: price,
+        remarks: remarks.length == 0 ? "" : remarks,
+        negotiable: _isNegotiable,
+        location: location,
+        games: _gameList);
+    await Network.shared.createSale(payload);
+    locator<EventBus>().fire(LoadingEvent.hide());
   }
 
   @override
@@ -171,7 +174,7 @@ class ImplCreateSale extends CreateSaleModel {
     _selectedGame = value;
     if (value != null) {
       setSelectedGameCondition(GameCondition.values.enumFromString(_gameList[value].gameCondition));
-      setSelectedPlatform(_gameList[value].platform.id);
+      setSelectedPlatform(_gameList[value].platform!.id);
     } else {
       setSelectedGameCondition(null);
       setSelectedPlatform(null);

@@ -11,3 +11,4 @@ const String GOOGLE_LOGO = "assets/icons/google.svg";
 /// Images Path
 const String LOGO_IMAGE = "assets/images/logo.png";
 const String BACKGROUND_IMAGE = "assets/images/background.jpg";
+const String SMILE_EMOJI = "assets/images/smile_emoji.png";
