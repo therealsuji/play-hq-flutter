@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:event_bus/event_bus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:play_hq/helpers/app-enums.dart';
@@ -8,6 +9,7 @@ import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/app-user-model.dart';
+import 'package:play_hq/models/loading-event-model.dart';
 import 'package:play_hq/services/auth_providers/google_auth_service.dart';
 import 'package:play_hq/services/nav-service.dart';
 
@@ -28,8 +30,10 @@ class AuthService {
         return null;
     }
     if (token != null) {
+      locator<EventBus>().fire(LoadingEvent.show());
       var strapiToken = await _getUserToken(token);
       SecureStorage.writeValue("jwtToken", strapiToken);
+      locator<EventBus>().fire(LoadingEvent.hide());
       locator<NavigationService>().pushReplacement(MAIN_SCREEN);
     }
   }
