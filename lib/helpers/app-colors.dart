@@ -21,13 +21,25 @@ const InputFillColor = Color(0xff171B23);
 const SubContainerColor = Color(0xff171B23);
 const landingPageViewBodyColor = Color(0xffDEDFE1);
 
-// gradients
+// Gradients
+const PRIMARY_GRADIENT = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0xFFF84592),
+      Color(0xFFD23163),
+    ]
+);
+
 const GREEN_GRADIENT = LinearGradient(
-    begin: Alignment(0.059474967420101166, 0.9999085068702698),
-    end: Alignment(-0.9999081492424011, 0.0015383202116936445),
-    colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(20, 130, 43, 1)]);
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(20, 130, 43, 1)],
+);
 
 const LIGHT_GREEN_GRADIENT = LinearGradient(
-    begin: Alignment(0.07773031294345856, 1.1520378589630127),
-    end: Alignment(-1.1520378589630127, 0.0020172065123915672),
-    colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(54, 248, 62, 1)]);
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(54, 248, 62, 1)],
+);
+
