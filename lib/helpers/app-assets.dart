@@ -3,6 +3,7 @@ const String TICK_MARK = "assets/icons/tick.svg";
 const String CROSS_MARK = "assets/icons/cross.svg";
 const String ARROW_LEFT = "assets/icons/arrow_left.svg";
 const String CHECK = "assets/icons/check.svg";
+const String ADD = "assets/icons/plus.svg";
 
 const String FACEBOOK_LOGO = "assets/icons/facebook.svg";
 const String GOOGLE_LOGO = "assets/icons/google.svg";

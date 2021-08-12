@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:play_hq/helpers/app-assets.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/nav-bar-screens/discover-screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/orders-screen.dart';
 import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
@@ -16,19 +18,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          Icons.add,
-          size: 30,
-        ),
-        onPressed: () => showPostGame(),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(
+      //     Icons.add,
+      //     size: 30,
+      //   ),
+      //   onPressed: () => showPostGame(),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Theme(
         data: ThemeData(
           splashColor: Colors.transparent,
@@ -61,10 +62,21 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
             BottomNavigationBarItem(
-                icon: SvgPicture.asset(
-                  'assets/icons/transparent.svg',
+              icon: GestureDetector(
+                onTap: () => Navigator.pushNamed(context, CREATE_SALE_ROUTE),
+                child: Container(
+                  padding: EdgeInsets.all(
+                    ScreenUtils.getDesignHeight(11.0),
+                  ),
+                  decoration: BoxDecoration(
+                    gradient: PRIMARY_GRADIENT,
+                    shape: BoxShape.circle,
+                  ),
+                  child: SvgPicture.asset(ADD),
                 ),
-                label: ''),
+              ),
+              label: "",
+            ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/orders.svg',
