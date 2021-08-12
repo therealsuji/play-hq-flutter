@@ -130,7 +130,7 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.all(10),
                           child: SvgPicture.asset(
-                            model.isNegotiable ? TICK_MARK : CROSS_MARK,
+                            model.isNegotiable ? TICK_MARK_ICON : CROSS_MARK_ICON,
                             color: Colors.white,
                             height: ScreenUtils.getDesignHeight(10.0),
                           ),

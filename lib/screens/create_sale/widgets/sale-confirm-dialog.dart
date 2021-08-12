@@ -26,7 +26,7 @@ class SaleConfirmDialog extends StatelessWidget {
             padding: EdgeInsets.all(ScreenUtils.getDesignWidth(15.0)),
             decoration: BoxDecoration(color: TURQUOISE_BLUE_COLOR, shape: BoxShape.circle),
             child: SvgPicture.asset(
-              TICK_MARK,
+              TICK_MARK_ICON,
               color: Colors.white,
             ),
           ),

@@ -43,21 +43,21 @@ class _MainScreenState extends State<MainScreen> {
           items: [
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/home.svg',
+                HOME_ICON,
               ),
               label: '',
               activeIcon: SvgPicture.asset(
-                'assets/icons/home.svg',
+                HOME_ICON,
                 color: PRIMARY_COLOR,
               ),
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/discover.svg',
+                DISCOVER_ICON,
               ),
               label: '',
               activeIcon: SvgPicture.asset(
-                'assets/icons/discover.svg',
+                DISCOVER_ICON,
                 color: PRIMARY_COLOR,
               ),
             ),
@@ -72,28 +72,28 @@ class _MainScreenState extends State<MainScreen> {
                     gradient: PRIMARY_GRADIENT,
                     shape: BoxShape.circle,
                   ),
-                  child: SvgPicture.asset(ADD),
+                  child: SvgPicture.asset(ADD_ICON),
                 ),
               ),
               label: "",
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/orders.svg',
+                ORDERS_ICON,
               ),
               label: '',
               activeIcon: SvgPicture.asset(
-                'assets/icons/orders.svg',
+                ORDERS_ICON,
                 color: PRIMARY_COLOR,
               ),
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                'assets/icons/profile.svg',
+                PROFILE_ICON,
               ),
               label: '',
               activeIcon: SvgPicture.asset(
-                'assets/icons/profile.svg',
+                PROFILE_ICON,
                 color: PRIMARY_COLOR,
               ),
             ),
