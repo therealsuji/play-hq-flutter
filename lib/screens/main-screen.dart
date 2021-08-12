@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/screens/nav-bar-screens/discover-screen.dart';
 import 'package:play_hq/screens/nav-bar-screens/orders-screen.dart';
 import 'package:play_hq/view-models/navigation/tab-navigation-model.dart';
@@ -25,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
           Icons.add,
           size: 30,
         ),
-        onPressed: () => null,
+        onPressed: () => showPostGame(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: Theme(
@@ -103,6 +104,25 @@ class _MainScreenState extends State<MainScreen> {
               return Container();
           }
         },
+      ),
+    );
+  }
+
+  void showPostGame() {
+    showModalBottomSheet(
+      context: context,
+      barrierColor: Colors.black87.withOpacity(0.26),
+      backgroundColor: BACKGROUND_COLOR,
+      isScrollControlled: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(15),
+          topRight: Radius.circular(15),
+        ),
+      ),
+      builder: (c) => Container(
+        color: PRIMARY_COLOR,
+        height: ScreenUtils.getDesignHeight(135.0),
       ),
     );
   }
