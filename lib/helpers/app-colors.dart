@@ -19,6 +19,7 @@ const BottomNavColor = Color(0xff171B23);
 const UNSELECTED_COLOR = Color(0xff4D596E);
 const SubheadingText = Color(0xffBABABA);
 const InputFillColor = Color(0xff171B23);
+const MAIN_CONTAINER_COLOR = Color(0xff07070B);
 const SubContainerColor = Color(0xff171B23);
 const landingPageViewBodyColor = Color(0xffDEDFE1);
 

@@ -33,7 +33,6 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        width: double.infinity,
         padding: EdgeInsets.symmetric(
           horizontal: 24.0,
           vertical: 30.0,
@@ -44,7 +43,7 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          children: <Widget>[
             Text(
               "Platform",
               style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(
@@ -56,26 +55,33 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Consumer<CreateSaleModel>(builder: (_, model, __) {
-                return Wrap(
-                  runAlignment: WrapAlignment.center,
-                  runSpacing: 10.0,
-                  spacing: 10.0,
-                  children: [
-                    ...model.consoleList.map((console) {
+                return GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                    mainAxisExtent: ScreenUtils.getDesignHeight(35.0),
+                  ),
+                  itemCount: model.consoleList.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == model.consoleList.length) {
                       return GestureDetector(
                         onTap: () {
-                          model.setSelectedPlatform(console['id']);
+                          model.setPlatformIsExpanded(!model.platformIsExpanded);
                         },
-                        child: _textButton(console['name'], model.selectedPlatform == console['id']),
+                        child: _textButton(model.platformIsExpanded ? "- Less" : "+ More", false),
                       );
-                    }).toList(),
-                    GestureDetector(
+                    }
+                    return GestureDetector(
                       onTap: () {
-                        model.setPlatformIsExpanded(!model.platformIsExpanded);
+                        model.setSelectedPlatform(model.consoleList.elementAt(index)['id']);
                       },
-                      child: _textButton(model.platformIsExpanded ? "- Less" : "+ More", false),
-                    )
-                  ],
+                      child: _textButton(model.consoleList.elementAt(index)['name'],
+                          model.selectedPlatform == model.consoleList.elementAt(index)['id']),
+                    );
+                  },
                 );
               }),
             ),
@@ -93,17 +99,25 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Consumer<CreateSaleModel>(builder: (_, model, __) {
-                return Wrap(
-                  runSpacing: 10.0,
-                  spacing: 10.0,
-                  children: _game_condtion.map((condtion) {
+                return GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 10.0,
+                    crossAxisSpacing: 10.0,
+                    mainAxisExtent: ScreenUtils.getDesignHeight(35.0),
+                  ),
+                  itemCount: _game_condtion.length,
+                  itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        model.setSelectedGameCondition(condtion['value']);
+                        model.setSelectedGameCondition(_game_condtion[index]['value']);
                       },
-                      child: _textButton(condtion['name'], model.selectedGameCondition == condtion['value']),
+                      child: _textButton(
+                          _game_condtion[index]['name'], model.selectedGameCondition == _game_condtion[index]['value']),
                     );
-                  }).toList(),
+                  },
                 );
               }),
             ),
@@ -151,7 +165,7 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
                   },
                 );
               }),
-            )
+            ),
           ],
         ),
       ),
@@ -163,9 +177,12 @@ Container _textButton(text, selected) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(3),
-      color: selected ? PRIMARY_COLOR : TEXT_COLOR,
+      color: !selected ? MAIN_CONTAINER_COLOR : null,
+      gradient: selected ? PRIMARY_GRADIENT : null,
     ),
+    alignment: Alignment.center,
     padding: EdgeInsets.all(8.0),
+    height: ScreenUtils.getDesignHeight(35.0),
     child: Text(text,
         style: TextStyle(
           color: Colors.white,
