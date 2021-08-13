@@ -35,4 +35,8 @@ class ConfigData {
   static String getSearchResults(String params) {
     return '$_rawgAPI' + '/games?page=1&search=$params' + '&key=$_RAWG_API_KEY';
   }
+
+  static String gameDetails(int id) {
+    return '$_rawgAPI' + '/games/$id' + '?key=$_RAWG_API_KEY';
+  }
 }

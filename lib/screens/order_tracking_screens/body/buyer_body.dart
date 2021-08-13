@@ -3,7 +3,7 @@ import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
-import 'package:play_hq/screens/order_tracking_screens/widgets/gradient_text_widget.dart';
+import 'package:play_hq/widgets/gradient_text_widget.dart';
 
 class BuyerBody extends StatefulWidget {
   const BuyerBody({Key? key}) : super(key: key);

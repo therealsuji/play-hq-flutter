@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 const BACKGROUND_COLOR = Color(0xff14131C);
 const CONTAINER_COLOR = Color(0xff1B1A26);
+
+const MAIN_CONTAINER_COLOR = Color(0xFF07070B);
+const SUB_TEXT_COLOR = Color(0x0FFC2B7CD);
+
 const HEADER_TEXT_COLOR = Color(0xffFFFFFF);
 const PLAYSTATION_COLOR = Color(0xff2E6DB4);
 const TURQUOISE_BLUE_COLOR = Color(0xff32BEA6);
@@ -23,10 +27,23 @@ const SubContainerColor = Color(0xff171B23);
 const landingPageViewBodyColor = Color(0xffDEDFE1);
 
 // Gradients
-const PRIMARY_GRADIENT = LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [
-  Color(0xFFF84592),
-  Color(0xFFD23163),
-]);
+const PRIMARY_GRADIENT = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [
+      Color(0xFFF84592),
+      Color(0xFFD23163),
+    ],
+);
+
+const SECONDARY_GRADIENT = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Color(0xFFFA713B),
+    Color(0xFFF13663),
+  ],
+);
 
 const GREEN_GRADIENT = LinearGradient(
   begin: Alignment.topCenter,

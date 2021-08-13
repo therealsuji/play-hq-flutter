@@ -33,7 +33,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
             children: [
               GestureDetector(
                 child: SvgPicture.asset(
-                  ARROW_LEFT,
+                  BACK_ARROW,
                   height: ScreenUtils.getDesignHeight(27.0),
                 ),
                 onTap: () {},
@@ -108,7 +108,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
         height: 5.0,
         width: ScreenUtils.getDesignWidth(97.0),
         decoration: BoxDecoration(
-          color: Color(0xFF07070B),
+          color: MAIN_CONTAINER_COLOR,
           borderRadius: BorderRadius.circular(20),
         ),
       ),

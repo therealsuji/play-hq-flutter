@@ -78,7 +78,7 @@ class CustomGameSaleWidget extends StatelessWidget {
             padding: EdgeInsets.only(right: 3),
             decoration: BoxDecoration(color: PRIMARY_COLOR, shape: BoxShape.circle),
             child: SvgPicture.asset(
-              'assets/icons/arrow-right.svg',
+              'assets/icons/back-arrow.svg',
               color: Colors.white,
               height: 15,
             ),
