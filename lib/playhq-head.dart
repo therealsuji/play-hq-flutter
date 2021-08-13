@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:play_hq/helpers/app-colors.dart';
@@ -42,8 +43,14 @@ class _PlayHqHeadState extends State<PlayHqHead> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LoadingOverlayModel>(
       create: (context) => ImplLoadingOverlay(),
+      builder: (context, child) {
+        return LoadingWidget(
+          child: child,
+        );
+      },
       child: MaterialApp(
         navigatorKey: locator<NavigationService>().navigatorKey,
+        scrollBehavior: CupertinoScrollBehavior(),
         theme: ThemeData(
           accentColor: PRIMARY_COLOR,
           canvasColor: Colors.transparent,
@@ -51,32 +58,58 @@ class _PlayHqHeadState extends State<PlayHqHead> {
           accentColorBrightness: Brightness.light,
           primaryTextTheme: TextTheme(
             headline1: TextStyle(
-              fontSize: 22,
+              fontSize: 28,
               color: Colors.white,
               fontFamily: Neusa,
             ),
             headline2: TextStyle(
-              fontSize: 18,
-              color: Colors.white.withOpacity(0.6),
-              fontFamily: CircularBook,
-            ),
-            subtitle1: TextStyle(
-              fontSize: 16,
-              color: Colors.white.withOpacity(0.6),
-              fontFamily: CircularBook,
-            ),
-            subtitle2: TextStyle(
-              fontSize: 14,
+              fontSize: 20,
               color: Colors.white,
-              fontFamily: CircularBook,
+              fontFamily: Neusa,
+              fontWeight: FontWeight.bold,
             ),
             headline3: TextStyle(
               fontSize: 18,
-              color: Color(0xffB5BDD5).withOpacity(0.8),
+              color: Colors.white,
+              fontFamily: Neusa,
+              fontWeight: FontWeight.bold,
+            ),
+            headline4: TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+              fontFamily: Neusa,
+              fontWeight: FontWeight.bold,
+            ),
+            headline5: TextStyle(
+              fontSize: 14,
+              color: Colors.white,
               fontFamily: CircularBold,
             ),
             headline6: TextStyle(
-              fontSize: 25,
+              fontSize: 12,
+              color: Colors.white,
+              fontFamily: Neusa,
+              fontWeight: FontWeight.bold,
+            ),
+            bodyText1: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontFamily: CircularBold,
+              fontWeight: FontWeight.w600,
+            ),
+            bodyText2: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+              fontFamily: CircularBook,
+            ),
+            subtitle1: TextStyle(
+              fontSize: 8,
+              color: Colors.white,
+              fontFamily: CircularBold,
+              fontWeight: FontWeight.w600,
+            ),
+            button: TextStyle(
+              fontSize: 14,
               color: Colors.white,
               fontFamily: CircularBold,
             ),
@@ -85,11 +118,6 @@ class _PlayHqHeadState extends State<PlayHqHead> {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
         initialRoute: '/',
-        builder: (context, child) {
-          return LoadingWidget(
-            child: child,
-          );
-        },
       ),
     );
   }
