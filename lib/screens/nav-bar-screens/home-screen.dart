@@ -20,7 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: GestureDetector(
             onTap: () {
               // TODO: PUT THIS IN A VIEW MODEL METHOD
-              locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN);
+              // locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN);
             },
             child: Container(
               height: ScreenUtils.getDesignHeight(30),
