@@ -16,12 +16,10 @@ class OrderTrackingScreen extends StatefulWidget {
 }
 
 class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTickerProviderStateMixin {
-
   late bool _isBuyer;
 
   @override
   Widget build(BuildContext context) {
-
     // TODO: Fix the logic to find the buyer or seller
     _isBuyer = true;
 
@@ -33,7 +31,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
             children: [
               GestureDetector(
                 child: SvgPicture.asset(
-                  BACK_ARROW,
+                  ARROW_LEFT_ICON,
                   height: ScreenUtils.getDesignHeight(27.0),
                 ),
                 onTap: () {},
@@ -44,8 +42,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
               Text(
                 "Order Tracking",
                 style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-                  fontSize: 20.0,
-                ),
+                      fontSize: 20.0,
+                    ),
               ),
             ],
           ),
@@ -76,19 +74,23 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
         gradient: PRIMARY_GRADIENT,
         shape: BoxShape.circle,
       ),
-      padding: EdgeInsets.all(ScreenUtils.getDesignHeight(11.0),),
-      child: isDone ? SvgPicture.asset(
-        CHECK,
-        color: Colors.white,
-        height: ScreenUtils.getDesignHeight(9.0),
-      ) : Text(
-        text,
-        style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-          fontSize: 14.0,
-          color: Colors.white,
-        ),
-        textAlign: TextAlign.center,
+      padding: EdgeInsets.all(
+        ScreenUtils.getDesignHeight(11.0),
       ),
+      child: isDone
+          ? SvgPicture.asset(
+              CHECK_ICON,
+              color: Colors.white,
+              height: ScreenUtils.getDesignHeight(9.0),
+            )
+          : Text(
+              text,
+              style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                  ),
+              textAlign: TextAlign.center,
+            ),
     );
   }
 
@@ -115,4 +117,3 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
     );
   }
 }
-
