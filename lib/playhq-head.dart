@@ -43,11 +43,6 @@ class _PlayHqHeadState extends State<PlayHqHead> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<LoadingOverlayModel>(
       create: (context) => ImplLoadingOverlay(),
-      builder: (context, child) {
-        return LoadingWidget(
-          child: child,
-        );
-      },
       child: MaterialApp(
         navigatorKey: locator<NavigationService>().navigatorKey,
         scrollBehavior: CupertinoScrollBehavior(),
@@ -118,6 +113,11 @@ class _PlayHqHeadState extends State<PlayHqHead> {
         debugShowCheckedModeBanner: false,
         onGenerateRoute: generateRoute,
         initialRoute: '/',
+        builder: (context, child) {
+          return LoadingWidget(
+            child: child,
+          );
+        },
       ),
     );
   }
