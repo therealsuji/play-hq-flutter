@@ -36,176 +36,169 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
         paddingRight: 0.0,
         paddingTop: 0.0,
         body: [
-        SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              height: ScreenUtils.totalBodyHeight,
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 24.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          child: Text(
-                            'Let\'s get Started',
-                            style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: 5),
-                          child: Text(
-                            'Select what kind of games you like',
-                            style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)),
-                          ),
-                        ),
-                      ],
+                    child: Text(
+                      'Let\'s get Started',
+                      style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa),
                     ),
                   ),
-                  Consumer<SetupPurchaseAccountModel>(
-                    builder: (_, value, __) {
-                      return Container(
-                        child: CustomExpanderWidget(
-                          height: value.currentGenreState == false
-                              ? ScreenUtils.getDesignHeight(55)
-                              : ScreenUtils.getDesignHeight(210),
-                          iconData: value.currentGenreState == false
-                              ? Icons.keyboard_arrow_down_rounded
-                              : Icons.keyboard_arrow_up_rounded,
-                          state: value.currentGenreState,
-                          onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).changeGenreState(
-                              Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentGenreState == false
-                                  ? true
-                                  : false),
-                          titleText: 'Select Preferred Genre',
-                          selectedText: value.genreCount == null || value.genreCount == 0
-                              ? 'None Selected'
-                              : value.genreCount == 5
-                              ? 'Max Selected'
-                              : value.genreCount.toString() + ' Selected',
-                          widget: _genreListWidget(),
-                        ),
-                      );
-                    },
-                  ),
-                  Consumer<SetupPurchaseAccountModel>(
-                    builder: (_, val, __) {
-                      return CustomExpanderWidget(
-                          height: val.currentPlatFormState == false
-                              ? ScreenUtils.getDesignHeight(55)
-                              : ScreenUtils.getDesignHeight(140),
-                          iconData: val.currentPlatFormState == false
-                              ? Icons.keyboard_arrow_down_rounded
-                              : Icons.keyboard_arrow_up_rounded,
-                          state: val.currentPlatFormState,
-                          onTap: () {
-                            Provider.of<SetupPurchaseAccountModel>(context, listen: false).changePlatformState(
-                                Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentPlatFormState == false
-                                    ? true
-                                    : false);
-                          },
-                          titleText: 'Choose your Platform',
-                          selectedText: val.totalPlatformCount == null || val.totalPlatformCount == 0
-                              ? 'None Selected'
-                              : val.totalPlatformCount == 5
-                              ? 'Max Selected'
-                              : val.totalPlatformCount.toString() + ' Selected',
-                          widget: Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            height: ScreenUtils.getDesignHeight(70),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                _platformItem(
-                                    'PlayStation',
-                                    PLAYSTATION_COLOR,
-                                    'assets/images/playstation-controller.png',
-                                        () => showPlatformBottomSheet('Select your PlayStation Console', playStationPlatforms,
-                                        PlatformSelection.PlayStation)),
-                                _platformItem(
-                                    'Xbox',
-                                    XBOX_COLOR,
-                                    'assets/images/xbox-controller.png',
-                                        () => showPlatformBottomSheet(
-                                        'Select your Xbox Console', xboxPlatforms, PlatformSelection.Xbox)),
-                                _platformItem(
-                                    'Nintendo',
-                                    NINTENDO_COLOR,
-                                    'assets/images/switch-controller.png',
-                                        () => showPlatformBottomSheet(
-                                        'Select your Nintendo Console', nintendoConsoles, PlatformSelection.Nintendo)),
-                              ],
-                            ),
-                          ));
-                    },
-                  ),
-                  Consumer<SetupPurchaseAccountModel>(
-                    builder: (_, val, __) {
-                      return CustomExpanderWidget(
-                          height: val.currentReleaseDateState == false
-                              ? ScreenUtils.getDesignHeight(55)
-                              : ScreenUtils.getDesignHeight(160),
-                          iconData: val.currentReleaseDateState == false
-                              ? Icons.keyboard_arrow_down_rounded
-                              : Icons.keyboard_arrow_up_rounded,
-                          state: val.currentReleaseDateState,
-                          onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).changeReleaseDateState(
-                              Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentReleaseDateState == false
-                                  ? true
-                                  : false),
-                          titleText: 'Choose Release Date',
-                          selectedText: 'None Selected',
-                          widget: Container(
-                            margin: EdgeInsets.only(bottom: 20),
-                            height: ScreenUtils.getDesignHeight(70),
-                            child: Wrap(
-                                direction: Axis.horizontal,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                spacing: 15,
-                                runSpacing: 20,
-                                children: releaseDates.map((e) {
-                                  return GestureDetector(
-                                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                                        .addReleaseDates(releaseDates.indexOf(e), e['name']),
-                                    child: CustomSelectingWidget(
-                                      titleText: e['name'],
-                                      active: val.selectedReleaseDates.contains(releaseDates.indexOf(e)),
-                                    ),
-                                  );
-                                }).toList()),
-                          ));
-                    },
-                  ),
                   Container(
-                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24),
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: 'Choose the games you want',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontFamily: CircularBook, color: Colors.white, fontSize: 16)),
-                        TextSpan(
-                            text: ' (Wishlist Games)',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500, fontFamily: CircularBook, color: PRIMARY_COLOR, fontSize: 16)),
-                      ]),
+                    margin: EdgeInsets.only(top: 5),
+                    child: Text(
+                      'Select what kind of games you like',
+                      style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)),
                     ),
                   ),
-                  _wishlistGames(),
-                  Container(
-                      margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30), top: ScreenUtils.getDesignHeight(160), left: 24, right: 24),
-                      child: CustomButton(
-                        buttonColor: PRIMARY_COLOR,
-                        buttonText: 'Setup Sales',
-                        textFontSize: 16,
-                        onPressed: () => locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),
-                      ))
                 ],
               ),
             ),
-          ),
+            Consumer<SetupPurchaseAccountModel>(
+              builder: (_, value, __) {
+                return Container(
+                  child: CustomExpanderWidget(
+                    height: value.currentGenreState == false
+                        ? ScreenUtils.getDesignHeight(55)
+                        : ScreenUtils.getDesignHeight(210),
+                    iconData: value.currentGenreState == false
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    state: value.currentGenreState,
+                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).changeGenreState(
+                        Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentGenreState == false
+                            ? true
+                            : false),
+                    titleText: 'Select Preferred Genre',
+                    selectedText: value.genreCount == null || value.genreCount == 0
+                        ? 'None Selected'
+                        : value.genreCount == 5
+                        ? 'Max Selected'
+                        : value.genreCount.toString() + ' Selected',
+                    widget: _genreListWidget(),
+                  ),
+                );
+              },
+            ),
+            Consumer<SetupPurchaseAccountModel>(
+              builder: (_, val, __) {
+                return CustomExpanderWidget(
+                    height: val.currentPlatFormState == false
+                        ? ScreenUtils.getDesignHeight(55)
+                        : ScreenUtils.getDesignHeight(140),
+                    iconData: val.currentPlatFormState == false
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    state: val.currentPlatFormState,
+                    onTap: () {
+                      Provider.of<SetupPurchaseAccountModel>(context, listen: false).changePlatformState(
+                          Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentPlatFormState == false
+                              ? true
+                              : false);
+                    },
+                    titleText: 'Choose your Platform',
+                    selectedText: val.totalPlatformCount == null || val.totalPlatformCount == 0
+                        ? 'None Selected'
+                        : val.totalPlatformCount == 5
+                        ? 'Max Selected'
+                        : val.totalPlatformCount.toString() + ' Selected',
+                    widget: Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      height: ScreenUtils.getDesignHeight(70),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          _platformItem(
+                              'PlayStation',
+                              PLAYSTATION_COLOR,
+                              'assets/images/playstation-controller.png',
+                                  () => showPlatformBottomSheet('Select your PlayStation Console', playStationPlatforms,
+                                  PlatformSelection.PlayStation)),
+                          _platformItem(
+                              'Xbox',
+                              XBOX_COLOR,
+                              'assets/images/xbox-controller.png',
+                                  () => showPlatformBottomSheet(
+                                  'Select your Xbox Console', xboxPlatforms, PlatformSelection.Xbox)),
+                          _platformItem(
+                              'Nintendo',
+                              NINTENDO_COLOR,
+                              'assets/images/switch-controller.png',
+                                  () => showPlatformBottomSheet(
+                                  'Select your Nintendo Console', nintendoConsoles, PlatformSelection.Nintendo)),
+                        ],
+                      ),
+                    ));
+              },
+            ),
+            Consumer<SetupPurchaseAccountModel>(
+              builder: (_, val, __) {
+                return CustomExpanderWidget(
+                    height: val.currentReleaseDateState == false
+                        ? ScreenUtils.getDesignHeight(55)
+                        : ScreenUtils.getDesignHeight(160),
+                    iconData: val.currentReleaseDateState == false
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
+                    state: val.currentReleaseDateState,
+                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).changeReleaseDateState(
+                        Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentReleaseDateState == false
+                            ? true
+                            : false),
+                    titleText: 'Choose Release Date',
+                    selectedText: 'None Selected',
+                    widget: Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      height: ScreenUtils.getDesignHeight(70),
+                      child: Wrap(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          spacing: 15,
+                          runSpacing: 20,
+                          children: releaseDates.map((e) {
+                            return GestureDetector(
+                              onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                                  .addReleaseDates(releaseDates.indexOf(e), e['name']),
+                              child: CustomSelectingWidget(
+                                titleText: e['name'],
+                                active: val.selectedReleaseDates.contains(releaseDates.indexOf(e)),
+                              ),
+                            );
+                          }).toList()),
+                    ));
+              },
+            ),
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24),
+              child: RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                      text: 'Choose the games you want',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontFamily: CircularBook, color: Colors.white, fontSize: 16)),
+                  TextSpan(
+                      text: ' (Wishlist Games)',
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500, fontFamily: CircularBook, color: PRIMARY_COLOR, fontSize: 16)),
+                ]),
+              ),
+            ),
+            _wishlistGames(),
+            Container(
+                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30), top: ScreenUtils.getDesignHeight(160), left: 24, right: 24),
+                child: CustomButton(
+                  buttonColor: PRIMARY_COLOR,
+                  buttonText: 'Setup Sales',
+                  textFontSize: 16,
+                  onPressed: () => locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),
+                ))
+          ],
         ),
       ],
 
