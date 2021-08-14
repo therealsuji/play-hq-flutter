@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
     required this.buttonText,
     this.onPressed,
     this.buttonColor,
-    this.textFontSize = 18,
+    this.textFontSize = 14,
     this.gradient,
     this.width = double.infinity,
     this.height = 50,
@@ -49,7 +49,9 @@ class CustomButton extends StatelessWidget {
         ),
         child: Text(
           buttonText,
-          style: Theme.of(context).primaryTextTheme.button,
+          style: Theme.of(context).primaryTextTheme.button!.copyWith(
+            fontSize: textFontSize,
+          ),
         ),
         onPressed: onPressed ?? () {},
       ),
