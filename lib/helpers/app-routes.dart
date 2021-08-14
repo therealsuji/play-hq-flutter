@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/create_sale/create-sale-screen.dart';
+import 'package:play_hq/screens/custom-search-screen/main-search-screen.dart';
 import 'package:play_hq/screens/order_tracking_screens/order_tracking_screen.dart';
 import 'package:play_hq/screens/trades/create-trade-screen.dart';
 import 'package:play_hq/screens/custom-search-screen.dart';
@@ -113,6 +114,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => OrderTrackingScreen(),
       );
+    case MAIN_SEARCH_SCREEN:
+      return MaterialPageRoute(builder: (context) => MainSearchScreen());
+
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
