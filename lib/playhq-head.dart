@@ -53,7 +53,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
           accentColorBrightness: Brightness.light,
           primaryTextTheme: TextTheme(
             headline1: TextStyle(
-              fontSize: 28,
+              fontSize: 25,
               color: Colors.white,
               fontFamily: Neusa,
             ),
@@ -87,13 +87,13 @@ class _PlayHqHeadState extends State<PlayHqHead> {
               fontWeight: FontWeight.bold,
             ),
             bodyText1: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               color: Colors.white,
               fontFamily: CircularBold,
               fontWeight: FontWeight.w600,
             ),
             bodyText2: TextStyle(
-              fontSize: 16,
+              fontSize: 12,
               color: Colors.white,
               fontFamily: CircularBook,
             ),
