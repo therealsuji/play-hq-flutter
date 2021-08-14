@@ -24,7 +24,7 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
-            color: CONTAINER_COLOR,
+            color: POPUP_COLOR,
           ),
           child: Consumer<CreateSaleModel>(
             builder: (_, model, __) {
@@ -33,20 +33,14 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                 children: [
                   Text(
                     "Sale Details Confirmation",
-                    style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
-                          fontFamily: Neusa,
-                          fontSize: ScreenUtils.getDesignWidth(16.0),
-                          color: Colors.white,
-                        ),
+                    style: Theme.of(context).primaryTextTheme.headline3,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 25.0),
+                    // TODO change the text below
                     child: Text(
                       "We all make mistakes,so just check if you've given all the details accurately",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .subtitle1
-                          ?.copyWith(fontSize: ScreenUtils.getDesignWidth(10)),
+                      style: Theme.of(context).primaryTextTheme.bodyText2?.copyWith(color: SubheadingText),
                     ),
                   ),
                   Row(
@@ -54,18 +48,12 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                     children: [
                       Text(
                         "Total Games",
-                        style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
-                              fontFamily: Neusa,
-                              fontSize: ScreenUtils.getDesignWidth(14.0),
-                              color: Colors.white,
-                            ),
+                        style: Theme.of(context).primaryTextTheme.headline3,
                       ),
                       Text(
                         "0" + model.gameList.length.toString(),
-                        style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
+                        style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
                               color: PRIMARY_COLOR,
-                              fontFamily: Neusa,
-                              fontSize: ScreenUtils.getDesignWidth(16.0),
                             ),
                       )
                     ],
@@ -94,18 +82,15 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                       children: [
                         Text(
                           "Game Bundle Price",
-                          style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
-                                fontFamily: Neusa,
-                                color: Colors.white,
-                              ),
+                          style: Theme.of(context).primaryTextTheme.headline3,
                         ),
                         ShaderMask(
-                          shaderCallback: (bounds) => LIGHT_GREEN_GRADIENT.createShader(
+                          shaderCallback: (bounds) => GREEN_GRADIENT.createShader(
                             Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                           ),
                           child: Text(
                             model.price.toString() + " LKR",
-                            style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(fontFamily: Neusa),
+                            style: Theme.of(context).primaryTextTheme.headline3,
                           ),
                         ),
                       ],
@@ -118,10 +103,7 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                       children: [
                         Text(
                           "Negotiable ?",
-                          style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(
-                                fontFamily: Neusa,
-                                color: Colors.white,
-                              ),
+                          style: Theme.of(context).primaryTextTheme.headline3,
                         ),
                         Container(
                           decoration: BoxDecoration(

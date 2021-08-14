@@ -48,14 +48,14 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                     children: [
                       Text(
                         "Create a Sale",
-                        style: Theme.of(context).primaryTextTheme.headline6?.copyWith(fontFamily: Neusa),
+                        style: Theme.of(context).primaryTextTheme.headline1,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5.0),
                         child: Text(
                           "Create a sale so you can sell your game super fast",
-                          style: Theme.of(context).primaryTextTheme.subtitle2!.copyWith(
-                                color: Color(0xffB5BDD5).withOpacity(0.8),
+                          style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
+                                color: Colors.white.withOpacity(0.7),
                               ),
                         ),
                       ),
@@ -127,14 +127,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Sale Price ",
-                              style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: Neusa,
-                                  ),
-                            ),
+                            Text("Sale Price ", style: Theme.of(context).primaryTextTheme.headline4),
                             Consumer<CreateSaleModel>(
                               builder: (_, model, __) {
                                 return Text(

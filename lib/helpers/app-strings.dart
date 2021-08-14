@@ -9,11 +9,10 @@ const String SEARCH_SCREEN = 'search';
 const String GAME_DETAILS_SCREEN = 'gamedetails';
 const String LANDING_PAGE_SCREEN = 'landingpage';
 const String CREATE_TRADE_SCREEN = 'createTrade';
-const String GamesForSaleRoute = 'gamesforsale';
+const String GAMES_FOR_SALE_ROUTE = 'gamesforsale';
 const String CREATE_SALE_ROUTE = 'createsale';
-const String SaleDetailsRoute = 'saleDetails';
-const String SetupPurchaseAccountRoute = 'setupPurchase';
-const String SetupSalesAccountRoute = 'setupSales';
+const String SALE_DETAILS_ROUTE = 'saleDetails';
+const String SETUP_PURCHASE_ACCOUNT_ROUTE = 'setupPurchase';
+const String SETUP_SALES_ACCOUNT_ROUTE = 'setupSales';
 const String ORDER_TRACKING_SCREEN = 'orderTrackingScreen';
-
-// TODO make all route names simillar
+const String PAYMENT_SCREEN = 'paymentScreen';

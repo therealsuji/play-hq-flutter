@@ -39,18 +39,14 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: CONTAINER_COLOR,
+          color: POPUP_COLOR,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               "Platform",
-              style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: Neusa,
-                    color: Colors.white,
-                  ),
+              style: Theme.of(context).primaryTextTheme.headline4,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
@@ -89,11 +85,7 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
                 "Gmae Condition",
-                style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontFamily: Neusa,
-                      color: Colors.white,
-                    ),
+                style: Theme.of(context).primaryTextTheme.headline4,
               ),
             ),
             Padding(
@@ -177,7 +169,7 @@ Container _textButton(text, selected) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(3),
-      color: !selected ? MAIN_CONTAINER_COLOR : null,
+      color: !selected ? CONTAINER_COLOR.withOpacity(0.5) : null,
       gradient: selected ? PRIMARY_GRADIENT : null,
     ),
     alignment: Alignment.center,
