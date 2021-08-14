@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const BACKGROUND_COLOR = Color(0xff14131C);
-const CONTAINER_COLOR = Color(0xff1B1A26);
+const CONTAINER_COLOR = Color(0xff07070B);
 
 const MAIN_CONTAINER_COLOR = Color(0xFF07070B);
 const SUB_TEXT_COLOR = Color(0x0FFC2B7CD);
@@ -56,3 +56,7 @@ const LIGHT_GREEN_GRADIENT = LinearGradient(
   end: Alignment.bottomCenter,
   colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(54, 248, 62, 1)],
 );
+
+final Shader textPrimaryGradient = LinearGradient(
+  colors: <Color>[Color(0xFFF84592), Color(0xFFD23163)],
+).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
