@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 const BACKGROUND_COLOR = Color(0xff14131C);
-const CONTAINER_COLOR = Color(0xff1B1A26);
+const CONTAINER_COLOR = Color(0xff07070B);
 
 const MAIN_CONTAINER_COLOR = Color(0xFF07070B);
 const SUB_TEXT_COLOR = Color(0x0FFC2B7CD);
@@ -25,15 +25,16 @@ const SubheadingText = Color(0xffBABABA);
 const InputFillColor = Color(0xff171B23);
 const SubContainerColor = Color(0xff171B23);
 const landingPageViewBodyColor = Color(0xffDEDFE1);
+const POPUP_COLOR = Color(0xff1B1A26);
 
 // Gradients
 const PRIMARY_GRADIENT = LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    colors: [
-      Color(0xFFF84592),
-      Color(0xFFD23163),
-    ],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+  colors: [
+    Color(0xFFF84592),
+    Color(0xFFD23163),
+  ],
 );
 
 const SECONDARY_GRADIENT = LinearGradient(
@@ -51,8 +52,6 @@ const GREEN_GRADIENT = LinearGradient(
   colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(20, 130, 43, 1)],
 );
 
-const LIGHT_GREEN_GRADIENT = LinearGradient(
-  begin: Alignment.topCenter,
-  end: Alignment.bottomCenter,
-  colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(54, 248, 62, 1)],
-);
+final Shader textPrimaryGradient = LinearGradient(
+  colors: <Color>[Color(0xFFF84592), Color(0xFFD23163)],
+).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));

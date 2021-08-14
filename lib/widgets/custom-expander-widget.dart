@@ -21,14 +21,14 @@ class CustomExpanderWidget extends StatelessWidget {
       width: ScreenUtils.bodyWidth,
       height: height,
       decoration: BoxDecoration(
-        color: CONTAINER_COLOR,
+        color: CONTAINER_COLOR.withOpacity(0.6),
       ),
-      margin: EdgeInsets.only(top: 25.0),
+      margin: EdgeInsets.only(top: 35.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(15), left: 24.0, right: 24.0),
+            padding: EdgeInsets.only(top: 20.0 , left: 24.0 , right: 24.0),
             child: GestureDetector(
               onTap: onTap,
               child: Row(
@@ -36,8 +36,7 @@ class CustomExpanderWidget extends StatelessWidget {
                   Container(
                     child: Text(
                       titleText!,
-                      style: TextStyle(
-                          fontFamily: CircularBook, fontWeight: FontWeight.w500, color: Colors.white, fontSize: 18.0),
+                      style: Theme.of(context).primaryTextTheme.headline3
                     ),
                   ),
                   Spacer(),
@@ -46,12 +45,15 @@ class CustomExpanderWidget extends StatelessWidget {
                     child: Text(
                       selectedText!,
                       style: TextStyle(
-                          fontSize: 16.0, color: PRIMARY_COLOR, fontFamily: CircularBook, fontWeight: FontWeight.w500),
+                        fontFamily: CircularBold,
+                        foreground: Paint()..shader = textPrimaryGradient,
+                        fontSize: 12
+                      )
                     ),
                   ),
                   Container(
                       height: 25.0,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: PRIMARY_COLOR),
+                      decoration: BoxDecoration(shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
                       child: Icon(
                         iconData,
                         color: Colors.white,

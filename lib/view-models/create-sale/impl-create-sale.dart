@@ -74,6 +74,7 @@ class ImplCreateSale extends CreateSaleModel {
     setSheetSaved(false);
     setSelectedGameCondition(null);
     setSelectedPlatform(null);
+    setPlatformIsExpanded(false);
   }
 
   @override
@@ -122,7 +123,6 @@ class ImplCreateSale extends CreateSaleModel {
     if (expanded) {
       _consoleList = _allConsoles;
     } else {
-      _selectedPlatform = null;
       _consoleList = popularConsoles.toSet();
     }
     notifyListeners();
@@ -178,6 +178,7 @@ class ImplCreateSale extends CreateSaleModel {
     } else {
       setSelectedGameCondition(null);
       setSelectedPlatform(null);
+      setPlatformIsExpanded(false);
     }
     notifyListeners();
   }
