@@ -12,16 +12,11 @@ class GameDetailsModel {
   final double? rating;
   final int? ratingTop;
   final List<Ratings>? ratings;
-  final int? playtime;
-  final int? screenshotsCount;
-  final int? ratingsCount;
-  final int? suggestionsCount;
-  final int? gameSeriesCount;
   final int? reviewsCount;
   final List<Platform>? platforms;
-  final List<GenreTagPublisher>? genres;
-  final List<GenreTagPublisher>? tags;
-  final List<GenreTagPublisher>? publishers;
+  final List<GenreTagDeveloper>? genres;
+  final List<GenreTagDeveloper>? tags;
+  final List<GenreTagDeveloper>? developer;
   final String? description;
 
   const GameDetailsModel({
@@ -38,16 +33,11 @@ class GameDetailsModel {
     this.rating,
     this.ratingTop,
     this.ratings,
-    this.playtime,
-    this.screenshotsCount,
-    this.ratingsCount,
-    this.suggestionsCount,
-    this.gameSeriesCount,
     this.reviewsCount,
     this.platforms,
     this.genres,
     this.tags,
-    this.publishers,
+    this.developer,
     this.description
   });
 
@@ -65,16 +55,11 @@ class GameDetailsModel {
     rating: json["rating"] ?? 0.0,
     ratingTop: json["rating_top"] ?? 0,
     ratings: json["ratings"] == null ? [] : List<Ratings>.from(json["ratings"].map((x) => Ratings.fromJson(x))),
-    playtime: json["playtime"] ?? 0,
-    screenshotsCount: json["screenshots_count"] ?? 0,
-    ratingsCount: json["ratings_count"] ?? 0,
-    suggestionsCount: json["suggestions_count"] ?? 0,
-    gameSeriesCount: json["game_series_count"] ?? 0,
     reviewsCount: json["reviews_count"] ?? 0,
     platforms: json["platforms"] == null ? [] : List<Platform>.from(json["platforms"].map((x) => Platform.fromJson(x))),
-    genres: json["genres"] == null ? [] : List<GenreTagPublisher>.from(json["genres"].map((x) => GenreTagPublisher.fromJson(x))),
-    tags: json["tags"] == null ? [] : List<GenreTagPublisher>.from(json["tags"].map((x) => GenreTagPublisher.fromJson(x))),
-    publishers: json["publishers"] == null ? [] : List<GenreTagPublisher>.from(json["publishers"].map((x) => GenreTagPublisher.fromJson(x))),
+    genres: json["genres"] == null ? [] : List<GenreTagDeveloper>.from(json["genres"].map((x) => GenreTagDeveloper.fromJson(x))),
+    tags: json["tags"] == null ? [] : List<GenreTagDeveloper>.from(json["tags"].map((x) => GenreTagDeveloper.fromJson(x))),
+    developer: json["developers"] == null ? [] : List<GenreTagDeveloper>.from(json["developers"].map((x) => GenreTagDeveloper.fromJson(x))),
     description: json["description_raw"] ?? "",
   );
 }
@@ -122,7 +107,7 @@ class Platform {
   );
 }
 
-class GenreTagPublisher {
+class GenreTagDeveloper {
 
   final int? id;
   final String? name;
@@ -130,7 +115,7 @@ class GenreTagPublisher {
   final int? gamesCount;
   final String? language;
 
-  const GenreTagPublisher({
+  const GenreTagDeveloper({
     this.id,
     this.name,
     this.slug,
@@ -138,7 +123,7 @@ class GenreTagPublisher {
     this.language,
   });
 
-  factory GenreTagPublisher.fromJson(Map<String, dynamic> json) => GenreTagPublisher(
+  factory GenreTagDeveloper.fromJson(Map<String, dynamic> json) => GenreTagDeveloper(
     id: json["id"] ?? 0,
     name: json["name"] ?? "",
     slug: json["slug"] ?? "",

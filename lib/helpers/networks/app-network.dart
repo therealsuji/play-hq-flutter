@@ -1,5 +1,6 @@
 import 'package:http/http.dart';
 import 'package:play_hq/models/game_details_model.dart';
+import 'package:play_hq/models/game_screenshot_modal.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/models/app-user-model.dart';
 import 'package:play_hq/models/create-sale-model.dart';
@@ -112,5 +113,9 @@ class Network {
 
   Future<GameDetailsModel> getGameDetails(int id) async {
     return await _performWebRequest<GameDetailsModel>(RequestType.get, ConfigData.gameDetails(id));
+  }
+
+  Future<GameScreenshotModal> gameScreenshots(int id) async {
+    return await _performWebRequest<GameScreenshotModal>(RequestType.get, ConfigData.gameScreenshots(id));
   }
 }

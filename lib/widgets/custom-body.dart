@@ -8,13 +8,16 @@ class CustomBody extends StatelessWidget {
   final double paddingLeft;
   final double paddingBottom;
   final double paddingRight;
+  final bool getStatusBar;
 
-  CustomBody(
-      {required this.body,
-      this.paddingTop = 20.0,
-      this.paddingLeft = 24.0,
-      this.paddingRight = 24.0,
-      this.paddingBottom = 45.0});
+  CustomBody({
+    required this.body,
+    this.paddingTop = 20.0,
+    this.paddingLeft = 24.0,
+    this.paddingRight = 24.0,
+    this.paddingBottom = 45.0,
+    this.getStatusBar = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +35,7 @@ class CustomBody extends StatelessWidget {
             width: ScreenUtils.bodyWidth,
             child: Padding(
               padding: EdgeInsets.only(
-                top: ScreenUtils.statusBarHeight + ScreenUtils.getDesignHeight(paddingTop),
+                top: (getStatusBar ? ScreenUtils.statusBarHeight : 0.0) + ScreenUtils.getDesignHeight(paddingTop),
                 left: ScreenUtils.getDesignWidth(paddingLeft),
                 right: ScreenUtils.getDesignWidth(paddingRight),
                 bottom: ScreenUtils.getDesignWidth(paddingBottom),

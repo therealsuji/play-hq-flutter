@@ -5,11 +5,14 @@ class ScreenUtils {
   static late double statusBarHeight;
   static late double totalBodyHeight;
   static late double bodyWidth;
+  static late bool isStatusBarBig;
+
 
   static void setScreenSizes(BuildContext context){
     statusBarHeight = MediaQuery.of(context).padding.top;
     totalBodyHeight = MediaQuery.of(context).size.height;
     bodyWidth = MediaQuery.of(context).size.width;
+    isStatusBarBig = statusBarHeight > 55.0;
   }
 
   static getDesignWidth(double designMargin){

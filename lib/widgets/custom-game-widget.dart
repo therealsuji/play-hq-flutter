@@ -1,18 +1,20 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+
+import 'gradient_text_widget.dart';
 
 class GamesWidget extends StatelessWidget {
   final String? backgroundUrl;
   final String? gameName;
   final String? releaseDate;
   final Color? color;
+  final Gradient? gradient;
 
   //for local testing
-  GamesWidget({this.gameName, this.releaseDate, this.backgroundUrl , this.color});
+  GamesWidget({this.gameName, this.releaseDate, this.backgroundUrl , this.color, this.gradient});
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +71,15 @@ class GamesWidget extends StatelessWidget {
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 5),
-                        child: Text(
+                        child: color != null ? Text(
                           releaseDate == null ? 'Not mentioned' : releaseDate!,
-                          style:
-                              TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: color),
-                        ))
+                          style: TextStyle(fontFamily: Neusa, fontSize: 12, fontWeight: FontWeight.bold, color: color),
+                        ) : GradientText(
+                          text: releaseDate ?? "",
+                          gradient: gradient!,
+                          style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: Colors.white),
+                        ),
+                    ),
                   ],
                 ),
               ),

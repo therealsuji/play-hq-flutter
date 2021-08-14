@@ -39,4 +39,8 @@ class ConfigData {
   static String gameDetails(int id) {
     return '$_rawgAPI' + '/games/$id' + '?key=$_RAWG_API_KEY';
   }
+
+  static String gameScreenshots(int id) {
+    return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
+  }
 }

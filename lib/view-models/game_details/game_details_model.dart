@@ -2,6 +2,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/game_details_model.dart';
+import 'package:play_hq/models/game_screenshot_modal.dart';
 import 'package:play_hq/models/loading-event-model.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/game_details/i_game_details_model.dart';
@@ -12,6 +13,7 @@ class GameDetails extends IGameDetailsModel {
   final _eventBus = locator<EventBus>();
 
   GameDetailsModel _gameDetailsModel = GameDetailsModel();
+  GameScreenshotModal _gameScreenshotModal = GameScreenshotModal();
 
   @override
   Future<void> getGameDetails(int id) async {
@@ -19,8 +21,12 @@ class GameDetails extends IGameDetailsModel {
     try {
       _eventBus.fire(LoadingEvent.show());
 
-      GameDetailsModel result = await _networkCalls.getGameDetails(id);
-      _gameDetailsModel = result;
+      GameDetailsModel results = await _networkCalls.getGameDetails(id);
+      GameScreenshotModal screenshots = await _networkCalls.gameScreenshots(id);
+
+      _gameDetailsModel = results;
+      _gameScreenshotModal = screenshots;
+
       notifyListeners();
 
       _eventBus.fire(LoadingEvent.hide());
@@ -36,5 +42,8 @@ class GameDetails extends IGameDetailsModel {
 
   @override
   GameDetailsModel get gameDetails => _gameDetailsModel;
+
+  @override
+  GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
 
 }

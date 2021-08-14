@@ -8,6 +8,7 @@ import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/view-models/game_details/i_game_details_model.dart';
 import 'package:play_hq/widgets/custom-body.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -21,8 +22,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<IGameDetailsModel>(context, listen: false).getGameDetails(43);
+    // TODO: Create Similar Games, OnTap for Company Tile and Genre Image
+    Provider.of<IGameDetailsModel>(context, listen: false).getGameDetails(134);
   }
+
+  List<String> temp = ["1", "2", "3", "4", "5"];
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +35,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         paddingLeft: 0.0,
         paddingTop: 0.0,
         paddingRight: 0.0,
+        getStatusBar: false,
         body: [
           Stack(
             children: [
@@ -49,12 +54,18 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   );
                 },
               ),
+              Container(
+                height: ScreenUtils.getDesignHeight(293.0),
+                width: double.infinity,
+                color: Color(0xFF08090A).withOpacity(0.7),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: ScreenUtils.getDesignHeight(10.0),
+                      top: ScreenUtils.getDesignHeight(
+                          ScreenUtils.isStatusBarBig ? 80.0 : 42.0),
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
@@ -95,18 +106,22 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                               releaseDate: model.gameDetails.released,
                               rate: model.gameDetails.rating,
                             ),
-                            Padding(
+                            GridView.builder(
                               padding: EdgeInsets.only(
                                 top: ScreenUtils.getDesignHeight(15.0),
                               ),
-                              child: Wrap(
-                                runSpacing: 5.0,
-                                spacing: 10.0,
-                                direction: Axis.horizontal,
-                                children: model.gameDetails.platforms!.map((e) {
-                                  return _platformContainer(e.name ?? "");
-                                }).toList(),
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                mainAxisSpacing: 10.0,
+                                crossAxisSpacing: 10.0,
+                                mainAxisExtent: ScreenUtils.getDesignHeight(35.0),
                               ),
+                              itemCount: model.gameDetails.platforms?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                return _platformContainer(model.gameDetails.platforms?[index].name ?? "");
+                              },
                             ),
                           ],
                         ),
@@ -119,7 +134,6 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       right: ScreenUtils.getDesignWidth(24.0),
                       left: ScreenUtils.getDesignWidth(24.0),
                     ),
-                    // TODO: CORRECT FONT FAMILY
                     child: Row(
                       children: [
                         Expanded(
@@ -144,10 +158,49 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       ],
                     ),
                   ),
-                  // TODO: ADD CORRECT DETAILS
                   _companyContainer(),
                   _subHeadingContainer(title: "Genre", paddingTop: 30.0),
+                  Consumer<IGameDetailsModel>(
+                    builder: (_,model,__) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: ScreenUtils.getDesignHeight(15.0),
+                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: model.gameDetails.genres != null ? model.gameDetails.genres!.map((g) {
+                              return _genreListContainer(
+                                name: g.name,
+                                index: model.gameDetails.genres!.indexOf(g),
+                              );
+                            }).toList() : [],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   _subHeadingContainer(title: "Game Screenshots"),
+                  Consumer<IGameDetailsModel>(
+                    builder: (_,model,__) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: ScreenUtils.getDesignHeight(15.0),
+                        ),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: model.gameScreenshots.results != null ? model.gameScreenshots.results!.map((s) {
+                              return _genreScreenshotContainer(
+                                imagePath: s.image,
+                                index: model.gameScreenshots.results!.indexOf(s),
+                              );
+                            }).toList() : [],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                   _subHeadingContainer(title: "Description"),
                   Padding(
                     padding: EdgeInsets.only(
@@ -168,6 +221,26 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     ),
                   ),
                   _subHeadingContainer(title: "Similar Games"),
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: temp.map((e) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                            top: ScreenUtils.getDesignHeight(15.0),
+                            left: ScreenUtils.getDesignWidth(
+                              temp.indexOf(e) == 0 ? 24.0 : 15.0,
+                            ),
+                          ),
+                          child: GamesWidget(
+                            backgroundUrl: "https://i.stack.imgur.com/y9DpT.jpg",
+                            gameName: "Test",
+                            releaseDate: "4200 LKR",gradient: GREEN_GRADIENT,
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                  ),
                 ],
               ),
             ],
@@ -184,7 +257,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   }) {
     return Container(
       margin: EdgeInsets.only(
-        top: ScreenUtils.getDesignHeight(205.68),
+        top: ScreenUtils.getDesignHeight(ScreenUtils.isStatusBarBig ? 135.35 : 173.35), // 205.68
       ),
       height: ScreenUtils.getDesignWidth(77.0),
       decoration: BoxDecoration(
@@ -209,14 +282,14 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               children: [
                 Text(
                   title ?? "",
-                  style: Theme.of(context).primaryTextTheme.headline3,
+                  style: Theme.of(context).primaryTextTheme.headline4,
                 ),
                 SizedBox(height: ScreenUtils.getDesignHeight(2.0),),
                 GradientText(
                   text: releaseDate != null
                       ? DateFormat('dd/MM/yyyy').format(DateTime.parse(releaseDate)) : "",
                   gradient: PRIMARY_GRADIENT,
-                  style: Theme.of(context).primaryTextTheme.headline3,
+                  style: Theme.of(context).primaryTextTheme.headline4,
                 ),
               ],
             ),
@@ -258,7 +331,6 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   Widget _companyContainer() {
     return GestureDetector(
       child: Container(
-        height: ScreenUtils.getDesignHeight(64.0),
         margin: EdgeInsets.only(
           top: ScreenUtils.getDesignHeight(25.0),
           left: ScreenUtils.getDesignWidth(24.0),
@@ -274,23 +346,32 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Sony Interactive Entertainment",
-                  style: Theme.of(context).primaryTextTheme.headline3,
-                ),
-                SizedBox(height: ScreenUtils.getDesignHeight(2.0),),
-                Text(
-                  "Company",
-                  style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                    color: SUB_TEXT_COLOR,
-                    fontSize: 12.0,
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: ScreenUtils.getDesignHeight(15.0),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Consumer<IGameDetailsModel>(
+                    builder: (_,model,__) {
+                      return Text(
+                        "${model.gameDetails.developer != null ? model.gameDetails.developer![0].name : ""}",
+                        style: Theme.of(context).primaryTextTheme.bodyText1,
+                      );
+                    },
                   ),
-                ),
-              ],
+                  SizedBox(height: ScreenUtils.getDesignHeight(2.0),),
+                  Text(
+                    "Company",
+                    style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
+                      color: SUB_TEXT_COLOR,
+                      fontSize: 12.0,
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
               decoration: BoxDecoration(
@@ -349,6 +430,61 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         child: Text(
           title,
           style: Theme.of(context).primaryTextTheme.headline3,
+        ),
+      ),
+    );
+  }
+
+  Widget _genreListContainer({String? name, int? index}) {
+    return Container(
+      width: ScreenUtils.getDesignWidth(97.0),
+      height: ScreenUtils.getDesignHeight(99.0),
+      margin: EdgeInsets.only(
+        left: ScreenUtils.getDesignWidth(index == 0 ? 24.0 : 16.0),
+      ),
+      decoration: BoxDecoration(
+        color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: ScreenUtils.getDesignWidth(57.0),
+            height: ScreenUtils.getDesignHeight(57.0),
+            color: Colors.amber,
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: ScreenUtils.getDesignHeight(8.0),
+            ),
+            child: Text(
+                name ?? "",
+                style: Theme.of(context).primaryTextTheme.subtitle1
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _genreScreenshotContainer({String? imagePath, int? index}) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ScreenUtils.getDesignWidth(index == 0 ? 24.0 : 15.0),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(5.0),
+        child: CachedNetworkImage(
+          width: ScreenUtils.getDesignWidth(235.0),
+          height: ScreenUtils.getDesignHeight(130.0),
+          placeholder: (context, url) => Center(
+            child: Container(height: 50, width: 50,
+              child: CircularProgressIndicator(color: PRIMARY_COLOR,),
+            ),
+          ),
+          imageUrl: imagePath ?? "https://i.stack.imgur.com/y9DpT.jpg",
+          fit: BoxFit.cover,
         ),
       ),
     );
