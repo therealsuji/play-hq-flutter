@@ -4,6 +4,7 @@ import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/create_sale/create-sale-screen.dart';
 import 'package:play_hq/screens/custom-search-screen/main-search-screen.dart';
 import 'package:play_hq/screens/order_tracking_screens/order_tracking_screen.dart';
+import 'package:play_hq/screens/payment/payment-screen.dart';
 import 'package:play_hq/screens/trades/create-trade-screen.dart';
 import 'package:play_hq/screens/custom-search-screen.dart';
 import 'package:play_hq/screens/game-details-screen.dart';
@@ -23,6 +24,8 @@ import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model
 import 'package:play_hq/view-models/onboarding/setup-purchase-account-view-model/purchase-account-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/impl-sales-account.dart';
 import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
+import 'package:play_hq/view-models/payment/impl-payment-model.dart';
+import 'package:play_hq/view-models/payment/payment-model.dart';
 import 'package:play_hq/view-models/search-game/impl-search-game.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-impl.dart';
@@ -81,8 +84,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => _implSetupSales,
             ),
           ],
-          child: CustomSearchScreen(
-              values: settings.arguments as SearchGameScreens),
+          child: CustomSearchScreen(values: settings.arguments as SearchGameScreens),
         ),
       );
     case CREATE_SALE_ROUTE:
@@ -117,6 +119,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(builder: (context) => MainSearchScreen());
 
+    case PAYMENT_SCREEN:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<PaymentModel>(
+          create: (context) => ImplPayment(settings.arguments as String),
+          child: PaymentScreen(),
+        ),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

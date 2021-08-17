@@ -47,9 +47,19 @@ const SECONDARY_GRADIENT = LinearGradient(
 );
 
 const GREEN_GRADIENT = LinearGradient(
+  colors: [
+    Color.fromRGBO(49, 197, 73, 1),
+    Color.fromRGBO(20, 130, 43, 1),
+  ],
+);
+
+const ALERT_GRADIENT = LinearGradient(
   begin: Alignment.topCenter,
   end: Alignment.bottomCenter,
-  colors: [Color.fromRGBO(49, 197, 73, 1), Color.fromRGBO(20, 130, 43, 1)],
+  colors: [
+    Color.fromRGBO(248, 47, 47, 1),
+    Color.fromRGBO(215, 36, 36, 1),
+  ],
 );
 
 final Shader textPrimaryGradient = LinearGradient(
