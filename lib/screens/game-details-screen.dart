@@ -18,7 +18,6 @@ class GameDetailsScreen extends StatefulWidget {
 }
 
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -40,13 +39,17 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           Stack(
             children: [
               Consumer<IGameDetailsModel>(
-                builder: (_,model,__) {
+                builder: (_, model, __) {
                   return CachedNetworkImage(
                     height: ScreenUtils.getDesignHeight(293.0),
                     width: double.infinity,
                     placeholder: (context, url) => Center(
-                      child: Container(height: 50, width: 50,
-                        child: CircularProgressIndicator(color: PRIMARY_COLOR,),
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(
+                          color: PRIMARY_COLOR,
+                        ),
                       ),
                     ),
                     imageUrl: model.gameDetails.backgroundImage ?? "https://i.stack.imgur.com/y9DpT.jpg",
@@ -64,8 +67,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: ScreenUtils.getDesignHeight(
-                          ScreenUtils.isStatusBarBig ? 80.0 : 42.0),
+                      top: ScreenUtils.getDesignHeight(ScreenUtils.isStatusBarBig ? 80.0 : 42.0),
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
@@ -75,7 +77,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       children: [
                         GestureDetector(
                           child: SvgPicture.asset(
-                            BACK_ARROW,
+                            BACK_ARROW_ICON,
                             height: ScreenUtils.getDesignHeight(27.0),
                           ),
                           onTap: () {
@@ -84,7 +86,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         ),
                         GestureDetector(
                           child: SvgPicture.asset(
-                            BACK_ARROW,
+                            BACK_ARROW_ICON,
                             height: ScreenUtils.getDesignHeight(27.0),
                           ),
                           onTap: () {},
@@ -93,7 +95,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     ),
                   ),
                   Consumer<IGameDetailsModel>(
-                    builder: (_,model,__) {
+                    builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: ScreenUtils.getDesignWidth(24.0),
@@ -161,7 +163,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   _companyContainer(),
                   _subHeadingContainer(title: "Genre", paddingTop: 30.0),
                   Consumer<IGameDetailsModel>(
-                    builder: (_,model,__) {
+                    builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.only(
                           top: ScreenUtils.getDesignHeight(15.0),
@@ -169,12 +171,14 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: model.gameDetails.genres != null ? model.gameDetails.genres!.map((g) {
-                              return _genreListContainer(
-                                name: g.name,
-                                index: model.gameDetails.genres!.indexOf(g),
-                              );
-                            }).toList() : [],
+                            children: model.gameDetails.genres != null
+                                ? model.gameDetails.genres!.map((g) {
+                                    return _genreListContainer(
+                                      name: g.name,
+                                      index: model.gameDetails.genres!.indexOf(g),
+                                    );
+                                  }).toList()
+                                : [],
                           ),
                         ),
                       );
@@ -182,7 +186,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   ),
                   _subHeadingContainer(title: "Game Screenshots"),
                   Consumer<IGameDetailsModel>(
-                    builder: (_,model,__) {
+                    builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.only(
                           top: ScreenUtils.getDesignHeight(15.0),
@@ -190,12 +194,14 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(
-                            children: model.gameScreenshots.results != null ? model.gameScreenshots.results!.map((s) {
-                              return _genreScreenshotContainer(
-                                imagePath: s.image,
-                                index: model.gameScreenshots.results!.indexOf(s),
-                              );
-                            }).toList() : [],
+                            children: model.gameScreenshots.results != null
+                                ? model.gameScreenshots.results!.map((s) {
+                                    return _genreScreenshotContainer(
+                                      imagePath: s.image,
+                                      index: model.gameScreenshots.results!.indexOf(s),
+                                    );
+                                  }).toList()
+                                : [],
                           ),
                         ),
                       );
@@ -209,13 +215,13 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
                     child: Consumer<IGameDetailsModel>(
-                      builder: (_,model,__) {
+                      builder: (_, model, __) {
                         return Text(
                           model.gameDetails.description ?? "",
                           style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                            color: SUB_TEXT_COLOR,
-                            fontSize: 12.0,
-                          ),
+                                color: SUB_TEXT_COLOR,
+                                fontSize: 12.0,
+                              ),
                         );
                       },
                     ),
@@ -235,7 +241,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                           child: GamesWidget(
                             backgroundUrl: "https://i.stack.imgur.com/y9DpT.jpg",
                             gameName: "Test",
-                            releaseDate: "4200 LKR",gradient: GREEN_GRADIENT,
+                            releaseDate: "4200 LKR",
+                            gradient: GREEN_GRADIENT,
                           ),
                         );
                       }).toList(),
@@ -284,10 +291,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   title ?? "",
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
-                SizedBox(height: ScreenUtils.getDesignHeight(2.0),),
+                SizedBox(
+                  height: ScreenUtils.getDesignHeight(2.0),
+                ),
                 GradientText(
-                  text: releaseDate != null
-                      ? DateFormat('dd/MM/yyyy').format(DateTime.parse(releaseDate)) : "",
+                  text: releaseDate != null ? DateFormat('dd/MM/yyyy').format(DateTime.parse(releaseDate)) : "",
                   gradient: PRIMARY_GRADIENT,
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
@@ -313,9 +321,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       style: Theme.of(context).primaryTextTheme.headline4,
                     ),
                   ),
-                  SizedBox(width: ScreenUtils.getDesignWidth(2.0),),
+                  SizedBox(
+                    width: ScreenUtils.getDesignWidth(2.0),
+                  ),
                   SvgPicture.asset(
-                    STAR,
+                    STAR_ICON,
                     height: ScreenUtils.getDesignHeight(13.0),
                     width: ScreenUtils.getDesignWidth(12.65),
                   ),
@@ -355,20 +365,22 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Consumer<IGameDetailsModel>(
-                    builder: (_,model,__) {
+                    builder: (_, model, __) {
                       return Text(
                         "${model.gameDetails.developer != null ? model.gameDetails.developer![0].name : ""}",
                         style: Theme.of(context).primaryTextTheme.bodyText1,
                       );
                     },
                   ),
-                  SizedBox(height: ScreenUtils.getDesignHeight(2.0),),
+                  SizedBox(
+                    height: ScreenUtils.getDesignHeight(2.0),
+                  ),
                   Text(
                     "Company",
                     style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
-                      color: SUB_TEXT_COLOR,
-                      fontSize: 12.0,
-                    ),
+                          color: SUB_TEXT_COLOR,
+                          fontSize: 12.0,
+                        ),
                   ),
                 ],
               ),
@@ -382,7 +394,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 ScreenUtils.getDesignHeight(6.0),
               ),
               child: SvgPicture.asset(
-                ARROW_RIGHT,
+                ARROW_RIGHT_ICON,
               ),
             ),
           ],
@@ -404,17 +416,14 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         child: Text(
           name,
           style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-            fontSize: 8.0,
-          ),
+                fontSize: 8.0,
+              ),
         ),
       ),
     );
   }
 
-  Widget _subHeadingContainer({
-    required String title,
-    double? paddingTop
-  }) {
+  Widget _subHeadingContainer({required String title, double? paddingTop}) {
     return Container(
       margin: EdgeInsets.only(
         top: ScreenUtils.getDesignHeight(paddingTop ?? 25.0),
@@ -458,10 +467,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
             padding: EdgeInsets.only(
               top: ScreenUtils.getDesignHeight(8.0),
             ),
-            child: Text(
-                name ?? "",
-                style: Theme.of(context).primaryTextTheme.subtitle1
-            ),
+            child: Text(name ?? "", style: Theme.of(context).primaryTextTheme.subtitle1),
           ),
         ],
       ),
@@ -479,8 +485,12 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           width: ScreenUtils.getDesignWidth(235.0),
           height: ScreenUtils.getDesignHeight(130.0),
           placeholder: (context, url) => Center(
-            child: Container(height: 50, width: 50,
-              child: CircularProgressIndicator(color: PRIMARY_COLOR,),
+            child: Container(
+              height: 50,
+              width: 50,
+              child: CircularProgressIndicator(
+                color: PRIMARY_COLOR,
+              ),
             ),
           ),
           imageUrl: imagePath ?? "https://i.stack.imgur.com/y9DpT.jpg",
