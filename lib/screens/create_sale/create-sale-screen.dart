@@ -77,8 +77,8 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                               if (idx == 0) {
                                 return GestureDetector(
                                   onTap: () async {
-                                    var gameDetails = await locator<NavigationService>()
-                                        .pushNamed(SEARCH_SCREEN, args: SearchGameScreens.CreateSales);
+                                    dynamic gameDetails = await Navigator.pushNamed(context, SEARCH_SCREEN,
+                                        arguments: SearchGameScreens.CreateSales);
                                     if (gameDetails != null) {
                                       await showSalesBottomSheet();
                                       Provider.of<CreateSaleModel>(context, listen: false)
@@ -192,10 +192,17 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                             selector: (_, provider) => provider.isFormValid,
                             builder: (_, formValid, __) {
                               return CustomButton(
-                                onPressed: () {
-                                  // showCompleteDialog();
+                                onPressed: () async {
                                   if (formValid) {
-                                    showSalesConfirmBottomSheet();
+                                    var confirmed = await showSalesConfirmBottomSheet();
+                                    if (confirmed) {
+                                      // TODO: Run API CALL
+                                      // TODO: go to payment screen
+                                      // await showCompleteDialog();
+                                      // Navigator.pushReplacementNamed(context, MAIN_SCREEN);
+                                    }
+                                  } else {
+                                    Navigator.pushNamed(context, PAYMENT_SCREEN, arguments: "String");
                                   }
                                 },
                                 buttonText: "Create Sale",
@@ -229,8 +236,8 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
     );
   }
 
-  void showCompleteDialog() {
-    showDialog(
+  Future<void> showCompleteDialog() async {
+    await showDialog(
         context: context,
         barrierDismissible: false,
         builder: (context) {
@@ -238,9 +245,9 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
         });
   }
 
-  Future<void> showSalesConfirmBottomSheet() async {
+  Future<bool> showSalesConfirmBottomSheet() async {
     CreateSaleModel model = Provider.of<CreateSaleModel>(context, listen: false);
-    await showModalBottomSheet<void>(
+    var confirmed = await showModalBottomSheet<bool>(
       isDismissible: false,
       context: context,
       builder: (context) {
@@ -250,5 +257,6 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
         );
       },
     );
+    return confirmed ?? false;
   }
 }

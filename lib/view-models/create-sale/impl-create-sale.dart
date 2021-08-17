@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app-constants.dart';
@@ -8,7 +6,6 @@ import 'package:play_hq/helpers/app-service-locator.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/create-sale-model.dart';
 import 'package:play_hq/models/loading-event-model.dart';
-import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/helpers/app-utils.dart';
 
@@ -101,8 +98,13 @@ class ImplCreateSale extends CreateSaleModel {
         negotiable: _isNegotiable,
         location: location,
         games: _gameList);
-    await Network.shared.createSale(payload);
-    locator<EventBus>().fire(LoadingEvent.hide());
+    try {
+      await Network.shared.createSale(payload);
+      locator<EventBus>().fire(LoadingEvent.hide());
+    } catch (e) {
+      print(e.toString());
+      locator<EventBus>().fire(LoadingEvent.hide());
+    }
   }
 
   @override
