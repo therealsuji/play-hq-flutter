@@ -34,7 +34,7 @@ class SignUpScreen extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     height: ScreenUtils.getDesignHeight(45),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: CONTAINER_COLOR),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: MAIN_CONTAINER_COLOR),
                     child: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -66,7 +66,7 @@ class SignUpScreen extends StatelessWidget {
                     child: Container(
                       width: double.infinity,
                       height: ScreenUtils.getDesignHeight(45),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: CONTAINER_COLOR),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: MAIN_CONTAINER_COLOR),
                       child: Container(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -96,7 +96,7 @@ class SignUpScreen extends StatelessWidget {
                   child: Container(
                     margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(65)),
                     child: CustomButton(
-                      buttonColor: PRIMARY_COLOR,
+                      gradient: PRIMARY_GRADIENT,
                       buttonText: 'I want to Explore',
                       onPressed: () => locator<NavigationService>().pushReplacement(PURCHASE_ACCOUNT_SCREEN),
                     ),

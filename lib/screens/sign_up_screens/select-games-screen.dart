@@ -64,7 +64,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
       height: ScreenUtils.getDesignHeight(200),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: CONTAINER_COLOR,
+        color: MAIN_CONTAINER_COLOR,
       ),
       child: GestureDetector(
         child: Container(
@@ -104,7 +104,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
       height: ScreenUtils.getDesignHeight(50),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: CONTAINER_COLOR,
+        color: MAIN_CONTAINER_COLOR,
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: GestureDetector(

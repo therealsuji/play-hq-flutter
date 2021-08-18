@@ -169,7 +169,7 @@ Container _textButton(text, selected) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(3),
-      color: !selected ? CONTAINER_COLOR.withOpacity(0.5) : null,
+      color: !selected ? MAIN_CONTAINER_COLOR.withOpacity(0.5) : null,
       gradient: selected ? PRIMARY_GRADIENT : null,
     ),
     alignment: Alignment.center,

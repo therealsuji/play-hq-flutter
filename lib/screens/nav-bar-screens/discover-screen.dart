@@ -5,12 +5,11 @@ import 'package:play_hq/helpers/app-colors.dart';
 class DiscoverScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
       body: Container(
         child: Center(
-          child: Text('This is the Discoer Screen'),
+          child: Text('This is the Discover Screen'),
         ),
       )
     );

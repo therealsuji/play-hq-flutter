@@ -67,7 +67,7 @@ class _LandingScreenState extends State<LandingScreen> {
                     padding:  EdgeInsets.only(top: ScreenUtils.getDesignHeight(10)),
                     child: CustomButton(
                       buttonText: "Login",
-                      buttonColor: BACKGROUND_COLOR,
+                      gradient: PRIMARY_GRADIENT,
                     ),
                   ),
                 ],

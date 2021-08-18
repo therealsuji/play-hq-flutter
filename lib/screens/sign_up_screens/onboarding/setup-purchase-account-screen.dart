@@ -34,7 +34,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
       body: CustomBody(
         paddingLeft: 0.0,
         paddingRight: 0.0,
-        paddingTop: 0.0,
+        paddingTop: 40.0,
         body: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +91,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                 return CustomExpanderWidget(
                     height: val.currentPlatFormState == false
                         ? ScreenUtils.getDesignHeight(55)
-                        : ScreenUtils.getDesignHeight(140),
+                        : ScreenUtils.getDesignHeight(190),
                     iconData: val.currentPlatFormState == false
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
@@ -109,29 +109,21 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         ? 'Max Selected'
                         : val.totalPlatformCount.toString() + ' Selected',
                     widget: Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      height: ScreenUtils.getDesignHeight(70),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _platformItem(
-                              'PlayStation',
-                              PLAYSTATION_COLOR,
-                              'assets/images/playstation-controller.png',
+                              'assets/images/playstation.png',
                                   () => showPlatformBottomSheet('Select your PlayStation Console', playStationPlatforms,
                                   PlatformSelection.PlayStation)),
                           _platformItem(
-                              'Xbox',
-                              XBOX_COLOR,
-                              'assets/images/xbox-controller.png',
+                              'assets/images/nintendo.png',
                                   () => showPlatformBottomSheet(
-                                  'Select your Xbox Console', xboxPlatforms, PlatformSelection.Xbox)),
+                                  'Select your Nintendo Console', xboxPlatforms, PlatformSelection.Xbox)),
                           _platformItem(
-                              'Nintendo',
-                              NINTENDO_COLOR,
-                              'assets/images/switch-controller.png',
+                              'assets/images/xbox.png',
                                   () => showPlatformBottomSheet(
-                                  'Select your Nintendo Console', nintendoConsoles, PlatformSelection.Nintendo)),
+                                  'Select your Xbox Console', nintendoConsoles, PlatformSelection.Nintendo)),
                         ],
                       ),
                     ));
@@ -142,7 +134,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                 return CustomExpanderWidget(
                     height: val.currentReleaseDateState == false
                         ? ScreenUtils.getDesignHeight(55)
-                        : ScreenUtils.getDesignHeight(160),
+                        : ScreenUtils.getDesignHeight(180),
                     iconData: val.currentReleaseDateState == false
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
@@ -153,24 +145,27 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                             : false),
                     titleText: 'Choose Release Date',
                     selectedText: 'None Selected',
-                    widget: Container(
-                      margin: EdgeInsets.only(bottom: 20),
-                      height: ScreenUtils.getDesignHeight(70),
-                      child: Wrap(
-                          direction: Axis.horizontal,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          spacing: 15,
-                          runSpacing: 20,
-                          children: releaseDates.map((e) {
-                            return GestureDetector(
-                              onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                                  .addReleaseDates(releaseDates.indexOf(e), e['name']),
-                              child: CustomSelectingWidget(
-                                titleText: e['name'],
-                                active: val.selectedReleaseDates.contains(releaseDates.indexOf(e)),
-                              ),
-                            );
-                          }).toList()),
+                    widget: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(0.0),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 15.0,
+                        crossAxisSpacing: 15.0,
+                        mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
+                      ),
+                      itemCount: releaseDates.length,
+                      itemBuilder: (context , index){
+                        return GestureDetector(
+                          onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                              .addReleaseDates(releaseDates.indexOf(releaseDates[index]), releaseDates[index]['name']),
+                          child: CustomSelectingWidget(
+                            titleText:releaseDates[index]['name'],
+                            active: val.selectedReleaseDates.contains(releaseDates.indexOf(releaseDates[index])),
+                          ),
+                        );
+                      },
                     ));
               },
             ),
@@ -193,27 +188,28 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             Container(
                 margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30), top: ScreenUtils.getDesignHeight(160), left: 24, right: 24),
                 child: CustomButton(
-                  buttonColor: PRIMARY_COLOR,
+                  gradient: PRIMARY_GRADIENT,
                   buttonText: 'Setup Sales',
-                  textFontSize: 16,
                   onPressed: () => locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN),
                 ))
           ],
         ),
       ],
-
       )
     );
   }
 
   showPlatformBottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) async {
+    SetupPurchaseAccountModel model = Provider.of<SetupPurchaseAccountModel>(context, listen: false);
     showModalBottomSheet(
         context: context,
         builder: (context) {
           return Container(
-            height: ScreenUtils.getDesignHeight(300),
-            decoration: BoxDecoration(color: CONTAINER_COLOR, borderRadius: BorderRadius.circular(15.0)),
-            child: _bottomSheet(title, list, platform),
+            height: ScreenUtils.getDesignHeight(340),
+            decoration: BoxDecoration(color: POP_UP_CONTAINER_COLOR, borderRadius: BorderRadius.circular(15.0)),
+            child: ChangeNotifierProvider.value(
+                value: model,
+                child: _bottomSheet(title, list, platform)),
           );
         });
   }
@@ -264,31 +260,22 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
     );
   }
 
-  Widget _platformItem(String title, Color color, String image_path, VoidCallback onPressed) {
+  Widget _platformItem(String image_path, VoidCallback onPressed) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(3.0), color: color),
+        margin: EdgeInsets.only(bottom: 20),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0)),
         width: ScreenUtils.getDesignWidth(100),
         child: Stack(
           children: [
             Container(
-                height: ScreenUtils.getDesignHeight(70),
+                height: ScreenUtils.getDesignHeight(115),
                 width: ScreenUtils.getDesignWidth(100),
                 child: Image.asset(
                   image_path,
                   fit: BoxFit.cover,
                 )),
-            Container(
-              decoration:
-                  BoxDecoration(color: BACKGROUND_COLOR.withOpacity(0.6), borderRadius: BorderRadius.circular(3.0)),
-            ),
-            Center(
-              child: Text(
-                title,
-                style: TextStyle(fontSize: 20, fontFamily: Neusa, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
-            ),
           ],
         ),
       ),
@@ -325,45 +312,46 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
 
   Widget _bottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) {
     return Container(
-      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40), left: 24, right: 24),
+      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             child: Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontFamily: Neusa, fontSize: 18, color: Colors.white),
+              style: Theme.of(context).primaryTextTheme.headline5?.copyWith(fontSize: 16)
             ),
           ),
           Container(
             margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
-            child: Wrap(
-              direction: Axis.horizontal,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              spacing: 15,
-              runSpacing: 20,
-              children: list.map((e) {
-                return GestureDetector(
-                  onTap: () {
-                    Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                        .addSelectedPlatforms(list.indexOf(e), platform);
-                  },
-                  child: ChangeNotifierProvider.value(
-                    value: Provider.of<SetupPurchaseAccountModel>(context),
-                    child: Consumer<SetupPurchaseAccountModel>(
-                      builder: (_, val, __) {
-                        return CustomSelectingWidget(
-                            titleText: e['name'],
-                            active: platform == PlatformSelection.PlayStation
-                                ? val.selectedPlaystationPlatforms.contains(list.indexOf(e))
-                                : platform == PlatformSelection.Xbox
-                                    ? val.selectedXboxPlatforms.contains(list.indexOf(e))
-                                    : val.selectedNintendoPlatforms.contains(list.indexOf(e)));
-                      },
-                    ),
+            child: Consumer<SetupPurchaseAccountModel>(
+              builder: (_ , val , __){
+                return GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    mainAxisSpacing: 15.0,
+                    crossAxisSpacing: 15.0,
+                    mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
                   ),
+                  itemCount: list.length,
+                  itemBuilder: (context , index){
+                    return GestureDetector(
+                      onTap: () {
+                        val.addSelectedPlatforms(list.indexOf(list[index]), platform);
+                      },
+                      child: CustomSelectingWidget(
+                          titleText: list[index]['name'],
+                          active: platform == PlatformSelection.PlayStation
+                              ? val.selectedPlaystationPlatforms.contains(list.indexOf(list[index]))
+                              : platform == PlatformSelection.Xbox
+                              ? val.selectedXboxPlatforms.contains(list.indexOf(list[index]))
+                              : val.selectedNintendoPlatforms.contains(list.indexOf(list[index])))
+                    );
+                  },
                 );
-              }).toList(),
+              },
             ),
           ),
           Spacer(),
@@ -371,7 +359,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(40)),
             child: CustomButton(
               buttonText: 'Confirm',
-              buttonColor: PRIMARY_COLOR,
+              gradient: GREEN_GRADIENT,
             ),
           ),
         ],
@@ -388,7 +376,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             child: Opacity(
               opacity: a1.value,
               child: AlertDialog(
-                  backgroundColor: CONTAINER_COLOR,
+                  backgroundColor: MAIN_CONTAINER_COLOR,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                   content: Container(
                     margin: EdgeInsets.symmetric(vertical: ScreenUtils.getDesignHeight(15)),
@@ -428,7 +416,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CustomAlertButton(
-                                  buttonColor: UNSELECTED_ITEM_COLOR,
+                                  buttonColor: UNSELECTED_CONTAINER_COLOR,
                                   buttonText: 'I only Sell',
                                 ),
                                 CustomAlertButton(

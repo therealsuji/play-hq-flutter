@@ -16,7 +16,7 @@ class CustomButton extends StatelessWidget {
     this.textFontSize = 14,
     this.gradient,
     this.width = double.infinity,
-    this.height = 50,
+    this.height = 55,
   });
 
   @override

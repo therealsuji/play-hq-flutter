@@ -21,7 +21,7 @@ class CustomExpanderWidget extends StatelessWidget {
       width: ScreenUtils.bodyWidth,
       height: height,
       decoration: BoxDecoration(
-        color: CONTAINER_COLOR.withOpacity(0.6),
+        color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
       ),
       margin: EdgeInsets.only(top: 35.0),
       child: Column(
@@ -68,7 +68,7 @@ class CustomExpanderWidget extends StatelessWidget {
             visible: state!,
             maintainAnimation: state!,
             child: Padding(
-              padding: EdgeInsets.only(top: 15.0, left: 24.0),
+              padding: EdgeInsets.only(top: 15.0, left: 24.0 , right: 24.0),
               child: widget,
             ),
           )

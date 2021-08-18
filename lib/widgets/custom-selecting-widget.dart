@@ -13,10 +13,10 @@ class CustomSelectingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: ScreenUtils.getDesignHeight(35),
-      width: ScreenUtils.getDesignWidth(102),
+      height: ScreenUtils.getDesignHeight(45),
+      width: ScreenUtils.getDesignWidth(100),
       decoration: BoxDecoration(
-        color: active! ? PRIMARY_COLOR : UNSELECTED_ITEM_COLOR,
+        gradient: active! ? PRIMARY_GRADIENT : LinearGradient(colors: [UNSELECTED_CONTAINER_COLOR.withOpacity(0.6), UNSELECTED_CONTAINER_COLOR.withOpacity(0.6)]),
         borderRadius: BorderRadius.circular(3.0)
       ),
       child: Center(

@@ -14,7 +14,7 @@ class SaleConfirmDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: CONTAINER_COLOR,
+      backgroundColor: MAIN_CONTAINER_COLOR,
       contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
       actionsPadding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
       content: Column(

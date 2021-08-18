@@ -37,7 +37,7 @@ class _MainScreenState extends State<MainScreen> {
         child: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          backgroundColor: CONTAINER_COLOR,
+          backgroundColor: MAIN_CONTAINER_COLOR,
           onTap: (index) => Provider.of<TabNavigationModel>(context, listen: false).changeTab(index),
           currentIndex: Provider.of<TabNavigationModel>(context).currentPage,
           items: [

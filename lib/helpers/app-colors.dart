@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 
 const BACKGROUND_COLOR = Color(0xff14131C);
-const CONTAINER_COLOR = Color(0xff07070B);
 
-const MAIN_CONTAINER_COLOR = Color(0xFF07070B);
 const SUB_TEXT_COLOR = Color(0x0FFC2B7CD);
+
+// Colors of the Containers
+const MAIN_CONTAINER_COLOR = Color(0xff07070B);
+const POP_UP_CONTAINER_COLOR = Color(0xff1B1A26);
+const UNSELECTED_CONTAINER_COLOR = Color(0xff2B2A3D);
+
+
 
 const HEADER_TEXT_COLOR = Color(0xffFFFFFF);
 const PLAYSTATION_COLOR = Color(0xff2E6DB4);
 const TURQUOISE_BLUE_COLOR = Color(0xff32BEA6);
 const XBOX_COLOR = Color(0xff107C10);
 const NINTENDO_COLOR = Color(0xffE60012);
-const UNSELECTED_ITEM_COLOR = Color(0xff787794);
 const TEXT_COLOR = Color(0xff9290B1);
 const Headertext = Color(0xffB5BDD5);
 const BodyText = Color(0xffB5BDD5);

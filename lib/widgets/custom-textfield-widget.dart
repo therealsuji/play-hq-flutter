@@ -15,12 +15,12 @@ class CustomTextfieldWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 20),
       decoration: BoxDecoration(
-        color: CONTAINER_COLOR,
+        color: MAIN_CONTAINER_COLOR,
         borderRadius: BorderRadius.circular(5),
       ),
       child: TextFormField(
         style: TextStyle(
-          color: UNSELECTED_ITEM_COLOR,
+          color: UNSELECTED_CONTAINER_COLOR,
           fontSize: 16,
         ),
         obscureText: hideText!,
@@ -35,12 +35,12 @@ class CustomTextfieldWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 18),
                   child: Icon(
                     iconData,
-                    color: UNSELECTED_ITEM_COLOR,
+                    color: UNSELECTED_CONTAINER_COLOR,
                   ),
                 )
               : null,
           errorText: errorText,
-          fillColor: CONTAINER_COLOR,
+          fillColor: MAIN_CONTAINER_COLOR,
           filled: true,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),

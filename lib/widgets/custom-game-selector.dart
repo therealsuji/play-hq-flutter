@@ -21,7 +21,7 @@ class CustomGameSelector extends StatelessWidget {
       width: ScreenUtils.getDesignWidth(290),
       height: ScreenUtils.getDesignHeight(170),
       decoration: BoxDecoration(
-          color: CONTAINER_COLOR, borderRadius: BorderRadius.circular(5.0)),
+          color: MAIN_CONTAINER_COLOR, borderRadius: BorderRadius.circular(5.0)),
       child: Column(
         children: [
           Container(
