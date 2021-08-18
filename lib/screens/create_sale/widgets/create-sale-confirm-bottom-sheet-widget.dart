@@ -7,6 +7,7 @@ import 'package:play_hq/helpers/app-utils.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:provider/provider.dart';
 
@@ -84,15 +85,10 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                           "Game Bundle Price",
                           style: Theme.of(context).primaryTextTheme.headline3,
                         ),
-                        ShaderMask(
-                          shaderCallback: (bounds) => GREEN_GRADIENT.createShader(
-                            Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                          ),
-                          child: Text(
-                            model.price.toString() + " LKR",
+                        GradientText(
+                            text: model.price.toString() + " LKR",
                             style: Theme.of(context).primaryTextTheme.headline3,
-                          ),
-                        ),
+                            gradient: GREEN_GRADIENT),
                       ],
                     ),
                   ),
@@ -123,7 +119,7 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 25.0),
                     child: CustomButton(
-                      onPressed: model.createSale,
+                      onPressed: () => Navigator.pop(context, true),
                       buttonText: "Details are Correct",
                       gradient: GREEN_GRADIENT,
                     ),

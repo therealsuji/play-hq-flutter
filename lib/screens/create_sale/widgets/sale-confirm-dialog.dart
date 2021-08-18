@@ -63,10 +63,7 @@ class SaleConfirmDialog extends StatelessWidget {
         ],
       ),
       actions: [
-        CustomButton(
-            buttonText: "Back to Home",
-            onPressed: () => Navigator.pushReplacementNamed(context, MAIN_SCREEN),
-            gradient: PRIMARY_GRADIENT),
+        CustomButton(buttonText: "Back to Home", onPressed: () => Navigator.pop(context), gradient: PRIMARY_GRADIENT),
       ],
     );
   }

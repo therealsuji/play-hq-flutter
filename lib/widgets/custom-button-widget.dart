@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
@@ -50,8 +51,9 @@ class CustomButton extends StatelessWidget {
         child: Text(
           buttonText,
           style: Theme.of(context).primaryTextTheme.button!.copyWith(
-            fontSize: textFontSize,
-          ),
+                fontSize: textFontSize,
+              ),
+          textAlign: TextAlign.center,
         ),
         onPressed: onPressed ?? () {},
       ),
