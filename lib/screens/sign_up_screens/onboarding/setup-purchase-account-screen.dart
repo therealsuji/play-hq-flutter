@@ -18,6 +18,7 @@ import 'package:play_hq/widgets/custom-expander-widget.dart';
 import 'package:play_hq/widgets/custom-game-widget.dart';
 import 'package:play_hq/widgets/custom-selecting-widget.dart';
 import 'package:play_hq/widgets/custom-smaller-button-widget.dart';
+import 'package:play_hq/widgets/custom-text-widget.dart';
 import 'package:play_hq/widgets/select-game-item-widget.dart';
 import 'package:play_hq/widgets/select-item-widget.dart';
 import 'package:provider/provider.dart';
@@ -44,19 +45,10 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  CustomTextWidget(height: ScreenUtils.getDesignHeight(30) , width: ScreenUtils.getDesignWidth(180), style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa), text: 'Let\'s get Started',),
                   Container(
-                    child: Text(
-                      'Let\'s get Started',
-                      style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5),
-                    child: Text(
-                      'Select what kind of games you like',
-                      style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)),
-                    ),
-                  ),
+                      margin: EdgeInsets.only(top: 5),
+                      child: CustomTextWidget(height: ScreenUtils.getDesignHeight(20) , width: ScreenUtils.getDesignWidth(220), style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)), text: 'Select what kind of games you like',)),
                 ],
               ),
             ),
@@ -64,9 +56,6 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
               builder: (_, value, __) {
                 return Container(
                   child: CustomExpanderWidget(
-                    height: value.currentGenreState == false
-                        ? ScreenUtils.getDesignHeight(55)
-                        : ScreenUtils.getDesignHeight(210),
                     iconData: value.currentGenreState == false
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
@@ -75,13 +64,14 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentGenreState == false
                             ? true
                             : false),
-                    titleText: 'Select Preferred Genre',
+                    titleText: 'Genre',
                     selectedText: value.genreCount == null || value.genreCount == 0
                         ? 'None Selected'
                         : value.genreCount == 5
                         ? 'Max Selected'
                         : value.genreCount.toString() + ' Selected',
                     widget: _genreListWidget(),
+                    textWidth: ScreenUtils.getDesignWidth(40),
                   ),
                 );
               },
@@ -89,9 +79,6 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
                 return CustomExpanderWidget(
-                    height: val.currentPlatFormState == false
-                        ? ScreenUtils.getDesignHeight(55)
-                        : ScreenUtils.getDesignHeight(190),
                     iconData: val.currentPlatFormState == false
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
@@ -102,12 +89,13 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                               ? true
                               : false);
                     },
-                    titleText: 'Choose your Platform',
+                    titleText: 'Platform',
                     selectedText: val.totalPlatformCount == null || val.totalPlatformCount == 0
                         ? 'None Selected'
                         : val.totalPlatformCount == 5
                         ? 'Max Selected'
                         : val.totalPlatformCount.toString() + ' Selected',
+                    textWidth: ScreenUtils.getDesignWidth(55),
                     widget: Container(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -132,9 +120,6 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
                 return CustomExpanderWidget(
-                    height: val.currentReleaseDateState == false
-                        ? ScreenUtils.getDesignHeight(55)
-                        : ScreenUtils.getDesignHeight(180),
                     iconData: val.currentReleaseDateState == false
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
@@ -143,7 +128,8 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentReleaseDateState == false
                             ? true
                             : false),
-                    titleText: 'Choose Release Date',
+                    titleText: 'Release Dates',
+                    textWidth: ScreenUtils.getDesignWidth(90),
                     selectedText: 'None Selected',
                     widget: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),

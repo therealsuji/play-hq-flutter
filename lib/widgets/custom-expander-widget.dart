@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/widgets/custom-text-widget.dart';
 
 class CustomExpanderWidget extends StatelessWidget {
   final double? height;
   final Widget? widget;
+  final double? textWidth;
   final IconData? iconData;
   final String? titleText;
   final String? selectedText;
@@ -13,7 +15,7 @@ class CustomExpanderWidget extends StatelessWidget {
   final bool? state;
 
   CustomExpanderWidget(
-      {this.height, this.iconData, this.widget, this.titleText, this.state, this.selectedText, this.onTap});
+      {this.height, this.iconData, this.widget, this.titleText, this.state, this.selectedText, this.onTap , this.textWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -28,27 +30,21 @@ class CustomExpanderWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(top: 20.0 , left: 24.0 , right: 24.0),
+            padding: EdgeInsets.only(top: 20.0 , left: 24.0 , right: 24.0 , bottom: state! ? 0.0 : 24.0),
             child: GestureDetector(
               onTap: onTap,
               child: Row(
                 children: [
-                  Container(
-                    child: Text(
-                      titleText!,
-                      style: Theme.of(context).primaryTextTheme.headline3
-                    ),
-                  ),
+                  CustomTextWidget(text: titleText, style: Theme.of(context).primaryTextTheme.headline3, width: textWidth, height: ScreenUtils.getDesignHeight(20),),
                   Spacer(),
                   Container(
-                    margin: EdgeInsets.only(right: 15.0),
-                    child: Text(
-                      selectedText!,
-                      style: TextStyle(
+                    margin: EdgeInsets.only(right: 10.0),
+                    child: CustomTextWidget(text: selectedText!,style: TextStyle(
                         fontFamily: CircularBold,
                         foreground: Paint()..shader = textPrimaryGradient,
-                        fontSize: 12
-                      )
+                        fontSize: 10
+                    ),
+                      height: ScreenUtils.getDesignHeight(15),
                     ),
                   ),
                   Container(
@@ -68,7 +64,7 @@ class CustomExpanderWidget extends StatelessWidget {
             visible: state!,
             maintainAnimation: state!,
             child: Padding(
-              padding: EdgeInsets.only(top: 15.0, left: 24.0 , right: 24.0),
+              padding: EdgeInsets.only(top: 15.0, left: 24.0 , right: 24.0 , bottom: 20.0),
               child: widget,
             ),
           )
