@@ -37,7 +37,6 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
             color: BACKGROUND_COLOR,
             child: Column(
               children: [
-                _customSearchTextfield(),
                 Consumer<SearchGameModel>(
                   builder: (_, val, __) {
                     switch (val.states) {
@@ -102,38 +101,6 @@ class _CustomSearchScreenState extends State<CustomSearchScreen> {
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _customSearchTextfield() {
-    return TextFormField(
-      style: TextStyle(
-        color: TEXT_COLOR,
-        fontSize: 18,
-      ),
-      obscureText: false,
-      focusNode: FocusScopeNode().focusedChild,
-      keyboardType: TextInputType.name,
-      onChanged: (val) => Provider.of<SearchGameModel>(context, listen: false).searchGames(val),
-      cursorColor: PRIMARY_COLOR,
-      decoration: InputDecoration(
-        prefixIcon: Container(
-          padding: EdgeInsets.symmetric(vertical: 18),
-          child: Icon(
-            Icons.search,
-            color: PRIMARY_COLOR,
-          ),
-        ),
-        fillColor: BACKGROUND_COLOR,
-        filled: true,
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: PRIMARY_COLOR),
-        ),
-        border: UnderlineInputBorder(
-          borderSide: BorderSide(color: TEXT_COLOR),
-        ),
-        contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20),
       ),
     );
   }

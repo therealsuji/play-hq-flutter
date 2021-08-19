@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app-assets.dart';
+import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/screens/custom-search-screen/sub-search-screens/clicked-search.dart';
+import 'package:play_hq/screens/custom-search-screen/sub-search-screens/opening-search.dart';
+import 'package:play_hq/view-models/custom-sale/custom-search-model.dart';
+import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/widgets/custom-body.dart';
+import 'package:provider/provider.dart';
 
 
 class MainSearchScreen extends StatefulWidget {
@@ -15,30 +22,25 @@ class _MainSearchScreenState extends State<MainSearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomBody(
-        body: [
-          SafeArea(child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  child: Text(
-                    'Search',
-                    style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa),
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 5),
-                  child: Text(
-                    'Find all your favourite games',
-                    style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)),
-                  ),
-                ),
-              ],
+      body: Container(
+        child: Stack(
+          children: [
+            Container(
+              width: double.infinity,
+              child: Image.asset(
+                BACKGROUND_IMAGE,
+                fit: BoxFit.cover,
+              ),
             ),
-          ))
-        ],
-      ),
+            Consumer<CustomSearchModel>(
+              builder: (_ , val , __){
+                return val.isCLicked ? OpeningSearch() : ClickedSearch();
+              },
+            )
+          ],
+        ),
+      )
     );
   }
+
 }

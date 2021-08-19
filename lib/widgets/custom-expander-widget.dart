@@ -41,7 +41,7 @@ class CustomExpanderWidget extends StatelessWidget {
                     margin: EdgeInsets.only(right: 10.0),
                     child: CustomTextWidget(text: selectedText!,style: TextStyle(
                         fontFamily: CircularBold,
-                        foreground: Paint()..shader = textPrimaryGradient,
+                        foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                         fontSize: 10
                     ),
                       height: ScreenUtils.getDesignHeight(13),

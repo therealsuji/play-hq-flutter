@@ -173,7 +173,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                           Spacer(),
                           CustomTextWidget(text: 'None Selected',style: TextStyle(
                               fontFamily: CircularBold,
-                              foreground: Paint()..shader = textPrimaryGradient,
+                              foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                               fontSize: 10
                           ),
                             height: ScreenUtils.getDesignHeight(13),
