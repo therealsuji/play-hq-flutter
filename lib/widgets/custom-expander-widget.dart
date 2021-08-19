@@ -23,7 +23,7 @@ class CustomExpanderWidget extends StatelessWidget {
       width: ScreenUtils.bodyWidth,
       height: height,
       decoration: BoxDecoration(
-        color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
+        color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
       ),
       margin: EdgeInsets.only(top: 35.0),
       child: Column(
@@ -44,7 +44,7 @@ class CustomExpanderWidget extends StatelessWidget {
                         foreground: Paint()..shader = textPrimaryGradient,
                         fontSize: 10
                     ),
-                      height: ScreenUtils.getDesignHeight(15),
+                      height: ScreenUtils.getDesignHeight(13),
                     ),
                   ),
                   Container(

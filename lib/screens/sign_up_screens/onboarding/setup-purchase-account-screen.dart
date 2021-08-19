@@ -156,23 +156,38 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
               },
             ),
             Container(
-              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24),
-              child: RichText(
-                text: TextSpan(children: [
-                  TextSpan(
-                      text: 'Choose the games you want',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500, fontFamily: CircularBook, color: Colors.white, fontSize: 16)),
-                  TextSpan(
-                      text: ' (Wishlist Games)',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w500, fontFamily: CircularBook, color: PRIMARY_COLOR, fontSize: 16)),
-                ]),
+              width: ScreenUtils.bodyWidth,
+              decoration: BoxDecoration(
+                color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
+              ),
+              margin: EdgeInsets.only(top: 30),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 24 , vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Row(
+                        children: [
+                          CustomTextWidget(text: 'Any Games you\'d like to buy?', style: Theme.of(context).primaryTextTheme.headline3, width: ScreenUtils.getDesignWidth(180), height: ScreenUtils.getDesignHeight(20),),
+                          Spacer(),
+                          CustomTextWidget(text: 'None Selected',style: TextStyle(
+                              fontFamily: CircularBold,
+                              foreground: Paint()..shader = textPrimaryGradient,
+                              fontSize: 10
+                          ),
+                            height: ScreenUtils.getDesignHeight(13),
+                          ),
+                        ],
+                      ),
+                    ),
+                    _wishlistGames(),
+                  ],
+                ),
               ),
             ),
-            _wishlistGames(),
             Container(
-                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30), top: ScreenUtils.getDesignHeight(160), left: 24, right: 24),
+                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100), left: 24, right: 24),
                 child: CustomButton(
                   gradient: PRIMARY_GRADIENT,
                   buttonText: 'Setup Sales',
@@ -204,7 +219,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
     final model = Provider.of<SetupPurchaseAccountModel>(context);
 
     return Container(
-      margin: EdgeInsets.only(top: 20, left: 24, right: 24),
+      margin: EdgeInsets.only(top: 20),
       height: ScreenUtils.getDesignHeight(160),
       child: Row(
         children: [
