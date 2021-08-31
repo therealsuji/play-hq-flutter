@@ -224,8 +224,14 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
       child: Row(
         children: [
           CustomDottedSelectorWidget(
-            onPressed: () =>
-                locator<NavigationService>().pushNamed(MAIN_SEARCH_SCREEN),
+            onPressed: () async{
+              dynamic gameDetails = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+                  arguments: SearchGameScreens.SetupPurchase);
+              if (gameDetails != null) {
+                Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                    .addSelectedGame(gameDetails);
+              }
+            }
           ),
           ChangeNotifierProvider.value(
             value: model,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/view-models/custom-search/custom-search-model.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/widgets/custom-text-widget.dart';
 import 'package:provider/provider.dart';
@@ -67,7 +68,7 @@ class _OpeningSearchState extends State<OpeningSearch> {
   Widget _customSearchContainer(bool active) {
     return GestureDetector(
       onTap: () {
-
+        Provider.of<CustomSearchModel>(context, listen: false).onClicked(true);
       },
       child: Container(
         decoration: BoxDecoration(

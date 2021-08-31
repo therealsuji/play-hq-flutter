@@ -16,6 +16,8 @@ import 'package:play_hq/screens/sign_up_screens/sign-up-screen.dart';
 import 'package:play_hq/screens/splash-screen.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/view-models/create-sale/impl-create-sale.dart';
+import 'package:play_hq/view-models/custom-search/custom-search-model.dart';
+import 'package:play_hq/view-models/custom-search/impl-custom-search.dart';
 import 'package:play_hq/view-models/game_details/game_details_model.dart';
 import 'package:play_hq/view-models/game_details/i_game_details_model.dart';
 import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
@@ -117,7 +119,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => OrderTrackingScreen(),
       );
     case MAIN_SEARCH_SCREEN:
-      return MaterialPageRoute(builder: (context) => MainSearchScreen());
+      return MaterialPageRoute(builder: (context) => MultiProvider(
+        providers: [
+          ChangeNotifierProvider<CustomSearchModel>(
+            create: (context) => ImplCustomSearch(),
+          ),
+        ],
+          child: MainSearchScreen(values: settings.arguments as SearchGameScreens)));
 
     case PAYMENT_SCREEN:
       return MaterialPageRoute(
