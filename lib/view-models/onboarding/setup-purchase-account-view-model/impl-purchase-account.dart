@@ -19,6 +19,7 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
 
   int? _genreCount;
   int _platformCount = 0;
+  int? _releaseDateCount;
 
   ReleaseDatesModel _releaseDates = ReleaseDatesModel();
   List<ReleaseDatesModel> _releaseDatesList = [];
@@ -138,7 +139,7 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
       _releaseDatesList.add(_releaseDates);
     }
     notifyListeners();
-    print(_releaseDatesList[2].id);
+    _releaseDateCount = _releaseDatesList.length;
   }
 
   @override
@@ -160,6 +161,7 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   // TODO: implement totalPlatformCount
   int get totalPlatformCount => _platformCount;
 
+
   @override
   // TODO: implement selectedNintendoPlatforms
   List<int> get selectedNintendoPlatforms => _selectedNintendoPlatforms;
@@ -167,5 +169,9 @@ class ImplSetupPurchaseAccount extends SetupPurchaseAccountModel{
   @override
   // TODO: implement selectedXboxPlatforms
   List<int> get selectedXboxPlatforms => _selectedXboxPlatforms;
+
+  @override
+  // TODO: implement releaseDateCount
+  int? get releaseDateCount => _releaseDateCount;
 
 }

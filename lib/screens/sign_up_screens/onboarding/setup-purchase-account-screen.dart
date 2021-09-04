@@ -130,7 +130,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                             : false),
                     titleText: 'Release Dates',
                     textWidth: ScreenUtils.getDesignWidth(90),
-                    selectedText: 'None Selected',
+                    selectedText: val.releaseDateCount == 0 ? 'None Selected' : val.releaseDateCount.toString() + ' Selected' ,
                     widget: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -237,7 +237,6 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             value: model,
             child: Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
-                print(val.selectedGameList);
                 return val.selectedGameList.isEmpty
                     ? Container()
                     : Expanded(
