@@ -16,6 +16,7 @@ const String SETUP_PURCHASE_ACCOUNT_ROUTE = 'setupPurchase';
 const String SETUP_SALES_ACCOUNT_ROUTE = 'setupSales';
 const String ORDER_TRACKING_SCREEN = 'orderTrackingScreen';
 const String PAYMENT_SCREEN = 'paymentScreen';
+const String CUSTOM_MAP_SEARCH_SCREEN = 'customMapScreen';
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';

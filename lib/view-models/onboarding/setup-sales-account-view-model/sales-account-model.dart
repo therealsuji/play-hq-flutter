@@ -9,4 +9,8 @@ abstract class SetupSalesModel with ChangeNotifier{
 
   void addSelectedGame(GameDetails game);
 
+  void addLocation(String location);
+
+  String get selectedLocation;
+
 }
