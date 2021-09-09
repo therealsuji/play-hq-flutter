@@ -3,6 +3,7 @@ import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/services/nav-service.dart';
 import 'package:play_hq/view-models/custom-address-search/custom-address-search-model.dart';
 import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
@@ -81,7 +82,7 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
               ),
             ),
             onPressed: () {
-
+                locator<NavigationService>().pushNamed(CUSTOM_MAP_SCREEN);
             }),
       ),
     );

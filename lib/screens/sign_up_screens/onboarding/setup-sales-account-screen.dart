@@ -137,13 +137,13 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                 Consumer<SetupSalesModel>(
                   builder: (_, value, __) {
                     return Container(
-                      width: ScreenUtils.getDesignWidth(175),
+                      width: ScreenUtils.getDesignWidth(110),
                       margin: EdgeInsets.only(
                           left: 15),
                       child: CustomTextWidget(
-                        text: value.selectedLocation.isEmpty
+                        text: value.selectedAddress.isEmpty
                             ? 'Add your location'
-                            : value.selectedLocation,
+                            : value.selectedAddress,
                         style: TextStyle(
                             fontFamily: CircularBook,
                             fontWeight: FontWeight.w500,
@@ -157,7 +157,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                 Spacer(),
                 GestureDetector(
                   onTap: () => locator<NavigationService>()
-                      .pushNamed(CUSTOM_MAP_SEARCH_SCREEN),
+                      .pushNamed(CUSTOM_ADDRESS_SEARCH_SCREEN),
                   child: Container(
                     height: ScreenUtils.getDesignHeight(40),
                     width: ScreenUtils.getDesignWidth(110),
@@ -165,17 +165,23 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       gradient: PRIMARY_GRADIENT,
                       borderRadius: BorderRadius.circular(5.0),
                     ),
-                    child: Center(
-                      child: CustomTextWidget(
-                        text: 'Add Here',
-                        style: TextStyle(
-                            fontFamily: CircularBook,
-                            fontWeight: FontWeight.bold,
-                            color: MAIN_TEXT_COLOR,
-                            fontSize: 10),
-                        width: ScreenUtils.getDesignWidth(45),
-                        height: ScreenUtils.getDesignHeight(12),
-                      ),
+                    child: Consumer<SetupSalesModel>(
+                      builder: (_ , value , __){
+                        return Center(
+                          child: CustomTextWidget(
+                            text: value.selectedAddress.isEmpty
+                                ? 'Add Here'
+                                : 'Change Now',
+                            style: TextStyle(
+                                fontFamily: CircularBook,
+                                fontWeight: FontWeight.bold,
+                                color: MAIN_TEXT_COLOR,
+                                fontSize: 10),
+                            width: ScreenUtils.getDesignWidth(45),
+                            height: ScreenUtils.getDesignHeight(12),
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -195,7 +201,6 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
 
   Widget _libraryGames() {
     final model = Provider.of<SetupSalesModel>(context);
-
     return Container(
       margin: EdgeInsets.only(top: 20),
       height: ScreenUtils.getDesignHeight(160),

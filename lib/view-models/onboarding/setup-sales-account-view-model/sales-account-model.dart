@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 
 abstract class SetupSalesModel with ChangeNotifier{
@@ -11,6 +12,9 @@ abstract class SetupSalesModel with ChangeNotifier{
 
   void addLocation(String location);
 
-  String get selectedLocation;
+  String get selectedAddress;
+
+  void selectedMapLocation(LatLng tappedPoint);
+
 
 }
