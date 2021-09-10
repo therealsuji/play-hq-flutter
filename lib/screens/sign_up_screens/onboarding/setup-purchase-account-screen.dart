@@ -130,7 +130,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                             : false),
                     titleText: 'Release Dates',
                     textWidth: ScreenUtils.getDesignWidth(90),
-                    selectedText: 'None Selected',
+                    selectedText: val.releaseDateCount == 0 ? 'None Selected' : val.releaseDateCount.toString() + ' Selected' ,
                     widget: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -224,14 +224,19 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
       child: Row(
         children: [
           CustomDottedSelectorWidget(
-            onPressed: () =>
-                locator<NavigationService>().pushNamed(MAIN_SEARCH_SCREEN),
+            onPressed: () async{
+              dynamic gameDetails = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+                  arguments: SearchGameScreens.SetupPurchase);
+              if (gameDetails != null) {
+                Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                    .addSelectedGame(gameDetails);
+              }
+            }
           ),
           ChangeNotifierProvider.value(
             value: model,
             child: Consumer<SetupPurchaseAccountModel>(
               builder: (_, val, __) {
-                print(val.selectedGameList);
                 return val.selectedGameList.isEmpty
                     ? Container()
                     : Expanded(

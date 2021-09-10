@@ -12,7 +12,7 @@
         android:label="Play HQ"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyASrPjBLYAAKYABa0UZa6PXLVXLOKCjH0Q"/>
+            android:value="AIzaSyBowE9CgMXTZENG7qyemAH_FUpU9F19MNo"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/screens/create_sale/create-sale-screen.dart';
+import 'package:play_hq/screens/custom-address-search.dart';
+import 'package:play_hq/screens/custom-map-screen.dart';
 import 'package:play_hq/screens/custom-search-screen/main-search-screen.dart';
 import 'package:play_hq/screens/order_tracking_screens/order_tracking_screen.dart';
 import 'package:play_hq/screens/payment/payment-screen.dart';
@@ -16,6 +18,12 @@ import 'package:play_hq/screens/sign_up_screens/sign-up-screen.dart';
 import 'package:play_hq/screens/splash-screen.dart';
 import 'package:play_hq/view-models/create-sale/create-sale-model.dart';
 import 'package:play_hq/view-models/create-sale/impl-create-sale.dart';
+import 'package:play_hq/view-models/custom-address-search/custom-address-search-model.dart';
+import 'package:play_hq/view-models/custom-address-search/impl-custom-address-search.dart';
+import 'package:play_hq/view-models/custom-map/custom-map-model.dart';
+import 'package:play_hq/view-models/custom-map/impl-custom-map.dart';
+import 'package:play_hq/view-models/custom-search/custom-search-model.dart';
+import 'package:play_hq/view-models/custom-search/impl-custom-search.dart';
 import 'package:play_hq/view-models/game_details/game_details_model.dart';
 import 'package:play_hq/view-models/game_details/i_game_details_model.dart';
 import 'package:play_hq/view-models/navigation/impl-tab-navigation.dart';
@@ -84,7 +92,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => _implSetupSales,
             ),
           ],
-          child: CustomSearchScreen(values: settings.arguments as SearchGameScreens),
+          child: CustomSearchScreen(
+              values: settings.arguments as SearchGameScreens),
         ),
       );
     case CREATE_SALE_ROUTE:
@@ -117,7 +126,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => OrderTrackingScreen(),
       );
     case MAIN_SEARCH_SCREEN:
-      return MaterialPageRoute(builder: (context) => MainSearchScreen());
+      return MaterialPageRoute(
+          builder: (context) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider<CustomSearchModel>(
+                      create: (context) => ImplCustomSearch(),
+                    ),
+                  ],
+                  child: MainSearchScreen(
+                      values: settings.arguments as SearchGameScreens)));
 
     case PAYMENT_SCREEN:
       return MaterialPageRoute(
@@ -126,6 +143,25 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           child: PaymentScreen(),
         ),
       );
+
+    case CUSTOM_ADDRESS_SEARCH_SCREEN:
+      return MaterialPageRoute(
+        builder: (context) => MultiProvider(providers: [
+          ChangeNotifierProvider<CustomAddressSearchModel>(
+              create: (context) => ImplCustomAddressSearch()),
+          ChangeNotifierProvider<SetupSalesModel>(
+              create: (context) => _implSetupSales),
+        ], child: CustomAddressSearchScreen()),
+      );
+
+    case CUSTOM_MAP_SCREEN:
+      return MaterialPageRoute(builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CustomMapModel>(create: (context) => ImplCustomMap()),
+            ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales)
+          ],
+          child: CustomMapScreen()));
+
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

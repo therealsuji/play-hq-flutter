@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app-assets.dart';
 import 'package:play_hq/helpers/app-colors.dart';
+import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-fonts.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
 import 'package:play_hq/screens/custom-search-screen/sub-search-screens/clicked-search.dart';
 import 'package:play_hq/screens/custom-search-screen/sub-search-screens/opening-search.dart';
-import 'package:play_hq/view-models/custom-sale/custom-search-model.dart';
+import 'package:play_hq/view-models/custom-search/custom-search-model.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/widgets/custom-body.dart';
 import 'package:provider/provider.dart';
 
 
 class MainSearchScreen extends StatefulWidget {
-  const MainSearchScreen({Key? key}) : super(key: key);
+
+  final SearchGameScreens? values;
+
+  MainSearchScreen({this.values});
 
   @override
   _MainSearchScreenState createState() => _MainSearchScreenState();
@@ -34,7 +38,7 @@ class _MainSearchScreenState extends State<MainSearchScreen> {
             ),
             Consumer<CustomSearchModel>(
               builder: (_ , val , __){
-                return val.isCLicked ? OpeningSearch() : ClickedSearch();
+                return val.isCLicked ? ClickedSearch(values: widget.values,) : OpeningSearch();
               },
             )
           ],

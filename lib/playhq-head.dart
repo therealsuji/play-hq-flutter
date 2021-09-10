@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:places_service/places_service.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/services/nav-service.dart';
@@ -19,11 +20,15 @@ class PlayHqHead extends StatefulWidget {
 }
 
 class _PlayHqHeadState extends State<PlayHqHead> {
+
+  final _placesService = locator<PlacesService>();
+
   @override
   void initState() {
     super.initState();
 
     initHive();
+    _placesService.initialize(apiKey: 'AIzaSyDGxXpv56r9r3jDvfWT6kYW_nFpU1T1xrQ');
   }
 
   void initHive() async {
