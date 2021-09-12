@@ -72,6 +72,8 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                   Navigator.pop(context, game);
                                   break;
                                 case SearchGameScreens.SetupSales:
+                                  var game = val.gameList[index];
+                                  Navigator.pop(context, game);
                                   break;
                                 case SearchGameScreens.CreateSales:
                                   break;

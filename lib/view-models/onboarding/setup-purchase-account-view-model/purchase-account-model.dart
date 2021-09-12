@@ -44,4 +44,6 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   int get totalPlatformCount;
 
+  int? get releaseDateCount;
+
 }
