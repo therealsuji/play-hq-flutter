@@ -98,9 +98,9 @@ class Network {
     }
   }
 
-  Future<UserModel> loginUser(token) async {
+  Future<UserModel> loginUser(token, fcmToken) async {
     return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login,
-        body: {"token": token}, noToken: true);
+        body: {"token": token, "fcmToken": fcmToken}, noToken: true);
   }
 
   Future<CreateSalePayload> createSale(CreateSalePayload payload) async {
