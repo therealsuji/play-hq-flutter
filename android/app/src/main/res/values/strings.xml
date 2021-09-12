@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">PlayHQ</string>
+    <string name="facebook_app_id">2782157425384991</string>
+    <string name="fb_login_protocol_scheme">fb2782157425384991</string>
+</resources>
