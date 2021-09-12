@@ -95,8 +95,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => _implSetupSales,
             ),
           ],
-          child: CustomSearchScreen(
-              values: settings.arguments as SearchGameScreens),
+          child: CustomSearchScreen(values: settings.arguments as SearchGameScreens),
         ),
       );
     case CREATE_SALE_ROUTE:
@@ -137,14 +136,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider<CustomSearchModel>(
-                      create: (context) => ImplCustomSearch(),
-                    ),
-                  ],
-                  child: MainSearchScreen(
-                      values: settings.arguments as SearchGameScreens)));
+          builder: (context) => MultiProvider(providers: [
+                ChangeNotifierProvider<CustomSearchModel>(
+                  create: (context) => ImplCustomSearch(),
+                ),
+              ], child: MainSearchScreen(values: settings.arguments as SearchGameScreens)));
 
     case PAYMENT_SCREEN:
       return MaterialPageRoute(
@@ -157,20 +153,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CUSTOM_ADDRESS_SEARCH_SCREEN:
       return MaterialPageRoute(
         builder: (context) => MultiProvider(providers: [
-          ChangeNotifierProvider<CustomAddressSearchModel>(
-              create: (context) => ImplCustomAddressSearch()),
-          ChangeNotifierProvider<SetupSalesModel>(
-              create: (context) => _implSetupSales),
+          ChangeNotifierProvider<CustomAddressSearchModel>(create: (context) => ImplCustomAddressSearch()),
+          ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales),
         ], child: CustomAddressSearchScreen()),
       );
 
     case CUSTOM_MAP_SCREEN:
       return MaterialPageRoute(
           builder: (context) => MultiProvider(providers: [
-                ChangeNotifierProvider<CustomMapModel>(
-                    create: (context) => ImplCustomMap()),
-                ChangeNotifierProvider<SetupSalesModel>(
-                    create: (context) => _implSetupSales)
+                ChangeNotifierProvider<CustomMapModel>(create: (context) => ImplCustomMap()),
+                ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales)
               ], child: CustomMapScreen()));
 
     default:
