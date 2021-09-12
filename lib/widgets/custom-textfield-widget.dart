@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/parser.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 
 class CustomTextfieldWidget extends StatelessWidget {
-  final IconData? iconData;
+  final dynamic iconData;
   final bool? hideText;
   final Function(String)? onChanged;
   final String? errorText;
@@ -31,13 +33,21 @@ class CustomTextfieldWidget extends StatelessWidget {
         cursorColor: PRIMARY_COLOR,
         decoration: InputDecoration(
           prefixIcon: iconData != null
-              ? Container(
-                  padding: EdgeInsets.symmetric(vertical: 18),
-                  child: Icon(
-                    iconData,
-                    color: SUB_TEXT_COLOR,
-                  ),
-                )
+              ? iconData.runtimeType == IconData
+                  ? Container(
+                      padding: EdgeInsets.symmetric(vertical: 18),
+                      child: Icon(
+                        iconData,
+                        color: SUB_TEXT_COLOR,
+                      ),
+                    )
+                  : Container(
+                      padding: EdgeInsets.symmetric(vertical: 18),
+                      child: SvgPicture.asset(
+                        iconData,
+                        color: SUB_TEXT_COLOR,
+                      ),
+                    )
               : null,
           errorText: errorText,
           fillColor: MAIN_CONTAINER_COLOR.withOpacity(0.4),
