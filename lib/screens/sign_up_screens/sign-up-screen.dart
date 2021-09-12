@@ -31,30 +31,33 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(130)),
-                  child: Container(
-                    width: double.infinity,
-                    height: ScreenUtils.getDesignHeight(45),
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: MAIN_CONTAINER_COLOR),
+                  child: GestureDetector(
+                    onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.FACEBOOK),
                     child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            child: SvgPicture.asset(FACEBOOK_LOGO),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
-                            child: Text(
-                              'Continue with Facebook',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white,
-                                  fontFamily: CircularBold),
+                      width: double.infinity,
+                      height: ScreenUtils.getDesignHeight(45),
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.0), color: MAIN_CONTAINER_COLOR),
+                      child: Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              child: SvgPicture.asset(FACEBOOK_LOGO),
                             ),
-                          )
-                        ],
+                            Container(
+                              margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(20)),
+                              child: Text(
+                                'Continue with Facebook',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontFamily: CircularBold),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
