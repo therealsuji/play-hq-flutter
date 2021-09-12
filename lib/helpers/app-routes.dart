@@ -7,6 +7,7 @@ import 'package:play_hq/screens/custom-map-screen.dart';
 import 'package:play_hq/screens/custom-search-screen/main-search-screen.dart';
 import 'package:play_hq/screens/order_tracking_screens/order_tracking_screen.dart';
 import 'package:play_hq/screens/payment/payment-screen.dart';
+import 'package:play_hq/screens/sale-details/sale-details-screen.dart';
 import 'package:play_hq/screens/trades/create-trade-screen.dart';
 import 'package:play_hq/screens/custom-search-screen.dart';
 import 'package:play_hq/screens/game-details-screen.dart';
@@ -34,6 +35,8 @@ import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/im
 import 'package:play_hq/view-models/onboarding/setup-sales-account-view-model/sales-account-model.dart';
 import 'package:play_hq/view-models/payment/impl-payment-model.dart';
 import 'package:play_hq/view-models/payment/payment-model.dart';
+import 'package:play_hq/view-models/sale-details/impl-sale-details.dart';
+import 'package:play_hq/view-models/sale-details/sale-details-model.dart';
 import 'package:play_hq/view-models/search-game/impl-search-game.dart';
 import 'package:play_hq/view-models/search-game/search-game-view-model.dart';
 import 'package:play_hq/view-models/splash-screen/splash-screen-impl.dart';
@@ -103,6 +106,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           child: CreateSaleScreen(),
         ),
       );
+    case SALE_DETAILS_ROUTE:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<SaleDetailsModel>(
+          create: (context) => ImplSaleDetails(),
+          child: SaleDetailsScreen(),
+        ),
+      );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
@@ -155,12 +165,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
 
     case CUSTOM_MAP_SCREEN:
-      return MaterialPageRoute(builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<CustomMapModel>(create: (context) => ImplCustomMap()),
-            ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales)
-          ],
-          child: CustomMapScreen()));
+      return MaterialPageRoute(
+          builder: (context) => MultiProvider(providers: [
+                ChangeNotifierProvider<CustomMapModel>(
+                    create: (context) => ImplCustomMap()),
+                ChangeNotifierProvider<SetupSalesModel>(
+                    create: (context) => _implSetupSales)
+              ], child: CustomMapScreen()));
 
     default:
       return MaterialPageRoute(
