@@ -2,7 +2,7 @@
 
 import 'package:places_service/places_service.dart';
 import 'package:places_service/src/models/application_models.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/view-models/custom-address-search/custom-address-search-model.dart';
 
 class ImplCustomAddressSearch extends CustomAddressSearchModel {

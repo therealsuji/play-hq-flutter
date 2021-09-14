@@ -1,4 +1,8 @@
-class GameDetailsModel {
+import 'dart:convert';
+
+GameDetailModel gameDetailsModelFromJson(String str) => GameDetailModel.fromJson(json.decode(str));
+
+class GameDetailModel {
   final int? id;
   final String? slug;
   final String? name;
@@ -19,7 +23,7 @@ class GameDetailsModel {
   final List<GenreTagDeveloper>? developer;
   final String? description;
 
-  const GameDetailsModel({
+  const GameDetailModel({
     this.id,
     this.slug,
     this.name,
@@ -41,7 +45,7 @@ class GameDetailsModel {
     this.description
   });
 
-  factory GameDetailsModel.fromJson(Map<String, dynamic> json) =>  GameDetailsModel(
+  factory GameDetailModel.fromJson(Map<String, dynamic> json) => GameDetailModel(
     id: json["id"] ?? 0,
     slug: json["slug"] ?? "",
     name: json["name"] ?? "",

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/models/loading-event-model.dart';
 import 'package:rxdart/rxdart.dart';
 

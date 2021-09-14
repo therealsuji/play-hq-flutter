@@ -3,7 +3,7 @@
 
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:hive/hive.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/services/nav-service.dart';

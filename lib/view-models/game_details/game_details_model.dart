@@ -1,49 +1,15 @@
-import 'package:event_bus/event_bus.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
-import 'package:play_hq/helpers/networks/app-network.dart';
-import 'package:play_hq/models/game_details_model.dart';
-import 'package:play_hq/models/game_screenshot_modal.dart';
-import 'package:play_hq/models/loading-event-model.dart';
-import 'package:play_hq/services/nav-service.dart';
-import 'package:play_hq/view-models/game_details/i_game_details_model.dart';
+import 'package:flutter/material.dart';
+import 'package:play_hq/models/game_details_models/game_details_model.dart';
+import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 
-class GameDetails extends IGameDetailsModel {
+abstract class GameDetailsModel with ChangeNotifier {
 
-  final _networkCalls = Network.shared;
-  final _eventBus = locator<EventBus>();
+  Future<void> getGameDetails(int id);
 
-  GameDetailsModel _gameDetailsModel = GameDetailsModel();
-  GameScreenshotModal _gameScreenshotModal = GameScreenshotModal();
+  GameDetailModel get gameDetails;
 
-  @override
-  Future<void> getGameDetails(int id) async {
+  GameScreenshotModal get gameScreenshots;
 
-    try {
-      _eventBus.fire(LoadingEvent.show());
-
-      GameDetailsModel results = await _networkCalls.getGameDetails(id);
-      GameScreenshotModal screenshots = await _networkCalls.gameScreenshots(id);
-
-      _gameDetailsModel = results;
-      _gameScreenshotModal = screenshots;
-
-      notifyListeners();
-
-      _eventBus.fire(LoadingEvent.hide());
-    }catch (e) {
-      print(e.toString());
-    }
-  }
-
-  @override
-  void navigateMainScreen() {
-    locator<NavigationService>().pop();
-  }
-
-  @override
-  GameDetailsModel get gameDetails => _gameDetailsModel;
-
-  @override
-  GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
+  void navigateMainScreen();
 
 }

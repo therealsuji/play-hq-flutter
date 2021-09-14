@@ -1,15 +1,51 @@
-import 'package:flutter/material.dart';
-import 'package:play_hq/models/game_details_model.dart';
-import 'package:play_hq/models/game_screenshot_modal.dart';
+import 'package:event_bus/event_bus.dart';
+import 'package:play_hq/models/game_details_models/game_details_model.dart';
+import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
+import 'package:play_hq/models/loading-event-model.dart';
+import 'package:play_hq/repository/clients/game_details_repository.dart';
+import 'package:play_hq/service-locator.dart';
+import 'package:play_hq/services/nav-service.dart';
+import 'package:play_hq/view-models/game_details/game_details_model.dart';
 
-abstract class IGameDetailsModel with ChangeNotifier {
+class IGameDetailsModel extends GameDetailsModel {
 
-  Future<void> getGameDetails(int id);
+  final _eventBus = locator<EventBus>();
+  final _gameDetailsApi = locator<GameDetailsRepository>();
 
-  GameDetailsModel get gameDetails;
+  GameDetailModel _gameDetailsModel = GameDetailModel();
+  GameScreenshotModal _gameScreenshotModal = GameScreenshotModal();
 
-  GameScreenshotModal get gameScreenshots;
+  @override
+  Future<void> getGameDetails(int id) async {
 
-  void navigateMainScreen();
+    try {
+
+      _eventBus.fire(LoadingEvent.show());
+
+      await _gameDetailsApi.getGameDetails(id).then((model) {
+        if(model != null){
+          _gameDetailsModel = model.gameDetails!;
+          _gameScreenshotModal = model.gameScreenshots!;
+        }
+      });
+
+      notifyListeners();
+
+      _eventBus.fire(LoadingEvent.hide());
+    }catch (e) {
+      print(e.toString());
+    }
+  }
+
+  @override
+  void navigateMainScreen() {
+    locator<NavigationService>().pop();
+  }
+
+  @override
+  GameDetailModel get gameDetails => _gameDetailsModel;
+
+  @override
+  GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
 
 }

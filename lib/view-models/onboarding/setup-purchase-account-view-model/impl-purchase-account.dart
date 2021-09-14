@@ -3,7 +3,7 @@
 import 'dart:async';
 
 import 'package:play_hq/helpers/app-enums.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/app-genre-model.dart';

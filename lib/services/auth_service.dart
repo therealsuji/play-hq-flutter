@@ -6,7 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:play_hq/helpers/app-enums.dart';
 import 'package:play_hq/helpers/app-secure-storage.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/helpers/app-strings.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/app-user-model.dart';

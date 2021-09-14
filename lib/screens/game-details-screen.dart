@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:play_hq/helpers/app-assets.dart';
 import 'package:play_hq/helpers/app-colors.dart';
 import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/view-models/game_details/i_game_details_model.dart';
+import 'package:play_hq/view-models/game_details/game_details_model.dart';
 import 'package:play_hq/widgets/custom-body.dart';
 import 'package:play_hq/widgets/custom-button-widget.dart';
 import 'package:play_hq/widgets/custom-game-widget.dart';
@@ -22,7 +22,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   void initState() {
     super.initState();
     // TODO: Create Similar Games, OnTap for Company Tile and Genre Image
-    Provider.of<IGameDetailsModel>(context, listen: false).getGameDetails(134);
+    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(134);
   }
 
   List<String> temp = ["1", "2", "3", "4", "5"];
@@ -38,7 +38,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         body: [
           Stack(
             children: [
-              Consumer<IGameDetailsModel>(
+              Consumer<GameDetailsModel>(
                 builder: (_, model, __) {
                   return CachedNetworkImage(
                     height: ScreenUtils.getDesignHeight(293.0),
@@ -81,7 +81,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                             height: ScreenUtils.getDesignHeight(27.0),
                           ),
                           onTap: () {
-                            Provider.of<IGameDetailsModel>(context, listen: false).navigateMainScreen();
+                            Provider.of<GameDetailsModel>(context, listen: false).navigateMainScreen();
                           },
                         ),
                         GestureDetector(
@@ -94,7 +94,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       ],
                     ),
                   ),
-                  Consumer<IGameDetailsModel>(
+                  Consumer<GameDetailsModel>(
                     builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.symmetric(
@@ -162,7 +162,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   ),
                   _companyContainer(),
                   _subHeadingContainer(title: "Genre", paddingTop: 30.0),
-                  Consumer<IGameDetailsModel>(
+                  Consumer<GameDetailsModel>(
                     builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.only(
@@ -185,7 +185,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     },
                   ),
                   _subHeadingContainer(title: "Game Screenshots"),
-                  Consumer<IGameDetailsModel>(
+                  Consumer<GameDetailsModel>(
                     builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.only(
@@ -214,7 +214,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
-                    child: Consumer<IGameDetailsModel>(
+                    child: Consumer<GameDetailsModel>(
                       builder: (_, model, __) {
                         return Text(
                           model.gameDetails.description ?? "",
@@ -364,7 +364,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Consumer<IGameDetailsModel>(
+                  Consumer<GameDetailsModel>(
                     builder: (_, model, __) {
                       return Text(
                         "${model.gameDetails.developer != null ? model.gameDetails.developer![0].name : ""}",

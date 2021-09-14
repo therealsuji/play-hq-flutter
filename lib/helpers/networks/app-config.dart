@@ -1,6 +1,6 @@
 import 'app-configurations.dart';
 
-class ConfigData {
+class APIConfig {
   //Base url and version are private and not exposed
   static String? _rawgAPI;
   static String? _baseUrl;

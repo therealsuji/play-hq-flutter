@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/services/auth_service.dart';
 
 class ProfileScreen extends StatelessWidget {

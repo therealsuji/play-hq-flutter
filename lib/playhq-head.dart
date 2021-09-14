@@ -11,7 +11,7 @@ import 'package:play_hq/widgets/loading-overlay-widget.dart';
 import 'package:provider/provider.dart';
 import 'helpers/app-fonts.dart';
 import 'helpers/app-routes.dart';
-import 'helpers/app-service-locator.dart';
+import 'service-locator.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 
 class PlayHqHead extends StatefulWidget {

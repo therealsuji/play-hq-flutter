@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+GameScreenshotModal gameScreenshotModalFromJson(String str) => GameScreenshotModal.fromJson(json.decode(str));
+
 class GameScreenshotModal {
 
   final int? count;

@@ -2,7 +2,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app-constants.dart';
 import 'package:play_hq/helpers/app-enums.dart';
-import 'package:play_hq/helpers/app-service-locator.dart';
+import 'package:play_hq/service-locator.dart';
 import 'package:play_hq/helpers/networks/app-network.dart';
 import 'package:play_hq/models/create-sale-model.dart';
 import 'package:play_hq/models/loading-event-model.dart';

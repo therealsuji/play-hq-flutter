@@ -1,6 +1,6 @@
-import 'package:http/http.dart';
-import 'package:play_hq/models/game_details_model.dart';
-import 'package:play_hq/models/game_screenshot_modal.dart';
+import 'package:http/http.dart' as http;
+import 'package:play_hq/models/game_details_models/game_details_model.dart';
+import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 import 'package:play_hq/models/search-model/app-search-game-model.dart';
 import 'package:play_hq/models/app-user-model.dart';
 import 'package:play_hq/models/create-sale-model.dart';
@@ -26,7 +26,7 @@ class Network {
   var _connect = ConnectionCheck.getInstance();
 
   //http client
-  Client client = Client();
+  // Client _client = Client();
 
   Map<String, String> _headers = {
     "User-Agent": 'PlayHQ',
@@ -36,7 +36,7 @@ class Network {
 
   Future<T> _performWebRequest<T>(RequestType type, String url, {dynamic body, bool noToken = false}) async {
     //Response initialization
-    late Response response;
+    late http.Response response;
 
     //Get the jwtToken from secure storage and if existing, add to the header
     String? bearerToken = await SecureStorage.readValue("jwtToken");
@@ -53,23 +53,23 @@ class Network {
         //Identify the request type
         switch (type) {
           case RequestType.get:
-            response = await client.get(Uri.parse(url), headers: _headers);
+            response = await http.get(Uri.parse(url), headers: _headers);
             break;
           case RequestType.post:
-            response = await client.post(Uri.parse(url), headers: _headers, body: json.encoder.convert(body));
+            response = await http.post(Uri.parse(url), headers: _headers, body: json.encoder.convert(body));
             break;
           case RequestType.postEncodedUrl:
-            response = await client.post(Uri.parse(url),
+            response = await http.post(Uri.parse(url),
                 headers: {'Content-Type': "application/x-www-form-urlencoded"}, body: body);
             break;
           case RequestType.put:
-            response = await client.put(Uri.parse(url), headers: _headers, body: json.encoder.convert(body));
+            response = await http.put(Uri.parse(url), headers: _headers, body: json.encoder.convert(body));
             break;
           case RequestType.patch:
-            response = await client.patch(Uri.parse(url), headers: _headers, body: json.encoder.convert(body));
+            response = await http.patch(Uri.parse(url), headers: _headers, body: json.encoder.convert(body));
             break;
           case RequestType.delete:
-            response = await client.delete(Uri.parse(url), headers: _headers);
+            response = await http.delete(Uri.parse(url), headers: _headers);
             break;
         }
         print("Network call ${response.statusCode} $url");
@@ -92,30 +92,37 @@ class Network {
         }
       } on SocketException catch (e) {
         throw Exception(e);
+      } on TimeoutException catch (e) {
+        throw Exception(e);
+      } catch (e) {
+        // Rethrow can be used to make sure that exception is properly handled internally
+        rethrow;
+      } finally {
+        print("CLose");
       }
     } else {
-      throw Exception('No interent');
+      throw Exception('No Internet');
     }
   }
 
   Future<UserModel> loginUser(token, fcmToken) async {
-    return await _performWebRequest<UserModel>(RequestType.post, ConfigData.login,
+    return await _performWebRequest<UserModel>(RequestType.post, APIConfig.login,
         body: {"token": token, "fcmToken": fcmToken}, noToken: true);
   }
 
   Future<CreateSalePayload> createSale(CreateSalePayload payload) async {
-    return await _performWebRequest<CreateSalePayload>(RequestType.post, ConfigData.createSale, body: payload);
+    return await _performWebRequest<CreateSalePayload>(RequestType.post, APIConfig.createSale, body: payload);
   }
 
   Future<SearchGame> searchGame(String params) async {
-    return await _performWebRequest<SearchGame>(RequestType.get, ConfigData.getSearchResults(params));
+    return await _performWebRequest<SearchGame>(RequestType.get, APIConfig.getSearchResults(params));
   }
 
-  Future<GameDetailsModel> getGameDetails(int id) async {
-    return await _performWebRequest<GameDetailsModel>(RequestType.get, ConfigData.gameDetails(id));
+  Future<GameDetailModel> getGameDetails(int id) async {
+    return await _performWebRequest<GameDetailModel>(RequestType.get, APIConfig.gameDetails(id));
   }
 
   Future<GameScreenshotModal> gameScreenshots(int id) async {
-    return await _performWebRequest<GameScreenshotModal>(RequestType.get, ConfigData.gameScreenshots(id));
+    return await _performWebRequest<GameScreenshotModal>(RequestType.get, APIConfig.gameScreenshots(id));
   }
 }
