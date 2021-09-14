@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:http/http.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:play_hq/helpers/networks/app-config.dart';
+import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/models/game_details_models/game_details_model.dart' as details;
 import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart' as sc;
 import 'package:play_hq/models/game_details_models/get_game_details.dart';

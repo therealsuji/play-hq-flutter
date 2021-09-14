@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/widgets/custom-body.dart';
-import 'package:play_hq/helpers/app-assets.dart';
-import 'package:play_hq/helpers/app-colors.dart';
-import 'package:play_hq/helpers/app-screen-utils.dart';
+import 'package:play_hq/widgets/custom_body.dart';
+import 'package:play_hq/helpers/app_assets.dart';
+import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/order_tracking_screens/body/buyer_body.dart';
 import 'package:play_hq/screens/order_tracking_screens/body/seller_body.dart';
 import 'package:play_hq/screens/order_tracking_screens/widgets/progress_animation.dart';

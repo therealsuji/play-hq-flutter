@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app-colors.dart';
-import 'package:play_hq/helpers/app-enums.dart';
-import 'package:play_hq/helpers/app-screen-utils.dart';
-import 'package:play_hq/widgets/custom-button-widget.dart';
+import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 
 class BuyerBody extends StatefulWidget {
