@@ -18,6 +18,7 @@ const String ORDER_TRACKING_SCREEN = 'orderTrackingScreen';
 const String PAYMENT_SCREEN = 'paymentScreen';
 const String CUSTOM_ADDRESS_SEARCH_SCREEN = 'customAddressSearchScreen';
 const String CUSTOM_MAP_SCREEN = 'customMapScreen';
+const String AUTH_SCREEN = 'authenticationScreen';
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';
