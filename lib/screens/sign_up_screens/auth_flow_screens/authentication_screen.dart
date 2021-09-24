@@ -1,8 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/service_locator.dart';
+import 'package:play_hq/services/auth_service.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 
@@ -45,7 +50,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                   width: ScreenUtils.bodyWidth,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(15) , topRight: Radius.circular(15)),
-                    color: MAIN_CONTAINER_COLOR.withOpacity(0.85)
+                    color: BACKGROUND_COLOR
                   ),
                   child: Container(
                     margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40) , left: 24 , right: 24),
@@ -61,29 +66,35 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                height: ScreenUtils.getDesignHeight(99),
-                                width: ScreenUtils.getDesignWidth(99),
-                                decoration: BoxDecoration(
-                                  color: POP_UP_CONTAINER_COLOR.withOpacity(0.5),
-                                  borderRadius: BorderRadius.circular(5.0)
-                                ),
-                                child: Image.asset('assets/images/google-logo.png'),
-                              ),
-                              Container(
-                                height: ScreenUtils.getDesignHeight(99),
-                                width: ScreenUtils.getDesignWidth(99),
-                                decoration: BoxDecoration(
-                                    color: POP_UP_CONTAINER_COLOR.withOpacity(0.5),
+                              GestureDetector(
+                                onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.GOOGLE),
+                                child: Container(
+                                  height: ScreenUtils.getDesignHeight(99),
+                                  width: ScreenUtils.getDesignWidth(99),
+                                  decoration: BoxDecoration(
+                                    color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(5.0)
+                                  ),
+                                  child: Image.asset('assets/images/google-logo.png'),
                                 ),
-                                child: Image.asset('assets/images/facebook-logo.png'),
+                              ),
+                              GestureDetector(
+                                onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.FACEBOOK),
+                                child: Container(
+                                  height: ScreenUtils.getDesignHeight(99),
+                                  width: ScreenUtils.getDesignWidth(99),
+                                  decoration: BoxDecoration(
+                                      color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
+                                      borderRadius: BorderRadius.circular(5.0)
+                                  ),
+                                  child: Image.asset('assets/images/facebook-logo.png'),
+                                ),
                               ),
                               Container(
                                 height: ScreenUtils.getDesignHeight(99),
                                 width: ScreenUtils.getDesignWidth(99),
                                 decoration: BoxDecoration(
-                                    color: POP_UP_CONTAINER_COLOR.withOpacity(0.5),
+                                    color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(5.0)
                                 ),
                                 child: Image.asset('assets/images/apple-logo.png'),
@@ -91,29 +102,11 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             ],
                           ),
                         ),
+                        Spacer(),
                         Container(
-                          margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(35)),
-                          height: ScreenUtils.getDesignHeight(50),
-                          width: ScreenUtils.bodyWidth,
-                          decoration: BoxDecoration(
-                            color: POP_UP_CONTAINER_COLOR.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          child: Center(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Icons.mail_outline , color: SUB_TEXT_COLOR,),
-                                Container(margin: EdgeInsets.only(left: 5),
-                                child: CustomTextWidget(text: 'Continue with Email' , width: ScreenUtils.getDesignWidth(115),height: 15,style: TextStyle(color: SUB_TEXT_COLOR , fontSize: 12 , fontWeight: FontWeight.w500 , fontFamily: CircularBook),),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(35)),
+                          margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(35)),
                           child: CustomButton(
+                            onPressed: () => locator<NavigationService>().pushNamed(MAIN_SCREEN),
                             buttonText: 'I want to Explore',gradient: PRIMARY_GRADIENT,),
                         )
                       ],

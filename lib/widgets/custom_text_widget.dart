@@ -6,8 +6,9 @@ class CustomTextWidget extends StatelessWidget {
   final double? width;
   final TextStyle? style;
   final String? text;
+  final TextAlign? align;
 
-  CustomTextWidget({this.height , this.width , this.style , this.text});
+  CustomTextWidget({this.height , this.width , this.style , this.text , this.align});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,8 @@ class CustomTextWidget extends StatelessWidget {
         fit: BoxFit.fitWidth,
         child: Text(
             text!,
-            style: style
+            style: style,
+          textAlign: align == null ? TextAlign.start : align,
         ),
       ),
     );

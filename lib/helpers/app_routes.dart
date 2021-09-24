@@ -1,4 +1,10 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
+import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
+import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
+import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
@@ -129,6 +135,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ChangeNotifierProvider<CustomMapModel>(create: (context) => ICustomMapModel()),
                 ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales)
               ], child: CustomMapScreen()));
+
+    case AUTH_SCREEN:
+      return MaterialPageRoute(builder: (context) => AuthenticationScreen());
+
+    case MAIN_ONBOARDING:
+      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
+          create: (context) => IMainOnbooardingModel(),
+          child: MainOnboarding()));
 
     default:
       return MaterialPageRoute(

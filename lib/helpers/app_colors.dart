@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const BACKGROUND_COLOR = Color(0xff14131C);
+const BACKGROUND_COLOR = Color(0xff1B1A26);
 
 
 // Colors of the Containers

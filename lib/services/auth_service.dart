@@ -41,18 +41,19 @@ class AuthService {
       return;
     }
     var fcmToken = await FirebaseMessaging.instance.getToken();
+    log("fcmToken $fcmToken");
+    log("firebaseToken $token");
     if (token != null && fcmToken != null) {
-      locator<EventBus>().fire(LoadingEvent.show());
-
-      var strapiToken = await _loginToBackend(token, fcmToken);
-      SecureStorage.writeValue("jwtToken", strapiToken);
-      SecureStorage.writeValue("fcmToken", fcmToken);
-      log("strapiToken $strapiToken");
-      log("firebaseToken $token");
-      log("fcmToken $fcmToken");
-
-      locator<EventBus>().fire(LoadingEvent.hide());
-      locator<NavigationService>().pushReplacement(MAIN_SCREEN);
+      UserModel userData = await _loginToBackend(token, fcmToken);
+      if(userData.user!.setupDone == true){
+        SecureStorage.writeValue("jwtToken", userData.jwt);
+        SecureStorage.writeValue("fcmToken", fcmToken);
+        locator<NavigationService>().pushNamed(MAIN_SCREEN);
+      }else{
+        SecureStorage.writeValue("jwtToken", userData.jwt);
+        SecureStorage.writeValue("fcmToken", fcmToken);
+        locator<NavigationService>().pushNamed(MAIN_ONBOARDING);
+      }
     } else {
       log("token or fcmToken is null");
     }
@@ -60,7 +61,7 @@ class AuthService {
 
   _loginToBackend(String token, String fcmToken) async {
     UserModel data = await Network.shared.loginUser(token, fcmToken);
-    return data.jwt;
+    return data;
   }
 
   Future<String?> googleLogin() async {
