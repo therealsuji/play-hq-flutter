@@ -25,4 +25,10 @@ class IMainOnbooardingModel extends MainOnboardingModel {
       notifyListeners();
     }
   }
+
+  @override
+  void changePage(int page) {
+    _currentPage = page;
+    notifyListeners();
+  }
 }

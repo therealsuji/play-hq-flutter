@@ -7,7 +7,6 @@ class ScreenUtils {
   static late double bodyWidth;
   static late bool isStatusBarBig;
 
-
   static void setScreenSizes(BuildContext context){
     statusBarHeight = MediaQuery.of(context).padding.top;
     totalBodyHeight = MediaQuery.of(context).size.height;

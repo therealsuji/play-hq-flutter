@@ -10,4 +10,6 @@ abstract class MainOnboardingModel with ChangeNotifier{
 
   void previousPage();
 
+  void changePage(int page);
+
 }

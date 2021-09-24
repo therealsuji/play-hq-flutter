@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_assets.dart';
+import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 
 class CustomBody extends StatelessWidget {
@@ -21,33 +22,25 @@ class CustomBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: double.infinity,
-          child: Image.asset(
-            BACKGROUND_IMAGE,
-            fit: BoxFit.cover,
-          ),
-        ),
-        SingleChildScrollView(
-          child: Container(
-            width: ScreenUtils.bodyWidth,
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: (getStatusBar ? ScreenUtils.statusBarHeight : 0.0) + ScreenUtils.getDesignHeight(paddingTop),
-                left: ScreenUtils.getDesignWidth(paddingLeft),
-                right: ScreenUtils.getDesignWidth(paddingRight),
-                bottom: ScreenUtils.getDesignWidth(paddingBottom),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: body != null && body != [] ? body : [],
-              ),
+    return Container(
+      color: BACKGROUND_COLOR,
+      child: SingleChildScrollView(
+        child: Container(
+          width: ScreenUtils.bodyWidth,
+          child: Padding(
+            padding: EdgeInsets.only(
+              top: (getStatusBar ? ScreenUtils.statusBarHeight : 0.0) + ScreenUtils.getDesignHeight(paddingTop),
+              left: ScreenUtils.getDesignWidth(paddingLeft),
+              right: ScreenUtils.getDesignWidth(paddingRight),
+              bottom: ScreenUtils.getDesignWidth(paddingBottom),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: body != null && body != [] ? body : [],
             ),
           ),
         ),
-      ],
+      ),
     );
   }
 }
