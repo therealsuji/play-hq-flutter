@@ -27,3 +27,6 @@ const String GOOGLE_LOGO = "assets/icons/google.svg";
 const String LOGO_IMAGE = "assets/images/logo.png";
 const String BACKGROUND_IMAGE = "assets/images/background.jpg";
 const String SMILE_EMOJI = "assets/images/smile_emoji.png";
+const String MY_SALES_CHARACTER_IMAGE = "assets/images/cyber-ct.png";
+const String CREATE_SALES_CHARACTER_IMAGE = "assets/images/cyber-ct.png";
+const String BUY_GAME_CHARACTER_IMAGE = "assets/images/cyber-ct.png";
