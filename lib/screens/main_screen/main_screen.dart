@@ -140,9 +140,7 @@ class _MainScreenState extends State<MainScreen> {
                       characterImage: BUY_GAME_CHARACTER_IMAGE,
                       charcterAlignment: Alignment.bottomLeft,
                       backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () {
-                        print("SOMTHING");
-                      },
+                      callback: () => Navigator.pushNamed(context, MY_SALES_ROUTE),
                     ),
                     Spacer(
                       flex: 1,
@@ -162,9 +160,7 @@ class _MainScreenState extends State<MainScreen> {
                       characterImage: BUY_GAME_CHARACTER_IMAGE,
                       charcterAlignment: Alignment.bottomRight,
                       backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () {
-                        print("SOMTHING");
-                      },
+                      callback: () => Navigator.pushNamed(context, BUY_GAMES_ROUTE),
                     ),
                   ],
                 ),
