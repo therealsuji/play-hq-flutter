@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/view_models/loading_overlay/loading_overlay_model.dart';
@@ -19,10 +22,19 @@ class LoadingWidget extends StatelessWidget {
           builder: (_, model, __) {
             return model.isLoading
                 ? Container(
-                    color: Colors.red.withOpacity(0.2),
-                    height: double.infinity,
-                    width: double.infinity,
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                      child: const ModalBarrier(dismissible: false, color:  Color.fromRGBO(0, 0, 0, 0.5),)),
+                  Center(
+                    child: Container(
+                        height: ScreenUtils.getDesignHeight(120),
+                        width: ScreenUtils.getDesignWidth(120),
+                        child: Lottie.asset('assets/animations/loading.json')),
                   )
+                ],
+              ),
+            )
                 : Container();
           },
         ),

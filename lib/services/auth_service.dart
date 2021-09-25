@@ -48,10 +48,12 @@ class AuthService {
       if(userData.user!.setupDone == true){
         SecureStorage.writeValue("jwtToken", userData.jwt);
         SecureStorage.writeValue("fcmToken", fcmToken);
+        locator<EventBus>().fire(LoadingEvent.hide());
         locator<NavigationService>().pushNamed(MAIN_SCREEN);
       }else{
         SecureStorage.writeValue("jwtToken", userData.jwt);
         SecureStorage.writeValue("fcmToken", fcmToken);
+        locator<EventBus>().fire(LoadingEvent.hide());
         locator<NavigationService>().pushNamed(MAIN_ONBOARDING);
       }
     } else {
@@ -65,9 +67,12 @@ class AuthService {
   }
 
   Future<String?> googleLogin() async {
+
     // make sure to log out user otherwise it will login using the previous account
     await _googleSignIn.signOut();
     await FirebaseAuth.instance.signOut();
+
+    locator<EventBus>().fire(LoadingEvent.show());
 
     final googleUser = await _googleSignIn.signIn();
     if (googleUser == null) return null;
