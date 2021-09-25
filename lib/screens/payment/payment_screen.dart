@@ -34,15 +34,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: BACKGROUND_COLOR,
+      appBar: CustomAppBarWidget(
+        title: "Final Touches",
+        showNotificationIcon: false,
+      ),
       body: CustomBody(
         paddingLeft: 0.0,
         paddingRight: 0.0,
         paddingTop: 0,
         body: [
-          CustomAppBarWidget(
-            title: "Final Touches",
-            showNotificationIcon: false,
-          ),
           Container(
             color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
             margin: EdgeInsets.only(top: 15.0),
