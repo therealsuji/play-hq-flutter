@@ -12,7 +12,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
   final double? paddingTop;
 
   @override
-  final Size preferredSize = const Size(0, 0);
+  final Size preferredSize = const Size(0, 80);
 
   CustomAppBarWidget(
       {required this.title, this.hasNotification = false, this.showNotificationIcon = true, this.paddingTop});
@@ -21,7 +21,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
   Widget build(BuildContext context) {
     return Padding(
       padding:
-          EdgeInsets.only(top: paddingTop ?? ScreenUtils.getDesignHeight(20), bottom: 15.0, left: 24.0, right: 24.0),
+          EdgeInsets.only(top: paddingTop ?? ScreenUtils.getDesignHeight(40), bottom: 15.0, left: 24.0, right: 24.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

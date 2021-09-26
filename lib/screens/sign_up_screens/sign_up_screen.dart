@@ -63,7 +63,6 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.GOOGLE),
                   child: Container(
                     margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(25)),
                     child: Container(

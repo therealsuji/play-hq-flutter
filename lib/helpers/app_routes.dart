@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
+import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
+import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
+import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
@@ -6,7 +10,6 @@ import 'package:play_hq/helpers/app_strings.dart';
 
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/view_models.dart';
-
 
 ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
@@ -70,6 +73,20 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           child: CreateSaleScreen(),
         ),
       );
+    case MY_SALES_ROUTE:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<MySalesModel>(
+          create: (context) => IMySalesModel(),
+          child: MySalesScreen(),
+        ),
+      );
+    case BUY_GAMES_ROUTE:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<BuyGamesModel>(
+          create: (context) => IBuyGamesModel(),
+          child: MySalesScreen(),
+        ),
+      );
     case SALE_DETAILS_ROUTE:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SaleDetailsModel>(
@@ -129,6 +146,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ChangeNotifierProvider<CustomMapModel>(create: (context) => ICustomMapModel()),
                 ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales)
               ], child: CustomMapScreen()));
+
+    case AUTH_SCREEN:
+      return MaterialPageRoute(builder: (context) => AuthenticationScreen());
+
+    case MAIN_ONBOARDING:
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
+              create: (context) => IMainOnbooardingModel(), child: MainOnboarding()));
 
     default:
       return MaterialPageRoute(

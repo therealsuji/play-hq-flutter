@@ -5,7 +5,7 @@ class ITabNavigationModel extends TabNavigationModel {
 
   @override
   void changeTab(int tabNumber) {
-    if (_currentPage == 2){
+    if (tabNumber == 2) {
       return;
     }
     _currentPage = tabNumber;
@@ -14,5 +14,4 @@ class ITabNavigationModel extends TabNavigationModel {
 
   @override
   int get currentPage => _currentPage;
-
 }

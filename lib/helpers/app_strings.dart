@@ -11,6 +11,8 @@ const String LANDING_PAGE_SCREEN = 'landingpage';
 const String CREATE_TRADE_SCREEN = 'createTrade';
 const String GAMES_FOR_SALE_ROUTE = 'gamesforsale';
 const String CREATE_SALE_ROUTE = 'createsale';
+const String MY_SALES_ROUTE = 'mySale';
+const String BUY_GAMES_ROUTE = 'buyGames';
 const String SALE_DETAILS_ROUTE = 'saleDetails';
 const String SETUP_PURCHASE_ACCOUNT_ROUTE = 'setupPurchase';
 const String SETUP_SALES_ACCOUNT_ROUTE = 'setupSales';
@@ -18,10 +20,11 @@ const String ORDER_TRACKING_SCREEN = 'orderTrackingScreen';
 const String PAYMENT_SCREEN = 'paymentScreen';
 const String CUSTOM_ADDRESS_SEARCH_SCREEN = 'customAddressSearchScreen';
 const String CUSTOM_MAP_SCREEN = 'customMapScreen';
+const String AUTH_SCREEN = 'authenticationScreen';
+const String MAIN_ONBOARDING = "onboarding";
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';
-
 
 //Custom Map Theme
 String mapStyle = '''

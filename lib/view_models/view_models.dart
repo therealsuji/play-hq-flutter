@@ -12,6 +12,8 @@ export 'package:play_hq/view_models/sale_details/sale_details_model.dart';
 export 'package:play_hq/view_models/search-game/search_game_model.dart';
 export 'package:play_hq/view_models/splash-screen/splash_screen_model.dart';
 export 'package:play_hq/view_models/loading_overlay/loading_overlay_model.dart';
+export 'package:play_hq/view_models/my_sales/i_my_sales_model.dart';
+export 'package:play_hq/view_models/buy_games/buy_games_model.dart';
 
 /// Implementation
 export 'package:play_hq/view_models/create_sale/i_create_sale_model.dart';
@@ -27,4 +29,5 @@ export 'package:play_hq/view_models/sale_details/i_sale_details.dart';
 export 'package:play_hq/view_models/search-game/i_search_game_model.dart';
 export 'package:play_hq/view_models/splash-screen/i_splash_screen.dart';
 export 'package:play_hq/view_models/loading_overlay/i_loading_overlay_model.dart';
-
+export 'package:play_hq/view_models/my_sales/my_sales_model.dart';
+export 'package:play_hq/view_models/buy_games/i_buy_games_model.dart';

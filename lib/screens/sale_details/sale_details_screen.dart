@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/sale_details/widgets/sale_details_bottom_sheet.dart';
 import 'package:play_hq/view_models/sale_details/sale_details_model.dart';
+import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
+import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
 class SaleDetailsScreen extends StatefulWidget {
@@ -23,117 +26,146 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomBody(
-        paddingLeft: 0,
-        paddingRight: 0,
-        body: [
-          SizedBox(
-            height: ScreenUtils.getDesignHeight(200.0),
-            child: PageView.builder(
-              controller: PageController(
-                viewportFraction: 0.9,
-                initialPage: 0,
-              ),
-              itemCount: gamesCOunt,
-              clipBehavior: Clip.none,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding:
-                      gamesCOunt == 1 ? EdgeInsets.zero : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0),
-                  child: _gameSlide(
-                      condition: "Mint Condtion",
-                      date: "12/03/2020",
-                      imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
-                      platform: "PS4",
-                      rating: "12",
-                      title: "Spider Man 3"),
-                );
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 24.0, right: 24.0, top: 50.0, bottom: 30.0),
-            child: CustomButton(
-              buttonText: "View Game Details",
-              height: ScreenUtils.getDesignHeight(47.0),
-              gradient: PRIMARY_GRADIENT,
-            ),
-          ),
-          Container(
-            color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
-            width: double.infinity,
-            height: ScreenUtils.getDesignHeight(50.0),
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text("Order Details", style: Theme.of(context).primaryTextTheme.headline4),
-                Text("#1325", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR)),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 25.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Price", style: Theme.of(context).primaryTextTheme.headline4),
-                    Text("4500 LKR", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: LIME_COLOR)),
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("Negotiable", style: Theme.of(context).primaryTextTheme.headline4),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: PRIMARY_COLOR,
-                          shape: BoxShape.circle,
+      backgroundColor: BACKGROUND_COLOR,
+      appBar: CustomAppBarWidget(
+        title: "Sale Details",
+        showNotificationIcon: false,
+      ),
+      body: Padding(
+        padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20.0)),
+        child: Column(
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: ScreenUtils.getDesignHeight(200.0),
+                          child: PageView.builder(
+                            controller: PageController(
+                              viewportFraction: 0.9,
+                              initialPage: 0,
+                            ),
+                            itemCount: gamesCOunt,
+                            clipBehavior: Clip.none,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: gamesCOunt == 1
+                                    ? EdgeInsets.zero
+                                    : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0),
+                                child: _gameSlide(
+                                    condition: "Mint Condtion",
+                                    date: "12/03/2020",
+                                    imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
+                                    platform: "PS4",
+                                    rating: "12",
+                                    title: "Spider Man 3"),
+                              );
+                            },
+                          ),
                         ),
-                        padding: const EdgeInsets.all(7),
-                        child: SvgPicture.asset(
-                          true ? TICK_MARK_ICON : CROSS_MARK_ICON,
-                          color: Colors.white,
-                          height: ScreenUtils.getDesignHeight(8.0),
+                        SizedBox(
+                          height: 50.0,
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 24.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 20.0),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text("Negotiable", style: Theme.of(context).primaryTextTheme.headline4),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: PRIMARY_COLOR,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      padding: const EdgeInsets.all(7),
+                                      child: SvgPicture.asset(
+                                        true ? TICK_MARK_ICON : CROSS_MARK_ICON,
+                                        color: Colors.white,
+                                        height: ScreenUtils.getDesignHeight(8.0),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Container(
+                                color: PRIMARY_COLOR,
+                                height: 2,
+                                margin: EdgeInsets.only(top: 15.0),
+                              ),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Text("Seller Location", style: Theme.of(context).primaryTextTheme.headline4),
+                              SizedBox(height: 5.0),
+                              Text("No 02 6th Lane Colombo 06 ",
+                                  style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: SUB_TEXT_COLOR)),
+                              SizedBox(
+                                height: 20.0,
+                              ),
+                              Container(
+                                color: PRIMARY_COLOR,
+                                height: 2,
+                              ),
+                              SizedBox(height: 25.0),
+                              Text("Seller Details", style: Theme.of(context).primaryTextTheme.headline4),
+                              SizedBox(height: 20.0),
+                              _sellerDetails(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(
-                  color: PRIMARY_COLOR,
-                  height: 2,
-                  margin: EdgeInsets.only(top: 15.0),
-                ),
-                SizedBox(height: 15.0),
-                Text("Seller Location", style: Theme.of(context).primaryTextTheme.headline4),
-                SizedBox(height: 5.0),
-                Text("No 02 6th Lane Colombo 06 ",
-                    style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: SUB_TEXT_COLOR)),
-                Container(
-                  color: PRIMARY_COLOR,
-                  height: 2,
-                  margin: EdgeInsets.only(top: 15.0),
-                ),
-                SizedBox(height: 15.0),
-                Text("Seller Details", style: Theme.of(context).primaryTextTheme.headline4),
-                _sellerDetails(),
-                CustomButton(
-                  buttonText: "Buy Game",
-                  onPressed: () => _openBottomSheet(),
-                  height: ScreenUtils.getDesignHeight(47.0),
-                  gradient: SECONDARY_GRADIENT,
-                ),
-              ],
+                  Positioned.fill(
+                    bottom: 0,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: double.infinity,
+                        color: Colors.black,
+                        height: ScreenUtils.getDesignHeight(70.0),
+                        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Total Price",
+                                  style: Theme.of(context).primaryTextTheme.headline5!.copyWith(fontFamily: Neusa),
+                                ),
+                                GradientText(text: "5200 LKR", gradient: GREEN_GRADIENT)
+                              ],
+                            ),
+                            CustomButton(
+                              buttonText: "Buy Now",
+                              onPressed: () => _openBottomSheet(),
+                              gradient: PRIMARY_GRADIENT,
+                              width: ScreenUtils.getDesignWidth(110.0),
+                              height: ScreenUtils.getDesignHeight(40.0),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -141,10 +173,9 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
   Widget _sellerDetails() {
     return Container(
       decoration: BoxDecoration(
-        color: Color(0xff111118).withOpacity(0.4),
+        color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
         borderRadius: BorderRadius.circular(6.0),
       ),
-      margin: EdgeInsets.symmetric(vertical: 24.0),
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 18.0),
         child: Row(
