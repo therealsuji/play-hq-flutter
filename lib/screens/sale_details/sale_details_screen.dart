@@ -7,6 +7,7 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/sale_details/widgets/sale_details_bottom_sheet.dart';
 import 'package:play_hq/view_models/sale_details/sale_details_model.dart';
+import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
@@ -26,8 +27,12 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,
+      appBar: CustomAppBarWidget(
+        title: "Sale Details",
+        showNotificationIcon: false,
+      ),
       body: Padding(
-        padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50.0)),
+        padding: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20.0)),
         child: Column(
           children: [
             Expanded(
