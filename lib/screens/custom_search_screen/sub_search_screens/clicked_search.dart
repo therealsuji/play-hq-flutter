@@ -34,20 +34,6 @@ class _ClickedSearchState extends State<ClickedSearch> {
               borderRadius: BorderRadius.circular(5.0)
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 15 , bottom: 15),
-            height: ScreenUtils.getDesignHeight(125),
-            width: ScreenUtils.bodyWidth,
-            color: Colors.red,
-          ),
-          Container(
-            height: 1.5,
-            width: ScreenUtils.bodyWidth,
-            decoration: BoxDecoration(
-                gradient: PRIMARY_GRADIENT,
-                borderRadius: BorderRadius.circular(5.0)
-            ),
-          ),
           Consumer<CustomSearchModel>(
             builder: (_, val, __) {
               switch (val.states) {

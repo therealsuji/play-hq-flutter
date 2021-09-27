@@ -14,7 +14,7 @@ class CustomLoadingBarrier extends StatelessWidget {
         child: Stack(
           children: <Widget>[
             Container(
-                child: const ModalBarrier(dismissible: false, color: Color.fromRGBO(0, 0, 0, 0.5),)),
+                child: const ModalBarrier(dismissible: false, color: Color.fromRGBO(0, 0, 0, 0),)),
             Center(
               child: Container(
                   child: Lottie.asset(path!)),

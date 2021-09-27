@@ -127,7 +127,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                             : false),
                     titleText: 'Release Dates',
                     textWidth: ScreenUtils.getDesignWidth(90),
-                    selectedText: val.releaseDateCount == 0 ? 'None Selected' : val.releaseDateCount.toString() + ' Selected' ,
+                    selectedText: val.releaseDateCount == null || val.releaseDateCount == 0 ? 'None Selected' : val.releaseDateCount.toString() + ' Selected' ,
                     widget: GridView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -273,11 +273,10 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
         child: Stack(
           children: [
             Container(
-                height: ScreenUtils.getDesignHeight(115),
                 width: ScreenUtils.getDesignWidth(100),
                 child: Image.asset(
                   image_path,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                 )),
           ],
         ),

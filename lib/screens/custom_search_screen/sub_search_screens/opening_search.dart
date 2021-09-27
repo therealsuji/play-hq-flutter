@@ -71,7 +71,7 @@ class _OpeningSearchState extends State<OpeningSearch> {
       },
       child: Container(
         decoration: BoxDecoration(
-          color: BACKGROUND_COLOR.withOpacity(0.5),
+          color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
           borderRadius: BorderRadius.circular(5.0),
         ),
         child: Container(

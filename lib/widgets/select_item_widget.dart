@@ -40,16 +40,20 @@ class SelectItem extends StatelessWidget {
             ),
           ),
           Center(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtils.getDesignWidth(11.0),
+            child: Container(
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Text(
+                  titleText!,
+                  style: Theme.of(context)
+                      .primaryTextTheme
+                      .headline2
+                      ?.copyWith(color: Colors.white, fontFamily: Neusa, fontSize: 18),
+                ),
               ),
-              child: Text(
-                titleText!,
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline2
-                    ?.copyWith(color: Colors.white, fontFamily: Neusa, fontSize: ScreenUtils.getDesignWidth(18.0)),
+              constraints: BoxConstraints(
+                maxWidth: ScreenUtils.getDesignWidth(80),
+                minWidth: ScreenUtils.getDesignHeight(30)
               ),
             ),
           )

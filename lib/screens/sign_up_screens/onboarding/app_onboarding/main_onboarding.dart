@@ -19,9 +19,6 @@ class MainOnboarding extends StatefulWidget {
   _MainOnboardingState createState() => _MainOnboardingState();
 }
 
-
-
-
 class _MainOnboardingState extends State<MainOnboarding> {
   @override
   Widget build(BuildContext context) {
@@ -33,7 +30,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
             Column(
               children: [
                 Expanded(
-                  flex: 5,
+                  flex: 7,
                   child: Container(
                     child: PageView.builder(
                         itemCount: onboardingData.length,
@@ -47,7 +44,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 Consumer<MainOnboardingModel>(
                   builder: (context , value , child){
                     return  Container(
-                      margin: EdgeInsets.only(bottom: 40 , left: 24 , right: 24),
+                      margin: EdgeInsets.only(bottom: 20 , left: 24 , right: 24),
                       child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE),) : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -175,7 +172,6 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20) , left: 24 , right: 24),
                 child: CustomTextWidget(
                   width: ScreenUtils.bodyWidth,
-                  height: ScreenUtils.getDesignHeight(55),
                   text: description,
                   style: TextStyle(fontSize: 14 , color: SUB_TEXT_COLOR , fontFamily: CircularBook , fontWeight: FontWeight.w500),
                   align: TextAlign.center,
