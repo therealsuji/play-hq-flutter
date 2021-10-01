@@ -10,6 +10,7 @@ import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:provider/provider.dart';
 
 class MainOnboarding extends StatefulWidget {
@@ -62,7 +63,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                               ),
                             ),
                           ),
-                          _dotIndicator(value.currentPage),
+                          DottedIndicatorWidget(currentPage: value.currentPage,),
                           GestureDetector(
                             child: Container(
                               alignment: Alignment.topRight,
@@ -96,57 +97,6 @@ class _MainOnboardingState extends State<MainOnboarding> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _dotIndicator(int currentPage){
-    return Container(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            margin: EdgeInsets.only(right: 4),
-            height: ScreenUtils.getDesignHeight(10),
-            width: currentPage == 0 ? ScreenUtils.getDesignWidth(25) : ScreenUtils.getDesignWidth(10),
-            decoration: BoxDecoration(
-              shape: currentPage == 0 ? BoxShape.rectangle : BoxShape.circle,
-              borderRadius: currentPage == 0 ? BorderRadius.circular(100) : null,
-              gradient: currentPage == 0 ? PRIMARY_GRADIENT : null,
-              color: currentPage == 0 ? null : SUB_TEXT_COLOR
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 4),
-            height: ScreenUtils.getDesignHeight(10),
-            width: currentPage == 1 ? ScreenUtils.getDesignWidth(25) : ScreenUtils.getDesignWidth(10),
-            decoration: BoxDecoration(
-                shape: currentPage == 1 ? BoxShape.rectangle : BoxShape.circle,
-                borderRadius: currentPage == 1 ? BorderRadius.circular(100) : null,
-                gradient: currentPage == 1 ? PRIMARY_GRADIENT : null,
-                color: currentPage == 1 ? null : SUB_TEXT_COLOR
-            ),
-          ),Container(
-            margin: EdgeInsets.only(right: 4),
-            height: ScreenUtils.getDesignHeight(10),
-            width: currentPage == 2 ? ScreenUtils.getDesignWidth(25) : ScreenUtils.getDesignWidth(10),
-            decoration: BoxDecoration(
-                shape: currentPage == 2 ? BoxShape.rectangle : BoxShape.circle,
-                borderRadius: currentPage == 2 ? BorderRadius.circular(100) : null,
-                gradient: currentPage == 2 ? PRIMARY_GRADIENT : null,
-                color: currentPage == 2 ? null : SUB_TEXT_COLOR
-            ),
-          ),Container(
-            height: ScreenUtils.getDesignHeight(10),
-            width: currentPage == 3 ? ScreenUtils.getDesignWidth(25) : ScreenUtils.getDesignWidth(10),
-            decoration: BoxDecoration(
-                shape: currentPage == 3 ? BoxShape.rectangle : BoxShape.circle,
-                borderRadius: currentPage == 3 ? BorderRadius.circular(100) : null,
-                gradient: currentPage == 3 ? PRIMARY_GRADIENT : null,
-                color: currentPage == 3 ? null : SUB_TEXT_COLOR
-            ),
-          ),
-        ],
       ),
     );
   }

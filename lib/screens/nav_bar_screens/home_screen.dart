@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:play_hq/widgets/rasied_gradient_button_widget.dart';
 
@@ -212,23 +213,35 @@ class _HomeScreenState extends State<HomeScreen> {
                       items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
                     ),
                   ),
-                  Center(
-                    child: DotsIndicator(
-                      dotsCount: temp.length,
-                      position: _currentIndex,
-                      decorator: DotsDecorator(
-                        color: SUB_TEXT_COLOR,
-                        activeColor: Colors.pinkAccent,
-                        spacing: EdgeInsets.only(
-                          top: ScreenUtils.getDesignHeight(10.0),
-                          right: ScreenUtils.getDesignWidth(4.0),
-                        ),
-                        size: const Size.square(10.0),
-                        activeSize: const Size(18.0, 9.0),
-                        activeShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
-                      ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: ScreenUtils.getDesignHeight(10.0),
                     ),
-                  )
+                    child: DottedIndicatorWidget(
+                      currentPage: _currentIndex.toInt(),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: ScreenUtils.getDesignHeight(30.0),
+                      left: ScreenUtils.getDesignWidth(24.0),
+                      right: ScreenUtils.getDesignWidth(24.0),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "From your Wishlist",
+                          style: Theme.of(context).primaryTextTheme.headline4,
+                        ),
+                        GradientText(
+                          text: "View All",
+                          gradient: PRIMARY_GRADIENT,
+                          style: Theme.of(context).primaryTextTheme.headline4,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
