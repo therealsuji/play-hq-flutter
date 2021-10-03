@@ -18,66 +18,69 @@ class _MySalesScreenState extends State<MySalesScreen> {
   var gamesCOunt = 2;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: BACKGROUND_COLOR,
-      appBar: CustomAppBarWidget(
-        title: "My Sales",
-        showNotificationIcon: true,
-      ),
-      body: Column(
-        children: [
-          Container(
-            color: MAIN_CONTAINER_COLOR,
-            padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 14.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Sale Items",
-                  style: Theme.of(context).primaryTextTheme.headline5,
-                ),
-                CustomButton(
-                  buttonText: "Filter",
-                  gradient: PRIMARY_GRADIENT,
-                  width: ScreenUtils.getDesignWidth(90.0),
-                  height: ScreenUtils.getDesignHeight(35.0),
-                )
-              ],
-            ),
-          ),
-          Flexible(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: PageView.builder(
-                    controller: PageController(
-                      viewportFraction: 0.9,
-                      initialPage: 0,
-                    ),
-                    itemCount: gamesCOunt,
-                    clipBehavior: Clip.none,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: gamesCOunt == 1
-                            ? EdgeInsets.zero
-                            : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0, top: 15.0),
-                        child: _gameSlide(
-                            condition: "Mint Condtion",
-                            price: "LKR 2000",
-                            imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
-                            platform: "PS4",
-                            offers: "12",
-                            title: "Legend of Zeld: Breath of the Wild"),
-                      );
-                    },
+    return SafeArea(
+      bottom: true,
+      child: Scaffold(
+        backgroundColor: BACKGROUND_COLOR,
+        appBar: CustomAppBarWidget(
+          title: "My Sales",
+          showNotificationIcon: true,
+        ),
+        body: Column(
+          children: [
+            Container(
+              color: MAIN_CONTAINER_COLOR,
+              padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 14.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sale Items",
+                    style: Theme.of(context).primaryTextTheme.headline5,
                   ),
-                ),
-                Flexible(child: CustomButton(buttonText: "Delete All Sales"))
-              ],
+                  CustomButton(
+                    buttonText: "Filter",
+                    gradient: PRIMARY_GRADIENT,
+                    width: ScreenUtils.getDesignWidth(90.0),
+                    height: ScreenUtils.getDesignHeight(35.0),
+                  )
+                ],
+              ),
             ),
-          )
-        ],
+            Flexible(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: PageView.builder(
+                      controller: PageController(
+                        viewportFraction: 0.9,
+                        initialPage: 0,
+                      ),
+                      itemCount: gamesCOunt,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: gamesCOunt == 1
+                              ? EdgeInsets.zero
+                              : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0, top: 15.0),
+                          child: _gameSlide(
+                              condition: "Mint Condtion",
+                              price: "LKR 2000",
+                              imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
+                              platform: "PS4",
+                              offers: "12",
+                              title: "Legend of Zeld: Breath of the Wild"),
+                        );
+                      },
+                    ),
+                  ),
+                  Flexible(child: CustomButton(buttonText: "Delete All Sales"))
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
