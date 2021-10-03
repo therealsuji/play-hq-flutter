@@ -32,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Positioned.fill(
-              top: ScreenUtils.getDesignHeight(268.0),
+              top: ScreenUtils.getDesignHeight(250.0 + ScreenUtils.statusBarHeight),
               child: Container(
                 decoration: BoxDecoration(
                   color: BACKGROUND_COLOR,
