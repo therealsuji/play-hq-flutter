@@ -5,6 +5,7 @@ import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:play_hq/widgets/gradient_text_widget.dart';
 
 class MySalesScreen extends StatefulWidget {
   const MySalesScreen({Key? key}) : super(key: key);
@@ -23,10 +24,8 @@ class _MySalesScreenState extends State<MySalesScreen> {
         title: "My Sales",
         showNotificationIcon: true,
       ),
-      body: CustomBody(
-        paddingLeft: 0.0,
-        paddingRight: 0.0,
-        body: [
+      body: Column(
+        children: [
           Container(
             color: MAIN_CONTAINER_COLOR,
             padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 14.0),
@@ -46,29 +45,36 @@ class _MySalesScreenState extends State<MySalesScreen> {
               ],
             ),
           ),
-          SizedBox(
-            height: ScreenUtils.getDesignHeight(335.0),
-            child: PageView.builder(
-              controller: PageController(
-                viewportFraction: 0.9,
-                initialPage: 0,
-              ),
-              itemCount: gamesCOunt,
-              clipBehavior: Clip.none,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: gamesCOunt == 1
-                      ? EdgeInsets.zero
-                      : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0, top: 15.0),
-                  child: _gameSlide(
-                      condition: "Mint Condtion",
-                      price: "LKR 2000",
-                      imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
-                      platform: "PS4",
-                      offers: "12",
-                      title: "Legend of Zeld: Breath of the Wild"),
-                );
-              },
+          Flexible(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  child: PageView.builder(
+                    controller: PageController(
+                      viewportFraction: 0.9,
+                      initialPage: 0,
+                    ),
+                    itemCount: gamesCOunt,
+                    clipBehavior: Clip.none,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: gamesCOunt == 1
+                            ? EdgeInsets.zero
+                            : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0, top: 15.0),
+                        child: _gameSlide(
+                            condition: "Mint Condtion",
+                            price: "LKR 2000",
+                            imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
+                            platform: "PS4",
+                            offers: "12",
+                            title: "Legend of Zeld: Breath of the Wild"),
+                      );
+                    },
+                  ),
+                ),
+                Flexible(child: CustomButton(buttonText: "Delete All Sales"))
+              ],
             ),
           )
         ],
@@ -131,9 +137,11 @@ class _MySalesScreenState extends State<MySalesScreen> {
                                 style: Theme.of(context).primaryTextTheme.headline4,
                               ),
                             ),
-                            Text(
+                            const SizedBox(height: 3.0),
+                            GradientText(
                               condition,
-                              style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: PRIMARY_COLOR),
+                              gradient: PRIMARY_GRADIENT,
+                              style: Theme.of(context).primaryTextTheme.headline6,
                             ),
                           ],
                         ),
@@ -144,39 +152,81 @@ class _MySalesScreenState extends State<MySalesScreen> {
               ],
             ),
           ),
-          SizedBox(height: ScreenUtils.getDesignHeight(10.0)),
-          Text(
-            title,
-            style: Theme.of(context).primaryTextTheme.headline6,
-          ),
-          SizedBox(height: ScreenUtils.getDesignHeight(10.0)),
+          SizedBox(height: 15.0),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                price,
+                "Purchase Offers",
                 style: Theme.of(context).primaryTextTheme.headline6,
               ),
-              SizedBox(width: ScreenUtils.getDesignWidth(10.0)),
+              SizedBox(width: 10.0),
+              GradientText(
+                offers + " Offers",
+                gradient: PRIMARY_GRADIENT,
+                style: Theme.of(context).primaryTextTheme.headline6,
+              ),
+            ],
+          ),
+          SizedBox(height: 10.0),
+          Container(
+            color: PRIMARY_COLOR,
+            height: 2,
+          ),
+          SizedBox(height: 15.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "Plaform",
+                style: Theme.of(context).primaryTextTheme.headline6,
+              ),
+              SizedBox(width: 10.0),
               Text(
                 platform,
-                style: Theme.of(context).primaryTextTheme.headline6,
+                style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: SUB_TEXT_COLOR),
               ),
             ],
           ),
-          SizedBox(height: ScreenUtils.getDesignHeight(10.0)),
+          SizedBox(height: 15.0),
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                condition,
+                "Price",
                 style: Theme.of(context).primaryTextTheme.headline6,
               ),
-              SizedBox(width: ScreenUtils.getDesignWidth(10.0)),
+              SizedBox(width: 10.0),
               Text(
-                offers,
-                style: Theme.of(context).primaryTextTheme.headline6,
+                price,
+                style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: SUB_TEXT_COLOR),
               ),
             ],
           ),
+          Container(
+            color: SUB_TEXT_COLOR,
+            height: 2,
+          ),
+          SizedBox(height: 15.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              CustomButton(
+                onPressed: () {},
+                buttonText: "Delete Sale",
+                width: ScreenUtils.getDesignWidth(95.0),
+                height: ScreenUtils.getDesignHeight(35.0),
+                buttonColor: Colors.transparent,
+              ),
+              CustomButton(
+                buttonText: "View Details",
+                onPressed: () {},
+                width: ScreenUtils.getDesignWidth(95.0),
+                height: ScreenUtils.getDesignHeight(35.0),
+                gradient: PRIMARY_GRADIENT,
+              )
+            ],
+          )
         ],
       ),
     );
