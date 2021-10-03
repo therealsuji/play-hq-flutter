@@ -30,6 +30,8 @@ class APIConfig {
 
   static String createSale = '$_baseUrl' + "/sell-games";
 
+  static String setupPurchase = '$_baseUrl' + "/user/set-preferences";
+
   static String getGenres = '$_rawgAPI' +
       '/genres?ordering=&page=1&page_size=30&' +
       'key=$_RAWG_API_KEY';

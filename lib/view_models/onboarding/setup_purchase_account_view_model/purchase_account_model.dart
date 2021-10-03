@@ -18,23 +18,21 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   List<int> get selectedGenres;
 
-  void addSelectedGenres(index);
+  void addSelectedGenres(index , Map<String, dynamic> genre);
 
-  List<int> get selectedPlaystationPlatforms;
+  List<int> get selectedPlatforms;
 
-  List<int> get selectedXboxPlatforms;
-
-  List<int> get selectedNintendoPlatforms;
-
-  void addSelectedPlatforms(int index,  PlatformSelection platformSelection);
+  void addSelectedPlatforms(int index,  Map<String, dynamic> platform);
 
   List<int> get selectedReleaseDates;
 
-  void addReleaseDates(int index , String? releaseDate);
+  void addReleaseDates(int index , Map<String, dynamic> releaseDates);
 
   List<GameDetails> get selectedGameList;
 
   void addSelectedGame(GameDetails game);
+
+  void performAPIRequest();
 
   int? get genreCount;
 

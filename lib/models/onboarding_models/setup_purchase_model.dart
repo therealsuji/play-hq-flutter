@@ -1,70 +1,40 @@
+class SetupPurchaseModel {
+  List<int>? genres;
+  List<ReleaseDate>? releaseDates;
+  List<int>? platforms;
 
+  SetupPurchaseModel({this.genres, this.releaseDates, this.platforms});
 
-class SetupPurchaseModel{
+  factory SetupPurchaseModel.fromJson(Map<String, dynamic> json) => SetupPurchaseModel(
+    genres: List<int>.from(json["genres"].map((x) => x)),
+    releaseDates: List<ReleaseDate>.from(json["release_dates"].map((x) => ReleaseDate.fromJson(x))),
+    platforms: List<int>.from(json["platforms"].map((x) => x)),
+  );
 
-  List<GenreModel>? _genreList;
-  List<ReleaseDatesModel>? _releaseDateList;
-  List<PlatformModel>? _platformList;
-
-
-  SetupPurchaseModel.fromJson(Map<String, dynamic> json) {
-    _genreList = json['genres'] == null
-        ? null
-        : List<GenreModel>.from(json['genres'].map((genres) => GenreModel.fromJson(genres)));
-
-    _releaseDateList = json['releaseDates'] == null
-        ? null
-        : List<ReleaseDatesModel>.from(json['releaseDates'].map((dates) => ReleaseDatesModel.fromJson(dates)));
-
-    _platformList = json['platforms'] == null
-        ? null
-        : List<PlatformModel>.from(json['platforms'].map((dates) => PlatformModel.fromJson(dates)));
-  }
-
-  List<GenreModel>? get genres => _genreList;
-
-  List<ReleaseDatesModel>? get releaseDates => _releaseDateList;
-
-  List<PlatformModel>? get platforms => _platformList;
+  Map<String, dynamic> toJson() => {
+    "genres": List<dynamic>.from(genres!.map((x) => x)),
+    "release_dates": List<dynamic>.from(releaseDates!.map((x) => x.toJson())),
+    "platforms": List<dynamic>.from(platforms!.map((x) => x)),
+  };
 
 }
 
-class GenreModel {
+class ReleaseDate {
+  ReleaseDate({
+    this.fromDate,
+    this.toDate,
+  });
 
-  int? id;
-  String? name;
+  String? fromDate;
+  String? toDate;
 
-  GenreModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'] == null ? null : json['name'];
-    id = json['api_id'] == null ? null : json['api_id'];
-  }
+  factory ReleaseDate.fromJson(Map<String, dynamic> json) => ReleaseDate(
+    fromDate: json["from_date"],
+    toDate: json["to_date"],
+  );
 
-  GenreModel({this.id , this.name});
-
-}
-
-class ReleaseDatesModel {
-
-  String? id;
-
-  ReleaseDatesModel.fromJson(Map<String,dynamic> json){
-    id = json['id'] == null ? null : json['id'];
-  }
-
-  ReleaseDatesModel({this.id});
-
-}
-
-class PlatformModel{
-
-  int? id;
-  String? name;
-
-  PlatformModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'] == null ? null : json['name'];
-    id = json['api_id'] == null ? null : json['api_id'];
-  }
-
-  PlatformModel({this.id , this.name});
-
+  Map<String, dynamic> toJson() => {
+    "from_date": fromDate,
+    "to_date": toDate,
+  };
 }
