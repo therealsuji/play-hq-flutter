@@ -13,26 +13,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   CarouselController _carouselController = CarouselController();
 
   double _currentIndex = 0.0;
 
   @override
   Widget build(BuildContext context) {
-
     List<String> temp = ["assets/images/stack_temp.png", "assets/images/cyber-ct.png", "assets/images/cyber-ct.png"];
 
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Container(
-              color: PRIMARY_COLOR,
-              height: ScreenUtils.totalBodyHeight - ScreenUtils.statusBarHeight,
+            Positioned.fill(
+              child: Container(
+                color: PRIMARY_COLOR,
+              ),
             ),
             Positioned.fill(
-              top: ScreenUtils.getDesignHeight(315.0),
+              top: ScreenUtils.getDesignHeight(268.0),
               child: Container(
                 decoration: BoxDecoration(
                   color: BACKGROUND_COLOR,
@@ -207,8 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           setState(() {
                             _currentIndex = index.toDouble();
                           });
-                        }
-                      ),
+                          }),
                       items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
                     ),
                   ),
