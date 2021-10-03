@@ -9,34 +9,38 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   bool _currentPlatformState = false;
   bool _currentReleaseDateState = false;
 
+
   int? _genreCount;
   int _platformCount = 0;
   int? _releaseDateCount;
 
-  ReleaseDatesModel _releaseDates = ReleaseDatesModel();
-  List<ReleaseDatesModel> _releaseDatesList = [];
+  // Lists for the API call
+  List<int> _genreList = [];
+  List<int> _platformList = [];
+  List<ReleaseDates> _releaseDateList = [];
 
   List<int> _selectedGenres = [];
-  List<int> _selectedPlaystationPlatforms = [];
-  List<int> _selectedXboxPlatforms = [];
-  List<int> _selectedNintendoPlatforms = [];
+  List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
   List<GameDetails> _selectedGames = [];
 
   // TODO : This is the Genre Selection Methods
   @override
-  void addSelectedGenres(index) {
+  void addSelectedGenres(index , Map<String , dynamic> genre) {
     if(_selectedGenres.contains(index)) {
       _selectedGenres.remove(index);
+      _genreList.remove(genre['id']);
     }else{
       if(_selectedGenres.length >= 5){
         return;
       }else{
         _selectedGenres.add(index);
+        _genreList.add(genre['id']);
       }
     }
     _genreCount = _selectedGenres.length;
     notifyListeners();
+    print("Selected Genres " + _genreList.toString());
   }
 
   @override
@@ -63,51 +67,22 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   bool get currentPlatFormState => _currentPlatformState;
 
   @override
-  void addSelectedPlatforms(int index , PlatformSelection platformSelection) {
-      switch (platformSelection) {
-        case PlatformSelection.PlayStation:
-          if(_selectedPlaystationPlatforms.contains(index)) {
-            _selectedPlaystationPlatforms.remove(index);
-          }else{
-            if(_platformCount <=4){
-              _selectedPlaystationPlatforms.add(index);
-            }else{
-              return;
-            }
-          }
-          break;
-        case PlatformSelection.Xbox:
-          if(_selectedXboxPlatforms.contains(index)) {
-            _selectedXboxPlatforms.remove(index);
-          }else{
-            if(_platformCount <= 4){
-              _selectedXboxPlatforms.add(index);
-            }else{
-              return;
-            }
-          }
-          break;
-        case PlatformSelection.Nintendo:
-          if(_selectedNintendoPlatforms.contains(index)) {
-            _selectedNintendoPlatforms.remove(index);
-          }else{
-            if(_platformCount <= 4){
-              _selectedNintendoPlatforms.add(index);
-            }else{
-              return;
-            }
-          }
-          break;
-        default:
-          return;
+  void addSelectedPlatforms(int index , Map<String , dynamic> platform) {
+    if(_selectedPlatforms.contains(index)) {
+      _selectedPlatforms.remove(index);
+      _platformList.remove(platform['id']);
+    }else{
+      if(_selectedPlatforms.length >= 3) {
+        return;
       }
-    _platformCount = _selectedPlaystationPlatforms.length + _selectedXboxPlatforms.length + _selectedNintendoPlatforms.length;
+      else{
+        _selectedPlatforms.add(index);
+        _platformList.add(platform['id']);
+      }
+    }
     notifyListeners();
+    _platformCount = _platformList.length;
   }
-
-  @override
-  // TODO: implement selectedPlatforms
-  List<int> get selectedPlaystationPlatforms => _selectedPlaystationPlatforms;
 
   @override
   void changeReleaseDateState(bool state) {
@@ -120,18 +95,22 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   bool get currentReleaseDateState => _currentReleaseDateState;
 
   @override
-  void addReleaseDates(int index , String? releaseDates) {
-    _releaseDates.id = index.toString();
+  void addReleaseDates(int index  , Map<String , dynamic> releaseDate) {
+
+    ReleaseDates dates = ReleaseDates(
+        start_date: releaseDate['start'],
+        end_date: releaseDate['end']
+    );
 
     if(_selectedReleaseDates.contains(index)) {
       _selectedReleaseDates.remove(index);
-      _releaseDatesList.remove(_releaseDates);
+      _releaseDateList.removeWhere((element) => element.start_date == dates.start_date);
     }else{
       _selectedReleaseDates.add(index);
-      _releaseDatesList.add(_releaseDates);
+      _releaseDateList.add(dates);
     }
     notifyListeners();
-    _releaseDateCount = _releaseDatesList.length;
+    _releaseDateCount = _selectedReleaseDates.length;
   }
 
   @override
@@ -153,17 +132,12 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   // TODO: implement totalPlatformCount
   int get totalPlatformCount => _platformCount;
 
-
-  @override
-  // TODO: implement selectedNintendoPlatforms
-  List<int> get selectedNintendoPlatforms => _selectedNintendoPlatforms;
-
-  @override
-  // TODO: implement selectedXboxPlatforms
-  List<int> get selectedXboxPlatforms => _selectedXboxPlatforms;
-
   @override
   // TODO: implement releaseDateCount
   int? get releaseDateCount => _releaseDateCount;
+
+  @override
+  // TODO: implement selectedPlatforms
+  List<int> get selectedPlatforms => _selectedPlatforms;
 
 }

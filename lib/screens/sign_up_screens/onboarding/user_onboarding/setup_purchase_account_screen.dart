@@ -80,37 +80,34 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                         ? Icons.keyboard_arrow_down_rounded
                         : Icons.keyboard_arrow_up_rounded,
                     state: val.currentPlatFormState,
-                    onTap: () {
-                      Provider.of<SetupPurchaseAccountModel>(context, listen: false).changePlatformState(
-                          Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentPlatFormState == false
-                              ? true
-                              : false);
-                    },
-                    titleText: 'Platform',
-                    selectedText: val.totalPlatformCount == null || val.totalPlatformCount == 0
-                        ? 'None Selected'
-                        : val.totalPlatformCount == 5
-                        ? 'Max Selected'
-                        : val.totalPlatformCount.toString() + ' Selected',
+                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).changePlatformState(
+                        Provider.of<SetupPurchaseAccountModel>(context, listen: false).currentPlatFormState == false
+                            ? true
+                            : false),
+                    titleText: 'Platforms',
                     textWidth: ScreenUtils.getDesignWidth(55),
-                    widget: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _platformItem(
-                              'assets/images/playstation.png',
-                                  () => showPlatformBottomSheet('Select your PlayStation Console', playStationPlatforms,
-                                  PlatformSelection.PlayStation)),
-                          _platformItem(
-                              'assets/images/nintendo.png',
-                                  () => showPlatformBottomSheet(
-                                  'Select your Nintendo Console', xboxPlatforms, PlatformSelection.Xbox)),
-                          _platformItem(
-                              'assets/images/xbox.png',
-                                  () => showPlatformBottomSheet(
-                                  'Select your Xbox Console', nintendoConsoles, PlatformSelection.Nintendo)),
-                        ],
+                    selectedText: val.totalPlatformCount == null || val.totalPlatformCount == 0 ? 'None Selected' : val.totalPlatformCount == 3 ? 'Max Selected' : val.totalPlatformCount.toString() + ' Selected' ,
+                    widget: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(0.0),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 15.0,
+                        crossAxisSpacing: 15.0,
+                        mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
                       ),
+                      itemCount: platforms.length,
+                      itemBuilder: (context , index){
+                        return GestureDetector(
+                          onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                              .addSelectedPlatforms(platforms.indexOf(platforms[index]) , platforms[index]),
+                          child: CustomSelectingWidget(
+                            titleText:platforms[index]['name'],
+                            active: val.selectedPlatforms.contains(platforms.indexOf(platforms[index])),
+                          ),
+                        );
+                      },
                     ));
               },
             ),
@@ -142,7 +139,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                       itemBuilder: (context , index){
                         return GestureDetector(
                           onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                              .addReleaseDates(releaseDates.indexOf(releaseDates[index]), releaseDates[index]['name']),
+                              .addReleaseDates(releaseDates.indexOf(releaseDates[index]) , releaseDates[index]),
                           child: CustomSelectingWidget(
                             titleText:releaseDates[index]['name'],
                             active: val.selectedReleaseDates.contains(releaseDates.indexOf(releaseDates[index])),
@@ -197,7 +194,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
     );
   }
 
-  showPlatformBottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) async {
+  /*showPlatformBottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) async {
     SetupPurchaseAccountModel model = Provider.of<SetupPurchaseAccountModel>(context, listen: false);
     showModalBottomSheet(
         context: context,
@@ -210,7 +207,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                 child: _bottomSheet(title, list, platform)),
           );
         });
-  }
+  }*/
 
   Widget _wishlistGames() {
     final model = Provider.of<SetupPurchaseAccountModel>(context);
@@ -299,7 +296,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
           itemCount: genreList.length,
           itemBuilder: (BuildContext context, index) {
             return GestureDetector(
-              onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).addSelectedGenres(index),
+              onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false).addSelectedGenres(index , genreList[index]),
               child: Consumer<SetupPurchaseAccountModel>(builder: (_, val, __) {
                 return SelectItem(
                   isSelected: val.selectedGenres.contains(index),
@@ -312,7 +309,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
     );
   }
 
-  Widget _bottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) {
+  /*Widget _bottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) {
     return Container(
       margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
       child: Column(
@@ -341,7 +338,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                   itemBuilder: (context , index){
                     return GestureDetector(
                       onTap: () {
-                        val.addSelectedPlatforms(list.indexOf(list[index]), platform);
+                        val.addSelectedPlatforms(list.indexOf(list[index]), platform , list[index]);
                       },
                       child: CustomSelectingWidget(
                           titleText: list[index]['name'],
@@ -367,7 +364,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
         ],
       ),
     );
-  }
+  }*/
 
   Future<void> customAlert({required BuildContext context, String? title, String? contentBody}) {
     return showGeneralDialog<void>(

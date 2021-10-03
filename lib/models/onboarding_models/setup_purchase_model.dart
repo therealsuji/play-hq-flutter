@@ -1,70 +1,41 @@
+class SetupPurchaseModel {
+  List<int>? genreList;
+  List<ReleaseDates>? releaseDateList;
+  List<int>? platformList;
 
-
-class SetupPurchaseModel{
-
-  List<GenreModel>? _genreList;
-  List<ReleaseDatesModel>? _releaseDateList;
-  List<PlatformModel>? _platformList;
-
+  SetupPurchaseModel({this.genreList, this.releaseDateList, this.platformList});
 
   SetupPurchaseModel.fromJson(Map<String, dynamic> json) {
-    _genreList = json['genres'] == null
-        ? null
-        : List<GenreModel>.from(json['genres'].map((genres) => GenreModel.fromJson(genres)));
+    genreList = json['genres'] == null ? null : List<int>.from(json['genres']);
 
-    _releaseDateList = json['releaseDates'] == null
+    releaseDateList = json['releaseDates'] == null
         ? null
-        : List<ReleaseDatesModel>.from(json['releaseDates'].map((dates) => ReleaseDatesModel.fromJson(dates)));
+        : List<ReleaseDates>.from(
+            json['releaseDates'].map((x) => ReleaseDates.fromJson(x)));
 
-    _platformList = json['platforms'] == null
-        ? null
-        : List<PlatformModel>.from(json['platforms'].map((dates) => PlatformModel.fromJson(dates)));
+    platformList =
+        json['platforms'] == null ? null : List<int>.from(json['platforms']);
   }
 
-  List<GenreModel>? get genres => _genreList;
+  List<int>? get genres => genreList;
 
-  List<ReleaseDatesModel>? get releaseDates => _releaseDateList;
+  List<ReleaseDates>? get releaseDates => releaseDateList;
 
-  List<PlatformModel>? get platforms => _platformList;
-
+  List<int>? get platforms => platformList;
 }
 
-class GenreModel {
+class ReleaseDates {
+  String? start_date;
+  String? end_date;
 
-  int? id;
-  String? name;
+  ReleaseDates({this.start_date, this.end_date});
 
-  GenreModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'] == null ? null : json['name'];
-    id = json['api_id'] == null ? null : json['api_id'];
+  ReleaseDates.fromJson(Map<String, dynamic> json) {
+    start_date = json['from_date'] ?? "";
+    end_date = json['to_date'] ?? "";
   }
 
-  GenreModel({this.id , this.name});
+  String? get start_Date => start_date;
 
-}
-
-class ReleaseDatesModel {
-
-  String? id;
-
-  ReleaseDatesModel.fromJson(Map<String,dynamic> json){
-    id = json['id'] == null ? null : json['id'];
-  }
-
-  ReleaseDatesModel({this.id});
-
-}
-
-class PlatformModel{
-
-  int? id;
-  String? name;
-
-  PlatformModel.fromJson(Map<String, dynamic> json) {
-    name = json['name'] == null ? null : json['name'];
-    id = json['api_id'] == null ? null : json['api_id'];
-  }
-
-  PlatformModel({this.id , this.name});
-
+  String? get end_Date => end_date;
 }
