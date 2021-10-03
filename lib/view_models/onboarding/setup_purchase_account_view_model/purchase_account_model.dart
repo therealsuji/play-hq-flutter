@@ -32,6 +32,8 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   void addSelectedGame(GameDetails game);
 
+  void performAPIRequest();
+
   int? get genreCount;
 
   int get totalPlatformCount;

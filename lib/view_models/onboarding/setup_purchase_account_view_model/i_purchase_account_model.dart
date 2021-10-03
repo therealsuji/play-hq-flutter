@@ -1,7 +1,14 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/helpers/networks/app_network.dart';
+import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/onboarding_models/setup_purchase_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
+
+import '../../../service_locator.dart';
 
 class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
 
@@ -17,7 +24,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   // Lists for the API call
   List<int> _genreList = [];
   List<int> _platformList = [];
-  List<ReleaseDates> _releaseDateList = [];
+  List<ReleaseDate> _releaseDateList = [];
 
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
@@ -97,14 +104,14 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   @override
   void addReleaseDates(int index  , Map<String , dynamic> releaseDate) {
 
-    ReleaseDates dates = ReleaseDates(
-        start_date: releaseDate['start'],
-        end_date: releaseDate['end']
+    ReleaseDate dates = ReleaseDate(
+        fromDate: releaseDate['start'],
+        toDate: releaseDate['end']
     );
 
     if(_selectedReleaseDates.contains(index)) {
       _selectedReleaseDates.remove(index);
-      _releaseDateList.removeWhere((element) => element.start_date == dates.start_date);
+      _releaseDateList.removeWhere((element) => element.fromDate == dates.fromDate);
     }else{
       _selectedReleaseDates.add(index);
       _releaseDateList.add(dates);
@@ -140,4 +147,22 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   // TODO: implement selectedPlatforms
   List<int> get selectedPlatforms => _selectedPlatforms;
 
+  @override
+  void performAPIRequest() async{
+    locator<EventBus>().fire(LoadingEvent.show());
+    SetupPurchaseModel model = SetupPurchaseModel(
+      genres: _genreList,
+      platforms:  _platformList,
+      releaseDates: _releaseDateList
+    );
+    try {
+      await Network.shared.setupPurchaseAccount(model);
+      locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
+      locator<EventBus>().fire(LoadingEvent.hide());
+    } catch (e) {
+      print(e.toString());
+      locator<EventBus>().fire(LoadingEvent.hide());
+    }
+    notifyListeners();
+  }
 }

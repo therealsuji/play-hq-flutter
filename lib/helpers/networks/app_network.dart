@@ -3,6 +3,7 @@ import 'package:play_hq/models/game_details_models/game_details_model.dart';
 import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/create_sale_model.dart';
+import 'package:play_hq/models/onboarding_models/setup_purchase_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'dart:convert';
 import 'dart:async';
@@ -114,6 +115,10 @@ class Network {
 
   Future<SearchGame> searchGame(String params) async {
     return await _performWebRequest<SearchGame>(RequestType.get, APIConfig.getSearchResults(params));
+  }
+
+  Future<SetupPurchaseModel> setupPurchaseAccount(SetupPurchaseModel purchaseModel) async {
+    return await _performWebRequest<SetupPurchaseModel>(RequestType.patch, APIConfig.setupPurchase, body: purchaseModel);
   }
 
   Future<GameDetailModel> getGameDetails(int id) async {
