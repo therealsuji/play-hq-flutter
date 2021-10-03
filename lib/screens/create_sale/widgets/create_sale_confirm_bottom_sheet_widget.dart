@@ -83,10 +83,8 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                           "Game Bundle Price",
                           style: Theme.of(context).primaryTextTheme.headline3,
                         ),
-                        GradientText(
-                            text: model.price.toString() + " LKR",
-                            style: Theme.of(context).primaryTextTheme.headline3,
-                            gradient: GREEN_GRADIENT),
+                        GradientText(model.price.toString() + " LKR",
+                            style: Theme.of(context).primaryTextTheme.headline3, gradient: GREEN_GRADIENT),
                       ],
                     ),
                   ),

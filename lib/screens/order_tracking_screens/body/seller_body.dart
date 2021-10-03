@@ -13,7 +13,6 @@ class SellerBody extends StatefulWidget {
 }
 
 class _SellerBodyState extends State<SellerBody> {
-
   final OrderTrack status = OrderTrack.RECEIVED;
 
   @override
@@ -44,8 +43,8 @@ class _SellerBodyState extends State<SellerBody> {
         Text(
           "Awaiting Courier",
           style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-            fontSize: 18.0,
-          ),
+                fontSize: 18.0,
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -54,8 +53,8 @@ class _SellerBodyState extends State<SellerBody> {
           child: Text(
             "We have dispathced a courier to your location. Please be patient until they arrive and confirm upon arrival.",
             style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-              fontSize: 14.0,
-            ),
+                  fontSize: 14.0,
+                ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -87,8 +86,8 @@ class _SellerBodyState extends State<SellerBody> {
         Text(
           "Delivering Game",
           style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-            fontSize: 18.0,
-          ),
+                fontSize: 18.0,
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -97,8 +96,8 @@ class _SellerBodyState extends State<SellerBody> {
           child: Text(
             'The order is now being delivered to the buyer. You  will be redirected to the final phase once the buyer has confirmed arrival of the order.',
             style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-              fontSize: 14.0,
-            ),
+                  fontSize: 14.0,
+                ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -120,8 +119,8 @@ class _SellerBodyState extends State<SellerBody> {
         Text(
           "Game Delivered Successfully",
           style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-            fontSize: 18.0,
-          ),
+                fontSize: 18.0,
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -130,8 +129,8 @@ class _SellerBodyState extends State<SellerBody> {
           child: Text(
             "The game has been delivered. Your money will be transferred into your account shortly. Please contact us if you had in any issues in receiving the money. Thanks a lot for using our services!",
             style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-              fontSize: 14.0,
-            ),
+                  fontSize: 14.0,
+                ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -144,12 +143,12 @@ class _SellerBodyState extends State<SellerBody> {
             height: ScreenUtils.getDesignHeight(50.0),
             child: Center(
               child: GradientText(
-                text: "I DIDN'T RECEIVED PAYMENT YET",
+                "I DIDN'T RECEIVED PAYMENT YET",
                 gradient: PRIMARY_GRADIENT,
                 style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-                  fontSize: 14.0,
-                  color: Colors.white,
-                ),
+                      fontSize: 14.0,
+                      color: Colors.white,
+                    ),
               ),
             ),
           ),

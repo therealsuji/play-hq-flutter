@@ -295,7 +295,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   height: ScreenUtils.getDesignHeight(2.0),
                 ),
                 GradientText(
-                  text: releaseDate != null ? DateFormat('dd/MM/yyyy').format(DateTime.parse(releaseDate)) : "",
+                  releaseDate != null ? DateFormat('dd/MM/yyyy').format(DateTime.parse(releaseDate)) : "",
                   gradient: PRIMARY_GRADIENT,
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),

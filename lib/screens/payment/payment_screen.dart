@@ -116,7 +116,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         style: Theme.of(context).primaryTextTheme.bodyText1,
                       ),
                       GradientText(
-                        text: "1232" + " LKR",
+                        "1232" + " LKR",
                         gradient: GREEN_GRADIENT,
                         style: Theme.of(context).primaryTextTheme.bodyText1!,
                       )
@@ -228,7 +228,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   GradientText(
-                                    text: "Edit Card Details",
+                                    "Edit Card Details",
                                     gradient: GREEN_GRADIENT,
                                     style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
                                           fontWeight: FontWeight.bold,
@@ -237,7 +237,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                   Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
                                     child: GradientText(
-                                      text: "Edit Card Details",
+                                      "Edit Card Details",
                                       gradient: ALERT_GRADIENT,
                                       style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
                                             fontWeight: FontWeight.bold,

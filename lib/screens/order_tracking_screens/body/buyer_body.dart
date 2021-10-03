@@ -13,7 +13,6 @@ class BuyerBody extends StatefulWidget {
 }
 
 class _BuyerBodyState extends State<BuyerBody> {
-
   final OrderTrack status = OrderTrack.RECEIVED;
 
   @override
@@ -44,8 +43,8 @@ class _BuyerBodyState extends State<BuyerBody> {
         Text(
           "Awaiting Seller Confirmation",
           style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-            fontSize: 18.0,
-          ),
+                fontSize: 18.0,
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -54,8 +53,8 @@ class _BuyerBodyState extends State<BuyerBody> {
           child: Text(
             "We’ve sent a request to the seller to confirm the sale of the game. Please confirm the order on your end when it is activated.",
             style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-              fontSize: 14.0,
-            ),
+                  fontSize: 14.0,
+                ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -87,8 +86,8 @@ class _BuyerBodyState extends State<BuyerBody> {
         Text(
           "Delivering your Order",
           style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-            fontSize: 18.0,
-          ),
+                fontSize: 18.0,
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -96,17 +95,18 @@ class _BuyerBodyState extends State<BuyerBody> {
           ),
           child: RichText(
             text: TextSpan(
-              text: 'The order has been picked up from the seller and is own their way to you now. Please await delivery Estimated time of arrival ',
+              text:
+                  'The order has been picked up from the seller and is own their way to you now. Please await delivery Estimated time of arrival ',
               style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                fontSize: 14.0,
-              ),
+                    fontSize: 14.0,
+                  ),
               children: <TextSpan>[
                 TextSpan(
                   text: '2.43pm',
                   style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                    fontSize: 14.0,
-                    color: PRIMARY_COLOR,
-                  ),
+                        fontSize: 14.0,
+                        color: PRIMARY_COLOR,
+                      ),
                 ),
               ],
             ),
@@ -131,8 +131,8 @@ class _BuyerBodyState extends State<BuyerBody> {
         Text(
           "Confirm Order Received",
           style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-            fontSize: 18.0,
-          ),
+                fontSize: 18.0,
+              ),
         ),
         Padding(
           padding: EdgeInsets.only(
@@ -141,8 +141,8 @@ class _BuyerBodyState extends State<BuyerBody> {
           child: Text(
             "Awesome! Your game has been successfully delivered, please confirm that the game is as accurately described in the order details.",
             style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-              fontSize: 14.0,
-            ),
+                  fontSize: 14.0,
+                ),
             textAlign: TextAlign.center,
           ),
         ),
@@ -155,12 +155,12 @@ class _BuyerBodyState extends State<BuyerBody> {
             height: ScreenUtils.getDesignHeight(50.0),
             child: Center(
               child: GradientText(
-                text: "MY ORDER IS NOT AS DESCRIBED",
+                "MY ORDER IS NOT AS DESCRIBED",
                 gradient: PRIMARY_GRADIENT,
                 style: Theme.of(context).primaryTextTheme.headline1!.copyWith(
-                  fontSize: 14.0,
-                  color: Colors.white,
-                ),
+                      fontSize: 14.0,
+                      color: Colors.white,
+                    ),
               ),
             ),
           ),

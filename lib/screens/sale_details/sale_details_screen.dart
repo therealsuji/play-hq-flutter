@@ -8,7 +8,6 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/sale_details/widgets/sale_details_bottom_sheet.dart';
 import 'package:play_hq/view_models/sale_details/sale_details_model.dart';
 import 'package:play_hq/widgets/custom_app_bar_widget.dart';
-import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
@@ -146,7 +145,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                                   "Total Price",
                                   style: Theme.of(context).primaryTextTheme.headline5!.copyWith(fontFamily: Neusa),
                                 ),
-                                GradientText(text: "5200 LKR", gradient: GREEN_GRADIENT)
+                                GradientText("5200 LKR", gradient: GREEN_GRADIENT)
                               ],
                             ),
                             CustomButton(

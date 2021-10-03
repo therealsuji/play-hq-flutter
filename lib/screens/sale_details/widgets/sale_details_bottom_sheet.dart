@@ -96,10 +96,8 @@ class SaleDetailsBottomSheet extends StatelessWidget {
                         ),
                         Row(
                           children: [
-                            GradientText(
-                                text: "2000.00 LKR",
-                                style: Theme.of(context).primaryTextTheme.headline3,
-                                gradient: GREEN_GRADIENT),
+                            GradientText("2000.00 LKR",
+                                style: Theme.of(context).primaryTextTheme.headline3, gradient: GREEN_GRADIENT),
                             Text(
                               "  (Minimum)",
                               style: Theme.of(context).primaryTextTheme.headline6,
