@@ -4,7 +4,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/search-game/search_game_model.dart';
+import 'package:play_hq/view_models/search_game/search_game_model.dart';
 import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/custom_loading_barrier_widget.dart';
 import 'package:play_hq/widgets/custom_search_item_widget.dart';
