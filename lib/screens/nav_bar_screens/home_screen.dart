@@ -28,13 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             Container(
               height: ScreenUtils.getDesignHeight(315.0),
-              decoration: BoxDecoration(
-                  gradient: PRIMARY_GRADIENT
-              ),
+              decoration: BoxDecoration(gradient: PRIMARY_GRADIENT),
               child: Stack(
+                clipBehavior: Clip.none,
                 children: [
                   Positioned.fill(
-                    bottom: -0.1,
+                    bottom: -0.2,
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
@@ -57,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Column(
                       children: [
-                          Row(
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Column(
@@ -138,8 +137,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   "Search Here...",
                                   style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                    color: Colors.white.withOpacity(0.70),
-                                  ),
+                                        color: Colors.white.withOpacity(0.70),
+                                      ),
                                 ),
                               ),
                             ],
