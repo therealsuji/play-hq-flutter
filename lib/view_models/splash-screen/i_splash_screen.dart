@@ -11,7 +11,7 @@ import 'package:play_hq/view_models/splash-screen/splash_screen_model.dart';
 class ISplashModel extends SplashScreenModel {
   @override
   void navigateMainScreen() {
-    locator<NavigationService>().pushReplacement(MAIN_ONBOARDING);
+    locator<NavigationService>().pushReplacement(MAIN_SCREEN);
   }
 
   @override
