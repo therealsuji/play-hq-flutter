@@ -6,7 +6,7 @@ import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/splash-screen/splash_screen_model.dart';
+import 'package:play_hq/view_models/splash_screen/splash_screen_model.dart';
 
 class ISplashModel extends SplashScreenModel {
   @override
