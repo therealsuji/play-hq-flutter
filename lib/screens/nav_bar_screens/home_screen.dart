@@ -145,41 +145,47 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: ScreenUtils.getDesignHeight(25.0),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: ScreenUtils.getDesignWidth(99.0),
-                                width: ScreenUtils.getDesignWidth(99.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              Container(
-                                height: ScreenUtils.getDesignWidth(99.0),
-                                width: ScreenUtils.getDesignWidth(99.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                              Container(
-                                height: ScreenUtils.getDesignWidth(99.0),
-                                width: ScreenUtils.getDesignWidth(99.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
+                    ),
+                  ),
+                  Positioned.fill(
+                    bottom: 0.0,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: ScreenUtils.getDesignWidth(24.0),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              height: ScreenUtils.getDesignWidth(99.0),
+                              width: ScreenUtils.getDesignWidth(99.0),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            Container(
+                              height: ScreenUtils.getDesignWidth(99.0),
+                              width: ScreenUtils.getDesignWidth(99.0),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                            Container(
+                              height: ScreenUtils.getDesignWidth(99.0),
+                              width: ScreenUtils.getDesignWidth(99.0),
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(5.0),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ],
