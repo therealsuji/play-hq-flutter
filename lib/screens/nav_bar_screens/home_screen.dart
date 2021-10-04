@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: ScreenUtils.getDesignHeight(ScreenUtils.statusBarHeight),
+                      top: ScreenUtils.getDesignHeight(ScreenUtils.statusBarHeight + 10.0),
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
@@ -187,7 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Padding(
               padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(10.0),
+                top: ScreenUtils.getDesignHeight(20.0),
                 left: ScreenUtils.getDesignWidth(24.0),
                 right: ScreenUtils.getDesignWidth(24.0),
               ),
