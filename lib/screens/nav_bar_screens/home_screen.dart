@@ -27,7 +27,9 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: ScreenUtils.getDesignHeight(315.0),
+              height: ScreenUtils.isStatusBarBig
+                  ? (ScreenUtils.statusBarHeight + ScreenUtils.getDesignHeight(295.0))
+                  : ScreenUtils.getDesignHeight(315.0),
               decoration: BoxDecoration(gradient: PRIMARY_GRADIENT),
               child: Stack(
                 clipBehavior: Clip.none,
@@ -37,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        height: ScreenUtils.getDesignHeight(43.0),
+                        height: ScreenUtils.getDesignHeight(47.0),
                         decoration: BoxDecoration(
                           color: BACKGROUND_COLOR,
                           borderRadius: BorderRadius.only(
@@ -50,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(
-                      top: ScreenUtils.getDesignHeight(ScreenUtils.statusBarHeight + 10.0),
+                      top: ScreenUtils.statusBarHeight + 20,
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
@@ -148,7 +150,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Positioned.fill(
-                    bottom: 0.0,
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Padding(
