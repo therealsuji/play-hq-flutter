@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Align(
                       alignment: Alignment.bottomCenter,
                       child: Container(
-                        height: ScreenUtils.getDesignHeight(50.0),
+                        height: ScreenUtils.getDesignHeight(43.0),
                         decoration: BoxDecoration(
                           color: BACKGROUND_COLOR,
                           borderRadius: BorderRadius.only(
