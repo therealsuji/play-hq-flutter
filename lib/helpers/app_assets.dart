@@ -31,3 +31,4 @@ const String HOME_BACKGROUND_IMAGE = "assets/images/home_background.svg";
 const String MY_SALES_CHARACTER_IMAGE = "assets/images/cyber-ct.png";
 const String CREATE_SALES_CHARACTER_IMAGE = "assets/images/cyber-ct.png";
 const String BUY_GAME_CHARACTER_IMAGE = "assets/images/cyber-ct.png";
+const String LEARN_MORE = "assets/images/learn_more.png";
