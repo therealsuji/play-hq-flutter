@@ -21,7 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> temp = ["assets/images/stack_temp.png", "assets/images/cyber-ct.png", "assets/images/cyber-ct.png"];
+    List<String> temp = [
+      "assets/images/stack_temp.png",
+      "assets/images/cyber-ct.png",
+      "assets/images/cyber-ct.png"
+    ];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -72,10 +76,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 Text(
                                   "Any particular games you’d like to\nbuy today?",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline4!
-                                      .copyWith(color: Colors.white.withOpacity(0.60)),
+                                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
+                                    color: Colors.white.withOpacity(0.60),
+                                  ),
                                 ),
                               ],
                             ),
@@ -138,8 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   "Search Here...",
                                   style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                        color: Colors.white.withOpacity(0.70),
-                                      ),
+                                    color: Colors.white.withOpacity(0.70),
+                                  ),
                                 ),
                               ),
                             ],
@@ -213,7 +216,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         _currentIndex = index.toDouble();
                       });
                     }),
-                items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
+                items:
+                    temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
               ),
             ),
             Padding(
@@ -328,15 +332,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       "Call of Duty: Modern Warfare",
                       style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                            fontSize: 16.0,
-                          ),
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                   Text(
                     "12/09/2019",
                     style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          color: SUB_TEXT_COLOR.withOpacity(0.6),
-                        ),
+                      color: SUB_TEXT_COLOR.withOpacity(0.6),
+                    ),
                   ),
                 ],
               ),
@@ -388,8 +392,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Colombo 06",
                         style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                              color: SUB_TEXT_COLOR.withOpacity(0.6),
-                            ),
+                          color: SUB_TEXT_COLOR.withOpacity(0.6),
+                        ),
                       ),
                     ],
                   ),
@@ -465,13 +469,12 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             CustomButton(
-              height: ScreenUtils.getDesignHeight(28.0),
-              width: ScreenUtils.getDesignWidth(77.0),
-              buttonText: "Learn More",
-              gradient: PRIMARY_GRADIENT,
-              textFontSize: 8.0,
-              onPressed: () {}
-            ),
+                height: ScreenUtils.getDesignHeight(28.0),
+                width: ScreenUtils.getDesignWidth(77.0),
+                buttonText: "Learn More",
+                gradient: PRIMARY_GRADIENT,
+                textFontSize: 8.0,
+                onPressed: () {}),
           ],
         ),
       ),
@@ -548,16 +551,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         "Bundle Price",
-                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          fontSize: 10.0,
-                        ),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline4!
+                            .copyWith(
+                              fontSize: 10.0,
+                            ),
                       ),
                       GradientText(
                         "5200.00 LKR",
                         gradient: GREEN_GRADIENT,
-                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          fontSize: 16.0,
-                        ),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline4!
+                            .copyWith(
+                              fontSize: 16.0,
+                            ),
                       ),
                     ],
                   ),
