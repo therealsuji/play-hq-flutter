@@ -23,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   double _currentIndex = 0.0;
 
-
   @override
   void initState() {
     x();
@@ -37,11 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> temp = [
-      "assets/images/stack_temp.png",
-      "assets/images/cyber-ct.png",
-      "assets/images/cyber-ct.png"
-    ];
+    List<String> temp = ["assets/images/stack_temp.png", "assets/images/cyber-ct.png", "assets/images/cyber-ct.png"];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -93,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   "Any particular games you’d like to\nbuy today?",
                                   style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                                    color: Colors.white.withOpacity(0.60),
-                                  ),
+                                        color: Colors.white.withOpacity(0.60),
+                                      ),
                                 ),
                               ],
                             ),
@@ -157,8 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   "Search Here...",
                                   style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                    color: Colors.white.withOpacity(0.70),
-                                  ),
+                                        color: Colors.white.withOpacity(0.70),
+                                      ),
                                 ),
                               ),
                             ],
@@ -180,8 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>()
-                                    .pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
                                 child: Container(
@@ -192,8 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>()
-                                    .pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
                                 child: Container(
@@ -204,8 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>()
-                                    .pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                             ],
                           ),
@@ -234,18 +226,20 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CarouselSlider(
                 carouselController: _carouselController,
                 options: CarouselOptions(
-                    initialPage: 0,
-                    height: ScreenUtils.getDesignHeight(220.0),
-                    disableCenter: true,
-                    viewportFraction: 0.85,
-                    autoPlay: true,
-                    onPageChanged: (index, _) {
-                      setState(() {
+                  initialPage: 0,
+                  height: ScreenUtils.getDesignHeight(220.0),
+                  disableCenter: true,
+                  viewportFraction: 0.85,
+                  autoPlay: true,
+                  onPageChanged: (index, _) {
+                    setState(
+                      () {
                         _currentIndex = index.toDouble();
-                      });
-                    }),
-                items:
-                    temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
+                      },
+                    );
+                  },
+                ),
+                items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
               ),
             ),
             Padding(
@@ -360,15 +354,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       "Call of Duty: Modern Warfare",
                       style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                        fontSize: 16.0,
-                      ),
+                            fontSize: 16.0,
+                          ),
                     ),
                   ),
                   Text(
                     "12/09/2019",
                     style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                      color: SUB_TEXT_COLOR.withOpacity(0.6),
-                    ),
+                          color: SUB_TEXT_COLOR.withOpacity(0.6),
+                        ),
                   ),
                 ],
               ),
@@ -420,8 +414,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Colombo 06",
                         style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          color: SUB_TEXT_COLOR.withOpacity(0.6),
-                        ),
+                              color: SUB_TEXT_COLOR.withOpacity(0.6),
+                            ),
                       ),
                     ],
                   ),
@@ -579,20 +573,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         "Bundle Price",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .headline4!
-                            .copyWith(
+                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                               fontSize: 10.0,
                             ),
                       ),
                       GradientText(
                         "5200.00 LKR",
                         gradient: GREEN_GRADIENT,
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .headline4!
-                            .copyWith(
+                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                               fontSize: 16.0,
                             ),
                       ),
