@@ -26,8 +26,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MAIN_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<TabNavigationModel>(
-          create: (context) => ITabNavigationModel(),
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<TabNavigationModel>(
+              create: (context) => ITabNavigationModel(),
+            ),
+            ChangeNotifierProvider<HomeScreenModel>(
+              create: (context) => IHomeScreenModel(),
+            ),
+          ],
           child: MainScreen(),
         ),
       );

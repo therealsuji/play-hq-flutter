@@ -4,14 +4,15 @@ import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/nav_service.dart';
+import 'package:play_hq/view_models/home_screen/home_screen_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:play_hq/widgets/rasied_gradient_button_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -19,24 +20,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  CarouselController _carouselController = CarouselController();
-
-  double _currentIndex = 0.0;
 
   @override
   void initState() {
-    x();
     super.initState();
-  }
-
-  void x() async {
-    String? bearerToken = await SecureStorage.readValue("jwtToken");
-    print(bearerToken);
   }
 
   @override
   Widget build(BuildContext context) {
-    List<String> temp = ["assets/images/stack_temp.png", "assets/images/cyber-ct.png", "assets/images/cyber-ct.png"];
+    List<String> temp = [
+      "assets/images/stack_temp.png",
+      "assets/images/cyber-ct.png",
+      "assets/images/cyber-ct.png"
+    ];
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -224,20 +220,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 top: ScreenUtils.getDesignHeight(10.0),
               ),
               child: CarouselSlider(
-                carouselController: _carouselController,
                 options: CarouselOptions(
                   initialPage: 0,
                   height: ScreenUtils.getDesignHeight(220.0),
                   disableCenter: true,
                   viewportFraction: 0.85,
                   autoPlay: true,
-                  onPageChanged: (index, _) {
-                    setState(
-                      () {
-                        _currentIndex = index.toDouble();
-                      },
-                    );
-                  },
+                  onPageChanged: (index, _) => Provider.of<HomeScreenModel>(context, listen: false)
+                      .onCarouselPageChanged(index),
                 ),
                 items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
               ),
@@ -246,8 +236,12 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(
                 top: ScreenUtils.getDesignHeight(10.0),
               ),
-              child: DottedIndicatorWidget(
-                currentPage: _currentIndex.toInt(),
+              child: Consumer<HomeScreenModel>(
+                builder: (_, model, __) {
+                  return DottedIndicatorWidget(
+                    currentPage: model.carouselPageIndex,
+                  );
+                },
               ),
             ),
             Padding(
@@ -491,12 +485,13 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             CustomButton(
-                height: ScreenUtils.getDesignHeight(28.0),
-                width: ScreenUtils.getDesignWidth(77.0),
-                buttonText: "Learn More",
-                gradient: PRIMARY_GRADIENT,
-                textFontSize: 8.0,
-                onPressed: () {}),
+              height: ScreenUtils.getDesignHeight(28.0),
+              width: ScreenUtils.getDesignWidth(77.0),
+              buttonText: "Learn More",
+              gradient: PRIMARY_GRADIENT,
+              textFontSize: 8.0,
+              onPressed: () {},
+            ),
           ],
         ),
       ),
