@@ -1,5 +1,6 @@
-import 'dart:async';
 import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:flutter/foundation.dart';
@@ -14,6 +15,14 @@ import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 
 class GameDetailsDelegate extends GameDetailsRepository {
+
+  Map<String, String> _headers = {
+    "User-Agent": 'PlayHQ',
+    'Content-type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjMzMjkyNDUyLCJleHAiOjE2MzU4ODQ0NTJ9.CzwaKpZF2M_YZmgOOGHTY0WGgEGP0F329narI0hjXDY'
+  };
+
   @override
   Future<GetGameDetails?> getGameDetails(int id) async {
     var client = Client();
@@ -43,6 +52,54 @@ class GameDetailsDelegate extends GameDetailsRepository {
         errorText: e.toString(),
       ));
       return null;
+    }
+    finally{
+      client.close();
+    }
+  }
+
+  @override
+  Future<void> setGameLibrary(Map<String, dynamic> body) async {
+    var client = Client();
+
+    try{
+      Response response = await client.post(Uri.parse(APIConfig.addToLibrary), body: json.encoder.convert(body), headers: _headers);
+      print("Response: ${response.body}");
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+    }
+    finally{
+      client.close();
+    }
+  }
+
+  @override
+  Future<void> setGameWishList(Map<String, dynamic> body) async {
+    var client = Client();
+
+    try{
+      Response response = await client.post(Uri.parse(APIConfig.addToWishList), body: json.encoder.convert(body), headers: _headers);
+      print("Response: ${response.body}");
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
     }
     finally{
       client.close();

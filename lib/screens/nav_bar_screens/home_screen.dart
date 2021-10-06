@@ -4,6 +4,10 @@ import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:play_hq/helpers/app_secure_storage.dart';
+import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/service_locator.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
@@ -18,6 +22,18 @@ class _HomeScreenState extends State<HomeScreen> {
   CarouselController _carouselController = CarouselController();
 
   double _currentIndex = 0.0;
+
+
+  @override
+  void initState() {
+    x();
+    super.initState();
+  }
+
+  void x() async {
+    String? bearerToken = await SecureStorage.readValue("jwtToken");
+    print(bearerToken);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,29 +171,41 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
-                                height: ScreenUtils.getDesignWidth(99.0),
-                                width: ScreenUtils.getDesignWidth(99.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5.0),
+                              InkWell(
+                                child: Container(
+                                  height: ScreenUtils.getDesignWidth(99.0),
+                                  width: ScreenUtils.getDesignWidth(99.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
                                 ),
+                                onTap: () => locator<NavigationService>()
+                                    .pushNamed(GAME_DETAILS_SCREEN),
                               ),
-                              Container(
-                                height: ScreenUtils.getDesignWidth(99.0),
-                                width: ScreenUtils.getDesignWidth(99.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5.0),
+                              InkWell(
+                                child: Container(
+                                  height: ScreenUtils.getDesignWidth(99.0),
+                                  width: ScreenUtils.getDesignWidth(99.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
                                 ),
+                                onTap: () => locator<NavigationService>()
+                                    .pushNamed(GAME_DETAILS_SCREEN),
                               ),
-                              Container(
-                                height: ScreenUtils.getDesignWidth(99.0),
-                                width: ScreenUtils.getDesignWidth(99.0),
-                                decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(5.0),
+                              InkWell(
+                                child: Container(
+                                  height: ScreenUtils.getDesignWidth(99.0),
+                                  width: ScreenUtils.getDesignWidth(99.0),
+                                  decoration: BoxDecoration(
+                                    color: Colors.amber,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
                                 ),
+                                onTap: () => locator<NavigationService>()
+                                    .pushNamed(GAME_DETAILS_SCREEN),
                               ),
                             ],
                           ),

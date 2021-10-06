@@ -47,4 +47,8 @@ class APIConfig {
   static String gameScreenshots(int id) {
     return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
   }
+
+  static String get addToWishList => '$_baseUrl' + '/wish-list-games';
+
+  static String get addToLibrary => '$_baseUrl' + '/library-games';
 }

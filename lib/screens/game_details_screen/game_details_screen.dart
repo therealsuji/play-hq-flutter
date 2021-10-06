@@ -5,10 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/game_details_models/game_details_model.dart';
 import 'package:play_hq/view_models/game_details/game_details_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
+import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -80,9 +82,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                             BACK_ARROW_ICON,
                             height: ScreenUtils.getDesignHeight(27.0),
                           ),
-                          onTap: () {
-                            Provider.of<GameDetailsModel>(context, listen: false).navigateMainScreen();
-                          },
+                          onTap: () => Provider.of<GameDetailsModel>(context, listen: false).navigateMainScreen(),
                         ),
                         GestureDetector(
                           child: SvgPicture.asset(
@@ -144,6 +144,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                             gradient: SECONDARY_GRADIENT,
                             height: ScreenUtils.getDesignHeight(35.0),
                             textFontSize: 10.0,
+                            onPressed: () {
+                              _showPlatformBottomSheet(
+                                onPressed: Provider.of<GameDetailsModel>(context, listen: false).addToWishList,
+                              );
+                            },
                           ),
                         ),
                         SizedBox(
@@ -155,6 +160,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                             gradient: PRIMARY_GRADIENT,
                             height: ScreenUtils.getDesignHeight(35.0),
                             textFontSize: 10.0,
+                            onPressed: () {
+                              _showPlatformBottomSheet(
+                                onPressed: Provider.of<GameDetailsModel>(context, listen: false).addToLibrary,
+                              );
+                            },
                           ),
                         ),
                       ],
@@ -303,7 +313,9 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
             ),
             Container(
               height: ScreenUtils.getDesignHeight(44.0),
-              width: ScreenUtils.getDesignWidth(44.0),
+              padding: EdgeInsets.symmetric(
+                horizontal: ScreenUtils.getDesignWidth(6.0),
+              ),
               decoration: BoxDecoration(
                 gradient: PRIMARY_GRADIENT,
                 borderRadius: BorderRadius.circular(3.0),
@@ -496,6 +508,86 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           imageUrl: imagePath ?? "https://i.stack.imgur.com/y9DpT.jpg",
           fit: BoxFit.cover,
         ),
+      ),
+    );
+  }
+
+  _showPlatformBottomSheet({VoidCallback? onPressed}) async {
+
+    final model =  Provider.of<GameDetailsModel>(context, listen: false);
+
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: ScreenUtils.getDesignHeight(340),
+          decoration: BoxDecoration(
+            color: POP_UP_CONTAINER_COLOR,
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: ChangeNotifierProvider.value(
+            value: model,
+            builder: (BuildContext context, _) {
+              return _platformBottomSheet(
+                model.gameDetails.platforms ?? [],
+                onPressed,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _platformBottomSheet(List<Platform> platformList, VoidCallback? onPressed) {
+    return Container(
+      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            child: Text(
+              "Select your Console",
+              style: Theme.of(context).primaryTextTheme.headline5?.copyWith(fontSize: 16)
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
+            child: GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                mainAxisSpacing: 15.0,
+                crossAxisSpacing: 15.0,
+                mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
+              ),
+              itemCount: platformList.length,
+              itemBuilder: (BuildContext context, index) {
+                return GestureDetector(
+                  child: Consumer<GameDetailsModel>(
+                    builder: (_, model, __) {
+                      return CustomSelectingWidget(
+                        titleText: platformList[index].name,
+                        active: model.selectedPlatforms.contains(platformList[index].id),
+                      );
+                    },
+                  ),
+                  onTap: () => Provider.of<GameDetailsModel>(context, listen: false).selectedPlatform(platformList[index].id!),
+                );
+              },
+            ),
+          ),
+          Spacer(),
+          Container(
+            margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(40)),
+            child: CustomButton(
+              buttonText: 'Confirm',
+              gradient: GREEN_GRADIENT,
+              onPressed: onPressed,
+            ),
+          ),
+        ],
       ),
     );
   }
