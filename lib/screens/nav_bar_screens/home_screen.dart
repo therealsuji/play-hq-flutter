@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_assets.dart';
+import 'package:provider/provider.dart';
 
+import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -12,8 +12,7 @@ import 'package:play_hq/view_models/home_screen/home_screen_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
-import 'package:play_hq/widgets/rasied_gradient_button_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:play_hq/widgets/raised_gradient_button_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -21,17 +20,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-  @override
-  void initState() {
-    super.initState();
-    x();
-  }
-
-  void x() async {
-    String? bearerToken = await SecureStorage.readValue("jwtToken");
-    print(bearerToken);
-  }
 
   @override
   Widget build(BuildContext context) {

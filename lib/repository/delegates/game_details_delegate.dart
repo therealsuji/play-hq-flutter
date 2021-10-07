@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:http/http.dart';
 import 'package:flutter/foundation.dart';
+import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/helpers/app_network.dart';
 
 import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
@@ -16,20 +16,15 @@ import 'package:play_hq/services/base_managers/error.dart';
 
 class GameDetailsDelegate extends GameDetailsRepository {
 
-  Map<String, String> _headers = {
-    "User-Agent": 'PlayHQ',
-    'Content-type': 'application/json',
-    'Accept': 'application/json',
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiaWF0IjoxNjMzMjkyNDUyLCJleHAiOjE2MzU4ODQ0NTJ9.CzwaKpZF2M_YZmgOOGHTY0WGgEGP0F329narI0hjXDY'
-  };
+  final _networkCalls = Network.shared;
 
   @override
   Future<GetGameDetails?> getGameDetails(int id) async {
-    var client = Client();
-    
+
     try{
-      var detailsResponse = await client.get(Uri.parse(APIConfig.gameDetails(id)));
-      var screenshotsResponse = await client.get(Uri.parse(APIConfig.gameScreenshots(id)));
+
+      var detailsResponse = await _networkCalls.performRequest(APIConfig.gameDetails(id), HttpAction.GET);
+      var screenshotsResponse = await _networkCalls.performRequest(APIConfig.gameScreenshots(id), HttpAction.GET);
 
       var gameDetails = await compute(details.gameDetailsModelFromJson, detailsResponse.body);
       var screenshots = await compute(sc.gameScreenshotModalFromJson, screenshotsResponse.body);
@@ -53,18 +48,13 @@ class GameDetailsDelegate extends GameDetailsRepository {
       ));
       return null;
     }
-    finally{
-      client.close();
-    }
   }
 
   @override
   Future<void> setGameLibrary(Map<String, dynamic> body) async {
-    var client = Client();
 
     try{
-      Response response = await client.post(Uri.parse(APIConfig.addToLibrary), body: json.encoder.convert(body), headers: _headers);
-      print("Response: ${response.body}");
+      await _networkCalls.performRequest(APIConfig.addToLibrary, HttpAction.POST, body: body);
     }
     on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -76,19 +66,14 @@ class GameDetailsDelegate extends GameDetailsRepository {
       locator<ErrorManager>().setError(PlayHQGeneralException(
         errorText: e.toString(),
       ));
-    }
-    finally{
-      client.close();
     }
   }
 
   @override
   Future<void> setGameWishList(Map<String, dynamic> body) async {
-    var client = Client();
 
     try{
-      Response response = await client.post(Uri.parse(APIConfig.addToWishList), body: json.encoder.convert(body), headers: _headers);
-      print("Response: ${response.body}");
+      await _networkCalls.performRequest(APIConfig.addToWishList, HttpAction.POST, body: body);
     }
     on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -100,9 +85,6 @@ class GameDetailsDelegate extends GameDetailsRepository {
       locator<ErrorManager>().setError(PlayHQGeneralException(
         errorText: e.toString(),
       ));
-    }
-    finally{
-      client.close();
     }
   }
 }
