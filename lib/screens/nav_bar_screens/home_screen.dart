@@ -4,6 +4,7 @@ import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -24,6 +25,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    x();
+  }
+
+  void x() async {
+    String? bearerToken = await SecureStorage.readValue("jwtToken");
+    print(bearerToken);
   }
 
   @override
@@ -84,8 +91,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 Text(
                                   "Any particular games you’d like to\nbuy today?",
                                   style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                                        color: Colors.white.withOpacity(0.60),
-                                      ),
+                                    color: Colors.white.withOpacity(0.60),
+                                  ),
                                 ),
                               ],
                             ),
@@ -148,8 +155,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Text(
                                   "Search Here...",
                                   style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                        color: Colors.white.withOpacity(0.70),
-                                      ),
+                                    color: Colors.white.withOpacity(0.70),
+                                  ),
                                 ),
                               ),
                             ],
@@ -348,15 +355,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Text(
                       "Call of Duty: Modern Warfare",
                       style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                            fontSize: 16.0,
-                          ),
+                        fontSize: 16.0,
+                      ),
                     ),
                   ),
                   Text(
                     "12/09/2019",
                     style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          color: SUB_TEXT_COLOR.withOpacity(0.6),
-                        ),
+                      color: SUB_TEXT_COLOR.withOpacity(0.6),
+                    ),
                   ),
                 ],
               ),
@@ -408,8 +415,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Colombo 06",
                         style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                              color: SUB_TEXT_COLOR.withOpacity(0.6),
-                            ),
+                          color: SUB_TEXT_COLOR.withOpacity(0.6),
+                        ),
                       ),
                     ],
                   ),
@@ -569,15 +576,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Bundle Price",
                         style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                              fontSize: 10.0,
-                            ),
+                          fontSize: 10.0,
+                        ),
                       ),
                       GradientText(
                         "5200.00 LKR",
                         gradient: GREEN_GRADIENT,
                         style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                              fontSize: 16.0,
-                            ),
+                          fontSize: 16.0,
+                        ),
                       ),
                     ],
                   ),
