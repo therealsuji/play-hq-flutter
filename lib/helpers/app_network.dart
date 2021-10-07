@@ -46,12 +46,13 @@ class Network {
 
       switch (action){
         case HttpAction.GET:
-          response = await _client.get(Uri.parse(url));
+          response = await _client.get(Uri.parse(url), headers: _headers);
           break;
         case HttpAction.POST:
           response = await _client.post(
             Uri.parse(url),
             body: body != null ? json.encoder.convert(body) : "",
+            headers: _headers,
           ).timeout(Duration(seconds: 8));
           break;
         case HttpAction.POST_ENCODED_URL:
@@ -64,16 +65,18 @@ class Network {
           response = await _client.put(
             Uri.parse(url),
             body: body != null ? json.encoder.convert(body) : "",
+            headers: _headers,
           ).timeout(Duration(seconds: 8));
           break;
         case HttpAction.PATCH:
           response = await _client.patch(
             Uri.parse(url),
             body: body != null ? json.encoder.convert(body) : "",
+            headers: _headers,
           ).timeout(Duration(seconds: 8));
           break;
         case HttpAction.DELETE:
-          response = await _client.delete(Uri.parse(url)).timeout(Duration(seconds: 8));
+          response = await _client.delete(Uri.parse(url), headers: _headers).timeout(Duration(seconds: 8));
           break;
       }
 
