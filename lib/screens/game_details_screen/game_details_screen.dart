@@ -24,7 +24,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   void initState() {
     super.initState();
     // TODO: Create Similar Games, OnTap for Company Tile and Genre Image
-    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(134);
+    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(302);
   }
 
   List<String> temp = ["1", "2", "3", "4", "5"];
@@ -73,25 +73,12 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
-                    // TODO: ADD BELL SVG
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          child: SvgPicture.asset(
-                            BACK_ARROW_ICON,
-                            height: ScreenUtils.getDesignHeight(27.0),
-                          ),
-                          onTap: () => Provider.of<GameDetailsModel>(context, listen: false).navigateMainScreen(),
-                        ),
-                        GestureDetector(
-                          child: SvgPicture.asset(
-                            BACK_ARROW_ICON,
-                            height: ScreenUtils.getDesignHeight(27.0),
-                          ),
-                          onTap: () {},
-                        ),
-                      ],
+                    child: GestureDetector(
+                      child: SvgPicture.asset(
+                        BACK_ARROW_ICON,
+                        height: ScreenUtils.getDesignHeight(27.0),
+                      ),
+                      onTap: () => Provider.of<GameDetailsModel>(context, listen: false).navigateMainScreen(),
                     ),
                   ),
                   Consumer<GameDetailsModel>(
