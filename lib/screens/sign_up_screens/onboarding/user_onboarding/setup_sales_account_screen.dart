@@ -97,6 +97,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                 height: ScreenUtils.getDesignHeight(20),
               )),
           CustomTextfieldWidget(
+            hintText: 'Enter Phone Number...',
             iconData: Icons.local_phone_rounded,
             hideText: false,
             type: TextInputType.phone,
@@ -134,8 +135,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   builder: (_, value, __) {
                     return Container(
                       width: ScreenUtils.getDesignWidth(110),
-                      margin: EdgeInsets.only(
-                          left: 15),
+                      margin: EdgeInsets.only(left: 15),
                       child: CustomTextWidget(
                         text: value.selectedAddress.isEmpty
                             ? 'Add your location'
@@ -149,7 +149,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       ),
                     );
                   },
-                ),
+          ),
                 Spacer(),
                 GestureDetector(
                   onTap: () => locator<NavigationService>()
@@ -162,7 +162,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       borderRadius: BorderRadius.circular(5.0),
                     ),
                     child: Consumer<SetupSalesModel>(
-                      builder: (_ , value , __){
+                      builder: (_, value, __) {
                         return Center(
                           child: CustomTextWidget(
                             text: value.selectedAddress.isEmpty

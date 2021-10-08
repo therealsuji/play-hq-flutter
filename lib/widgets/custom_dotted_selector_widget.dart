@@ -17,8 +17,8 @@ class CustomDottedSelectorWidget extends StatelessWidget {
       child: DottedBorder(
           borderType: BorderType.RRect,
           radius: Radius.circular(5),
-          color: filled ? Colors.transparent : MAIN_CONTAINER_COLOR,
-          dashPattern: [10, 6],
+          color: filled ? Colors.transparent : FILL_COLOR,
+          dashPattern: [12, 6],
           strokeWidth: 3,
           child: ClipRRect(
             borderRadius: BorderRadius.all(
@@ -26,7 +26,7 @@ class CustomDottedSelectorWidget extends StatelessWidget {
             ),
             child: Container(
               width: ScreenUtils.getDesignWidth(100),
-              color: filled ? MAIN_CONTAINER_COLOR : Colors.transparent,
+              color: filled ? FILL_COLOR : Colors.transparent,
               child: GestureDetector(
                 onTap: onPressed,
                 child: Center(

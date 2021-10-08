@@ -185,7 +185,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                 child: CustomButton(
                   gradient: PRIMARY_GRADIENT,
                   buttonText: 'Setup Sales',
-                  onPressed: () => Provider.of<SetupPurchaseAccountModel>(context , listen: false).performAPIRequest(),
+                  onPressed: () => locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE),
                 ))
           ],
         ),
