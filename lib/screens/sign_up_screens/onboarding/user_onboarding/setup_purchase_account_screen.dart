@@ -42,10 +42,10 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextWidget(height: ScreenUtils.getDesignHeight(30) , width: ScreenUtils.getDesignWidth(180), style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa), text: 'Let\'s get Started',),
+                  CustomTextWidget(isDynamic: false,height: ScreenUtils.getDesignHeight(30) , width: ScreenUtils.getDesignWidth(180), style: Theme.of(context).primaryTextTheme.headline1?.copyWith(fontFamily: Neusa), text: 'Let\'s get Started',),
                   Container(
                       margin: EdgeInsets.only(top: 5),
-                      child: CustomTextWidget(height: ScreenUtils.getDesignHeight(20) , width: ScreenUtils.getDesignWidth(220), style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)), text: 'Select what kind of games you like',)),
+                      child: CustomTextWidget(isDynamic: false,height: ScreenUtils.getDesignHeight(20) , width: ScreenUtils.getDesignWidth(220), style: Theme.of(context).primaryTextTheme.headline4?.copyWith(fontFamily: CircularBook , color: Colors.white.withOpacity(0.6)), text: 'Select what kind of games you like',)),
                 ],
               ),
             ),
@@ -163,9 +163,9 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                     Container(
                       child: Row(
                         children: [
-                          CustomTextWidget(text: 'Any Games you\'d like to buy?', style: Theme.of(context).primaryTextTheme.headline3, width: ScreenUtils.getDesignWidth(180), height: ScreenUtils.getDesignHeight(20),),
+                          CustomTextWidget(isDynamic: false ,text: 'Any Games you\'d like to buy?', style: Theme.of(context).primaryTextTheme.headline3, width: ScreenUtils.getDesignWidth(180), height: ScreenUtils.getDesignHeight(20),),
                           Spacer(),
-                          CustomTextWidget(text: 'None Selected',style: TextStyle(
+                          CustomTextWidget(isDynamic: false , text: 'None Selected',style: TextStyle(
                               fontFamily: CircularBold,
                               foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                               fontSize: 10

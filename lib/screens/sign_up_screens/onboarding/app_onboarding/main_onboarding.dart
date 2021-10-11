@@ -56,6 +56,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                             child: Container(
                               alignment: Alignment.topRight,
                               child: CustomTextWidget(
+                                isDynamic: false,
                                 width: ScreenUtils.getDesignWidth(30),
                                 height: ScreenUtils.getDesignHeight(18),
                                 text: 'Back',
@@ -68,6 +69,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                             child: Container(
                               alignment: Alignment.topRight,
                               child: CustomTextWidget(
+                                isDynamic: false,
                                 width: ScreenUtils.getDesignWidth(30),
                                 height: ScreenUtils.getDesignHeight(18),
                                 text: 'Next',
@@ -88,6 +90,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40) , right: 24),
                 child: CustomTextWidget(
+                  isDynamic: false,
                   width: ScreenUtils.getDesignWidth(30),
                   height: ScreenUtils.getDesignHeight(18),
                   text: 'Skip',
@@ -112,6 +115,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
               Container(
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40)),
                 child: CustomTextWidget(
+                  isDynamic: false,
                   width: ScreenUtils.getDesignWidth(178),
                   height: ScreenUtils.getDesignHeight(27),
                   text: title,
@@ -121,6 +125,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
               Container(
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20) , left: 24 , right: 24),
                 child: CustomTextWidget(
+                  isDynamic: false,
                   width: ScreenUtils.bodyWidth,
                   text: description,
                   style: TextStyle(fontSize: 14 , color: SUB_TEXT_COLOR , fontFamily: CircularBook , fontWeight: FontWeight.w500),
