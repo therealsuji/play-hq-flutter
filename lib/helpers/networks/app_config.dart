@@ -50,5 +50,13 @@ class APIConfig {
 
   static String get addToWishList => '$_baseUrl' + '/wish-list-games';
 
+  static String getWishListGames() {
+    return '$_baseUrl' + '/wish-list-games';
+  }
+
   static String get addToLibrary => '$_baseUrl' + '/library-games';
+
+  static String getLibraryGames() {
+    return '$_baseUrl' + '/library-games';
+  }
 }

@@ -16,5 +16,6 @@ void setupLocator() {
   locator.registerLazySingleton<PlacesService>(() => PlacesService());
   locator.registerLazySingleton<AuthService>(() => AuthService());
 
+  locator.registerFactory<HomeRepository>(() => HomeDelegate());
   locator.registerFactory<GameDetailsRepository>(() => GameDetailsDelegate());
 }

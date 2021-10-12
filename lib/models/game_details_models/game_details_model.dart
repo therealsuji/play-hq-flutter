@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-GameDetailModel gameDetailsModelFromJson(String str) => GameDetailModel.fromJson(json.decode(str));
+import 'package:play_hq/models/other/platform_model.dart';
 
+GameDetailModel gameDetailsModelFromJson(String str) => GameDetailModel.fromJson(json.decode(str));
 class GameDetailModel {
   final int? id;
   final String? slug;
@@ -89,28 +90,6 @@ class Ratings {
     percent: json["percent"] ?? 0.0,
   );
 }
-
-class Platform {
-  final int? id;
-  final String? name;
-  final String? slug;
-  final int? gamesCount;
-
-  const Platform({
-    required this.id,
-    this.name,
-    this.slug,
-    this.gamesCount,
-  });
-
-  factory Platform.fromJson(Map<String, dynamic> json) => Platform(
-    id: json["platform"]["id"] ?? 0,
-    name: json["platform"]["name"] ?? "",
-    slug: json["platform"]["slug"] ?? "",
-    gamesCount: json["platform"]["games_count"] ?? 0,
-  );
-}
-
 class GenreTagDeveloper {
 
   final int? id;

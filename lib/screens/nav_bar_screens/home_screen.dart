@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_assets.dart';
@@ -20,6 +21,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<HomeScreenModel>(context, listen: false).getWishListGames();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -259,6 +266,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
+            ),
+            Consumer<HomeScreenModel>(
+              builder: (_, model, __) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: model.wishListGames.map((e) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: ScreenUtils.getDesignHeight(20.0),
+                          left: model.wishListGames.indexOf(e) == 0 ? ScreenUtils.getDesignWidth(24.0)
+                              : ScreenUtils.getDesignWidth(15.0),
+                        ),
+                        child: GamesWidget(
+                          gameName: e.title,
+                          releaseDate: e.releaseDate.toString(),
+                          backgroundUrl: e.boxCover,
+                          gradient: GREEN_GRADIENT,
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                );
+              }
             ),
             _learnMoreContainer(),
             Padding(

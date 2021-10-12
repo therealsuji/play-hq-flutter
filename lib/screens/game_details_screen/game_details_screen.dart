@@ -1,11 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/game_details_models/game_details_model.dart';
+import 'package:play_hq/models/other/platform_model.dart';
 import 'package:play_hq/view_models/game_details/game_details_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
