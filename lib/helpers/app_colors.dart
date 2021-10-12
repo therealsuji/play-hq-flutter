@@ -8,6 +8,8 @@ const MAIN_CONTAINER_COLOR = Color(0xff07070B);
 const POP_UP_CONTAINER_COLOR = Color(0xff1B1A26);
 const UNSELECTED_CONTAINER_COLOR = Color(0xff2B2A3D);
 
+const FILL_COLOR = Color(0xffE43A79);
+
 // Text Colors
 const MAIN_TEXT_COLOR = Color(0xffFFFFFF);
 const SUB_TEXT_COLOR = Color(0x0FFC2B7CD);

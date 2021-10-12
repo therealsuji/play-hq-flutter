@@ -57,10 +57,10 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomTextWidget(width: ScreenUtils.getDesignWidth(105) , text: 'Hey Dude!', style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 24 , fontFamily: Neusa ),),
+                        CustomTextWidget(isDynamic: false , width: ScreenUtils.getDesignWidth(105) , text: 'Hey Dude!', style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold , fontSize: 24 , fontFamily: Neusa ),),
                         Container(
                             margin: EdgeInsets.only(top: 7),
-                            child: CustomTextWidget(width: ScreenUtils.bodyWidth, text: "You stumbled upon a Gem. Sign up/in to see what’s there in store. \n You are gonna love it",style: TextStyle(color: SUB_TEXT_COLOR , fontSize: 14 , fontFamily: CircularBook ))),
+                            child: CustomTextWidget(isDynamic: false , width: ScreenUtils.bodyWidth, text: "You stumbled upon a Gem. Sign up/in to see what’s there in store. \n You are gonna love it",style: TextStyle(color: SUB_TEXT_COLOR , fontSize: 14 , fontFamily: CircularBook ))),
                         Container(
                           margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40)),
                           child: Row(
