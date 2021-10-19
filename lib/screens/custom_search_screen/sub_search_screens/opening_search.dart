@@ -23,6 +23,7 @@ class _OpeningSearchState extends State<OpeningSearch> {
         children: [
           Container(
               child: CustomTextWidget(
+                'Search',
                 isDynamic: false,
             height: ScreenUtils.getDesignHeight(30),
             width: ScreenUtils.getDesignWidth(80),
@@ -30,7 +31,6 @@ class _OpeningSearchState extends State<OpeningSearch> {
                 .primaryTextTheme
                 .headline1
                 ?.copyWith(fontFamily: Neusa),
-            text: 'Search',
           )),
           Container(
               margin: EdgeInsets.only(top: 25),
@@ -43,16 +43,16 @@ class _OpeningSearchState extends State<OpeningSearch> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomTextWidget(
+                  'Most Recent',
                   isDynamic: false,
                   height: ScreenUtils.getDesignHeight(30),
                   width: ScreenUtils.getDesignWidth(80),
                   style: Theme.of(context).primaryTextTheme.headline3,
-                  text: 'Most Recent',
                 ),
                 Spacer(),
                 CustomTextWidget(
+                    'Clear All',
                   isDynamic: false,
-                    text: 'Clear All',
                     height: ScreenUtils.getDesignHeight(13),
                     style: TextStyle(
                         fontFamily: CircularBold,
@@ -85,7 +85,9 @@ class _OpeningSearchState extends State<OpeningSearch> {
               Icon(Icons.search , color: SUB_TEXT_COLOR,),
               Container(
                   margin: EdgeInsets.only(left: 15),
-                  child: CustomTextWidget(isDynamic: false , height: ScreenUtils.getDesignHeight(16), width: ScreenUtils.getDesignWidth(85),style: TextStyle(color: SUB_TEXT_COLOR.withOpacity(0.6) , fontSize: 13),text: 'Search Here...',))
+                  child: CustomTextWidget(
+                      'Search Here...',
+                      isDynamic: false , height: ScreenUtils.getDesignHeight(16), width: ScreenUtils.getDesignWidth(85),style: TextStyle(color: SUB_TEXT_COLOR.withOpacity(0.6) , fontSize: 13)))
             ],
           ),
         )

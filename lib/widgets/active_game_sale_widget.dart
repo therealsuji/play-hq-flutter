@@ -37,8 +37,8 @@ class ActiveGameSaleWidget extends StatelessWidget {
               decoration: BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.cover,
-                      image: NetworkImage(
-                        backgroundUrl!,
+                      image: AssetImage(
+                        backgroundUrl!
                       ))),
             ),
             Positioned.fill(

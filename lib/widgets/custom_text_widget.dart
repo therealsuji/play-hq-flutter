@@ -11,12 +11,12 @@ class CustomTextWidget extends StatelessWidget {
   final TextAlign? align;
 
   CustomTextWidget(
+  this.text,
       {this.height,
       this.width,
       this.style,
       this.maxWidth,
       this.minWidth,
-      required this.text,
       required this.isDynamic,
       this.align});
 

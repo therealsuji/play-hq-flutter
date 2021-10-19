@@ -3,6 +3,8 @@ import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication
 import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
+import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
+import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
@@ -34,6 +36,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ChangeNotifierProvider<HomeScreenModel>(
               create: (context) => IHomeScreenModel(),
             ),
+            ChangeNotifierProvider<MainProfileModel>(
+                create: (context) => IMainProfileModel()),
           ],
           child: MainScreen(),
         ),
