@@ -57,24 +57,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
           create: (context) => _implSetupPurchaseAccount,
-          child: SetupPurchaseAccountScreen(),
-        ),
-      );
-    case SEARCH_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<SearchGameModel>(
-              create: (context) => ISearchGamesModel(),
-            ),
-            ChangeNotifierProvider<SetupPurchaseAccountModel>(
-              create: (context) => _implSetupPurchaseAccount,
-            ),
-            ChangeNotifierProvider<SetupSalesModel>(
-              create: (context) => _implSetupSales,
-            ),
-          ],
-          child: CustomSearchScreen(values: settings.arguments as SearchGameScreens),
+          child: SetupPurchaseAccountScreen(gamePicker : settings.arguments as GamePicker),
         ),
       );
     case CREATE_SALE_ROUTE:
@@ -165,6 +148,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
               create: (context) => IMainOnbooardingModel(), child: MainOnboarding()));
+
 
     default:
       return MaterialPageRoute(

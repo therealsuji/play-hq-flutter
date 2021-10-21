@@ -6,7 +6,7 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
-import 'package:play_hq/widgets/custom_game_picker_widget.dart';
+import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 

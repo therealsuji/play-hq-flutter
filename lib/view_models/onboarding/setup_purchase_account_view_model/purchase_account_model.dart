@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 
 abstract class SetupPurchaseAccountModel with ChangeNotifier{
@@ -28,9 +29,9 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   void addReleaseDates(int index , Map<String, dynamic> releaseDates);
 
-  List<GameDetails> get selectedGameList;
+  List<WishListGameDetails> get selectedGameList;
 
-  void addSelectedGame(GameDetails game);
+  void addSelectedGame(WishListGameDetails game);
 
   void performAPIRequest();
 

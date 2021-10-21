@@ -1,3 +1,5 @@
+import 'package:play_hq/models/other/release_date_model.dart';
+
 class UserModel {
   UserModel({
     this.user,
@@ -39,7 +41,7 @@ class UserClass {
   dynamic notificationToken;
   dynamic name;
   List<PrefGenre>? prefGenres;
-  List<DateTime>? prefReleaseDates;
+  List<ReleaseDate>? prefReleaseDates;
   List<PrefPlatform>? prefPlatforms;
   Location? location;
   bool? setupDone;
@@ -57,8 +59,8 @@ class UserClass {
               json["pref_genres"].map((x) => PrefGenre.fromJson(x))),
       prefReleaseDates: json["pref_release_dates"] == null
           ? null
-          : List<DateTime>.from(
-              json["pref_release_dates"].map((x) => DateTime.parse(x))),
+          : List<ReleaseDate>.from(
+              json["pref_release_dates"].map((x) => ReleaseDate.fromJson(x))),
       prefPlatforms: json["pref_platforms"] == null
           ? null
           : List<PrefPlatform>.from(
@@ -79,8 +81,7 @@ class UserClass {
             : List<dynamic>.from(prefGenres!.map((x) => x.toJson())),
         "pref_release_dates": prefReleaseDates == null
             ? null
-            : List<dynamic>.from(prefReleaseDates!.map((x) =>
-                "${x.year.toString().padLeft(4, '0')}-${x.month.toString().padLeft(2, '0')}-${x.day.toString().padLeft(2, '0')}")),
+            : List<dynamic>.from(prefReleaseDates!.map((x) => x.toJson())),
         "pref_platforms": prefPlatforms == null
             ? null
             : List<dynamic>.from(prefPlatforms!.map((x) => x.toJson())),

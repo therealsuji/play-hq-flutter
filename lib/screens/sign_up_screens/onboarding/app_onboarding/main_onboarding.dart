@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
@@ -44,9 +45,9 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 Spacer(),
                 Consumer<MainOnboardingModel>(
                   builder: (context , value , child){
-                    return  Container(
+                    return Container(
                       margin: EdgeInsets.only(bottom: 20 , left: 24 , right: 24),
-                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE),) : Row(
+                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE ,args: GamePicker.PurchaseWishlist),) : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           value.currentPage == 0 ? Container(

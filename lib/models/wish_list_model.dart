@@ -2,8 +2,7 @@ import 'dart:convert';
 
 import 'package:play_hq/models/other/platform_model.dart';
 
-List<WishListModal> wishListModalFromJson(String str) =>
-    List<WishListModal>.from(json.decode(str).map((x) => WishListModal.fromJson(x)));
+List<WishListModal> wishListModalFromJson(String str) => List<WishListModal>.from(json.decode(str).map((x) => WishListModal.fromJson(x)));
 
 class WishListModal {
   

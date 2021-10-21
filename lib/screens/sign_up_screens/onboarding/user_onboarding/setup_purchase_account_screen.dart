@@ -5,15 +5,18 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/onboarding_models/setup_purchase_models/setup_purchase_model.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
+import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/widgets/custom_alert_button.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_dotted_selector_widget.dart';
 import 'package:play_hq/widgets/custom_expander_widget.dart';
+import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
@@ -21,6 +24,11 @@ import 'package:play_hq/widgets/select_item_widget.dart';
 import 'package:provider/provider.dart';
 
 class SetupPurchaseAccountScreen extends StatefulWidget {
+
+  final GamePicker? gamePicker;
+
+  SetupPurchaseAccountScreen({this.gamePicker});
+
   @override
   _SetupPurchaseAccountScreenState createState() =>
       _SetupPurchaseAccountScreenState();
@@ -32,234 +40,251 @@ class _SetupPurchaseAccountScreenState
   Widget build(BuildContext context) {
     return Scaffold(
         body: CustomBody(
-      paddingLeft: 0.0,
-      paddingRight: 0.0,
-      paddingTop: 40.0,
-      body: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 24.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextWidget(
-                    'Let\'s get Started',
-                    isDynamic: false,
-                    height: ScreenUtils.getDesignHeight(30),
-                    width: ScreenUtils.getDesignWidth(180),
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .headline1
-                        ?.copyWith(fontFamily: Neusa),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(top: 5),
-                    child: CustomTextWidget(
-                      'Select what kind of games you like',
-                      isDynamic: false,
-                      height: ScreenUtils.getDesignHeight(20),
-                      width: ScreenUtils.getDesignWidth(220),
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .headline4
-                          ?.copyWith(
+          paddingLeft: 0.0,
+          paddingRight: 0.0,
+          paddingTop: 40.0,
+          body: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextWidget(
+                        'Let\'s get Started',
+                        isDynamic: false,
+                        height: ScreenUtils.getDesignHeight(30),
+                        width: ScreenUtils.getDesignWidth(180),
+                        style: Theme
+                            .of(context)
+                            .primaryTextTheme
+                            .headline1
+                            ?.copyWith(fontFamily: Neusa),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 5),
+                        child: CustomTextWidget(
+                          'Select what kind of games you like',
+                          isDynamic: false,
+                          height: ScreenUtils.getDesignHeight(20),
+                          width: ScreenUtils.getDesignWidth(220),
+                          style: Theme
+                              .of(context)
+                              .primaryTextTheme
+                              .headline4
+                              ?.copyWith(
                             fontFamily: CircularBook,
                             color: Colors.white.withOpacity(0.6),
                           ),
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Consumer<SetupPurchaseAccountModel>(
-              builder: (_, value, __) {
-                return Container(
-                  child: CustomExpanderWidget(
-                    iconData: value.currentGenreState == false
-                        ? Icons.keyboard_arrow_down_rounded
-                        : Icons.keyboard_arrow_up_rounded,
-                    state: value.currentGenreState,
-                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
-                            listen: false)
-                        .changeGenreState(
+                ),
+                Consumer<SetupPurchaseAccountModel>(
+                  builder: (_, value, __) {
+                    return Container(
+                      child: CustomExpanderWidget(
+                        iconData: value.currentGenreState == false
+                            ? Icons.keyboard_arrow_down_rounded
+                            : Icons.keyboard_arrow_up_rounded,
+                        state: value.currentGenreState,
+                        onTap: () =>
                             Provider.of<SetupPurchaseAccountModel>(context,
-                                            listen: false)
-                                        .currentGenreState ==
+                                listen: false)
+                                .changeGenreState(
+                                Provider
+                                    .of<SetupPurchaseAccountModel>(context,
+                                    listen: false)
+                                    .currentGenreState ==
                                     false
-                                ? true
-                                : false),
-                    titleText: 'Genre',
-                    selectedText:
+                                    ? true
+                                    : false),
+                        titleText: 'Genre',
+                        selectedText:
                         value.genreCount == null || value.genreCount == 0
                             ? 'None Selected'
                             : value.genreCount == 5
-                                ? 'Max Selected'
-                                : value.genreCount.toString() + ' Selected',
-                    widget: _genreListWidget(),
-                    textWidth: ScreenUtils.getDesignWidth(40),
-                  ),
-                );
-              },
-            ),
-            Consumer<SetupPurchaseAccountModel>(
-              builder: (_, val, __) {
-                return CustomExpanderWidget(
-                    iconData: val.currentPlatFormState == false
-                        ? Icons.keyboard_arrow_down_rounded
-                        : Icons.keyboard_arrow_up_rounded,
-                    state: val.currentPlatFormState,
-                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
-                            listen: false)
-                        .changePlatformState(
+                            ? 'Max Selected'
+                            : value.genreCount.toString() + ' Selected',
+                        widget: _genreListWidget(),
+                        textWidth: ScreenUtils.getDesignWidth(40),
+                      ),
+                    );
+                  },
+                ),
+                Consumer<SetupPurchaseAccountModel>(
+                  builder: (_, val, __) {
+                    return CustomExpanderWidget(
+                        iconData: val.currentPlatFormState == false
+                            ? Icons.keyboard_arrow_down_rounded
+                            : Icons.keyboard_arrow_up_rounded,
+                        state: val.currentPlatFormState,
+                        onTap: () =>
                             Provider.of<SetupPurchaseAccountModel>(context,
-                                            listen: false)
-                                        .currentPlatFormState ==
+                                listen: false)
+                                .changePlatformState(
+                                Provider
+                                    .of<SetupPurchaseAccountModel>(context,
+                                    listen: false)
+                                    .currentPlatFormState ==
                                     false
-                                ? true
-                                : false),
-                    titleText: 'Platforms',
-                    textWidth: ScreenUtils.getDesignWidth(55),
-                    selectedText: val.totalPlatformCount == null ||
+                                    ? true
+                                    : false),
+                        titleText: 'Platforms',
+                        textWidth: ScreenUtils.getDesignWidth(55),
+                        selectedText: val.totalPlatformCount == null ||
                             val.totalPlatformCount == 0
-                        ? 'None Selected'
-                        : val.totalPlatformCount == 3
+                            ? 'None Selected'
+                            : val.totalPlatformCount == 3
                             ? 'Max Selected'
                             : val.totalPlatformCount.toString() + ' Selected',
-                    widget: GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.all(0.0),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 15.0,
-                        crossAxisSpacing: 15.0,
-                        mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
-                      ),
-                      itemCount: platforms.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => Provider.of<SetupPurchaseAccountModel>(
-                                  context,
-                                  listen: false)
-                              .addSelectedPlatforms(
-                                  platforms.indexOf(platforms[index]),
-                                  platforms[index]),
-                          child: CustomSelectingWidget(
-                            titleText: platforms[index]['name'],
-                            active: val.selectedPlatforms
-                                .contains(platforms.indexOf(platforms[index])),
+                        widget: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.all(0.0),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 15.0,
+                            crossAxisSpacing: 15.0,
+                            mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
                           ),
-                        );
-                      },
-                    ));
-              },
-            ),
-            Consumer<SetupPurchaseAccountModel>(
-              builder: (_, val, __) {
-                return CustomExpanderWidget(
-                    iconData: val.currentReleaseDateState == false
-                        ? Icons.keyboard_arrow_down_rounded
-                        : Icons.keyboard_arrow_up_rounded,
-                    state: val.currentReleaseDateState,
-                    onTap: () => Provider.of<SetupPurchaseAccountModel>(context,
-                            listen: false)
-                        .changeReleaseDateState(
-                            Provider.of<SetupPurchaseAccountModel>(context,
-                                            listen: false)
-                                        .currentReleaseDateState ==
-                                    false
-                                ? true
-                                : false),
-                    titleText: 'Release Dates',
-                    textWidth: ScreenUtils.getDesignWidth(90),
-                    selectedText: val.releaseDateCount == null ||
-                            val.releaseDateCount == 0
-                        ? 'None Selected'
-                        : val.releaseDateCount.toString() + ' Selected',
-                    widget: GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      padding: EdgeInsets.all(0.0),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        mainAxisSpacing: 15.0,
-                        crossAxisSpacing: 15.0,
-                        mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
-                      ),
-                      itemCount: releaseDates.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => Provider.of<SetupPurchaseAccountModel>(
-                                  context,
-                                  listen: false)
-                              .addReleaseDates(
-                                  releaseDates.indexOf(releaseDates[index]),
-                                  releaseDates[index]),
-                          child: CustomSelectingWidget(
-                            titleText: releaseDates[index]['name'],
-                            active: val.selectedReleaseDates.contains(
-                                releaseDates.indexOf(releaseDates[index])),
-                          ),
-                        );
-                      },
-                    ));
-              },
-            ),
-            Container(
-              width: ScreenUtils.bodyWidth,
-              decoration: BoxDecoration(
-                color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
-              ),
-              margin: EdgeInsets.only(top: 30),
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Row(
-                        children: [
-                          CustomTextWidget(
-                            'Any Games you\'d like to buy?',
-                            isDynamic: false,
-                            style: Theme.of(context).primaryTextTheme.headline3,
-                            width: ScreenUtils.getDesignWidth(180),
-                            height: ScreenUtils.getDesignHeight(20),
-                          ),
-                          Spacer(),
-                          CustomTextWidget(
-                            'None Selected',
-                            isDynamic: false,
-                            style: TextStyle(
-                                fontFamily: CircularBold,
-                                foreground: Paint()
-                                  ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
-                                fontSize: 10),
-                            height: ScreenUtils.getDesignHeight(13),
-                          ),
-                        ],
-                      ),
-                    ),
-                    _wishlistGames(),
-                  ],
+                          itemCount: platforms.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () =>
+                                  Provider.of<SetupPurchaseAccountModel>(
+                                      context,
+                                      listen: false)
+                                      .addSelectedPlatforms(
+                                      platforms.indexOf(platforms[index]),
+                                      platforms[index]),
+                              child: CustomSelectingWidget(
+                                titleText: platforms[index]['name'],
+                                active: val.selectedPlatforms
+                                    .contains(
+                                    platforms.indexOf(platforms[index])),
+                              ),
+                            );
+                          },
+                        ));
+                  },
                 ),
-              ),
+                Consumer<SetupPurchaseAccountModel>(
+                  builder: (_, val, __) {
+                    return CustomExpanderWidget(
+                        iconData: val.currentReleaseDateState == false
+                            ? Icons.keyboard_arrow_down_rounded
+                            : Icons.keyboard_arrow_up_rounded,
+                        state: val.currentReleaseDateState,
+                        onTap: () =>
+                            Provider.of<SetupPurchaseAccountModel>(context,
+                                listen: false)
+                                .changeReleaseDateState(
+                                Provider
+                                    .of<SetupPurchaseAccountModel>(context,
+                                    listen: false)
+                                    .currentReleaseDateState ==
+                                    false
+                                    ? true
+                                    : false),
+                        titleText: 'Release Dates',
+                        textWidth: ScreenUtils.getDesignWidth(90),
+                        selectedText: val.releaseDateCount == null ||
+                            val.releaseDateCount == 0
+                            ? 'None Selected'
+                            : val.releaseDateCount.toString() + ' Selected',
+                        widget: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.all(0.0),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 15.0,
+                            crossAxisSpacing: 15.0,
+                            mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
+                          ),
+                          itemCount: releaseDates.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () =>
+                                  Provider.of<SetupPurchaseAccountModel>(
+                                      context,
+                                      listen: false)
+                                      .addReleaseDates(
+                                      releaseDates.indexOf(releaseDates[index]),
+                                      releaseDates[index]),
+                              child: CustomSelectingWidget(
+                                titleText: releaseDates[index]['name'],
+                                active: val.selectedReleaseDates.contains(
+                                    releaseDates.indexOf(releaseDates[index])),
+                              ),
+                            );
+                          },
+                        ));
+                  },
+                ),
+                Container(
+                  width: ScreenUtils.bodyWidth,
+                  margin: EdgeInsets.only(top: 30),
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(horizontal: 24),
+                          child: Row(
+                            children: [
+                              CustomTextWidget(
+                                'Any Games you\'d like to buy?',
+                                isDynamic: false,
+                                style: Theme
+                                    .of(context)
+                                    .primaryTextTheme
+                                    .headline3,
+                                width: ScreenUtils.getDesignWidth(180),
+                                height: ScreenUtils.getDesignHeight(20),
+                              ),
+                              Spacer(),
+                              CustomTextWidget(
+                                'None Selected',
+                                isDynamic: false,
+                                style: TextStyle(
+                                    fontFamily: CircularBold,
+                                    foreground: Paint()
+                                      ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                                    fontSize: 10),
+                                height: ScreenUtils.getDesignHeight(13),
+                              ),
+                            ],
+                          ),
+                        ),
+                        ChangeNotifierProvider.value(
+                          value: Provider.of<SetupPurchaseAccountModel>(context),
+                          child: CustomGamePicker(gameType: GamePicker.PurchaseWishlist,),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                    margin: EdgeInsets.only(
+                        top: ScreenUtils.getDesignHeight(100),
+                        left: 24,
+                        right: 24),
+                    child: CustomButton(
+                      gradient: PRIMARY_GRADIENT,
+                      buttonText: 'Setup Sales',
+                      onPressed: () =>
+                          Provider.of<SetupPurchaseAccountModel>(context , listen: false).performAPIRequest()
+                    ))
+              ],
             ),
-            Container(
-                margin: EdgeInsets.only(
-                    top: ScreenUtils.getDesignHeight(100), left: 24, right: 24),
-                child: CustomButton(
-                  gradient: PRIMARY_GRADIENT,
-                  buttonText: 'Setup Sales',
-                  onPressed: () => locator<NavigationService>()
-                      .pushNamed(SETUP_SALES_ACCOUNT_ROUTE),
-                ))
           ],
-        ),
-      ],
-    ));
+        ));
   }
 
   /*showPlatformBottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) async {
@@ -301,27 +326,27 @@ class _SetupPurchaseAccountScreenState
                 return val.selectedGameList.isEmpty
                     ? Container()
                     : Expanded(
-                        child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 15,
-                              );
-                            },
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: val.selectedGameList.length,
-                            itemBuilder: (context, index) {
-                              return GamesWidget(
-                                gameName: val.selectedGameList[index].name,
-                                color: PRIMARY_COLOR,
-                                backgroundUrl:
-                                    val.selectedGameList[index].image,
-                                releaseDate:
-                                    val.selectedGameList[index].released,
-                              );
-                            }),
-                      );
+                  child: ListView.separated(
+                      separatorBuilder:
+                          (BuildContext context, int index) {
+                        return SizedBox(
+                          width: 15,
+                        );
+                      },
+                      physics: BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: val.selectedGameList.length,
+                      itemBuilder: (context, index) {
+                        return GamesWidget(
+                          gameName: val.selectedGameList[index].gameTitle,
+                          color: PRIMARY_COLOR,
+                          backgroundUrl:
+                          val.selectedGameList[index].boxCover,
+                          releaseDate:
+                          val.selectedGameList[index].releaseDate,
+                        );
+                      }),
+                );
               },
             ),
           )
@@ -461,7 +486,7 @@ class _SetupPurchaseAccountScreenState
                           height: ScreenUtils.getDesignHeight(60),
                           width: ScreenUtils.getDesignWidth(60),
                           child:
-                              Image.asset('assets/images/confused-emoji.png'),
+                          Image.asset('assets/images/confused-emoji.png'),
                         ),
                         Container(
                           margin: EdgeInsets.only(top: 25),

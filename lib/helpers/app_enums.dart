@@ -2,11 +2,18 @@ enum EmailValidType { EMAIL_VALID, EMAIL_NOT_VALID, EMAIL_NOT_SET }
 
 enum LOGIN_PROVIDER { GOOGLE, APPLE, FACEBOOK }
 
-enum HttpAction { GET, POST, PUT, PATCH, POST_ENCODED_URL, DELETE}
+enum HttpAction { GET, POST, PUT, PATCH, POST_ENCODED_URL, DELETE }
 
 enum SearchScreenStates { EMPTY, SUCCESS, NOTHING, LOADING, FAILED }
 
-enum SearchGameScreens { SetupPurchase, SetupSales, CreateSales }
+enum SearchGameScreens { SetupPurchase, SetupSales, CreateSales , ProfileWishList , ProfileLibrary }
+
+enum GamePicker {
+  PurchaseWishlist,
+  SalesLibrary,
+  ProfileWishlist,
+  ProfileLibrary
+}
 
 enum PlatformSelection { PlayStation, Xbox, Nintendo }
 

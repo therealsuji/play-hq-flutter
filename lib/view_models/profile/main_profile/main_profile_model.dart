@@ -2,15 +2,12 @@
 
 
 import 'package:flutter/cupertino.dart';
+import 'package:play_hq/models/search_model/app_search_game_model.dart';
 
 abstract class MainProfileModel with ChangeNotifier {
 
-  ScrollController get scroller;
+  List<GameDetails> get selectedGameList;
 
-  double get height;
-
-  double get width;
-
-  void scrollListner();
+  void addSelectedGame(GameDetails game);
 
 }
