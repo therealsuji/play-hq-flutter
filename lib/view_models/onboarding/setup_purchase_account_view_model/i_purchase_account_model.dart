@@ -30,7 +30,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> _selectedReleaseDates = [];
   List<WishListGameDetails> _selectedGames = [];
 
-  final _addToWishListAPI = locator<SetupPurchaseRepository>();
+  final _setupPurchasesAPI = locator<SetupPurchaseRepository>();
   final _eventBus = locator<EventBus>();
 
 
@@ -154,12 +154,19 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
       releaseDates: _releaseDateList
     );
 
+    var gamePreferances = {
+      "genres" : _selectedGenres,
+      "release_dates" : _releaseDateList,
+      "platforms" : _selectedPlatforms
+    };
+
     var body = {
       "list": _selectedGames,
     };
 
     try {
-      await _addToWishListAPI.setGameWishList(body);
+      await _setupPurchasesAPI.setGameWishList(body);
+      await _setupPurchasesAPI.setGamePreferences(gamePreferances);
       _eventBus.fire(LoadingEvent.hide());
       locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
     } catch (e) {

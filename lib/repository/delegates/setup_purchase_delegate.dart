@@ -16,13 +16,30 @@ import '../../service_locator.dart';
 class SetupPurchaseDelegate extends SetupPurchaseRepository {
 
   final _networkCalls = Network.shared;
-
-  late final Response response;
-
+  
   @override
   Future<void> setGameWishList(Map<String, dynamic> body) async {
     try{
-      response = await _networkCalls.performRequest(APIConfig.addWishListGames, HttpAction.POST, body: body);
+      await _networkCalls.performRequest(APIConfig.addWishListGames, HttpAction.POST, body: body);
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      print('error ' + e.toString());
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+    }
+  }
+
+  @override
+  Future<void> setGamePreferences(Map<String, dynamic> body) async {
+    try{
+      await _networkCalls.performRequest(APIConfig.setupPurchase, HttpAction.PATCH, body: body);
     }
     on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
