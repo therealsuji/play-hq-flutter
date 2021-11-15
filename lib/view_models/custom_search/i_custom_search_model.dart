@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/networks/app_network.dart';
+import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 
@@ -9,9 +10,11 @@ class ICustomSearchModel extends CustomSearchModel{
 
   bool _isClicked = false;
   List<GameDetails> _searchedGames = [];
+  List<WishListGameDetails> _wishListGames = [];
   final _networkCalls = Network.shared;
   late SearchGame value;
   SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
+  SearchGameScreens? _gameScreens;
   Timer? _debounce;
 
   @override
@@ -55,6 +58,16 @@ class ICustomSearchModel extends CustomSearchModel{
   @override
   // TODO: implement states
   SearchScreenStates get states => _screenStates;
+
+  @override
+  // TODO: implement wishListGameList
+  List<WishListGameDetails> get wishListGameList => _wishListGames;
+
+  @override
+  void addGameType(SearchGameScreens states) {
+    _gameScreens = states;
+    notifyListeners();
+  }
 
 
 

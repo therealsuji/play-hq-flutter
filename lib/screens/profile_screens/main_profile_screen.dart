@@ -5,7 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
+import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:provider/provider.dart';
 
 class MainProfileScreen extends StatefulWidget {
   @override
@@ -13,83 +16,92 @@ class MainProfileScreen extends StatefulWidget {
 }
 
 class _MainProfileScreenState extends State<MainProfileScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          top: ScreenUtils.getDesignHeight(50), left: 24, right: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(child: SvgPicture.asset('assets/icons/settings.svg')),
-              Stack(
+          top: ScreenUtils.getDesignHeight(50)),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              margin: EdgeInsets.only(right: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                      margin:
-                          EdgeInsets.only(left: ScreenUtils.getDesignWidth(30)),
-                      child: SvgPicture.asset('assets/icons/notification.svg')),
-                  Positioned(
-                    top: 0,
-                    right: 0,
-                    child: Container(
-                      height: 11,
-                      width: 11,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.green),
-                    ),
+                  Container(child: SvgPicture.asset('assets/icons/settings.svg')),
+                  Stack(
+                    children: [
+                      Container(
+                          margin:
+                              EdgeInsets.only(left: ScreenUtils.getDesignWidth(30)),
+                          child: SvgPicture.asset('assets/icons/notification.svg')),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: Container(
+                          height: 11,
+                          width: 11,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.green),
+                        ),
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          ),
-          _userDetails(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEZrATmgHOi5ls0YCCQBTkocia_atSw0X-Q&usqp=CAU',
-              'Damsara Perera',
-              '@Damasu007'),
-          Container(
-            margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-            child: CustomTextWidget(
-              isDynamic: false,
-              style: Theme.of(context).primaryTextTheme.headline3,
-              width: ScreenUtils.getDesignWidth(111),
-              text: 'Subscription Plan',
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 15),
-            child: _subscriptionPlan('Pro Gamer Pack',
-                'assets/images/xbox_background.png', '16 Days Remaining', 2, 3),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                _subButtons('View History', false),
-                _subButtons('Get Add Ons', true)
-              ],
+            _userDetails(
+                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEZrATmgHOi5ls0YCCQBTkocia_atSw0X-Q&usqp=CAU',
+                'Damsara Perera',
+                '@Damasu007'),
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
+              child: CustomTextWidget(
+                'Subscription Plan',
+                isDynamic: false,
+                style: Theme.of(context).primaryTextTheme.headline3,
+                width: ScreenUtils.getDesignWidth(111),
+              ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CustomTextWidget(
-                  isDynamic: false,
-                  style: Theme.of(context).primaryTextTheme.headline3,
-                  width: ScreenUtils.getDesignWidth(111),
-                  text: 'Library Games',
-                ),
-                Spacer(),
-                CustomTextWidget(text: 'View All', isDynamic: false , width: ScreenUtils.getDesignWidth(40),style: TextStyle(fontSize: 10 , fontFamily: CircularBook , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR, fontWeight: FontWeight.w700),)
-              ],
+            Container(
+              margin: EdgeInsets.only(top: 15 , left: 24 , right: 24),
+              child: _subscriptionPlan('Pro Gamer Pack',
+                  'assets/images/xbox_background.png', '16 Days Remaining', 2, 3),
             ),
-          ),
-        ],
+            Container(
+              margin: EdgeInsets.only(top: 15 , left: 24 , right: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  _subButtons('View History', false),
+                  _subButtons('Get Add Ons', true)
+                ],
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomTextWidget(
+                    'Library Games',
+                    isDynamic: false,
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                    width: ScreenUtils.getDesignWidth(111),
+                  ),
+                  Spacer(),
+                  CustomTextWidget('View All', isDynamic: false , width: ScreenUtils.getDesignWidth(40),style: TextStyle(fontSize: 10 , fontFamily: CircularBook , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR, fontWeight: FontWeight.w700),)
+                ],
+              ),
+            ),
+            ChangeNotifierProvider.value(
+                value: Provider.of<MainProfileModel>(context),
+                child: CustomGamePicker())
+          ],
+        ),
       ),
     );
   }
@@ -171,7 +183,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTextWidget(
-                text: name,
+                name,
                 isDynamic: true,
                 style: Theme.of(context).primaryTextTheme.headline2,
                 maxWidth: ScreenUtils.getDesignWidth(180),
@@ -180,7 +192,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
               Container(
                 margin: EdgeInsets.only(top: 3),
                 child: CustomTextWidget(
-                  text: remaining,
+                  remaining,
                   isDynamic: true,
                   maxWidth: ScreenUtils.getDesignWidth(180),
                   minWidth: ScreenUtils.getDesignWidth(40),
@@ -193,7 +205,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
               ),
               Container(
                 margin: EdgeInsets.only(top: 8),
-                height: 1.5,
+                height: 1,
                 width: ScreenUtils.bodyWidth,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
@@ -219,9 +231,9 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                       ),
                       child: Center(
                         child: CustomTextWidget(
+                          'Change Pack',
                           isDynamic: false,
                           width: ScreenUtils.getDesignWidth(55),
-                          text: 'Change Pack',
                           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white , fontSize: 9 , fontFamily: CircularBook),
                         ),
                       ),
@@ -239,11 +251,11 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextWidget(text: stat, isDynamic: true , minWidth: ScreenUtils.getDesignWidth(20),maxWidth: ScreenUtils.getDesignWidth(60),style: TextStyle(fontSize: 12 , fontFamily: CircularBook , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR, fontWeight: FontWeight.w700),
+          CustomTextWidget(stat, isDynamic: true , minWidth: ScreenUtils.getDesignWidth(20),maxWidth: ScreenUtils.getDesignWidth(60),style: TextStyle(fontSize: 12 , fontFamily: CircularBook , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR, fontWeight: FontWeight.w700),
           ),
           Container(
               margin: EdgeInsets.only(top: 2),
-              child: CustomTextWidget(text: amount.toString() + ' Remaining', isDynamic: true , minWidth: ScreenUtils.getDesignWidth(20),maxWidth: ScreenUtils.getDesignWidth(100) , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , color: Colors.white, fontWeight: FontWeight.bold) ,))
+              child: CustomTextWidget(amount.toString() + ' Remaining', isDynamic: true , minWidth: ScreenUtils.getDesignWidth(20),maxWidth: ScreenUtils.getDesignWidth(100) , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , color: Colors.white, fontWeight: FontWeight.bold) ,))
         ],
       ),
     );

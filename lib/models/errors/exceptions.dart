@@ -36,7 +36,7 @@ class PlayHQGeneralException implements PlayHQException {
   Duration? duration;
 
   @override
-  String? message = "Bad request. Please retry!";
+  String? message = "";
 
   @override
   void Function()? onTap;

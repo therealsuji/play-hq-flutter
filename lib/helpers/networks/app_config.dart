@@ -32,6 +32,8 @@ class APIConfig {
 
   static String setupPurchase = '$_baseUrl' + "/user/set-preferences";
 
+  static String addWishListGames = '$_baseUrl' + "/wish-list-games/set";
+
   static String getGenres = '$_rawgAPI' +
       '/genres?ordering=&page=1&page_size=30&' +
       'key=$_RAWG_API_KEY';

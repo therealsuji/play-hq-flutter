@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
@@ -44,9 +45,9 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 Spacer(),
                 Consumer<MainOnboardingModel>(
                   builder: (context , value , child){
-                    return  Container(
+                    return Container(
                       margin: EdgeInsets.only(bottom: 20 , left: 24 , right: 24),
-                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE),) : Row(
+                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE ,args: GamePicker.PurchaseWishlist),) : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           value.currentPage == 0 ? Container(
@@ -56,10 +57,10 @@ class _MainOnboardingState extends State<MainOnboarding> {
                             child: Container(
                               alignment: Alignment.topRight,
                               child: CustomTextWidget(
+                                'Back',
                                 isDynamic: false,
                                 width: ScreenUtils.getDesignWidth(30),
                                 height: ScreenUtils.getDesignHeight(18),
-                                text: 'Back',
                                 style: TextStyle(fontFamily: CircularBook , fontWeight: FontWeight.w700, foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR , fontSize: 14),
                               ),
                             ),
@@ -69,10 +70,10 @@ class _MainOnboardingState extends State<MainOnboarding> {
                             child: Container(
                               alignment: Alignment.topRight,
                               child: CustomTextWidget(
+                                'Next',
                                 isDynamic: false,
                                 width: ScreenUtils.getDesignWidth(30),
                                 height: ScreenUtils.getDesignHeight(18),
-                                text: 'Next',
                                 style: TextStyle(fontFamily: CircularBook , fontWeight: FontWeight.w700 , fontSize: 14 , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,),
                               ),
                             ),
@@ -90,10 +91,10 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40) , right: 24),
                 child: CustomTextWidget(
+                  'Skip',
                   isDynamic: false,
                   width: ScreenUtils.getDesignWidth(30),
                   height: ScreenUtils.getDesignHeight(18),
-                  text: 'Skip',
                   style: TextStyle(fontFamily: CircularBook , fontWeight: FontWeight.w700, color: Colors.white , fontSize: 14),
                 ),
               ),
@@ -115,19 +116,19 @@ class _MainOnboardingState extends State<MainOnboarding> {
               Container(
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40)),
                 child: CustomTextWidget(
+                  title,
                   isDynamic: false,
                   width: ScreenUtils.getDesignWidth(178),
                   height: ScreenUtils.getDesignHeight(27),
-                  text: title,
                   style: TextStyle(fontFamily: Neusa , fontWeight: FontWeight.bold , color: Colors.white , fontSize: 16),
                 ),
               ),
               Container(
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20) , left: 24 , right: 24),
                 child: CustomTextWidget(
+                  description,
                   isDynamic: false,
                   width: ScreenUtils.bodyWidth,
-                  text: description,
                   style: TextStyle(fontSize: 14 , color: SUB_TEXT_COLOR , fontFamily: CircularBook , fontWeight: FontWeight.w500),
                   align: TextAlign.center,
                 ),

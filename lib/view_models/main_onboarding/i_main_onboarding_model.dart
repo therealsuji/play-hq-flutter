@@ -7,7 +7,6 @@ class IMainOnbooardingModel extends MainOnboardingModel {
   int _currentPage = 0;
 
   @override
-  // TODO: implement currentPage
   int get currentPage => _currentPage;
 
   @override

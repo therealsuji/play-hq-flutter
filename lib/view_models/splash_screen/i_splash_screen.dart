@@ -16,7 +16,7 @@ class ISplashModel extends SplashScreenModel {
 
   @override
   void navigateSignUpScreen() {
-    locator<NavigationService>().pushReplacement(MAIN_SCREEN);
+    locator<NavigationService>().pushReplacement(AUTH_SCREEN);
   }
 
   @override

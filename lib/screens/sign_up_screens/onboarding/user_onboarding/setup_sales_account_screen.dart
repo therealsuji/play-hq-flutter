@@ -39,6 +39,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextWidget(
+                      'Almost There! ',
                       isDynamic: false,
                       height: ScreenUtils.getDesignHeight(30),
                       width: ScreenUtils.getDesignWidth(180),
@@ -46,11 +47,11 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                           .primaryTextTheme
                           .headline1
                           ?.copyWith(fontFamily: Neusa),
-                      text: 'Almost There! ',
                     ),
                     Container(
                         margin: EdgeInsets.only(top: 5),
                         child: CustomTextWidget(
+                          'We just wannt a few more details',
                           isDynamic: false,
                           height: ScreenUtils.getDesignHeight(20),
                           width: ScreenUtils.getDesignWidth(220),
@@ -60,7 +61,6 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                               ?.copyWith(
                                   fontFamily: CircularBook,
                                   color: Colors.white.withOpacity(0.6)),
-                          text: 'We just wannt a few more details',
                         )),
                   ],
                 ),
@@ -72,16 +72,16 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
             child: Row(
               children: [
                 CustomTextWidget(
+                  'Any Games you\'d like to buy?',
                   isDynamic: false,
-                  text: 'Any Games you\'d like to buy?',
                   style: Theme.of(context).primaryTextTheme.headline3,
                   width: ScreenUtils.getDesignWidth(180),
                   height: ScreenUtils.getDesignHeight(20),
                 ),
                 Spacer(),
                 CustomTextWidget(
+                  'None Selected',
                   isDynamic: false,
-                  text: 'None Selected',
                   style: TextStyle(
                       fontFamily: CircularBold,
                       foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
@@ -95,8 +95,8 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
           Container(
               margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
               child: CustomTextWidget(
+                'Enter your mobile number',
                 isDynamic: false,
-                text: 'Enter your mobile number',
                 style: Theme.of(context).primaryTextTheme.headline3,
                 width: ScreenUtils.getDesignWidth(180),
                 height: ScreenUtils.getDesignHeight(20),
@@ -111,8 +111,8 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
           Container(
               margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
               child: CustomTextWidget(
+                'Let us know your location',
                 isDynamic: false,
-                text: 'Let us know your location',
                 style: Theme.of(context).primaryTextTheme.headline3,
                 width: ScreenUtils.getDesignWidth(180),
                 height: ScreenUtils.getDesignHeight(20),
@@ -120,8 +120,8 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
           Container(
             margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(10)),
             child: CustomTextWidget(
+              'Why we need it',
               isDynamic: false,
-              text: 'Why we need it',
               style: TextStyle(
                   fontFamily: CircularBold,
                   foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
@@ -144,10 +144,10 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       width: ScreenUtils.getDesignWidth(110),
                       margin: EdgeInsets.only(left: 15),
                       child: CustomTextWidget(
-                        isDynamic: true,
-                        text: value.selectedAddress.isEmpty
+                        value.selectedAddress.isEmpty
                             ? 'Add your location'
                             : value.selectedAddress,
+                        isDynamic: true,
                         style: TextStyle(
                             fontFamily: CircularBook,
                             fontWeight: FontWeight.w500,
@@ -157,7 +157,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       ),
                     );
                   },
-          ),
+                ),
                 Spacer(),
                 GestureDetector(
                   onTap: () => locator<NavigationService>()
@@ -173,10 +173,10 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       builder: (_, value, __) {
                         return Center(
                           child: CustomTextWidget(
-                            isDynamic: true,
-                            text: value.selectedAddress.isEmpty
+                            value.selectedAddress.isEmpty
                                 ? 'Add Here'
                                 : 'Change Now',
+                            isDynamic: true,
                             style: TextStyle(
                                 fontFamily: CircularBook,
                                 fontWeight: FontWeight.bold,

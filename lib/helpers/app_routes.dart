@@ -3,6 +3,8 @@ import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication
 import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
+import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
+import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
@@ -34,6 +36,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ChangeNotifierProvider<HomeScreenModel>(
               create: (context) => IHomeScreenModel(),
             ),
+            ChangeNotifierProvider<MainProfileModel>(
+                create: (context) => IMainProfileModel()),
           ],
           child: MainScreen(),
         ),
@@ -53,24 +57,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
           create: (context) => _implSetupPurchaseAccount,
-          child: SetupPurchaseAccountScreen(),
-        ),
-      );
-    case SEARCH_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<SearchGameModel>(
-              create: (context) => ISearchGamesModel(),
-            ),
-            ChangeNotifierProvider<SetupPurchaseAccountModel>(
-              create: (context) => _implSetupPurchaseAccount,
-            ),
-            ChangeNotifierProvider<SetupSalesModel>(
-              create: (context) => _implSetupSales,
-            ),
-          ],
-          child: CustomSearchScreen(values: settings.arguments as SearchGameScreens),
+          child: SetupPurchaseAccountScreen(gamePicker : settings.arguments as GamePicker),
         ),
       );
     case CREATE_SALE_ROUTE:
@@ -161,6 +148,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
               create: (context) => IMainOnbooardingModel(), child: MainOnboarding()));
+
 
     default:
       return MaterialPageRoute(

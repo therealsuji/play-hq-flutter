@@ -8,12 +8,10 @@ class ICustomAddressSearchModel extends CustomAddressSearchModel {
   List<PlacesAutoCompleteResult> _autoCompleteResults = [];
 
   @override
-  // TODO: implement autoCompleteResults
   List<PlacesAutoCompleteResult> get autoCompleteResults => _autoCompleteResults;
 
   @override
   void setFormStatus(String val) {
-    // TODO: implement setFormStatus
     _getAutoCompleteResults(val);
   }
 

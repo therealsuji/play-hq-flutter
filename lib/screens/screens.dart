@@ -6,7 +6,6 @@ export 'package:play_hq/screens/order_tracking_screens/order_tracking_screen.dar
 export 'package:play_hq/screens/payment/payment_screen.dart';
 export 'package:play_hq/screens/sale_details/sale_details_screen.dart';
 export 'package:play_hq/screens/trades/create_trade_screen.dart';
-export 'package:play_hq/screens/search_screen/custom_search_screen.dart';
 export 'package:play_hq/screens/game_details_screen/game_details_screen.dart';
 export 'package:play_hq/screens/main_screen/main_screen.dart';
 export 'package:play_hq/screens/nav_bar_screens/discover_screen.dart';
