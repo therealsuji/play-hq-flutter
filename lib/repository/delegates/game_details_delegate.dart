@@ -2,17 +2,18 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:play_hq/service_locator.dart';
+
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_network.dart';
-
 import 'package:play_hq/helpers/networks/app_config.dart';
+
 import 'package:play_hq/models/errors/exceptions.dart';
-import 'package:play_hq/models/game_details_models/game_details_model.dart' as details;
-import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart' as sc;
-import 'package:play_hq/models/game_details_models/get_game_details.dart';
-import 'package:play_hq/repository/clients/game_details_repository.dart';
-import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/base_managers/error.dart';
+import 'package:play_hq/models/game_details_models/get_game_details.dart';
+import 'package:play_hq/models/game_details_models/game_details_model.dart';
+import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
+import 'package:play_hq/repository/repositories.dart' show GameDetailsRepository;
 
 class GameDetailsDelegate extends GameDetailsRepository {
 
@@ -26,8 +27,8 @@ class GameDetailsDelegate extends GameDetailsRepository {
       var detailsResponse = await _networkCalls.performRequest(APIConfig.gameDetails(id), HttpAction.GET);
       var screenshotsResponse = await _networkCalls.performRequest(APIConfig.gameScreenshots(id), HttpAction.GET);
 
-      var gameDetails = await compute(details.gameDetailsModelFromJson, detailsResponse.body);
-      var screenshots = await compute(sc.gameScreenshotModalFromJson, screenshotsResponse.body);
+      var gameDetails = await compute(gameDetailsModelFromJson, detailsResponse.body);
+      var screenshots = await compute(gameScreenshotModalFromJson, screenshotsResponse.body);
 
       return GetGameDetails(
         gameDetails: gameDetails,
