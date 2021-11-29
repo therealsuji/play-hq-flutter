@@ -1,10 +1,8 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
+import 'package:play_hq/models/common_models/release_date_model.dart';
+import 'package:play_hq/models/common_models/user_games_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/models/onboarding_models/setup_purchase_models/setup_purchase_model.dart';
-import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
-import 'package:play_hq/models/other/release_date_model.dart';
 import 'package:play_hq/repository/clients/setup_purchase_repository.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
@@ -28,7 +26,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
-  List<WishListGameDetails> _selectedGames = [];
+  List<UserGamesModel> _selectedGames = [];
 
   final _setupPurchasesAPI = locator<SetupPurchaseRepository>();
   final _eventBus = locator<EventBus>();
@@ -125,13 +123,13 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> get selectedReleaseDates => _selectedReleaseDates;
 
   @override
-  void addSelectedGame(WishListGameDetails game) {
+  void addSelectedGame(UserGamesModel game) {
     _selectedGames.add(game);
     notifyListeners();
   }
 
   @override
-  List<WishListGameDetails> get selectedGameList => _selectedGames;
+  List<UserGamesModel> get selectedGameList => _selectedGames;
 
   @override
   int? get genreCount => _genreCount;
@@ -148,11 +146,6 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   @override
   void performAPIRequest() async{
     _eventBus.fire(LoadingEvent.show());
-    SetupPurchaseModel model = SetupPurchaseModel(
-      genres: _genreList,
-      platforms:  _platformList,
-      releaseDates: _releaseDateList
-    );
 
     var gamePreferances = {
       "genres" : _selectedGenres,

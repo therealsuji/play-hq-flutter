@@ -1,4 +1,9 @@
-import 'package:play_hq/models/other/release_date_model.dart';
+
+import 'dart:convert';
+
+import 'package:play_hq/models/common_models/release_date_model.dart';
+
+UserModel userDetailsfromModel(String str) => UserModel.fromJson(json.decode(str));
 
 class UserModel {
   UserModel({

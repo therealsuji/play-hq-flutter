@@ -16,7 +16,7 @@ import '../../service_locator.dart';
 class SetupPurchaseDelegate extends SetupPurchaseRepository {
 
   final _networkCalls = Network.shared;
-  
+
   @override
   Future<void> setGameWishList(Map<String, dynamic> body) async {
     try{

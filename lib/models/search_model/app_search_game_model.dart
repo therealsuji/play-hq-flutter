@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import 'package:play_hq/models/common_models/genres_model.dart';
 
 part 'app_search_game_model.g.dart';
 
@@ -30,6 +31,9 @@ class GameDetails extends HiveObject {
 
   @HiveField(4)
   List<PlatformElement>? platforms;
+  
+  @HiveField(5)
+  List<Genres>? genres;
 
   GameDetails.fromJson(Map<String, dynamic> json) {
     name = json['name'] == null ? null : json['name'];
@@ -37,20 +41,12 @@ class GameDetails extends HiveObject {
     image = json['background_image'] == null ? null : json['background_image'];
     id = json['id'] == null ? null : json['id'];
     platforms = List<PlatformElement>.from(json["platforms"].map((x) => PlatformElement.fromJson(x)));
+    genres = List<Genres>.from(json["genres"].map((x) => Genres.fromJson(x)));
   }
 
-  GameDetails({this.name, this.released, this.image, this.id , this.platforms});
+  GameDetails({this.name, this.released, this.image, this.id , this.platforms , this.genres});
 }
 
-class Genres {
-  String? _name;
-
-  Genres.fromJson(Map<String, dynamic> json) {
-    _name = json['name'] == null ? null : json['name'];
-  }
-
-  String? get name => _name;
-}
 
 class PlatformElement {
   PlatformElement({

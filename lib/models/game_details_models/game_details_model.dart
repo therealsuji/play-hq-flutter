@@ -1,6 +1,7 @@
 import 'dart:convert';
 
-import 'package:play_hq/models/other/platform_model.dart';
+import 'package:play_hq/models/common_models/platform_model.dart';
+
 
 GameDetailModel gameDetailsModelFromJson(String str) => GameDetailModel.fromJson(json.decode(str));
 class GameDetailModel {

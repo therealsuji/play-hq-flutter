@@ -9,8 +9,9 @@ class CustomTextfieldWidget extends StatelessWidget {
   final String? errorText;
   final TextInputType? type;
   final String? hintText;
+  final String? labelText;
 
-  CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type , this.hintText});
+  CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type , this.hintText , this.labelText});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +27,7 @@ class CustomTextfieldWidget extends StatelessWidget {
           fontSize: 16,
         ),
         obscureText: hideText!,
+        initialValue: labelText ?? '',
         keyboardType: type,
         maxLines: type == TextInputType.multiline ? 4 : null,
         minLines: type == TextInputType.multiline ? 4 : null,

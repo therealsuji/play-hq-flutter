@@ -2,46 +2,21 @@
 
 import 'dart:convert';
 
-WishListGames wishListGamesModelFromJson(String str) => WishListGames.fromJson(json.decode(str));
+import 'package:play_hq/models/common_models/user_games_model.dart';
+
+List<WishListGames> wishListGamesFromJson(String str) => List<WishListGames>.from(json.decode(str).map((x) => WishListGames.fromJson(x)));
 
 class WishListGames {
-  List<WishListGameDetails>? gameList;
+  WishListGames({
+    required this.game,
+    required this.platform,
+  });
 
-  WishListGames({this.gameList});
+  UserGamesModel game;
+  int platform;
 
   factory WishListGames.fromJson(Map<String, dynamic> json) => WishListGames(
-    gameList: List<WishListGameDetails>.from(json["list"].map((x) => WishListGameDetails.fromJson(x))),
+    game: UserGamesModel.fromJson(json["game"]),
+    platform: json["platform"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "list": List<dynamic>.from(gameList!.map((x) => x.toJson())),
-  };
-}
-
-class WishListGameDetails {
-
-  String? gameTitle;
-  String? boxCover;
-  String? releaseDate;
-  int? id;
-  List<int>? platforms;
-
-  WishListGameDetails({this.gameTitle , this.boxCover , this.releaseDate , this.id ,  this.platforms});
-
-  factory WishListGameDetails.fromJson(Map<String, dynamic> json) => WishListGameDetails(
-    gameTitle: json["title"],
-    boxCover: json["box_cover"],
-    releaseDate: json["release_date"],
-    id: json["api_id"],
-    platforms: List<int>.from(json["platforms"].map((x) => x)),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "title": gameTitle,
-    "box_cover": boxCover,
-    "release_date": releaseDate,
-    "api_id": id,
-    "platforms": List<dynamic>.from(platforms!.map((x) => x)),
-  };
-
 }

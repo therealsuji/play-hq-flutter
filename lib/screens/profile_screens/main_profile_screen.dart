@@ -5,10 +5,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../service_locator.dart';
 
 class MainProfileScreen extends StatefulWidget {
   @override
@@ -31,7 +35,9 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(child: SvgPicture.asset('assets/icons/settings.svg')),
+                  GestureDetector(
+                      onTap: () => locator<NavigationService>().pushNamed(SETTINGS_SCREEN),
+                      child: Container(child: SvgPicture.asset('assets/icons/settings.svg'))),
                   Stack(
                     children: [
                       Container(
@@ -97,9 +103,6 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 ],
               ),
             ),
-            ChangeNotifierProvider.value(
-                value: Provider.of<MainProfileModel>(context),
-                child: CustomGamePicker())
           ],
         ),
       ),

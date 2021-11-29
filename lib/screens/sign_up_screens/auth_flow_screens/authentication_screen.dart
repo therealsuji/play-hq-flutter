@@ -8,8 +8,10 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/services/nav_service.dart';
+import 'package:play_hq/view_models/authentication/authentication_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:provider/provider.dart';
 
 class AuthenticationScreen extends StatefulWidget {
   @override
@@ -65,43 +67,47 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                 isDynamic: false , width: ScreenUtils.bodyWidth,style: TextStyle(color: SUB_TEXT_COLOR , fontSize: 14 , fontFamily: CircularBook ))),
                         Container(
                           margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              GestureDetector(
-                                onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.GOOGLE),
-                                child: Container(
-                                  height: ScreenUtils.getDesignHeight(99),
-                                  width: ScreenUtils.getDesignWidth(99),
-                                  decoration: BoxDecoration(
-                                    color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(5.0)
+                          child: Consumer<AuthenticationModel>(
+                            builder: (_ , val , __){
+                              return Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () => val.socialLogin(SocialLogin.GOOGLE),
+                                    child: Container(
+                                      height: ScreenUtils.getDesignHeight(99),
+                                      width: ScreenUtils.getDesignWidth(99),
+                                      decoration: BoxDecoration(
+                                          color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
+                                          borderRadius: BorderRadius.circular(5.0)
+                                      ),
+                                      child: Image.asset('assets/images/google-logo.png'),
+                                    ),
                                   ),
-                                  child: Image.asset('assets/images/google-logo.png'),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () => locator<AuthService>().login(LOGIN_PROVIDER.FACEBOOK),
-                                child: Container(
-                                  height: ScreenUtils.getDesignHeight(99),
-                                  width: ScreenUtils.getDesignWidth(99),
-                                  decoration: BoxDecoration(
-                                      color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
-                                      borderRadius: BorderRadius.circular(5.0)
+                                  GestureDetector(
+                                    onTap: () => locator<AuthService>().login(SocialLogin.FACEBOOK),
+                                    child: Container(
+                                      height: ScreenUtils.getDesignHeight(99),
+                                      width: ScreenUtils.getDesignWidth(99),
+                                      decoration: BoxDecoration(
+                                          color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
+                                          borderRadius: BorderRadius.circular(5.0)
+                                      ),
+                                      child: Image.asset('assets/images/facebook-logo.png'),
+                                    ),
                                   ),
-                                  child: Image.asset('assets/images/facebook-logo.png'),
-                                ),
-                              ),
-                              Container(
-                                height: ScreenUtils.getDesignHeight(99),
-                                width: ScreenUtils.getDesignWidth(99),
-                                decoration: BoxDecoration(
-                                    color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
-                                    borderRadius: BorderRadius.circular(5.0)
-                                ),
-                                child: Image.asset('assets/images/apple-logo.png'),
-                              )
-                            ],
+                                  Container(
+                                    height: ScreenUtils.getDesignHeight(99),
+                                    width: ScreenUtils.getDesignWidth(99),
+                                    decoration: BoxDecoration(
+                                        color: MAIN_CONTAINER_COLOR.withOpacity(0.5),
+                                        borderRadius: BorderRadius.circular(5.0)
+                                    ),
+                                    child: Image.asset('assets/images/apple-logo.png'),
+                                  )
+                                ],
+                              );
+                            },
                           ),
                         ),
                         Spacer(),

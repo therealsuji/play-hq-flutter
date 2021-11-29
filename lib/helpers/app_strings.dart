@@ -22,6 +22,7 @@ const String CUSTOM_ADDRESS_SEARCH_SCREEN = 'customAddressSearchScreen';
 const String CUSTOM_MAP_SCREEN = 'customMapScreen';
 const String AUTH_SCREEN = 'authenticationScreen';
 const String MAIN_ONBOARDING = "onboarding";
+const String SETTINGS_SCREEN = 'settings';
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';

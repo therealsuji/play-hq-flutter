@@ -338,7 +338,7 @@ class _SetupPurchaseAccountScreenState
                       itemCount: val.selectedGameList.length,
                       itemBuilder: (context, index) {
                         return GamesWidget(
-                          gameName: val.selectedGameList[index].gameTitle,
+                          gameName: val.selectedGameList[index].title,
                           color: PRIMARY_COLOR,
                           backgroundUrl:
                           val.selectedGameList[index].boxCover,

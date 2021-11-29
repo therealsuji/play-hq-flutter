@@ -5,5 +5,7 @@ abstract class SplashScreenModel with ChangeNotifier {
 
   void navigateMainScreen();
 
+  void navigateOnboarding();
+
   void startAuthentication();
 }

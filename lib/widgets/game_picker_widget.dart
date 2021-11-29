@@ -8,6 +8,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
+import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -67,28 +68,57 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             margin: EdgeInsets.only(left: _margin, right: 24),
             child: _getGameType(widget.gameType!),
           ),
-          Positioned.fill(
-            left: _selectingWidgetleftPos,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: GestureDetector(
-                onTap: () async {
-                  dynamic gameDetails = await Navigator.pushNamed(
-                      context, MAIN_SEARCH_SCREEN,
-                      arguments: SearchGameScreens.SetupPurchase);
-                  if (gameDetails != null) {
-                    Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                        .addSelectedGame(gameDetails);
-                  }
-                },
-                child: _selectingWidget(
-                    _selectingWidgetHeight, _selectingWidgetWidth),
-              ),
-            ),
-          ),
+          _searchGameType(widget.gameType!)
         ],
       ),
     ));
+  }
+
+  Widget _searchGameType(GamePicker game){
+    switch (game){
+      case GamePicker.PurchaseWishlist:
+        return Positioned.fill(
+          left: _selectingWidgetleftPos,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () async {
+                dynamic gameDetails = await Navigator.pushNamed(
+                    context, MAIN_SEARCH_SCREEN,
+                    arguments: SearchGameScreens.SetupPurchase);
+                if (gameDetails != null) {
+                  Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                      .addSelectedGame(gameDetails);
+                }
+              },
+              child: _selectingWidget(
+                  _selectingWidgetHeight, _selectingWidgetWidth),
+            ),
+          ),
+        );
+      case GamePicker.SalesLibrary:
+        return Positioned.fill(
+          left: _selectingWidgetleftPos,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () async {
+                dynamic gameDetails = await Navigator.pushNamed(
+                    context, MAIN_SEARCH_SCREEN,
+                    arguments: SearchGameScreens.SetupSales);
+                if (gameDetails != null) {
+                  Provider.of<SetupSalesModel>(context, listen: false)
+                      .addSelectedGame(gameDetails);
+                }
+              },
+              child: _selectingWidget(
+                  _selectingWidgetHeight, _selectingWidgetWidth),
+            ),
+          ),
+        );
+      default:
+        return Container();
+    }
   }
 
   Widget _getGameType(GamePicker game){
@@ -112,13 +142,42 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         itemBuilder: (BuildContext context , int index){
                           return GamePickerGames(
                             backgroundUrl: values.selectedGameList[index].boxCover,
-                            gameName: values.selectedGameList[index].gameTitle,
+                            gameName: values.selectedGameList[index].title,
                             releaseDate: values.selectedGameList[index].releaseDate,
                           );
                         });
                   },
                 ),
                 );
+            },
+          ),
+        );
+      case GamePicker.SalesLibrary:
+        return ChangeNotifierProvider.value(
+          value: Provider.of<SetupSalesModel>(context),
+          child: Consumer<SetupSalesModel>(
+            builder: (_ , val , __){
+              return Container(
+                child: Consumer<SetupSalesModel>(
+                  builder: (_ , values , __){
+                    return ListView.separated(
+                        separatorBuilder: (BuildContext context , int index){
+                          return SizedBox(width: ScreenUtils.getDesignWidth(15));
+                        },
+                        padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
+                        controller: _sliderController,
+                        itemCount: values.selectedGameList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context , int index){
+                          return GamePickerGames(
+                            backgroundUrl: values.selectedGameList[index].boxCover,
+                            gameName: values.selectedGameList[index].title,
+                            releaseDate: values.selectedGameList[index].releaseDate,
+                          );
+                        });
+                  },
+                ),
+              );
             },
           ),
         );

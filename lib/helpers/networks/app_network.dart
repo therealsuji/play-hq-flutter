@@ -118,19 +118,4 @@ class Network {
     return await _performWebRequest<SearchGame>(RequestType.get, APIConfig.getSearchResults(params));
   }
 
-  Future<SetupPurchaseModel> setupPurchaseAccount(SetupPurchaseModel purchaseModel) async {
-    return await _performWebRequest<SetupPurchaseModel>(RequestType.patch, APIConfig.setupPurchase, body: purchaseModel);
-  }
-
-  Future<WishListGames> addWishListGames(WishListGames wishListGames) async {
-    return await _performWebRequest(RequestType.post, APIConfig.addToWishList , body: wishListGames);
-  }
-
-  Future<GameDetailModel> getGameDetails(int id) async {
-    return await _performWebRequest<GameDetailModel>(RequestType.get, APIConfig.gameDetails(id));
-  }
-
-  Future<GameScreenshotModal> gameScreenshots(int id) async {
-    return await _performWebRequest<GameScreenshotModal>(RequestType.get, APIConfig.gameScreenshots(id));
-  }
 }

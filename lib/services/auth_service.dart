@@ -17,17 +17,17 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 class AuthService {
   final _googleSignIn = GoogleSignIn();
 
-  void login(LOGIN_PROVIDER authProvider) async {
+  void login(SocialLogin authProvider) async {
     String? token;
     try {
       switch (authProvider) {
-        case LOGIN_PROVIDER.GOOGLE:
+        case SocialLogin.GOOGLE:
           token = await googleLogin();
           break;
-        case LOGIN_PROVIDER.APPLE:
+        case SocialLogin.APPLE:
           // COMPLETE APPLE LOGIN
           break;
-        case LOGIN_PROVIDER.FACEBOOK:
+        case SocialLogin.FACEBOOK:
           token = await facebookLogin();
           break;
         default:

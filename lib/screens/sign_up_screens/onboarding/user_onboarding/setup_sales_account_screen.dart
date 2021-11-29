@@ -7,6 +7,7 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
+import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
@@ -14,6 +15,7 @@ import 'package:play_hq/widgets/custom_dotted_selector_widget.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/custom_textfield_widget.dart';
+import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:provider/provider.dart';
 
 class SetupSalesAccountScreen extends StatefulWidget {
@@ -91,7 +93,10 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
               ],
             ),
           ),
-          _libraryGames(),
+          ChangeNotifierProvider.value(
+            value: Provider.of<SetupSalesModel>(context),
+            child: CustomGamePicker(gameType: GamePicker.SalesLibrary,),
+          ),
           Container(
               margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
               child: CustomTextWidget(
@@ -148,6 +153,8 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                             ? 'Add your location'
                             : value.selectedAddress,
                         isDynamic: true,
+                        maxWidth: ScreenUtils.getDesignWidth(120),
+                        minWidth: ScreenUtils.getDesignWidth(30),
                         style: TextStyle(
                             fontFamily: CircularBook,
                             fontWeight: FontWeight.w500,
@@ -177,12 +184,13 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                                 ? 'Add Here'
                                 : 'Change Now',
                             isDynamic: true,
+                            maxWidth: ScreenUtils.getDesignWidth(55),
+                            minWidth: ScreenUtils.getDesignWidth(45),
                             style: TextStyle(
                                 fontFamily: CircularBook,
                                 fontWeight: FontWeight.bold,
                                 color: MAIN_TEXT_COLOR,
                                 fontSize: 10),
-                            width: ScreenUtils.getDesignWidth(45),
                             height: ScreenUtils.getDesignHeight(12),
                           ),
                         );
@@ -198,7 +206,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
               child: CustomButton(
                   gradient: PRIMARY_GRADIENT,
                   buttonText: 'GAME ON!',
-                  onPressed: () async {}))
+                  onPressed: () => Provider.of<SetupSalesModel>(context , listen: false).performAPIRequest()))
         ],
       ),
     );
@@ -239,12 +247,12 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                             itemCount: val.selectedGameList.length,
                             itemBuilder: (context, index) {
                               return GamesWidget(
-                                gameName: val.selectedGameList[index].name,
+                                gameName: val.selectedGameList[index].title,
                                 color: PRIMARY_COLOR,
                                 backgroundUrl:
-                                    val.selectedGameList[index].image,
+                                    val.selectedGameList[index].boxCover,
                                 releaseDate:
-                                    val.selectedGameList[index].released,
+                                    val.selectedGameList[index].releaseDate,
                               );
                             }),
                       );

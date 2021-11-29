@@ -1,6 +1,11 @@
+import 'package:event_bus/event_bus.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
+import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/loading_event_model.dart';
+import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
+import 'package:play_hq/repository/clients/setup_sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -11,25 +16,23 @@ class ISetupSalesModel extends SetupSalesModel{
 
   late var box;
 
-  List<GameDetails> _selectedGames = [];
+  final _setupSalesAPI = locator<SetupSalesRepository>();
+  final _eventBus = locator<EventBus>();
+
+  List<UserGamesModel> _selectedGames = [];
   String _selectedLocation = '';
-  String _selectedMapLocationAddresss = '';
 
   @override
-  void addSelectedGame(GameDetails game) async{
-    box = await Hive.openBox('libraryGames');
-    box.add(game);
+  void addSelectedGame(UserGamesModel game) async{
     _selectedGames.add(game);
     notifyListeners();
   }
 
   @override
-  List<GameDetails> get selectedGameList => _selectedGames;
+  List<UserGamesModel> get selectedGameList => _selectedGames;
 
   @override
   void dispose() {
-    // TODO: implement dispose
-    box.close();
     super.dispose();
   }
 
@@ -41,7 +44,6 @@ class ISetupSalesModel extends SetupSalesModel{
   }
 
   @override
-  // TODO: implement selectedLocation
   String get selectedAddress => _selectedLocation;
 
   @override
@@ -51,5 +53,25 @@ class ISetupSalesModel extends SetupSalesModel{
     locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
     notifyListeners();
   }
+
+  @override
+  void performAPIRequest() async{
+    _eventBus.fire(LoadingEvent.show());
+
+    var body = {
+      "list": _selectedGames,
+    };
+
+    try{
+      await _setupSalesAPI.setLibraryGames(body);
+      _eventBus.fire(LoadingEvent.hide());
+    }catch (e) {
+      print(e.toString());
+      _eventBus.fire(LoadingEvent.hide());
+    }
+
+  }
+
+
 
 }

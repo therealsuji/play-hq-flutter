@@ -17,8 +17,6 @@ class InitializeData {
         return CreateSalePayload.fromJson(json) as T;
       case SetupPurchaseModel:
         return SetupPurchaseModel.fromJson(json) as T;
-      case WishListGames:
-        return WishListGames.fromJson(json) as T;
       default:
         throw Exception("Unknown class");
     }

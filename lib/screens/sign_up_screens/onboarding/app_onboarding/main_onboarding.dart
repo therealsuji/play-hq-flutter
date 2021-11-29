@@ -8,7 +8,6 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
-import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/dotted_indicator_widget.dart';
@@ -86,7 +85,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
               ],
             ),
             GestureDetector(
-              onTap: () => locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE),
+              onTap: () => locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE , args: GamePicker.PurchaseWishlist),
               child: Container(
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40) , right: 24),

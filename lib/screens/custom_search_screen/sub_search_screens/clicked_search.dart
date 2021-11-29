@@ -59,7 +59,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                               .add(element.platform!.id!);
                                         })
                                       : platformID = [];
-                                  WishListGameDetails gameItem =
+                                  /*UserGamesModel gameItem =
                                       WishListGameDetails(
                                           gameTitle: val.gameList[index].name,
                                           releaseDate:
@@ -68,11 +68,27 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                           boxCover: val.gameList[index].image,
                                           platforms: platformID);
                                   var game = gameItem;
-                                  Navigator.pop(context, game);
+                                  Navigator.pop(context, game);*/
                                   break;
                                 case SearchGameScreens.SetupSales:
-                                  var game = val.gameList[index];
-                                  Navigator.pop(context, game);
+                                  List<int>? platformID = [];
+                                  val.gameList[index].platforms!.length > 0
+                                      ? val.gameList[index].platforms!
+                                      .forEach((element) {
+                                    platformID!
+                                        .add(element.platform!.id!);
+                                  })
+                                      : platformID = [];
+                                  /*WishListGameDetails gameItem =
+                                  WishListGameDetails(
+                                      gameTitle: val.gameList[index].name,
+                                      releaseDate:
+                                      val.gameList[index].released,
+                                      id: val.gameList[index].id,
+                                      boxCover: val.gameList[index].image,
+                                      platforms: platformID);
+                                  var game = gameItem;
+                                  Navigator.pop(context, game);*/
                                   break;
                                 case SearchGameScreens.CreateSales:
                                   break;

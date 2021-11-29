@@ -1,6 +1,8 @@
-import 'package:play_hq/models/wish_list_model.dart';
+import 'package:play_hq/models/common_models/user_games_model.dart';
 
 abstract class HomeRepository {
 
-  Future<List<WishListModal>> getGameDetails();
+/*
+  Future<List<UserGamesModel>> getGameDetails();
+*/
 }
