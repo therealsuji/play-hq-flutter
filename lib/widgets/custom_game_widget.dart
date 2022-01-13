@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/widgets/custom_text_widget.dart';
 
 import 'gradient_text_widget.dart';
 
@@ -33,7 +34,7 @@ class GamesWidget extends StatelessWidget {
                 width: ScreenUtils.getDesignWidth(105.0),
                 height: ScreenUtils.getDesignHeight(160.0),
                 decoration: BoxDecoration(
-                    image: DecorationImage(
+                  image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
                       backgroundUrl!,
@@ -65,25 +66,42 @@ class GamesWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    CustomTextWidget(
                       gameName!,
-                      overflow: TextOverflow.ellipsis,
+                      isDynamic: true,
                       style: TextStyle(
                         fontFamily: CircularBook,
-                        fontSize: 14.0,
+                        fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
+                      maxWidth: ScreenUtils.getDesignWidth(70.0),
+                      minWidth: ScreenUtils.getDesignWidth(30.0),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
-                      child: color != null ? Text(releaseDate == null ? 'Not mentioned' : releaseDate!,
-                              style: TextStyle(fontFamily: Neusa, fontSize: 12.0, fontWeight: FontWeight.bold, color: color,),
-                      ) : GradientText(
-                        releaseDate ?? "",
-                        gradient: gradient!,
-                        style: Theme.of(context).primaryTextTheme.headline6!.copyWith(color: Colors.white,),
-                      ),
+                      child: color != null
+                          ? Text(
+                              releaseDate == null
+                                  ? 'Not mentioned'
+                                  : releaseDate!,
+                              style: TextStyle(
+                                fontFamily: Neusa,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                            )
+                          : GradientText(
+                              releaseDate ?? "",
+                              gradient: gradient!,
+                              style: Theme.of(context)
+                                  .primaryTextTheme
+                                  .headline6!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
                     ),
                   ],
                 ),
