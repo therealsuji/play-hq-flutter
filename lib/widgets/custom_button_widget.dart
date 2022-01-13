@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final LinearGradient? gradient;
   final VoidCallback? onPressed;
   final double? textFontSize;
+  final bool? isSignOut;
   final double? height;
   final double? width;
 
@@ -14,6 +15,7 @@ class CustomButton extends StatelessWidget {
     required this.buttonText,
     this.onPressed,
     this.buttonColor,
+    this.isSignOut = false,
     this.textFontSize = 14,
     this.gradient,
     this.width = double.infinity,
@@ -52,6 +54,7 @@ class CustomButton extends StatelessWidget {
           buttonText,
           style: Theme.of(context).primaryTextTheme.button!.copyWith(
                 fontSize: textFontSize,
+                color: isSignOut! ? Colors.red : Colors.white,
               ),
           textAlign: TextAlign.center,
         ),
