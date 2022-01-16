@@ -22,6 +22,49 @@ const List<Map<String, dynamic>> testerGames = [
   {'id': 6, 'name': 'God of War' , 'releaseDate' : '02/06/2021' , 'coverImage' : 'https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_GodofWar_SantaMonicaStudio_S2_1200x1600-fbdf3cbc2980749091d52751ffabb7b7'},
 ];
 
+const List<Map<String, dynamic>> testerOrders = [
+  {
+    'data': [
+      {
+        'id': 1,
+        'name': 'Call of Duty: Warzone',
+        'releaseDate' : '12/02/2019',
+        'coverImage' : 'https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg',
+        'platform': 'PlayStation 5',
+        'price': '\$50.00',
+      },
+      {
+        'id': 2,
+        'name': 'Cyperpunk 2077',
+        'releaseDate' : '22/05/2020',
+        'coverImage' : 'https://static.wikia.nocookie.net/g-c-a/images/0/0b/Cover-art-6.jpg/revision/latest?cb=20210104020439',
+        'platform': 'PlayStation 5',
+        'price': '\$50.00',
+      },
+      {
+        'id': 3,
+        'name': 'Ghost of Tsushima',
+        'releaseDate' : '17/04/2020',
+        'coverImage' : 'https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg',
+        'platform': 'PlayStation 5',
+        'price': '\$50.00',
+      },
+    ],
+  },
+  {
+    'data': [
+      {
+        'id': 3,
+        'name': 'Far Cry 06',
+        'releaseDate': '17/04/2020',
+        'coverImage': 'https://image.api.playstation.com/vulcan/img/rnd/202106/0722/s3zMp9o1SdEtPJK267avcCxT.jpg',
+        'platform': 'PlayStation 5',
+        'price': '\$50.00',
+      },
+    ],
+  }
+];
+
 const List<Map<String, dynamic>> onboardingData = [
   {'image': 'assets/images/home_onboarding.png', 'title': 'Best Deals in the Market' , 'description':'Your favourite games given to you write at your\nfingertips for awesome prices. These games are\nshown to you according to your gamer preferance!'},
   {'image': 'assets/images/discover_onboarding.png', 'title': 'Latest & Greatest Games' , 'description':'Go through a game database of more than 3000\ngames and stay upto date on the latest and\ntrending games in the world.'},
