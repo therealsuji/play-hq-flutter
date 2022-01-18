@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/profile_screens/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
@@ -152,6 +153,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case SETTINGS_SCREEN:
       return MaterialPageRoute(builder: (context) => SettingsScreen());
+
+    case NOTIFICATION_SCREEN:
+      return MaterialPageRoute(builder: (context) => NotificationScreen());
 
     default:
       return MaterialPageRoute(

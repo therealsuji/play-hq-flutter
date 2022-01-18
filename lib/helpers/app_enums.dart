@@ -15,6 +15,8 @@ enum GamePicker {
   ProfileLibrary
 }
 
+enum NotificationType {Information, Success, Failure, Warning}
+
 enum PlatformSelection { PlayStation, Xbox, Nintendo }
 
 enum GameCondition { MINT_SEALED, VERY_NEW, KINDA_USED, PLAYABLE }

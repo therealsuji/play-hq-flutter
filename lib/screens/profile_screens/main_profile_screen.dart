@@ -7,11 +7,7 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
-import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:provider/provider.dart';
-
 import '../../service_locator.dart';
 
 class MainProfileScreen extends StatefulWidget {
@@ -40,10 +36,13 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                       child: Container(child: SvgPicture.asset('assets/icons/settings.svg'))),
                   Stack(
                     children: [
-                      Container(
-                          margin:
-                              EdgeInsets.only(left: ScreenUtils.getDesignWidth(30)),
-                          child: SvgPicture.asset('assets/icons/notification.svg')),
+                      GestureDetector(
+                        onTap: () => locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
+                        child: Container(
+                            margin:
+                                EdgeInsets.only(left: ScreenUtils.getDesignWidth(30)),
+                            child: SvgPicture.asset('assets/icons/notification.svg')),
+                      ),
                       Positioned(
                         top: 0,
                         right: 0,
