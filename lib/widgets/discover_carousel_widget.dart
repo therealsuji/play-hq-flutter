@@ -106,7 +106,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20,
                         color: Colors.white,
-                        fontFamily: CircularBold),
+                        fontFamily: CircularBook),
                   ),
                 ),
                 // TODO: on click go to game details page
@@ -115,7 +115,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
                   child: Text(
                     "View Details",
                     style: TextStyle(
-                        color: PRIMARY_COLOR, fontSize: 16, fontFamily: CircularBold),
+                        color: PRIMARY_COLOR, fontSize: 16, fontFamily: CircularBook),
                   ),
                 )
               ],

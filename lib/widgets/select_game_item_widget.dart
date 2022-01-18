@@ -91,7 +91,7 @@ class SelectGameItem extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
-                      fontFamily: CircularBold,
+                      fontFamily: CircularBook,
                       fontSize: ScreenUtils.getDesignWidth(9.0),
                     ),
                   ),

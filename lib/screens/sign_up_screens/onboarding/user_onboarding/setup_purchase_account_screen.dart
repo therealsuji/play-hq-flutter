@@ -253,7 +253,7 @@ class _SetupPurchaseAccountScreenState
                                 'None Selected',
                                 isDynamic: false,
                                 style: TextStyle(
-                                    fontFamily: CircularBold,
+                                    fontFamily: CircularBook,
                                     foreground: Paint()
                                       ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                                     fontSize: 10),
