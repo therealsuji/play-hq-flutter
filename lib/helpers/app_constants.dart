@@ -24,14 +24,13 @@ const List<Map<String, dynamic>> testerGames = [
 
 const List<Map<String, dynamic>> testerOrders = [
   {
-    'data': [
+    'games': [
       {
         'id': 1,
         'name': 'Call of Duty: Warzone',
         'releaseDate' : '12/02/2019',
         'coverImage' : 'https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg',
         'platform': 'PlayStation 5',
-        'price': '\$50.00',
       },
       {
         'id': 2,
@@ -39,7 +38,6 @@ const List<Map<String, dynamic>> testerOrders = [
         'releaseDate' : '22/05/2020',
         'coverImage' : 'https://static.wikia.nocookie.net/g-c-a/images/0/0b/Cover-art-6.jpg/revision/latest?cb=20210104020439',
         'platform': 'PlayStation 5',
-        'price': '\$50.00',
       },
       {
         'id': 3,
@@ -47,21 +45,47 @@ const List<Map<String, dynamic>> testerOrders = [
         'releaseDate' : '17/04/2020',
         'coverImage' : 'https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg',
         'platform': 'PlayStation 5',
-        'price': '\$50.00',
       },
     ],
+    'price': '\$100',
+    'status': 'Active',
+    'due_date': '12/02/2020',
+    'platform': 'PlayStation 4',
   },
   {
-    'data': [
+    'games': [
       {
         'id': 3,
         'name': 'Far Cry 06',
         'releaseDate': '17/04/2020',
         'coverImage': 'https://image.api.playstation.com/vulcan/img/rnd/202106/0722/s3zMp9o1SdEtPJK267avcCxT.jpg',
         'platform': 'PlayStation 5',
-        'price': '\$50.00',
       },
     ],
+    'price': '\$40',
+    'status': 'Active',
+    'due_date': '12/02/2020',
+    'platform': 'Xbox One',
+  },
+  {
+    'games': [
+      {
+        'id': 3,
+        'name': 'Ratchet & Clank: Rift Apart',
+        'releaseDate': '17/04/2020',
+        'coverImage': 'https://i.ytimg.com/vi/ai3o0XtrnM8/maxresdefault.jpg',
+      },
+      {
+        'id': 3,
+        'name': 'Battlefield 2042',
+        'releaseDate': '17/04/2020',
+        'coverImage': 'https://cdn1.epicgames.com/offer/52f57f57120c440fad9bfa0e6c279317/EGS_Battlefield2042_DICE_S1_2560x1440-36f16374c9c29a18a46872795b483d72_2560x1440-36f16374c9c29a18a46872795b483d72',
+      },
+    ],
+    'price': '\$80',
+    'status': 'Active',
+    'due_date': '12/02/2020',
+    'platform': 'PlayStation 5',
   }
 ];
 

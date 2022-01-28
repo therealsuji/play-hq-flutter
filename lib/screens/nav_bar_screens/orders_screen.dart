@@ -5,10 +5,16 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/orders_model/orders.dart';
+import 'package:play_hq/repository/clients/order_repository.dart';
+import 'package:play_hq/repository/delegates/orders_delegate.dart';
 import 'package:play_hq/services/nav_service.dart';
+import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
 import 'package:play_hq/widgets/active_orders/multiple_active_orders_widget.dart';
 import 'package:play_hq/widgets/active_orders/single_active_order_widget.dart';
+import 'package:play_hq/widgets/active_orders_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:provider/provider.dart';
 
 import '../../service_locator.dart';
 
@@ -18,6 +24,15 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<ActiveOrdersViewModel>(context, listen: false).fetchActiveOrders();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -132,9 +147,12 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ],
           ),
         ),
-        Expanded(
-          child: PageView(
-            children: [_purchases(), _sales()],
+        ChangeNotifierProvider.value(
+          value: Provider.of<ActiveOrdersViewModel>(context),
+          child: Expanded(
+            child: PageView(
+              children: [_purchases(), _sales()],
+            ),
           ),
         ),
       ],
@@ -192,22 +210,28 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ),
           ),
         ),
-        Container(
-          height: ScreenUtils.getDesignHeight(225),
-          margin: EdgeInsets.only(left: 24 , right: 24, top: 15),
-          child: PageView.builder(
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (BuildContext context, int index) {
-                return testerOrders[index]['data'].length == 1
-                    ? SingleActiveOrderWidget(
-                        gameName: testerOrders[index]['data'][0]['name'],
-                        gamePrice: testerOrders[index]['data'][0]['price'],
-                        backgroundImage: testerOrders[index]['data'][0]
-                            ['coverImage'],
-                      )
-                    : MultipleActiveOrderWidget();
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(left: 24 , right: 24 , top: 15),
+            child: Consumer<ActiveOrdersViewModel>(
+              builder: (_ , model, __){
+                return ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (BuildContext context, int index) {
+                      print(model.activeOrderList.length);
+                      return ActiveOrdersWidget(
+                        orderDetails: model.activeOrderList[index],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: 15,
+                      );
+                    },
+                    itemCount: model.activeOrderList.length);
               },
-              itemCount: testerOrders.length),
+            ),
+          ),
         )
       ],
     );

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
@@ -22,17 +23,19 @@ class SingleActiveOrderWidget extends StatelessWidget {
       children: [
         Container(
           width: MediaQuery.of(context).size.width,
-          height: ScreenUtils.getDesignHeight(170),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(5),
-            image: DecorationImage(
-              image: NetworkImage(backgroundImage!),
-              fit: BoxFit.cover,
-            ),
-          ),
+          height: ScreenUtils.getDesignHeight(195),
         ),
+        Container(
+            width: MediaQuery.of(context).size.width,
+            height: ScreenUtils.getDesignHeight(170),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+                child: CachedNetworkImage(imageUrl: backgroundImage! , fit: BoxFit.cover,))),
         Positioned(
-          bottom: 30,
+          bottom: 0,
           left: 0,
           right: 0,
           child: Center(

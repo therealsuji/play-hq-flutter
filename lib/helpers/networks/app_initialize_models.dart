@@ -4,6 +4,7 @@ import 'package:play_hq/models/create_sale_model.dart';
 import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/onboarding_models/setup_purchase_models/setup_purchase_model.dart';
 import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
+import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 
 class InitializeData {
@@ -17,6 +18,8 @@ class InitializeData {
         return CreateSalePayload.fromJson(json) as T;
       case SetupPurchaseModel:
         return SetupPurchaseModel.fromJson(json) as T;
+      case OrdersModel:
+        return OrdersModel.fromJson(json) as T;
       default:
         throw Exception("Unknown class");
     }

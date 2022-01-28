@@ -4,6 +4,7 @@ import 'package:play_hq/models/common_models/platform_model.dart';
 
 
 GameDetailModel gameDetailsModelFromJson(String str) => GameDetailModel.fromJson(json.decode(str));
+
 class GameDetailModel {
   final int? id;
   final String? slug;

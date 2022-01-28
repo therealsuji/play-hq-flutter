@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/screens/profile_screens/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
@@ -7,6 +8,8 @@ import 'package:play_hq/view_models/authentication/authentication_model.dart';
 import 'package:play_hq/view_models/authentication/i_authentication_model.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
+import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
+import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +41,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ),
             ChangeNotifierProvider<MainProfileModel>(
                 create: (context) => IMainProfileModel()),
+            ChangeNotifierProvider<ActiveOrdersViewModel>(
+                create: (context) => IActiveOrdersViewModel()),
           ],
           child: MainScreen(),
         ),
@@ -156,6 +161,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case NOTIFICATION_SCREEN:
       return MaterialPageRoute(builder: (context) => NotificationScreen());
+
+    case ORDERS_SCREEN:
+      return MaterialPageRoute(builder: (context) => OrdersScreen());
 
     default:
       return MaterialPageRoute(

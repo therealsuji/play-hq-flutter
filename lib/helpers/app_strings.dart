@@ -24,6 +24,7 @@ const String AUTH_SCREEN = 'authenticationScreen';
 const String MAIN_ONBOARDING = "onboarding";
 const String SETTINGS_SCREEN = 'settings';
 const String NOTIFICATION_SCREEN = 'notification';
+const String ORDERS_SCREEN = 'orders';
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';
