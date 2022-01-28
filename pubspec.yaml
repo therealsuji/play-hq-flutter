@@ -107,10 +107,6 @@ flutter:
       fonts:
         - asset: assets/fonts/Circular Std Book.ttf
 
-    - family: Circular Std Bold
-      fonts:
-        - asset: assets/fonts/Circular Std Bold.ttf
-
     - family: Neusa Std
       fonts:
         - asset: assets/fonts/NeusaNextPro-Bold.ttf

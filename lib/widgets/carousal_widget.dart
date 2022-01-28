@@ -78,7 +78,7 @@ class CarousalWidget extends StatelessWidget {
                                 fontSize: 33,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontFamily: CircularBold),
+                                fontFamily: CircularBook),
                           ),
                         ),
                         Container(

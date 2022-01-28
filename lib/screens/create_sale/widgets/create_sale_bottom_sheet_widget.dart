@@ -178,7 +178,7 @@ Container _textButton(text, selected) {
     child: Text(text,
         style: TextStyle(
           color: Colors.white,
-          fontFamily: CircularBold,
+          fontFamily: CircularBook,
           fontWeight: FontWeight.bold,
         )),
   );

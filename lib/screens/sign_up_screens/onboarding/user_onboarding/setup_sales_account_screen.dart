@@ -85,7 +85,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   'None Selected',
                   isDynamic: false,
                   style: TextStyle(
-                      fontFamily: CircularBold,
+                      fontFamily: CircularBook,
                       foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                       fontSize: 10),
                   height: ScreenUtils.getDesignHeight(13),
@@ -128,7 +128,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
               'Why we need it',
               isDynamic: false,
               style: TextStyle(
-                  fontFamily: CircularBold,
+                  fontFamily: CircularBook,
                   foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                   fontSize: 12),
               height: ScreenUtils.getDesignHeight(15),

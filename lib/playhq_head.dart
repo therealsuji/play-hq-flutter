@@ -106,7 +106,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
             headline5: TextStyle(
               fontSize: 14,
               color: Colors.white,
-              fontFamily: CircularBold,
+              fontFamily: CircularBook,
             ),
             headline6: TextStyle(
               fontSize: 12,
@@ -117,24 +117,26 @@ class _PlayHqHeadState extends State<PlayHqHead> {
             bodyText1: TextStyle(
               fontSize: 14,
               color: Colors.white,
-              fontFamily: CircularBold,
+              fontFamily: CircularBook,
               fontWeight: FontWeight.w600,
             ),
             bodyText2: TextStyle(
               fontSize: 12,
               color: Colors.white,
               fontFamily: CircularBook,
+              fontWeight: FontWeight.bold,
             ),
             subtitle1: TextStyle(
               fontSize: 8,
               color: Colors.white,
-              fontFamily: CircularBold,
+              fontFamily: CircularBook,
               fontWeight: FontWeight.w600,
             ),
             button: TextStyle(
               fontSize: 14,
               color: Colors.white,
-              fontFamily: CircularBold,
+              fontFamily: CircularBook,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

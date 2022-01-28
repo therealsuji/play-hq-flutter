@@ -78,7 +78,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
                 child: Text(
                   title,
                   style: TextStyle(
-                      fontSize: 18, fontFamily: CircularBold, color: Colors.white, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontFamily: CircularBook, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               Spacer(),
@@ -115,7 +115,7 @@ class _SelectGamesScreenState extends State<SelectGamesScreen> {
                 child: Text(
                   title,
                   style: TextStyle(
-                      fontSize: 18, fontFamily: CircularBold, color: Colors.white, fontWeight: FontWeight.bold),
+                      fontSize: 18, fontFamily: CircularBook, color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               Spacer(),

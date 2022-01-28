@@ -55,7 +55,7 @@ class _OpeningSearchState extends State<OpeningSearch> {
                   isDynamic: false,
                     height: ScreenUtils.getDesignHeight(13),
                     style: TextStyle(
-                        fontFamily: CircularBold,
+                        fontFamily: CircularBook,
                         foreground: Paint()
                           ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                         fontSize: 10)),

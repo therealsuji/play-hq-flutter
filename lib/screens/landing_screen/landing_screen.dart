@@ -108,7 +108,7 @@ class _LandingScreenState extends State<LandingScreen> {
               body,
               textAlign: TextAlign.center,
               style:
-                  TextStyle(color: landingPageViewBodyColor.withOpacity(0.8), fontFamily: CircularBold, fontSize: 18),
+                  TextStyle(color: landingPageViewBodyColor.withOpacity(0.8), fontFamily: CircularBook, fontSize: 18),
             )),
       ],
     );
