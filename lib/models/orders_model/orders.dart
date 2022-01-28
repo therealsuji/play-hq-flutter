@@ -13,6 +13,7 @@ class OrdersModel {
     this.platform,
     this.type,
     this.status,
+    this.dueDate
   });
 
   List<Game>? games;
@@ -20,6 +21,7 @@ class OrdersModel {
   String? platform;
   String? type;
   String? status;
+  String? dueDate;
 
   factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
     games: List<Game>.from(json["games"].map((x) => Game.fromJson(x))),
@@ -27,15 +29,8 @@ class OrdersModel {
     platform: json["platform"],
     type: json["type"],
     status: json["status"],
+    dueDate: json["due_date"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "games": List<dynamic>.from(games!.map((x) => x.toJson())),
-    "price": price,
-    "platform": platform,
-    "type": type,
-    "status": status,
-  };
 }
 
 class Game {

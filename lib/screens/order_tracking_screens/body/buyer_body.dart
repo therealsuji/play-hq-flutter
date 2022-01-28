@@ -13,7 +13,7 @@ class BuyerBody extends StatefulWidget {
 }
 
 class _BuyerBodyState extends State<BuyerBody> {
-  final OrderTrack status = OrderTrack.RECEIVED;
+  final OrderTrack status = OrderTrack.AWAITING;
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
-import 'package:play_hq/repository/clients/order_repository.dart';
-import 'package:play_hq/repository/delegates/orders_delegate.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
-import 'package:play_hq/widgets/active_orders/multiple_active_orders_widget.dart';
-import 'package:play_hq/widgets/active_orders/single_active_order_widget.dart';
 import 'package:play_hq/widgets/active_orders_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
@@ -27,9 +21,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Provider.of<ActiveOrdersViewModel>(context, listen: false).fetchActiveOrders();
+    context.read<ActiveOrdersViewModel>().fetchActiveOrders();
   }
 
 
@@ -147,12 +140,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ],
           ),
         ),
-        ChangeNotifierProvider.value(
-          value: Provider.of<ActiveOrdersViewModel>(context),
-          child: Expanded(
-            child: PageView(
-              children: [_purchases(), _sales()],
-            ),
+        Expanded(
+          child: PageView(
+            children: [_purchases(), _sales()],
           ),
         ),
       ],
@@ -196,16 +186,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       ),
                     )),
                 Spacer(),
-                // View all Text Widget
-                CustomTextWidget(
-                  'View All',
-                  isDynamic: false,
-                  width: ScreenUtils.getDesignWidth(40),
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .headline3!
-                      .copyWith(color: PRIMARY_COLOR),
-                ),
               ]),
             ),
           ),
@@ -218,7 +198,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
                 return ListView.separated(
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
-                      print(model.activeOrderList.length);
                       return ActiveOrdersWidget(
                         orderDetails: model.activeOrderList[index],
                       );

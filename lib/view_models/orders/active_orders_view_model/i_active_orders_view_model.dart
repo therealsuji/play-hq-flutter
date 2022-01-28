@@ -15,12 +15,11 @@ class IActiveOrdersViewModel extends ActiveOrdersViewModel {
   List<OrdersModel> _activeOrders = [];
 
   @override
-  // TODO: implement activeOrderList
   List<OrdersModel> get activeOrderList => _activeOrders;
 
   @override
-  void fetchActiveOrders() {
-    _ordersAPI.getActiveOrders().then((value) {
+  void fetchActiveOrders() async {
+    await _ordersAPI.getActiveOrders().then((value) {
       _activeOrders = value;
     });
     notifyListeners();
