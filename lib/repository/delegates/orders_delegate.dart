@@ -7,7 +7,7 @@ import 'package:play_hq/repository/clients/order_repository.dart';
 
 class OrdersDelegate extends OrdersRepository{
   @override
-  Future<List<OrdersModel>> getActiveOrders() async {
+  Future<List<OrdersModel>> fetchAllActiveOrders() async {
     try{
 
       List<OrdersModel> testerOrderMap = [];
@@ -17,8 +17,12 @@ class OrdersDelegate extends OrdersRepository{
       return Future.value(testerOrderMap);
 
     }catch(e){
-      print(e);
-    }
+      throw UnimplementedError();    }
+  }
+
+  @override
+  Future<OrdersModel> fetchOrder(String id) {
+    // TODO: implement fetchOrder
     throw UnimplementedError();
   }
 

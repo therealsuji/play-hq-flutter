@@ -19,7 +19,7 @@ class IActiveOrdersViewModel extends ActiveOrdersViewModel {
 
   @override
   void fetchActiveOrders() async {
-    await _ordersAPI.getActiveOrders().then((value) {
+    await _ordersAPI.fetchAllActiveOrders().then((value) {
       _activeOrders = value;
     });
     notifyListeners();

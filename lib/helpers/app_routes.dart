@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
+import 'package:play_hq/screens/order_details/order_details_screen.dart';
 import 'package:play_hq/screens/profile_screens/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
@@ -164,6 +165,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
     case ORDERS_SCREEN:
       return MaterialPageRoute(builder: (context) => OrdersScreen());
+
+    case ORDER_DETAILS_SCREEN:
+      return MaterialPageRoute(builder: (context) => OrderDetailsScreen());
 
     default:
       return MaterialPageRoute(

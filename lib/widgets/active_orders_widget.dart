@@ -131,19 +131,22 @@ class ActiveOrdersWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    height: ScreenUtils.getDesignHeight(40),
-                    width: ScreenUtils.getDesignWidth(140),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(3),
-                        gradient: PRIMARY_GRADIENT),
-                    child: Center(
-                      child: Text(
-                        'Order Details',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context , ORDER_DETAILS_SCREEN),
+                    child: Container(
+                      height: ScreenUtils.getDesignHeight(40),
+                      width: ScreenUtils.getDesignWidth(140),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(3),
+                          gradient: PRIMARY_GRADIENT),
+                      child: Center(
+                        child: Text(
+                          'Order Details',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
