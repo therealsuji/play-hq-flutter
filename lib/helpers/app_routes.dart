@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
-import 'package:play_hq/screens/profile_screens/notification_screen.dart';
+import 'package:play_hq/screens/profile_screens/notifications/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';

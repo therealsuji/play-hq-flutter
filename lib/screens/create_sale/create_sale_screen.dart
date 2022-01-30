@@ -176,8 +176,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                         margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
                         child: Text(
                           'Other remarks',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: CircularBook),
+                          style: Theme.of(context).primaryTextTheme.headline3!.copyWith(fontFamily: CircularBook)
                         ),
                       ),
                       CustomTextfieldWidget(

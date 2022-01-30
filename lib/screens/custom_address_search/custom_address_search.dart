@@ -115,10 +115,10 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title , style: TextStyle(color: SUB_TEXT_COLOR , fontSize: 14 , fontFamily: CircularBook , fontWeight: FontWeight.bold),),
+                    Text(title , style: Theme.of(context).primaryTextTheme.headline4,),
                     Container(
                         margin: EdgeInsets.only(top: 5),
-                        child: Text(subtitle , style: TextStyle(color: SUB_TEXT_COLOR.withOpacity(0.4) , fontSize: 12 , fontFamily: CircularBook , fontWeight: FontWeight.w500),))
+                        child: Text(subtitle , style: Theme.of(context).primaryTextTheme.headline4,))
                   ],
                 ),
               )

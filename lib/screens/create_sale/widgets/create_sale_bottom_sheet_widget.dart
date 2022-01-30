@@ -128,7 +128,7 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
                         },
                         child: Text(
                           "DELETE GAME",
-                          style: TextStyle(fontFamily: Neusa, fontSize: 16, color: PRIMARY_COLOR),
+                          style: Theme.of(context).primaryTextTheme.headline4,
                         ),
                       ),
                     ),
