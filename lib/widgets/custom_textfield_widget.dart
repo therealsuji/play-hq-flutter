@@ -57,7 +57,7 @@ class CustomTextfieldWidget extends StatelessWidget {
           hintText: hintText,
           hintStyle: TextStyle(
             color: SUB_TEXT_COLOR.withOpacity(0.6),
-            fontSize: 16,
+            fontSize: 14,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(6),

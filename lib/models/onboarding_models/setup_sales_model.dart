@@ -1,48 +1,27 @@
 
-class SalesModel {
-  SalesModel({
+import 'dart:convert';
+
+import '../app_user_model.dart';
+
+SetupSalesModel setupSalesModelFromJson(String str) => SetupSalesModel.fromJson(json.decode(str));
+
+class SetupSalesModel {
+  SetupSalesModel({
     this.location,
     this.phoneNumber,
-    this.name,
+    this.displayName,
+    this.fullName,
   });
 
   Location? location;
   String? phoneNumber;
-  String? name;
+  String? displayName;
+  String? fullName;
 
-  factory SalesModel.fromJson(Map<String, dynamic> json) => SalesModel(
+  factory SetupSalesModel.fromJson(Map<String, dynamic> json) => SetupSalesModel(
     location: Location.fromJson(json["location"]),
     phoneNumber: json["phone_number"],
-    name: json["name"],
+    displayName: json["display_name"],
+    fullName: json["full_name"],
   );
-
-  Map<String, dynamic> toJson() => {
-    "location": location!.toJson(),
-    "phone_number": phoneNumber,
-    "name": name,
-  };
-}
-
-class Location {
-  Location({
-    this.lat,
-    this.long,
-    this.address,
-  });
-
-  int? lat;
-  int? long;
-  String? address;
-
-  factory Location.fromJson(Map<String, dynamic> json) => Location(
-    lat: json["lat"],
-    long: json["long"],
-    address: json["address"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "lat": lat,
-    "long": long,
-    "address": address,
-  };
 }

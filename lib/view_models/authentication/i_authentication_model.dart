@@ -24,7 +24,6 @@ class IAuthenticationModel extends AuthenticationModel {
 
   final _logintoBackend = locator<AuthenticationRepository>();
 
-
   @override
   void socialLogin(SocialLogin socialLogin) async {
     try {

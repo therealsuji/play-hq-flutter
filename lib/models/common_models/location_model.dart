@@ -18,4 +18,5 @@ class LocationModel {
     long: json["long"].toDouble(),
     address: json["address"],
   );
+
 }
