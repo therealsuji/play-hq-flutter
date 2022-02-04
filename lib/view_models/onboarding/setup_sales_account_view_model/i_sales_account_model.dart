@@ -12,24 +12,16 @@ import 'package:play_hq/services/nav_service.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
 
-class ISetupSalesModel extends SetupSalesModel{
+class ISetupSalesModel extends SetupSalesViewModel{
 
   late var box;
 
   final _setupSalesAPI = locator<SetupSalesRepository>();
   final _eventBus = locator<EventBus>();
 
-  List<GameModel> _selectedGames = [];
+  List<GamePreferances> _selectedGames = [];
   String _selectedLocation = '';
 
-  @override
-  void addSelectedGame(GameModel game) async{
-    _selectedGames.add(game);
-    notifyListeners();
-  }
-
-  @override
-  List<GameModel> get selectedGameList => _selectedGames;
 
   @override
   void dispose() {
@@ -59,7 +51,7 @@ class ISetupSalesModel extends SetupSalesModel{
     _eventBus.fire(LoadingEvent.show());
 
     try{
-      // await _setupSalesAPI.setLibraryGames();
+      await _setupSalesAPI.setLibraryGames(_selectedGames);
       _eventBus.fire(LoadingEvent.hide());
     }catch (e) {
       print(e.toString());
@@ -67,6 +59,16 @@ class ISetupSalesModel extends SetupSalesModel{
     }
 
   }
+
+  @override
+  void addSelectedGame(GamePreferances game) {
+    _selectedGames.add(game);
+    notifyListeners();
+    locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
+  }
+
+  @override
+  List<GamePreferances> get selectedGameList => _selectedGames;
 
 
 

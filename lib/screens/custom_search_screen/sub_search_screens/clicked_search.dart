@@ -6,10 +6,12 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/user_games_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/onboarding_models/setup_sales_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
+import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_loading_barrier_widget.dart';
 import 'package:play_hq/widgets/custom_search_item_widget.dart';
@@ -158,11 +160,11 @@ class _ClickedSearchState extends State<ClickedSearch> {
                         buttonText: 'Confirm Game',
                         gradient: GREEN_GRADIENT,
                         onPressed: () {
-                          GamePreferances wishListGame = GamePreferances(
+                          GamePreferances game = GamePreferances(
                               game: addGamesToModel(val.gameList[index]), platform: val.selectedPlatformId);
-                          dynamic game = wishListGame;
-                          Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                              .addSelectedGame(game);
+                          dynamic finalGame = game;
+                          widget.values == SearchGameScreens.SetupPurchase ? Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                              .addSelectedGame(finalGame) : Provider.of<SetupSalesViewModel>(context, listen: false).addSelectedGame(finalGame);
                         },
                       ))
                 ],

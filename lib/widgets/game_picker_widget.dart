@@ -150,11 +150,11 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
         );
       case GamePicker.SalesLibrary:
         return ChangeNotifierProvider.value(
-          value: Provider.of<SetupSalesModel>(context),
-          child: Consumer<SetupSalesModel>(
+          value: Provider.of<SetupSalesViewModel>(context),
+          child: Consumer<SetupSalesViewModel>(
             builder: (_, val, __) {
               return Container(
-                child: Consumer<SetupSalesModel>(
+                child: Consumer<SetupSalesViewModel>(
                   builder: (_, values, __) {
                     return ListView.separated(
                         separatorBuilder: (BuildContext context, int index) {
@@ -169,10 +169,10 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         itemBuilder: (BuildContext context, int index) {
                           return GamePickerGames(
                             backgroundUrl:
-                                values.selectedGameList[index].boxCover,
-                            gameName: values.selectedGameList[index].title,
+                                values.selectedGameList[index].game.boxCover,
+                            gameName: values.selectedGameList[index].game.title,
                             releaseDate:
-                                values.selectedGameList[index].releaseDate,
+                                values.selectedGameList[index].game.releaseDate,
                           );
                         });
                   },

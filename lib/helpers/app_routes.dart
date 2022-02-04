@@ -97,7 +97,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<SetupSalesModel>(
+        builder: (context) => ChangeNotifierProvider<SetupSalesViewModel>(
           create: (context) => _implSetupSales,
           child: SetupSalesAccountScreen(),
         ),
@@ -127,6 +127,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                     ChangeNotifierProvider<SetupPurchaseAccountModel>(
                       create: (context) => _implSetupPurchaseAccount,
                     ),
+                    ChangeNotifierProvider<SetupSalesViewModel>(
+                      create: (context) => _implSetupSales,
+                    ),
                   ],
                   child: MainSearchScreen(
                       values: settings.arguments as SearchGameScreens)));
@@ -144,7 +147,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
         builder: (context) => MultiProvider(providers: [
           ChangeNotifierProvider<CustomAddressSearchModel>(
               create: (context) => ICustomAddressSearchModel()),
-          ChangeNotifierProvider<SetupSalesModel>(
+          ChangeNotifierProvider<SetupSalesViewModel>(
               create: (context) => _implSetupSales),
         ], child: CustomAddressSearchScreen()),
       );
@@ -154,7 +157,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => MultiProvider(providers: [
                 ChangeNotifierProvider<CustomMapModel>(
                     create: (context) => ICustomMapModel()),
-                ChangeNotifierProvider<SetupSalesModel>(
+                ChangeNotifierProvider<SetupSalesViewModel>(
                     create: (context) => _implSetupSales)
               ], child: CustomMapScreen()));
 

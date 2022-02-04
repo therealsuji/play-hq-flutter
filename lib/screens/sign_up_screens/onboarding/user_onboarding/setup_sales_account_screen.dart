@@ -96,7 +96,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
             ),
           ),
           ChangeNotifierProvider.value(
-            value: Provider.of<SetupSalesModel>(context),
+            value: Provider.of<SetupSalesViewModel>(context),
             child: CustomGamePicker(gameType: GamePicker.SalesLibrary,),
           ),
           Container(
@@ -117,6 +117,22 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   iconData: Icons.local_phone_rounded,
                   hideText: false,
                   type: TextInputType.phone,
+                  onChanged: null,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
+                    child: CustomTextWidget(
+                      'Enter your Display Name',
+                      isDynamic: false,
+                      style: Theme.of(context).primaryTextTheme.headline3,
+                      width: ScreenUtils.getDesignWidth(160),
+                      height: ScreenUtils.getDesignHeight(20),
+                    )),
+                CustomTextfieldWidget(
+                  hintText: 'Enter Display Name...',
+                  iconData: Icons.person_outline,
+                  hideText: false,
+                  type: TextInputType.text,
                   onChanged: null,
                 ),
                 Container(
@@ -149,7 +165,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                         size: 30,
                         color: SUB_TEXT_COLOR,
                       ),
-                      Consumer<SetupSalesModel>(
+                      Consumer<SetupSalesViewModel>(
                         builder: (_, value, __) {
                           return Container(
                             width: ScreenUtils.getDesignWidth(110),
@@ -182,16 +198,15 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                             gradient: PRIMARY_GRADIENT,
                             borderRadius: BorderRadius.circular(5.0),
                           ),
-                          child: Consumer<SetupSalesModel>(
+                          child: Consumer<SetupSalesViewModel>(
                             builder: (_, value, __) {
                               return Center(
                                 child: CustomTextWidget(
                                   value.selectedAddress.isEmpty
                                       ? 'Add Here'
                                       : 'Change Now',
-                                  isDynamic: true,
-                                  maxWidth: ScreenUtils.getDesignWidth(55),
-                                  minWidth: ScreenUtils.getDesignWidth(45),
+                                  isDynamic: false,
+                                  align: TextAlign.center,
                                   style: TextStyle(
                                       fontFamily: CircularBook,
                                       fontWeight: FontWeight.bold,
@@ -212,7 +227,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                     child: CustomButton(
                         gradient: PRIMARY_GRADIENT,
                         buttonText: 'GAME ON!',
-                        onPressed: () => Provider.of<SetupSalesModel>(context , listen: false).performAPIRequest()))
+                        onPressed: () => Provider.of<SetupSalesViewModel>(context , listen: false).performAPIRequest()))
               ],
             ),
           ),
@@ -223,7 +238,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
   }
 
   Widget _libraryGames() {
-    final model = Provider.of<SetupSalesModel>(context);
+    final model = Provider.of<SetupSalesViewModel>(context);
     return Container(
       margin: EdgeInsets.only(top: 20),
       height: ScreenUtils.getDesignHeight(160),
@@ -234,13 +249,13 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                 context, MAIN_SEARCH_SCREEN,
                 arguments: SearchGameScreens.SetupSales);
             if (gameDetails != null) {
-              Provider.of<SetupSalesModel>(context, listen: false)
+              Provider.of<SetupSalesViewModel>(context, listen: false)
                   .addSelectedGame(gameDetails);
             }
           }),
           ChangeNotifierProvider.value(
             value: model,
-            child: Consumer<SetupSalesModel>(
+            child: Consumer<SetupSalesViewModel>(
               builder: (_, val, __) {
                 return val.selectedGameList.isEmpty
                     ? Container()
@@ -257,12 +272,12 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                             itemCount: val.selectedGameList.length,
                             itemBuilder: (context, index) {
                               return GamesWidget(
-                                gameName: val.selectedGameList[index].title,
+                                gameName: val.selectedGameList[index].game.title,
                                 color: PRIMARY_COLOR,
                                 backgroundUrl:
-                                    val.selectedGameList[index].boxCover,
+                                    val.selectedGameList[index].game.boxCover,
                                 releaseDate:
-                                    val.selectedGameList[index].releaseDate,
+                                    val.selectedGameList[index].game.releaseDate,
                               );
                             }),
                       );
