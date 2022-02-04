@@ -35,16 +35,16 @@ class CustomExpanderWidget extends StatelessWidget {
               onTap: onTap,
               child: Row(
                 children: [
-                  CustomTextWidget(titleText!, style: Theme.of(context).primaryTextTheme.headline3, width: textWidth, height: ScreenUtils.getDesignHeight(20),isDynamic: false,),
+                  CustomTextWidget(titleText!, style: Theme.of(context).primaryTextTheme.headline3, width: textWidth,isDynamic: false,),
                   Spacer(),
                   Container(
                     margin: EdgeInsets.only(right: 10.0),
                     child: CustomTextWidget(selectedText!,style: TextStyle(
                         fontFamily: CircularBook,
                         foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
-                        fontSize: 10
+                        fontSize: 10,
+                        fontWeight: FontWeight.bold
                     ),
-                      height: ScreenUtils.getDesignHeight(13),
                       isDynamic: false,
                     ),
                   ),

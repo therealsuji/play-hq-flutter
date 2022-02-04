@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/release_date_model.dart';
 import 'package:play_hq/models/common_models/user_games_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/repository/clients/setup_purchase_repository.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
@@ -26,7 +29,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
-  List<UserGamesModel> _selectedGames = [];
+  List<GamePreferances> _selectedGames = [];
 
   final _setupPurchasesAPI = locator<SetupPurchaseRepository>();
   final _eventBus = locator<EventBus>();
@@ -123,13 +126,14 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> get selectedReleaseDates => _selectedReleaseDates;
 
   @override
-  void addSelectedGame(UserGamesModel game) {
+  void addSelectedGame(GamePreferances game) {
     _selectedGames.add(game);
     notifyListeners();
+    locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE);
   }
 
   @override
-  List<UserGamesModel> get selectedGameList => _selectedGames;
+  List<GamePreferances> get selectedGameList => _selectedGames;
 
   @override
   int? get genreCount => _genreCount;
@@ -153,12 +157,8 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
       "platforms" : _selectedPlatforms
     };
 
-    var body = {
-      "list": _selectedGames,
-    };
-
     try {
-      await _setupPurchasesAPI.setGameWishList(body);
+      await _setupPurchasesAPI.setGameWishList(_selectedGames);
       await _setupPurchasesAPI.setGamePreferences(gamePreferances);
       _eventBus.fire(LoadingEvent.hide());
       locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);

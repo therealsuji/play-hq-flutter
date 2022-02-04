@@ -50,4 +50,13 @@ class ISearchGamesModel extends SearchGameModel {
   @override
   // TODO: implement states
   SearchScreenStates get states => _screenStates;
+
+  @override
+  void addPlatform(int index, int platformId) {
+
+  }
+
+  @override
+  int get selectedPlatform => throw UnimplementedError();
+
 }

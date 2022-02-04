@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-UserGamesModel userGamesModelFromJson(String str) => UserGamesModel.fromJson(json.decode(str));
+GameModel userGamesModelFromJson(String str) => GameModel.fromJson(json.decode(str));
 
-class UserGamesModel {
-  UserGamesModel({
-    this.required,
+class GameModel {
+  GameModel({
     this.title,
     this.apiId,
     this.boxCover,
@@ -14,7 +13,6 @@ class UserGamesModel {
     this.backgroundImage,
   });
 
-  String? required;
   String? title;
   int? apiId;
   String? boxCover;
@@ -23,8 +21,7 @@ class UserGamesModel {
   String? releaseDate;
   String? backgroundImage;
 
-  factory UserGamesModel.fromJson(Map<String, dynamic> json) => UserGamesModel(
-    required: json["required"],
+  factory GameModel.fromJson(Map<String, dynamic> json) => GameModel(
     title: json["title"],
     apiId: json["api_id"],
     boxCover: json["box_cover"],
@@ -33,5 +30,15 @@ class UserGamesModel {
     releaseDate: json["release_date"],
     backgroundImage: json["background_image"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "title": title,
+    "box_cover": boxCover,
+    "release_date": releaseDate,
+    "background_image": backgroundImage,
+    "api_id": apiId,
+    "platforms": List<int>.from(platforms!.map((x) => x)),
+    "genres": List<int>.from(genres!.map((x) => x)),
+  };
 }
 

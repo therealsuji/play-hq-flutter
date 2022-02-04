@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/common_models/user_games_model.dart';
-import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 
@@ -11,12 +11,14 @@ class ICustomSearchModel extends CustomSearchModel{
 
   bool _isClicked = false;
   List<GameDetails> _searchedGames = [];
-  List<UserGamesModel> _wishListGames = [];
+  List<GameModel> _wishListGames = [];
   final _networkCalls = Network.shared;
   late SearchGame value;
   SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
   SearchGameScreens? _gameScreens;
   Timer? _debounce;
+  int _selectedPlatform = 10;
+  int _selectedPlatformId = 0;
 
   @override
   void onClicked(bool click) {
@@ -62,7 +64,7 @@ class ICustomSearchModel extends CustomSearchModel{
 
   @override
   // TODO: implement wishListGameList
-  List<UserGamesModel> get wishListGameList => _wishListGames;
+  List<GameModel> get wishListGameList => _wishListGames;
 
   @override
   void addGameType(SearchGameScreens states) {
@@ -70,6 +72,17 @@ class ICustomSearchModel extends CustomSearchModel{
     notifyListeners();
   }
 
+  @override
+  void addPlatform(int index, int platformId) {
+    _selectedPlatform = index;
+    _selectedPlatformId = platformId;
+    notifyListeners();
+  }
 
+  @override
+  int get selectedPlatform => _selectedPlatform;
+
+  @override
+  int get selectedPlatformId => _selectedPlatformId;
 
 }

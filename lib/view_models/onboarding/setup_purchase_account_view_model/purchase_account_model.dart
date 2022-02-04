@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 
 
 abstract class SetupPurchaseAccountModel with ChangeNotifier{
@@ -28,9 +29,9 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   void addReleaseDates(int index , Map<String, dynamic> releaseDates);
 
-  List<UserGamesModel> get selectedGameList;
+  List<GamePreferances> get selectedGameList;
 
-  void addSelectedGame(UserGamesModel game);
+  void addSelectedGame(GamePreferances game);
 
   void performAPIRequest();
 
@@ -39,5 +40,7 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
   int get totalPlatformCount;
 
   int? get releaseDateCount;
+
+
 
 }

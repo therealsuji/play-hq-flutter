@@ -11,10 +11,16 @@ abstract class CustomSearchModel with ChangeNotifier{
 
   List<GameDetails> get gameList;
 
-  List<UserGamesModel> get wishListGameList;
+  List<GameModel> get wishListGameList;
 
   void searchGames(String name);
 
   SearchScreenStates get states;
+
+  void addPlatform(int index, int platformId);
+
+  int get selectedPlatform;
+
+  int get selectedPlatformId;
 
 }

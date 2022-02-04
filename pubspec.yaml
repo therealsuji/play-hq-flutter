@@ -112,6 +112,13 @@ flutter:
       fonts:
         - asset: assets/fonts/NeusaNextStd.ttf
 
+    - family: Neusa Std Bold
+      fonts:
+
+        - asset: assets/fonts/NeusaNextStd-Bold.ttf
+
+
+
     - family: MyFlutterApp
       fonts:
         - asset: assets/fonts/MyFlutterApp.ttf

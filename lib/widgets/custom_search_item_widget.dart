@@ -33,7 +33,7 @@ class SearchGameItem extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
-                  imageUrl: imageUrl!,
+                  imageUrl: imageUrl ?? 'https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg',
                   fit: BoxFit.fill,
                 ),
               ),

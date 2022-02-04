@@ -18,7 +18,7 @@ class SetupPurchaseDelegate extends SetupPurchaseRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<void> setGameWishList(Map<String, dynamic> body) async {
+  Future<void> setGameWishList(dynamic body) async {
     try{
       await _networkCalls.performRequest(APIConfig.addWishListGames, HttpAction.POST, body: body);
     }

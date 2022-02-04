@@ -23,7 +23,7 @@ class Network {
   Future<Response> performRequest(
     String url,
     HttpAction action, {
-    Map<String, dynamic>? body,
+    dynamic body,
     Map<String, String>? headers,
     bool noToken = false,
   }) async {
@@ -80,7 +80,7 @@ class Network {
           break;
       }
 
-      print("Result: ${response.body}");
+      print("Response Status Code: ${response.statusCode}");
 
       return response;
     }

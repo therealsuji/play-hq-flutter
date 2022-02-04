@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/onboarding_models/setup_purchase_models/setup_purchase_model.dart';
+import 'package:play_hq/models/onboarding_models/setup_purchase_model.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -24,10 +24,6 @@ import 'package:play_hq/widgets/select_item_widget.dart';
 import 'package:provider/provider.dart';
 
 class SetupPurchaseAccountScreen extends StatefulWidget {
-
-  final GamePicker? gamePicker;
-
-  SetupPurchaseAccountScreen({this.gamePicker});
 
   @override
   _SetupPurchaseAccountScreenState createState() =>
@@ -218,8 +214,7 @@ class _SetupPurchaseAccountScreenState
                                       releaseDates[index]),
                               child: CustomSelectingWidget(
                                 titleText: releaseDates[index]['name'],
-                                active: val.selectedReleaseDates.contains(
-                                    releaseDates.indexOf(releaseDates[index])),
+                                active: val.selectedReleaseDates.contains(releaseDates.indexOf(releaseDates[index])),
                               ),
                             );
                           },
@@ -287,21 +282,6 @@ class _SetupPurchaseAccountScreenState
         ));
   }
 
-  /*showPlatformBottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) async {
-    SetupPurchaseAccountModel model = Provider.of<SetupPurchaseAccountModel>(context, listen: false);
-    showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            height: ScreenUtils.getDesignHeight(340),
-            decoration: BoxDecoration(color: POP_UP_CONTAINER_COLOR, borderRadius: BorderRadius.circular(15.0)),
-            child: ChangeNotifierProvider.value(
-                value: model,
-                child: _bottomSheet(title, list, platform)),
-          );
-        });
-  }*/
-
   Widget _wishlistGames() {
     final model = Provider.of<SetupPurchaseAccountModel>(context);
 
@@ -338,12 +318,12 @@ class _SetupPurchaseAccountScreenState
                       itemCount: val.selectedGameList.length,
                       itemBuilder: (context, index) {
                         return GamesWidget(
-                          gameName: val.selectedGameList[index].title,
+                          gameName: val.selectedGameList[index].game.title,
                           color: PRIMARY_COLOR,
                           backgroundUrl:
-                          val.selectedGameList[index].boxCover,
+                          val.selectedGameList[index].game.boxCover,
                           releaseDate:
-                          val.selectedGameList[index].releaseDate,
+                          val.selectedGameList[index].game.releaseDate,
                         );
                       }),
                 );

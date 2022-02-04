@@ -41,7 +41,7 @@ class CustomAppBarWidget extends StatelessWidget implements PreferredSizeWidget 
                     )),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 12.0),
+                padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
                   title,
                   style: Theme.of(context).primaryTextTheme.headline2!.copyWith(color: Colors.white),

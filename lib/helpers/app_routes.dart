@@ -21,7 +21,8 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/view_models.dart';
 
-ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
+ISetupPurchaseAccountModel _implSetupPurchaseAccount =
+    ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -62,8 +63,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case PURCHASE_ACCOUNT_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
-          create: (context) => ISetupPurchaseAccountModel(),
-          child: SetupPurchaseAccountScreen(gamePicker : settings.arguments as GamePicker),
+          create: (context) => _implSetupPurchaseAccount,
+          child: SetupPurchaseAccountScreen(),
         ),
       );
     case CREATE_SALE_ROUTE:
@@ -118,11 +119,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => MultiProvider(providers: [
-                ChangeNotifierProvider<CustomSearchModel>(
-                  create: (context) => ICustomSearchModel(),
-                ),
-              ], child: MainSearchScreen(values: settings.arguments as SearchGameScreens)));
+          builder: (context) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider<CustomSearchModel>(
+                      create: (context) => ICustomSearchModel(),
+                    ),
+                    ChangeNotifierProvider<SetupPurchaseAccountModel>(
+                      create: (context) => _implSetupPurchaseAccount,
+                    ),
+                  ],
+                  child: MainSearchScreen(
+                      values: settings.arguments as SearchGameScreens)));
 
     case PAYMENT_SCREEN:
       return MaterialPageRoute(
@@ -135,27 +142,33 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CUSTOM_ADDRESS_SEARCH_SCREEN:
       return MaterialPageRoute(
         builder: (context) => MultiProvider(providers: [
-          ChangeNotifierProvider<CustomAddressSearchModel>(create: (context) => ICustomAddressSearchModel()),
-          ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales),
+          ChangeNotifierProvider<CustomAddressSearchModel>(
+              create: (context) => ICustomAddressSearchModel()),
+          ChangeNotifierProvider<SetupSalesModel>(
+              create: (context) => _implSetupSales),
         ], child: CustomAddressSearchScreen()),
       );
 
     case CUSTOM_MAP_SCREEN:
       return MaterialPageRoute(
           builder: (context) => MultiProvider(providers: [
-                ChangeNotifierProvider<CustomMapModel>(create: (context) => ICustomMapModel()),
-                ChangeNotifierProvider<SetupSalesModel>(create: (context) => _implSetupSales)
+                ChangeNotifierProvider<CustomMapModel>(
+                    create: (context) => ICustomMapModel()),
+                ChangeNotifierProvider<SetupSalesModel>(
+                    create: (context) => _implSetupSales)
               ], child: CustomMapScreen()));
 
     case AUTH_SCREEN:
-      return MaterialPageRoute(builder: (context) => ChangeNotifierProvider<AuthenticationModel>(
-          create: (context) => IAuthenticationModel(),
-          child: AuthenticationScreen()));
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<AuthenticationModel>(
+              create: (context) => IAuthenticationModel(),
+              child: AuthenticationScreen()));
 
     case MAIN_ONBOARDING:
       return MaterialPageRoute(
           builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
-              create: (context) => IMainOnbooardingModel(), child: MainOnboarding()));
+              create: (context) => IMainOnbooardingModel(),
+              child: MainOnboarding()));
 
     case SETTINGS_SCREEN:
       return MaterialPageRoute(builder: (context) => SettingsScreen());

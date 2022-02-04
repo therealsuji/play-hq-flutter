@@ -9,5 +9,5 @@ abstract class HomeScreenModel extends ChangeNotifier {
 
   void getWishListGames();
 
-  List<UserGamesModel> get wishListGames;
+  List<GameModel> get wishListGames;
 }

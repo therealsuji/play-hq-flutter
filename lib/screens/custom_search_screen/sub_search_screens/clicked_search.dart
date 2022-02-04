@@ -1,12 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/onboarding_models/setup_purchase_models/wishlist_games_model.dart';
+import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/search_model/app_search_game_model.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
+import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
+import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_loading_barrier_widget.dart';
 import 'package:play_hq/widgets/custom_search_item_widget.dart';
+import 'package:play_hq/widgets/custom_selecting_widget.dart';
+import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../../service_locator.dart';
 
 class ClickedSearch extends StatefulWidget {
   final SearchGameScreens? values;
@@ -49,52 +60,11 @@ class _ClickedSearchState extends State<ClickedSearch> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              switch (widget.values) {
-                                case SearchGameScreens.SetupPurchase:
-                                  List<int>? platformID = [];
-                                  val.gameList[index].platforms!.length > 0
-                                      ? val.gameList[index].platforms!
-                                          .forEach((element) {
-                                          platformID!
-                                              .add(element.platform!.id!);
-                                        })
-                                      : platformID = [];
-                                  /*UserGamesModel gameItem =
-                                      WishListGameDetails(
-                                          gameTitle: val.gameList[index].name,
-                                          releaseDate:
-                                              val.gameList[index].released,
-                                          id: val.gameList[index].id,
-                                          boxCover: val.gameList[index].image,
-                                          platforms: platformID);
-                                  var game = gameItem;
-                                  Navigator.pop(context, game);*/
-                                  break;
-                                case SearchGameScreens.SetupSales:
-                                  List<int>? platformID = [];
-                                  val.gameList[index].platforms!.length > 0
-                                      ? val.gameList[index].platforms!
-                                      .forEach((element) {
-                                    platformID!
-                                        .add(element.platform!.id!);
-                                  })
-                                      : platformID = [];
-                                  /*WishListGameDetails gameItem =
-                                  WishListGameDetails(
-                                      gameTitle: val.gameList[index].name,
-                                      releaseDate:
-                                      val.gameList[index].released,
-                                      id: val.gameList[index].id,
-                                      boxCover: val.gameList[index].image,
-                                      platforms: platformID);
-                                  var game = gameItem;
-                                  Navigator.pop(context, game);*/
-                                  break;
-                                case SearchGameScreens.CreateSales:
-                                  break;
-                                default:
-                                  print('Something went wrong');
-                              }
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return _platformBottomSheet(index);
+                                  });
                             },
                             child: SearchGameItem(
                               releaseDate: val.gameList[index].released,
@@ -120,6 +90,114 @@ class _ClickedSearchState extends State<ClickedSearch> {
         ],
       ),
     );
+  }
+
+  Widget _platformBottomSheet(int index) {
+    return ChangeNotifierProvider.value(
+      value: Provider.of<CustomSearchModel>(context),
+      child: Consumer<CustomSearchModel>(
+        builder: (_, val, __) {
+          return Container(
+            width: ScreenUtils.bodyWidth,
+            height: ScreenUtils.getDesignHeight(300),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+              color: POPUP_COLOR,
+            ),
+            child: Container(
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(30),
+                  left: ScreenUtils.getDesignWidth(24),
+                  right: ScreenUtils.getDesignWidth(24)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextWidget(
+                    'Select Platform',
+                    isDynamic: false,
+                    width: ScreenUtils.getDesignWidth(100),
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                  ),
+                  Container(
+                      margin:
+                          EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
+                      child: GridView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        padding: EdgeInsets.all(0.0),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          mainAxisSpacing: 15.0,
+                          crossAxisSpacing: 15.0,
+                          mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
+                        ),
+                        itemCount: platforms.length,
+                        itemBuilder: (context, index) {
+                          return GestureDetector(
+                              onTap: () {
+                                Provider.of<CustomSearchModel>(context,
+                                        listen: false)
+                                    .addPlatform(
+                                        platforms.indexOf(platforms[index]),
+                                        platforms[index]['id']);
+                              },
+                              child: CustomSelectingWidget(
+                                titleText: platforms[index]['name'],
+                                active: platforms.indexOf(platforms[index]) ==
+                                        val.selectedPlatform
+                                    ? true
+                                    : false,
+                              ));
+                        },
+                      )),
+                  Container(
+                      margin:
+                          EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
+                      child: CustomButton(
+                        buttonText: 'Confirm Game',
+                        gradient: GREEN_GRADIENT,
+                        onPressed: () {
+                          GamePreferances wishListGame = GamePreferances(
+                              game: addGamesToModel(val.gameList[index]), platform: val.selectedPlatformId);
+                          dynamic game = wishListGame;
+                          Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                              .addSelectedGame(game);
+                        },
+                      ))
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  GameModel addGamesToModel(GameDetails gameDetails){
+    List<int>? platformID = [];
+    List<int>? genreID = [];
+    gameDetails.platforms!.length > 0
+        ? gameDetails.platforms!
+        .forEach((element) {
+      platformID!.add(element.platform!.id!);
+    })
+        : platformID = [];
+    gameDetails.genres!.length > 0
+        ? gameDetails.genres!
+        .forEach((element) {
+      platformID!.add(element.id);
+    })
+        : genreID = [];
+    GameModel gameItem = GameModel(
+        title: gameDetails.name,
+        releaseDate: gameDetails.released,
+        apiId: gameDetails.id,
+        boxCover: gameDetails.image,
+        genres: genreID,
+        backgroundImage: gameDetails.image,
+        platforms: platformID);
+    return gameItem;
   }
 
   Widget _customSearchTextfield(bool active) {

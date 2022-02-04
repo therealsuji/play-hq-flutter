@@ -84,6 +84,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
               fontSize: 25,
               color: Colors.white,
               fontFamily: Neusa,
+              fontWeight: FontWeight.bold
             ),
             headline2: TextStyle(
               fontSize: 20,

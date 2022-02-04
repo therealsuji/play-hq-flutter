@@ -15,7 +15,6 @@ import 'package:provider/provider.dart';
 import 'game_picker_details_widget.dart';
 
 class CustomGamePicker extends StatefulWidget {
-
   final GamePicker? gameType;
 
   CustomGamePicker({this.gameType});
@@ -50,7 +49,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
           ScreenUtils.getDesignHeight(65), _t)!;
       _selectingWidgetleftPos = lerpDouble(24, 0, _t)!;
       _margin = lerpDouble(0, 24, _t)!;
-      _containerColor = Color.lerp(Colors.transparent, MAIN_CONTAINER_COLOR, _t)!;
+      _containerColor =
+          Color.lerp(Colors.transparent, MAIN_CONTAINER_COLOR, _t)!;
       _borderColor = Color.lerp(FILL_COLOR, Colors.transparent, _t * 3)!;
       _radius = lerpDouble(5, 50, _t)!;
     });
@@ -58,9 +58,10 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(child: Padding(
-      padding: EdgeInsets.only(
-          top: ScreenUtils.getDesignHeight(15), bottom: 100),
+    return SingleChildScrollView(
+        child: Padding(
+      padding:
+          EdgeInsets.only(top: ScreenUtils.getDesignHeight(15), bottom: 30),
       child: Stack(
         children: [
           Container(
@@ -74,8 +75,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
     ));
   }
 
-  Widget _searchGameType(GamePicker game){
-    switch (game){
+  Widget _searchGameType(GamePicker game) {
+    switch (game) {
       case GamePicker.PurchaseWishlist:
         return Positioned.fill(
           left: _selectingWidgetleftPos,
@@ -83,13 +84,9 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             alignment: Alignment.centerLeft,
             child: GestureDetector(
               onTap: () async {
-                dynamic gameDetails = await Navigator.pushNamed(
+                 Navigator.pushNamed(
                     context, MAIN_SEARCH_SCREEN,
                     arguments: SearchGameScreens.SetupPurchase);
-                if (gameDetails != null) {
-                  Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                      .addSelectedGame(gameDetails);
-                }
               },
               child: _selectingWidget(
                   _selectingWidgetHeight, _selectingWidgetWidth),
@@ -103,13 +100,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             alignment: Alignment.centerLeft,
             child: GestureDetector(
               onTap: () async {
-                dynamic gameDetails = await Navigator.pushNamed(
-                    context, MAIN_SEARCH_SCREEN,
+                Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
                     arguments: SearchGameScreens.SetupSales);
-                if (gameDetails != null) {
-                  Provider.of<SetupSalesModel>(context, listen: false)
-                      .addSelectedGame(gameDetails);
-                }
               },
               child: _selectingWidget(
                   _selectingWidgetHeight, _selectingWidgetWidth),
@@ -121,58 +113,33 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
     }
   }
 
-  Widget _getGameType(GamePicker game){
-    switch (game){
-      case GamePicker.PurchaseWishlist :
+  Widget _getGameType(GamePicker game) {
+    switch (game) {
+      case GamePicker.PurchaseWishlist:
         return ChangeNotifierProvider.value(
           value: Provider.of<SetupPurchaseAccountModel>(context),
           child: Consumer<SetupPurchaseAccountModel>(
-            builder: (_ , val , __){
+            builder: (_, val, __) {
               return Container(
                 child: Consumer<SetupPurchaseAccountModel>(
-                  builder: (_ , values , __){
+                  builder: (_, values, __) {
                     return ListView.separated(
-                      separatorBuilder: (BuildContext context , int index){
-                        return SizedBox(width: ScreenUtils.getDesignWidth(15));
-                      },
-                        padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
-                        controller: _sliderController,
-                        itemCount: values.selectedGameList.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context , int index){
-                          return GamePickerGames(
-                            backgroundUrl: values.selectedGameList[index].boxCover,
-                            gameName: values.selectedGameList[index].title,
-                            releaseDate: values.selectedGameList[index].releaseDate,
-                          );
-                        });
-                  },
-                ),
-                );
-            },
-          ),
-        );
-      case GamePicker.SalesLibrary:
-        return ChangeNotifierProvider.value(
-          value: Provider.of<SetupSalesModel>(context),
-          child: Consumer<SetupSalesModel>(
-            builder: (_ , val , __){
-              return Container(
-                child: Consumer<SetupSalesModel>(
-                  builder: (_ , values , __){
-                    return ListView.separated(
-                        separatorBuilder: (BuildContext context , int index){
-                          return SizedBox(width: ScreenUtils.getDesignWidth(15));
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                              width: ScreenUtils.getDesignWidth(15));
                         },
-                        padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
+                        padding: EdgeInsets.only(
+                            left: ScreenUtils.getDesignWidth(160)),
                         controller: _sliderController,
                         itemCount: values.selectedGameList.length,
                         scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context , int index){
+                        itemBuilder: (BuildContext context, int index) {
                           return GamePickerGames(
-                            backgroundUrl: values.selectedGameList[index].boxCover,
-                            gameName: values.selectedGameList[index].title,
-                            releaseDate: values.selectedGameList[index].releaseDate,
+                            backgroundUrl:
+                                values.selectedGameList[index].game.boxCover,
+                            gameName: values.selectedGameList[index].game.title,
+                            releaseDate:
+                                values.selectedGameList[index].game.releaseDate,
                           );
                         });
                   },
@@ -181,7 +148,40 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             },
           ),
         );
-      default :
+      case GamePicker.SalesLibrary:
+        return ChangeNotifierProvider.value(
+          value: Provider.of<SetupSalesModel>(context),
+          child: Consumer<SetupSalesModel>(
+            builder: (_, val, __) {
+              return Container(
+                child: Consumer<SetupSalesModel>(
+                  builder: (_, values, __) {
+                    return ListView.separated(
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                              width: ScreenUtils.getDesignWidth(15));
+                        },
+                        padding: EdgeInsets.only(
+                            left: ScreenUtils.getDesignWidth(160)),
+                        controller: _sliderController,
+                        itemCount: values.selectedGameList.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GamePickerGames(
+                            backgroundUrl:
+                                values.selectedGameList[index].boxCover,
+                            gameName: values.selectedGameList[index].title,
+                            releaseDate:
+                                values.selectedGameList[index].releaseDate,
+                          );
+                        });
+                  },
+                ),
+              );
+            },
+          ),
+        );
+      default:
         return Container();
     }
   }

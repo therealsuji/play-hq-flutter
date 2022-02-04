@@ -10,4 +10,7 @@ abstract class SearchGameModel with ChangeNotifier{
 
   SearchScreenStates get states;
 
+  void addPlatform(int index, int platformId);
+
+  int get selectedPlatform;
 }

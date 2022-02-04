@@ -20,7 +20,7 @@ class CustomSelectingWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(3.0)
       ),
       child: Center(
-        child: Text(titleText! , style: TextStyle(fontSize: 14 , fontFamily: CircularBook , color: Colors.white , fontWeight: FontWeight.w500),),
+        child: Text(titleText! , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , color: Colors.white , fontWeight: FontWeight.w500),),
       ),
     );
   }

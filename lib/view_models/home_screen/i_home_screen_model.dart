@@ -8,7 +8,7 @@ class IHomeScreenModel extends HomeScreenModel {
   final _homeApi = locator<HomeRepository>();
 
   int _carouselPageIndex = 0;
-  List<UserGamesModel> _wishListGames = [];
+  List<GameModel> _wishListGames = [];
 
   @override
   void onCarouselPageChanged(int index) {
@@ -25,5 +25,5 @@ class IHomeScreenModel extends HomeScreenModel {
   int get carouselPageIndex => _carouselPageIndex;
 
   @override
-  List<UserGamesModel> get wishListGames => _wishListGames;
+  List<GameModel> get wishListGames => _wishListGames;
 }

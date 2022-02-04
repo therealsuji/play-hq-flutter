@@ -2,8 +2,6 @@ import 'dart:convert';
 
 import 'package:play_hq/models/common_models/release_date_model.dart';
 
-
-
 SetupPurchaseModel setupPurchaseModelFromJson(String str) => SetupPurchaseModel.fromJson(json.decode(str));
 
 class SetupPurchaseModel {
