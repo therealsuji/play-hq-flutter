@@ -55,7 +55,7 @@ class GameDetailsDelegate extends GameDetailsRepository {
   Future<void> setGameLibrary(Map<String, dynamic> body) async {
 
     try{
-      await _networkCalls.performRequest(APIConfig.addToLibrary, HttpAction.POST, body: body);
+      await _networkCalls.performRequest(APIConfig.addLibraryGames, HttpAction.POST, body: body);
     }
     on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());

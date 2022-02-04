@@ -51,7 +51,7 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                   onTap: () {
-                                    Provider.of<SetupSalesViewModel>(context ,listen: false).addLocation(value.autoCompleteResults[index].mainText.toString());
+                                      Provider.of<SetupSalesViewModel>(context ,listen: false).addLocation(value.autoCompleteResults[index].placeId.toString() , value.autoCompleteResults[index].mainText.toString());
                                   },
                                   child: _customAddress(value.autoCompleteResults[index].mainText.toString(), value.autoCompleteResults[index].secondaryText.toString()));
                             },

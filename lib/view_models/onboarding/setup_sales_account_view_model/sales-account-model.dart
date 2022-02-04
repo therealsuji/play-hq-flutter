@@ -6,7 +6,11 @@ import 'package:play_hq/models/search_model/app_search_game_model.dart';
 
 abstract class SetupSalesViewModel with ChangeNotifier{
 
-  void addLocation(String location);
+  void addLocation(String placeId , String address);
+
+  void addPhoneNumber(String phoneNumber);
+
+  void addDisplayName(String displayName);
 
   String get selectedAddress;
 

@@ -85,6 +85,8 @@ class AuthService {
 
     final loggedInUser = await FirebaseAuth.instance.signInWithCredential(credential);
     final token = await loggedInUser.user!.getIdToken();
+    final fullName  = loggedInUser.user!.displayName;
+    SecureStorage.writeValue("displayName", fullName);
     return token;
   }
 

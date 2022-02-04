@@ -32,7 +32,11 @@ class APIConfig {
 
   static String setupPurchase = '$_baseUrl' + "/user/set-preferences";
 
+  static String setupSales = '$_baseUrl' + "/user/set-details";
+
   static String addWishListGames = '$_baseUrl' + "/wish-list-games/set";
+
+  static String get addLibraryGames => '$_baseUrl' + '/library-games/set';
 
   static String getGenres = '$_rawgAPI' +
       '/genres?ordering=&page=1&page_size=30&' +
@@ -55,8 +59,6 @@ class APIConfig {
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';
   }
-
-  static String get addToLibrary => '$_baseUrl' + '/library-games/set';
 
   static String getLibraryGames() {
     return '$_baseUrl' + '/library-games';

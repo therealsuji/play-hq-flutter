@@ -117,7 +117,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   iconData: Icons.local_phone_rounded,
                   hideText: false,
                   type: TextInputType.phone,
-                  onChanged: null,
+                  onChanged: (val) => Provider.of<SetupSalesViewModel>(context, listen: false).addPhoneNumber(val),
                 ),
                 Container(
                   margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
@@ -133,7 +133,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   iconData: Icons.person_outline,
                   hideText: false,
                   type: TextInputType.text,
-                  onChanged: null,
+                  onChanged: (val) => Provider.of<SetupSalesViewModel>(context, listen: false).addDisplayName(val),
                 ),
                 Container(
                     margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
