@@ -1,20 +1,29 @@
-class Platform {
-  final int? id;
-  final String? name;
-  final String? slug;
-  final int? gamesCount;
+import 'dart:convert';
 
-  const Platform({
-    required this.id,
+Platform platformFromJson(String str) => Platform.fromJson(json.decode(str));
+
+String platformToJson(Platform data) => json.encode(data.toJson());
+
+class Platform {
+  Platform({
+    this.id,
     this.name,
-    this.slug,
-    this.gamesCount,
+    this.platformName,
   });
 
+  int? id;
+  String? name;
+  String? platformName;
+
   factory Platform.fromJson(Map<String, dynamic> json) => Platform(
-    id: json["platform"]["id"] ?? 0,
-    name: json["platform"]["name"] ?? "",
-    slug: json["platform"]["slug"] ?? "",
-    gamesCount: json["platform"]["games_count"] ?? 0,
+    id: json["id"],
+    name: json["name"],
+    platformName: json["platform_name"],
   );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "name": name,
+    "platform_name": platformName,
+  };
 }

@@ -56,16 +56,17 @@ class IAuthenticationModel extends AuthenticationModel {
     };
     if (token != null && fcmToken != null) {
       UserModel? userData  = await _logintoBackend.backendLogin(credentials);
-      if(userData!.user!.setupDone == true){
+      print('Setup Done Status: ${userData!.user!.setupDone}');
+      if(userData.user!.setupDone == true){
         SecureStorage.writeValue("jwtToken", userData.jwt);
         SecureStorage.writeValue("fcmToken", fcmToken);
-        SecureStorage.writeValue("setupDone", true);
+        SecureStorage.writeValue("setupDone", "Done");
         locator<EventBus>().fire(LoadingEvent.hide());
         locator<NavigationService>().pushNamed(MAIN_SCREEN);
       }else{
         SecureStorage.writeValue("jwtToken", userData.jwt);
         SecureStorage.writeValue("fcmToken", fcmToken);
-        SecureStorage.writeValue("setupDone", false);
+        SecureStorage.writeValue("setupDone", "Not Done");
         locator<EventBus>().fire(LoadingEvent.hide());
         locator<NavigationService>().pushNamed(MAIN_ONBOARDING);
       }

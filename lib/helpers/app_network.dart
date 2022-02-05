@@ -81,6 +81,7 @@ class Network {
       }
 
       print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
 
       return response;
     }

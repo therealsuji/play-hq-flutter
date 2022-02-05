@@ -4,7 +4,7 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/onboarding_models/setup_sales_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';

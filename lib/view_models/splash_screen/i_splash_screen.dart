@@ -39,7 +39,7 @@ class ISplashModel extends SplashScreenModel {
     });
 
     if (FirebaseAuth.instance.currentUser != null && localToken != null) {
-      if(setupStatus == true){
+      if(setupStatus.toString() == "Done"){
         navigateMainScreen();
       }else{
         navigateOnboarding();

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:play_hq/models/common_models/platform_model.dart';
+import 'package:play_hq/models/common_models/rawg_platform_model.dart';
 
 
 GameDetailModel gameDetailsModelFromJson(String str) => GameDetailModel.fromJson(json.decode(str));
@@ -20,7 +20,7 @@ class GameDetailModel {
   final int? ratingTop;
   final List<Ratings>? ratings;
   final int? reviewsCount;
-  final List<Platform>? platforms;
+  final List<RawgPlatformModel>? platforms;
   final List<GenreTagDeveloper>? genres;
   final List<GenreTagDeveloper>? tags;
   final List<GenreTagDeveloper>? developer;
@@ -63,7 +63,7 @@ class GameDetailModel {
     ratingTop: json["rating_top"] ?? 0,
     ratings: json["ratings"] == null ? [] : List<Ratings>.from(json["ratings"].map((x) => Ratings.fromJson(x))),
     reviewsCount: json["reviews_count"] ?? 0,
-    platforms: json["platforms"] == null ? [] : List<Platform>.from(json["platforms"].map((x) => Platform.fromJson(x))),
+    platforms: json["platforms"] == null ? [] : List<RawgPlatformModel>.from(json["platforms"].map((x) => RawgPlatformModel.fromJson(x))),
     genres: json["genres"] == null ? [] : List<GenreTagDeveloper>.from(json["genres"].map((x) => GenreTagDeveloper.fromJson(x))),
     tags: json["tags"] == null ? [] : List<GenreTagDeveloper>.from(json["tags"].map((x) => GenreTagDeveloper.fromJson(x))),
     developer: json["developers"] == null ? [] : List<GenreTagDeveloper>.from(json["developers"].map((x) => GenreTagDeveloper.fromJson(x))),

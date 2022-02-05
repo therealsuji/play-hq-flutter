@@ -7,7 +7,10 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
+import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
+import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:provider/provider.dart';
 import '../../service_locator.dart';
 
 class MainProfileScreen extends StatefulWidget {
@@ -16,15 +19,20 @@ class MainProfileScreen extends StatefulWidget {
 }
 
 class _MainProfileScreenState extends State<MainProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<MainProfileModel>(context, listen: false).getMyGames();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(
-          top: ScreenUtils.getDesignHeight(50)),
+      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50) ),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               margin: EdgeInsets.only(right: 24),
@@ -32,16 +40,21 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                      onTap: () => locator<NavigationService>().pushNamed(SETTINGS_SCREEN),
-                      child: Container(child: SvgPicture.asset('assets/icons/settings.svg'))),
+                      onTap: () => locator<NavigationService>()
+                          .pushNamed(SETTINGS_SCREEN),
+                      child: Container(
+                          child:
+                              SvgPicture.asset('assets/icons/settings.svg'))),
                   Stack(
                     children: [
                       GestureDetector(
-                        onTap: () => locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
+                        onTap: () => locator<NavigationService>()
+                            .pushNamed(NOTIFICATION_SCREEN),
                         child: Container(
-                            margin:
-                                EdgeInsets.only(left: ScreenUtils.getDesignWidth(30)),
-                            child: SvgPicture.asset('assets/icons/notification.svg')),
+                            margin: EdgeInsets.only(
+                                left: ScreenUtils.getDesignWidth(30)),
+                            child: SvgPicture.asset(
+                                'assets/icons/notification.svg')),
                       ),
                       Positioned(
                         top: 0,
@@ -63,7 +76,8 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 'Damsara Perera',
                 '@Damasu007'),
             Container(
-              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
               child: CustomTextWidget(
                 'Subscription Plan',
                 isDynamic: false,
@@ -72,12 +86,16 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 15 , left: 24 , right: 24),
-              child: _subscriptionPlan('Pro Gamer Pack',
-                  'assets/images/xbox_background.png', '16 Days Remaining', 2, 3),
+              margin: EdgeInsets.only(top: 15, left: 24, right: 24),
+              child: _subscriptionPlan(
+                  'Pro Gamer Pack',
+                  'assets/images/xbox_background.png',
+                  '16 Days Remaining',
+                  2,
+                  3),
             ),
             Container(
-              margin: EdgeInsets.only(top: 15 , left: 24 , right: 24),
+              margin: EdgeInsets.only(top: 15, left: 24, right: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -87,7 +105,67 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30) , left: 24 , right: 24),
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  CustomTextWidget(
+                    'WishList Games',
+                    isDynamic: false,
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                    width: ScreenUtils.getDesignWidth(111),
+                  ),
+                  Spacer(),
+                  CustomTextWidget(
+                    'View All',
+                    isDynamic: false,
+                    width: ScreenUtils.getDesignWidth(40),
+                    style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: CircularBook,
+                        foreground: Paint()
+                          ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                        fontWeight: FontWeight.w700),
+                  )
+                ],
+              ),
+            ),
+            Flexible(
+              child: Container(
+                margin: EdgeInsets.only(top: 15, left: 24, right: 24),
+                child: Consumer<MainProfileModel>(
+                  builder: (_, val, __) {
+                    return val.fetchAllWishlistGames.length > 0 ? ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GamesWidget(
+                            gameName: val.fetchAllWishlistGames[index].game.title ?? "",
+                            backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
+                            releaseDate: val.fetchAllWishlistGames[index].game.releaseDate ?? "",
+                            gradient: PRIMARY_GRADIENT,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(width: ScreenUtils.getDesignHeight(15));
+                        },
+                        itemCount: val.fetchAllWishlistGames.length) : Container(
+                      child: Center(
+                        child: CustomTextWidget(
+                          'No Games Added',
+                          isDynamic: false,
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                          width: ScreenUtils.getDesignWidth(111),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                  top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -98,29 +176,74 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                     width: ScreenUtils.getDesignWidth(111),
                   ),
                   Spacer(),
-                  CustomTextWidget('View All', isDynamic: false , width: ScreenUtils.getDesignWidth(40),style: TextStyle(fontSize: 10 , fontFamily: CircularBook , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR, fontWeight: FontWeight.w700),)
+                  CustomTextWidget(
+                    'View All',
+                    isDynamic: false,
+                    width: ScreenUtils.getDesignWidth(40),
+                    style: TextStyle(
+                        fontSize: 10,
+                        fontFamily: CircularBook,
+                        foreground: Paint()
+                          ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                        fontWeight: FontWeight.w700),
+                  )
                 ],
               ),
             ),
+            Flexible(
+              child: Container(
+                margin: EdgeInsets.only(top: 15, left: 24, right: 24 , bottom: ScreenUtils.getDesignHeight(30)),
+                child: Consumer<MainProfileModel>(
+                  builder: (_, val, __) {
+                    return val.fetchAllLibraryGames.length > 0 ? ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GamesWidget(
+                            gameName: val.fetchAllLibraryGames[index].game.title ?? "",
+                            backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
+                            releaseDate: val.fetchAllLibraryGames[index].game.releaseDate ?? "",
+                            gradient: PRIMARY_GRADIENT,
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(width: ScreenUtils.getDesignHeight(15));
+                        },
+                        itemCount: val.fetchAllLibraryGames.length) : Container(
+                      child: Center(
+                        child: CustomTextWidget(
+                          'No Games Added',
+                          isDynamic: false,
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                          width: ScreenUtils.getDesignWidth(111),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-  Widget _subButtons(String text , bool emphasis){
+  Widget _subButtons(String text, bool emphasis) {
     return Container(
       height: ScreenUtils.getDesignHeight(45),
       width: ScreenUtils.getDesignWidth(155),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(3),
-        gradient: emphasis ? PRIMARY_GRADIENT : null,
-        border: emphasis ? null : Border.all(color: FILL_COLOR)
-      ),
+          borderRadius: BorderRadius.circular(3),
+          gradient: emphasis ? PRIMARY_GRADIENT : null,
+          border: emphasis ? null : Border.all(color: FILL_COLOR)),
       child: Center(
         child: Text(
           text,
-          style: TextStyle(fontWeight: FontWeight.bold , color: Colors.white, fontSize: 11, fontFamily: CircularBook),
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 11,
+              fontFamily: CircularBook),
         ),
       ),
     );
@@ -221,7 +344,8 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                   children: [
                     _statistics('Sales', sales),
                     Container(
-                        margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(40)),
+                        margin: EdgeInsets.only(
+                            left: ScreenUtils.getDesignWidth(40)),
                         child: _statistics('Purchases', purchases)),
                     Spacer(),
                     Container(
@@ -229,14 +353,17 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                       height: ScreenUtils.getDesignHeight(35),
                       decoration: BoxDecoration(
                           gradient: PRIMARY_GRADIENT,
-                          borderRadius: BorderRadius.circular(3.0)
-                      ),
+                          borderRadius: BorderRadius.circular(3.0)),
                       child: Center(
                         child: CustomTextWidget(
                           'Change Pack',
                           isDynamic: false,
                           width: ScreenUtils.getDesignWidth(55),
-                          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white , fontSize: 9 , fontFamily: CircularBook),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontFamily: CircularBook),
                         ),
                       ),
                     )
@@ -248,16 +375,35 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
         ));
   }
 
-  Widget _statistics(String stat , int amount){
+  Widget _statistics(String stat, int amount) {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextWidget(stat, isDynamic: true , minWidth: ScreenUtils.getDesignWidth(20),maxWidth: ScreenUtils.getDesignWidth(60),style: TextStyle(fontSize: 12 , fontFamily: CircularBook , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR, fontWeight: FontWeight.w700),
+          CustomTextWidget(
+            stat,
+            isDynamic: true,
+            minWidth: ScreenUtils.getDesignWidth(20),
+            maxWidth: ScreenUtils.getDesignWidth(60),
+            style: TextStyle(
+                fontSize: 12,
+                fontFamily: CircularBook,
+                foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                fontWeight: FontWeight.w700),
           ),
           Container(
               margin: EdgeInsets.only(top: 2),
-              child: CustomTextWidget(amount.toString() + ' Remaining', isDynamic: true , minWidth: ScreenUtils.getDesignWidth(20),maxWidth: ScreenUtils.getDesignWidth(100) , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , color: Colors.white, fontWeight: FontWeight.bold) ,))
+              child: CustomTextWidget(
+                amount.toString() + ' Remaining',
+                isDynamic: true,
+                minWidth: ScreenUtils.getDesignWidth(20),
+                maxWidth: ScreenUtils.getDesignWidth(100),
+                style: TextStyle(
+                    fontSize: 12,
+                    fontFamily: CircularBook,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold),
+              ))
         ],
       ),
     );

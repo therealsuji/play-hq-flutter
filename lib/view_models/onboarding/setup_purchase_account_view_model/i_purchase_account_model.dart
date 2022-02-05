@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/release_date_model.dart';
-import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/repository/clients/setup_purchase_repository.dart';

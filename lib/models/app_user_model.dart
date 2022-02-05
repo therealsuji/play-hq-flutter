@@ -72,7 +72,7 @@ class UserClass {
               json["pref_platforms"].map((x) => PrefPlatform.fromJson(x))),
       location:
           json["location"] == null ? null : Location.fromJson(json["location"]),
-      setupDone: json["setupDone"] == null ? false : json["setupDone"]);
+      setupDone: json["setup_done"] == null ? false : json["setup_done"]);
 
   Map<String, dynamic> toJson() => {
         "username": username == null ? null : username,

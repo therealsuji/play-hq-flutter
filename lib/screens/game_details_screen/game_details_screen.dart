@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/common_models/platform_model.dart';
+import 'package:play_hq/models/common_models/rawg_platform_model.dart';
 import 'package:play_hq/view_models/game_details/game_details_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
@@ -526,7 +526,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
     );
   }
 
-  Widget _platformBottomSheet(List<Platform> platformList, VoidCallback? onPressed) {
+  Widget _platformBottomSheet(List<RawgPlatformModel> platformList, VoidCallback? onPressed) {
     return Container(
       margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
       child: Column(

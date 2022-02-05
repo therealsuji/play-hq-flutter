@@ -28,6 +28,8 @@ class APIConfig {
   //authenticate user
   static String login = '$_baseUrl' + "/firebase/auth";
 
+  static String renewJwt = '$_baseUrl' + "/firebase/renew-token";
+
   static String createSale = '$_baseUrl' + "/sell-games";
 
   static String setupPurchase = '$_baseUrl' + "/user/set-preferences";

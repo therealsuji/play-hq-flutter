@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';

@@ -1,10 +1,10 @@
 
-import 'package:play_hq/models/common_models/user_games_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 
 abstract class MainProfileScreenRepository {
 
-  Future<List<GameModel>> getWishListGames();
+  Future<List<GamePreferances>> getWishListGames();
 
-  Future<List<GameModel>> getLibraryGames();
+  Future<List<GamePreferances>> getLibraryGames();
 
 }
