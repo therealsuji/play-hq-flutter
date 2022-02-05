@@ -22,11 +22,11 @@ class GameModel {
   String? backgroundImage;
 
   factory GameModel.fromJson(Map<String, dynamic> json) => GameModel(
-    title: json["title"],
+    title: json["title"] == null ? null : json["title"],
     apiId: json["api_id"],
     boxCover: json["box_cover"],
-    platforms: List<int>.from(json["platforms"].map((x) => x)),
-    genres: List<int>.from(json["genres"].map((x) => x)),
+    platforms:json["platforms"] == null ? List.empty() : List<int>.from(json["platforms"].map((x) => x)),
+    genres: json["genres"] == null ? List.empty() : List<int>.from(json["genres"].map((x) => x)),
     releaseDate: json["release_date"],
     backgroundImage: json["background_image"],
   );

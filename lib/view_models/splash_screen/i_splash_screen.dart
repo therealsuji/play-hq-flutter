@@ -4,12 +4,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_secure_storage.dart';
+import 'package:play_hq/repository/clients/splash_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/splash_screen/splash_screen_model.dart';
 
 class ISplashModel extends SplashScreenModel {
+
+  final _splashAPI = locator<SplashRepository>();
+
   @override
   void navigateMainScreen() {
     locator<NavigationService>().pushReplacement(MAIN_SCREEN);
@@ -24,7 +28,7 @@ class ISplashModel extends SplashScreenModel {
   void startAuthentication() async {
     var localToken = await SecureStorage.readValue('jwtToken');
     var fcmToken = await SecureStorage.readValue('fcmToken');
-    dynamic setupStatus = await SecureStorage.readValue("setupDone");
+    bool isSetupDone = false;
     log("strapiToken $localToken");
     log("fcmToken $fcmToken");
     log("firebaseToken ${await FirebaseAuth.instance.currentUser?.getIdToken()}");
@@ -38,15 +42,20 @@ class ISplashModel extends SplashScreenModel {
       }
     });
 
-    if (FirebaseAuth.instance.currentUser != null && localToken != null) {
-      if(setupStatus.toString() == "Done"){
-        navigateMainScreen();
-      }else{
-        navigateOnboarding();
+    await _splashAPI.renewJwtToken().then((value) {
+      localToken = value.jwt!;
+      if (FirebaseAuth.instance.currentUser != null && localToken != null) {
+        SecureStorage.writeValue('jwtToken', value.jwt);
+        if(value.user!.setupDone!){
+          navigateMainScreen();
+        }else{
+          navigateOnboarding();
+        }
       }
-    } else {
+    }).onError((error, stackTrace) {
+      SecureStorage.deleteAll();
       navigateSignUpScreen();
-    }
+    });
   }
 
   @override

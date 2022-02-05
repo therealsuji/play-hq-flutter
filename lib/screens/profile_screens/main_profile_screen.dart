@@ -133,6 +133,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
             ),
             Flexible(
               child: Container(
+                height: ScreenUtils.getDesignHeight(150),
                 margin: EdgeInsets.only(top: 15, left: 24, right: 24),
                 child: Consumer<MainProfileModel>(
                   builder: (_, val, __) {
@@ -192,6 +193,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
             ),
             Flexible(
               child: Container(
+                height: ScreenUtils.getDesignHeight(150),
                 margin: EdgeInsets.only(top: 15, left: 24, right: 24 , bottom: ScreenUtils.getDesignHeight(30)),
                 child: Consumer<MainProfileModel>(
                   builder: (_, val, __) {
