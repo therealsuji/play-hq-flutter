@@ -2,12 +2,14 @@ import 'package:event_bus/event_bus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
 import 'package:play_hq/repository/clients/authentication_repository.dart';
+import 'package:play_hq/repository/clients/create_sale_repository.dart';
 import 'package:play_hq/repository/clients/main_profile_screen_repository.dart';
 import 'package:play_hq/repository/clients/order_repository.dart';
 import 'package:play_hq/repository/clients/setup_purchase_repository.dart';
 import 'package:play_hq/repository/clients/setup_sales_repository.dart';
 import 'package:play_hq/repository/clients/splash_repository.dart';
 import 'package:play_hq/repository/delegates/authentication_delegate.dart';
+import 'package:play_hq/repository/delegates/create_sale_delegate.dart';
 import 'package:play_hq/repository/delegates/main_profile_screen_delegate.dart';
 import 'package:play_hq/repository/delegates/orders_delegate.dart';
 import 'package:play_hq/repository/delegates/setup_purchase_delegate.dart';
@@ -36,4 +38,5 @@ void setupLocator() {
   locator.registerFactory<MainProfileScreenRepository>(() => MainProfileScreenDelegate());
   locator.registerFactory<OrdersRepository>(() => OrdersDelegate());
   locator.registerFactory<SplashRepository>(() => SplashDelegate());
+  locator.registerFactory<CreateSaleRepository>(() => CreateSaleDelegate());
 }

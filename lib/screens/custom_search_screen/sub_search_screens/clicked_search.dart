@@ -143,7 +143,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                         platforms[index]['id']) : Provider.of<CustomSearchModel>(context, listen: false)
                                     .addGameCondition(
                                     game_conditions.indexOf(game_conditions[index]),
-                                    game_conditions[index]['API_Slug']) ;
+                                    game_conditions[index]['API_Slug']);
                               },
                               child: CustomSelectingWidget(
                                 titleText: isPLatform ? platforms[index]['name'] : game_conditions[index]['name'],
@@ -162,7 +162,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                         buttonText: 'Confirm Game',
                         gradient: GREEN_GRADIENT,
                         onPressed: () {
-                          GamePreferances game = GamePreferances(game: addGamesToModel(val.gameList[index]), platform: val.selectedPlatformId , condition: game_conditions[val.selectedGameCondition]['name']);
+                          GamePreferances game = GamePreferances(game: addGamesToModel(val.gameList[index]), id: val.gameList[index].id, platform: val.selectedPlatformId , conditionId: game_conditions[val.selectedGameCondition]['API_Slug'] , conditionName: game_conditions[val.selectedGameCondition]['name']);
                           dynamic finalGame = game;
                           switch (widget.values) {
                             case SearchGameScreens.SetupPurchase:

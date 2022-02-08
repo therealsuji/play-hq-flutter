@@ -12,47 +12,34 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   bool get isFormValid;
 
+  int get platformId;
+
+  String get currentCondition;
+
   void validateForm();
 
   void setPrice(double value);
 
   void setIsNegotiable(bool value);
 
-  // dynamic get selectedGame;
-
-  // void setSelectedGame(dynamic value);
-
   void setRemarks(String value);
-
-  List<SaleGame> get gameList;
-
-  void updateGame(int id);
-
-  // void addGame(int id, String name, String image);
 
   List<GamePreferances> get selectedGameList;
 
   void addSelectedGame(GamePreferances game);
 
-  void removeGame(int id);
+  int get selectedPlatform;
+
+  void setSelectedPlatform(int selecttedId , int platformId);
 
   void createSale();
 
-  dynamic get selectedPlatform;
+  void removeGame(int id);
 
-  void setSelectedPlatform(dynamic id);
+  void updateGame(int id);
 
-  GameCondition? get selectedGameCondition;
+  void getCurrentCondition(int id);
 
-  void setSelectedGameCondition(GameCondition condition);
+  void changeCurrentCondition(String condition);
 
-  bool get sheetSaved;
-
-  void setSheetSaved(bool isSaved);
-
-  bool get platformIsExpanded;
-
-  void setPlatformIsExpanded(bool expanded);
-
-  Set<Map<String, dynamic>> get consoleList;
 }
