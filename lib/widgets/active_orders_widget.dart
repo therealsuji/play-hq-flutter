@@ -4,7 +4,6 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
-import 'package:play_hq/services/nav_service.dart';
 
 class ActiveOrdersWidget extends StatelessWidget {
   final OrdersModel? orderDetails;
@@ -15,7 +14,6 @@ class ActiveOrdersWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: ScreenUtils.getDesignHeight(280),
       decoration: BoxDecoration(
         color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
         borderRadius: BorderRadius.circular(5),
