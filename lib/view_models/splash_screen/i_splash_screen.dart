@@ -26,12 +26,6 @@ class ISplashModel extends SplashScreenModel {
 
   @override
   void startAuthentication() async {
-    var localToken = await SecureStorage.readValue('jwtToken');
-    var fcmToken = await SecureStorage.readValue('fcmToken');
-    bool isSetupDone = false;
-    log("strapiToken $localToken");
-    log("fcmToken $fcmToken");
-    log("firebaseToken ${await FirebaseAuth.instance.currentUser?.getIdToken()}");
     // TESTING CODE
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print('Got a message whilst in the foreground!');
@@ -43,7 +37,7 @@ class ISplashModel extends SplashScreenModel {
     });
 
     await _splashAPI.renewJwtToken().then((value) {
-      localToken = value.jwt!;
+      var localToken = value.jwt!;
       if (FirebaseAuth.instance.currentUser != null && localToken != null) {
         SecureStorage.writeValue('jwtToken', value.jwt);
         if(value.user!.setupDone!){

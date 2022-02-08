@@ -17,8 +17,12 @@ class ICustomSearchModel extends CustomSearchModel{
   SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
   SearchGameScreens? _gameScreens;
   Timer? _debounce;
+
   int _selectedPlatform = 10;
   int _selectedPlatformId = 0;
+
+  int _selectedGameCondition = 10;
+  String _gameConditionSlug = '';
 
   @override
   void onClicked(bool click) {
@@ -84,5 +88,18 @@ class ICustomSearchModel extends CustomSearchModel{
 
   @override
   int get selectedPlatformId => _selectedPlatformId;
+
+  @override
+  void addGameCondition(int index, String slug) {
+    _selectedGameCondition = index;
+    _gameConditionSlug = slug;
+    notifyListeners();
+  }
+
+  @override
+  int get selectedGameCondition => _selectedGameCondition;
+
+  @override
+  String get selectedGameConditionSlug => _gameConditionSlug;
 
 }

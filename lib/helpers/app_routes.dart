@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
+import 'package:play_hq/models/search_model/search_argument_model.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
 import 'package:play_hq/screens/profile_screens/notifications/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
@@ -24,6 +25,7 @@ import 'package:play_hq/view_models/view_models.dart';
 ISetupPurchaseAccountModel _implSetupPurchaseAccount =
     ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
+ICreateSaleModel _implCreateSale = ICreateSaleModel();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -70,7 +72,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
-          create: (context) => ICreateSaleModel(),
+          create: (context) => _implCreateSale,
           child: CreateSaleScreen(),
         ),
       );
@@ -130,9 +132,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                     ChangeNotifierProvider<SetupSalesViewModel>(
                       create: (context) => _implSetupSales,
                     ),
+                    ChangeNotifierProvider<CreateSaleModel>(
+                      create: (context) => _implCreateSale,
+                    ),
                   ],
                   child: MainSearchScreen(
-                      values: settings.arguments as SearchGameScreens)));
+                      values: settings.arguments as SearchArguments)));
 
     case PAYMENT_SCREEN:
       return MaterialPageRoute(

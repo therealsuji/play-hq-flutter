@@ -19,6 +19,12 @@ abstract class CustomSearchModel with ChangeNotifier{
 
   void addPlatform(int index, int platformId);
 
+  void addGameCondition(int index, String slug);
+
+  int get selectedGameCondition;
+
+  String get selectedGameConditionSlug;
+
   int get selectedPlatform;
 
   int get selectedPlatformId;

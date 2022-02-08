@@ -3,12 +3,9 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
-import 'package:play_hq/models/onboarding_models/setup_sales_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
-import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/view_models.dart';
@@ -19,12 +16,11 @@ import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../../service_locator.dart';
-
 class ClickedSearch extends StatefulWidget {
   final SearchGameScreens? values;
+  final bool? isPlatform;
 
-  ClickedSearch({this.values});
+  ClickedSearch({this.values , this.isPlatform = true});
 
   @override
   _ClickedSearchState createState() => _ClickedSearchState();
@@ -65,7 +61,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                               showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return _platformBottomSheet(index);
+                                    return widget.isPlatform! ? _platformBottomSheet(index , true) : _platformBottomSheet(index , false);
                                   });
                             },
                             child: SearchGameItem(
@@ -94,7 +90,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
     );
   }
 
-  Widget _platformBottomSheet(int index) {
+  Widget _platformBottomSheet(int index , bool isPLatform) {
     return ChangeNotifierProvider.value(
       value: Provider.of<CustomSearchModel>(context),
       child: Consumer<CustomSearchModel>(
@@ -134,22 +130,28 @@ class _ClickedSearchState extends State<ClickedSearch> {
                           crossAxisSpacing: 15.0,
                           mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
                         ),
-                        itemCount: platforms.length,
+                        itemCount: isPLatform ? platforms.length : game_conditions.length,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                               onTap: () {
+                                print(val.selectedGameCondition);
+                                isPLatform ?
                                 Provider.of<CustomSearchModel>(context,
                                         listen: false)
                                     .addPlatform(
                                         platforms.indexOf(platforms[index]),
-                                        platforms[index]['id']);
+                                        platforms[index]['id']) : Provider.of<CustomSearchModel>(context, listen: false)
+                                    .addGameCondition(
+                                    game_conditions.indexOf(game_conditions[index]),
+                                    game_conditions[index]['API_Slug']) ;
                               },
                               child: CustomSelectingWidget(
-                                titleText: platforms[index]['name'],
-                                active: platforms.indexOf(platforms[index]) ==
+                                titleText: isPLatform ? platforms[index]['name'] : game_conditions[index]['name'],
+                                active: isPLatform ? platforms.indexOf(platforms[index]) ==
                                         val.selectedPlatform
                                     ? true
-                                    : false,
+                                    : false : game_conditions.indexOf(game_conditions[index]) ==
+                                        val.selectedGameCondition ? true : false,
                               ));
                         },
                       )),
@@ -160,11 +162,22 @@ class _ClickedSearchState extends State<ClickedSearch> {
                         buttonText: 'Confirm Game',
                         gradient: GREEN_GRADIENT,
                         onPressed: () {
-                          GamePreferances game = GamePreferances(
-                              game: addGamesToModel(val.gameList[index]), platform: val.selectedPlatformId);
+                          GamePreferances game = GamePreferances(game: addGamesToModel(val.gameList[index]), platform: val.selectedPlatformId , condition: game_conditions[val.selectedGameCondition]['name']);
                           dynamic finalGame = game;
-                          widget.values == SearchGameScreens.SetupPurchase ? Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                              .addSelectedGame(finalGame) : Provider.of<SetupSalesViewModel>(context, listen: false).addSelectedGame(finalGame);
+                          switch (widget.values) {
+                            case SearchGameScreens.SetupPurchase:
+                              Provider.of<SetupPurchaseAccountModel>(context, listen: false)
+                                  .addSelectedGame(finalGame);
+                              break;
+                            case SearchGameScreens.SetupSales:
+                              Provider.of<SetupSalesViewModel>(context, listen: false).addSelectedGame(finalGame);
+                              break;
+                            case SearchGameScreens.CreateSales:
+                              Provider.of<CreateSaleModel>(context, listen: false).addSelectedGame(finalGame);
+                              break;
+                            default:
+                              break;
+                          }
                         },
                       ))
                 ],

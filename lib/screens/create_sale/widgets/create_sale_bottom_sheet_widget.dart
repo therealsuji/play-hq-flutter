@@ -114,26 +114,25 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
               }),
             ),
             ...[
-              if (Provider.of<CreateSaleModel>(context, listen: false).selectedGame != null)
-                Consumer<CreateSaleModel>(builder: (_, model, __) {
-                  return Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: ScreenUtils.getDesignHeight(50.0),
-                      child: TextButton(
-                        onPressed: () {
-                          model.removeGame(model.selectedGame);
-                          Navigator.pop(context);
-                        },
-                        child: Text(
-                          "DELETE GAME",
-                          style: Theme.of(context).primaryTextTheme.headline4,
-                        ),
-                      ),
-                    ),
-                  );
-                })
+              // if (Provider.of<CreateSaleModel>(context, listen: false).selectedGame != null)
+              //   Consumer<CreateSaleModel>(builder: (_, model, __) {
+              //     return Padding(
+              //       padding: const EdgeInsets.only(top: 20.0),
+              //       child: Container(
+              //         width: double.infinity,
+              //         height: ScreenUtils.getDesignHeight(50.0),
+              //         child: TextButton(
+              //           onPressed: () {
+              //             Navigator.pop(context);
+              //           },
+              //           child: Text(
+              //             "DELETE GAME",
+              //             style: Theme.of(context).primaryTextTheme.headline4,
+              //           ),
+              //         ),
+              //       ),
+              //     );
+              //   })
             ],
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
@@ -146,13 +145,13 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
                       (model.selectedGameCondition != null && model.selectedPlatform != null) ? GREEN_GRADIENT : null,
                   onPressed: () {
                     if (model.selectedGameCondition != null && model.selectedPlatform != null) {
-                      if (model.selectedGame != null) {
-                        model.updateGame(model.selectedGame);
-                        Navigator.pop(context);
-                      } else {
-                        model.setSheetSaved(true);
-                        Navigator.pop(context);
-                      }
+                      // if (model.selectedGame != null) {
+                      //   model.updateGame(model.selectedGame);
+                      //   Navigator.pop(context);
+                      // } else {
+                      //   model.setSheetSaved(true);
+                      //   Navigator.pop(context);
+                      // }
                     }
                   },
                 );

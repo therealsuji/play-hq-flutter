@@ -16,7 +16,7 @@ class CustomTextfieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 15),
       decoration: BoxDecoration(
         color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
         borderRadius: BorderRadius.circular(5),
