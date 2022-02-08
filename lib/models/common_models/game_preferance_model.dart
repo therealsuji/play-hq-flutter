@@ -11,20 +11,24 @@ class GamePreferances {
     required this.game,
     required this.platform,
     this.id,
+    this.condition
   });
 
   GameModel game;
   int? id;
   int platform;
+  String? condition;
 
   factory GamePreferances.fromJson(Map<String, dynamic> json) => GamePreferances(
     game: GameModel.fromJson(json["game"]),
     platform: json["platform"] == null ? 0 : json["platform"],
     id: json["id"] == null ? 0 : json["id"],
+    condition: json["condition"] == '' ? '' : json["condition"],
   );
 
   Map<String, dynamic> toJson() => {
     "game": game.toJson(),
     "platform": platform,
+    "condition": condition,
   };
 }

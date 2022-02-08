@@ -7,6 +7,8 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/search_model/search_argument_model.dart';
+import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
@@ -16,8 +18,9 @@ import 'game_picker_details_widget.dart';
 
 class CustomGamePicker extends StatefulWidget {
   final GamePicker? gameType;
+  final double? bottomMargin;
 
-  CustomGamePicker({this.gameType});
+  CustomGamePicker({this.gameType, this.bottomMargin = 30});
 
   @override
   _CustomGamePickerState createState() => _CustomGamePickerState();
@@ -60,8 +63,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
         child: Padding(
-      padding:
-          EdgeInsets.only(top: ScreenUtils.getDesignHeight(15), bottom: 30),
+      padding: EdgeInsets.only(
+          top: ScreenUtils.getDesignHeight(15), bottom: widget.bottomMargin!),
       child: Stack(
         children: [
           Container(
@@ -76,40 +79,44 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
   }
 
   Widget _searchGameType(GamePicker game) {
+    return Positioned.fill(
+      left: _selectingWidgetleftPos,
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Consumer<CreateSaleModel>(
+          builder: (_, val, __) {
+            return GestureDetector(
+                onTap: () => checkSearchScreen(game , val.selectedGameList.length),
+                child: _selectingWidget(
+                    _selectingWidgetHeight, _selectingWidgetWidth));
+          },
+        ),
+      ),
+    );
+  }
+
+  void checkSearchScreen(GamePicker game , int length){
     switch (game) {
       case GamePicker.PurchaseWishlist:
-        return Positioned.fill(
-          left: _selectingWidgetleftPos,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () async {
-                 Navigator.pushNamed(
-                    context, MAIN_SEARCH_SCREEN,
-                    arguments: SearchGameScreens.SetupPurchase);
-              },
-              child: _selectingWidget(
-                  _selectingWidgetHeight, _selectingWidgetWidth),
-            ),
-          ),
-        );
+        Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+            arguments: SearchArguments(
+                states: SearchGameScreens.SetupPurchase));
+        break;
       case GamePicker.SalesLibrary:
-        return Positioned.fill(
-          left: _selectingWidgetleftPos,
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: GestureDetector(
-              onTap: () async {
-                Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
-                    arguments: SearchGameScreens.SetupSales);
-              },
-              child: _selectingWidget(
-                  _selectingWidgetHeight, _selectingWidgetWidth),
-            ),
-          ),
-        );
+        Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+            arguments: SearchArguments(
+                states: SearchGameScreens.SetupSales));
+        break;
+      case GamePicker.CreateSale:
+         length == 3
+            ? showAlertDialog(context)
+            : Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+            arguments: SearchArguments(
+                states: SearchGameScreens.CreateSales,
+                isPlatform: false));
+        break;
       default:
-        return Container();
+        break;
     }
   }
 
@@ -181,6 +188,30 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             },
           ),
         );
+      case GamePicker.CreateSale:
+        return ChangeNotifierProvider.value(
+          value: Provider.of<CreateSaleModel>(context),
+          child: Consumer<CreateSaleModel>(
+            builder: (_, val, __) {
+              return ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(width: ScreenUtils.getDesignWidth(15));
+                  },
+                  padding:
+                      EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
+                  controller: _sliderController,
+                  itemCount: val.selectedGameList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GamePickerGames(
+                      backgroundUrl: val.selectedGameList[index].game.boxCover,
+                      gameName: val.selectedGameList[index].game.title,
+                      releaseDate: val.selectedGameList[index].condition,
+                    );
+                  });
+            },
+          ),
+        );
       default:
         return Container();
     }
@@ -244,6 +275,33 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
               ),
             ),
           )),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Ah Ah Ah"),
+      content: Text("Sorry bro, only 3 games at a time"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

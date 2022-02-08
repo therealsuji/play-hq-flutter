@@ -11,8 +11,7 @@ enum SearchGameScreens { SetupPurchase, SetupSales, CreateSales , ProfileWishLis
 enum GamePicker {
   PurchaseWishlist,
   SalesLibrary,
-  ProfileWishlist,
-  ProfileLibrary
+  CreateSale
 }
 
 enum NotificationType {Information, Success, Failure, Warning}

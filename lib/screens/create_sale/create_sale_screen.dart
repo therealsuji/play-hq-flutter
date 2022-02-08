@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
@@ -12,9 +13,10 @@ import 'package:play_hq/screens/create_sale/widgets/sale_confirm_dialog.dart';
 import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/custom_dotted_selector_widget.dart';
+import 'package:play_hq/widgets/custom_selecting_widget.dart';
+import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/custom_textfield_widget.dart';
-import 'package:play_hq/widgets/select_game_item_widget.dart';
+import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateSaleScreen extends StatefulWidget {
@@ -60,60 +62,9 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                     ],
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24)),
-                  margin: const EdgeInsets.only(top: 25.0),
-                  height: ScreenUtils.getDesignHeight(124.0),
-                  child: Row(
-                    children: [
-                      Consumer<CreateSaleModel>(builder: (_, model, __) {
-                        return Expanded(
-                          child: ListView.separated(
-                            itemCount: model.gameList.length + 1,
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, idx) {
-                              if (idx == 0) {
-                                return GestureDetector(
-                                  onTap: () async {
-                                    dynamic gameDetails = await Navigator.pushNamed(context, SEARCH_SCREEN,
-                                        arguments: SearchGameScreens.CreateSales);
-                                    if (gameDetails != null) {
-                                      await showSalesBottomSheet();
-                                      Provider.of<CreateSaleModel>(context, listen: false)
-                                          .addGame(gameDetails['id'], gameDetails['name'], gameDetails['image']);
-                                    }
-                                  },
-                                  child: CustomDottedSelectorWidget(
-                                    filled: true,
-                                  ),
-                                );
-                              }
-                              return GestureDetector(
-                                onTap: () async {
-                                  // set the selected game so the bottom sheet knows that it should be in the update state
-                                  model.setSelectedGame(idx - 1);
-                                  await showSalesBottomSheet();
-                                  // once the update is completed set clear bottomsheets state
-                                  model.setSelectedGame(null);
-                                },
-                                child: SelectGameItem(
-                                  imageURL: model.gameList[idx - 1].boxImage,
-                                  titleText: model.gameList[idx - 1].title,
-                                  isSelected: (idx - 1) == model.selectedGame,
-                                ),
-                              );
-                            },
-                            separatorBuilder: (BuildContext context, int index) {
-                              if (index == 0) return Container();
-                              return SizedBox(
-                                width: ScreenUtils.getDesignWidth(15.0),
-                              );
-                            },
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
+                ChangeNotifierProvider.value(
+                  value: Provider.of<CreateSaleModel>(context),
+                  child: CustomGamePicker(gameType: GamePicker.CreateSale,bottomMargin: 0,),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(24)),
@@ -145,9 +96,47 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                         return CustomTextfieldWidget(
                           type: TextInputType.number,
                           hideText: false,
+                          hintText: "Enter the price",
                           onChanged: (value) => value != "" ? model.setPrice(double.parse(value)) : model.setPrice(0),
                         );
                       }),
+                      Container(
+                          margin: EdgeInsets.only(top: 30),
+                          child: CustomTextWidget('Select a Platform', isDynamic: false , width: ScreenUtils.getDesignWidth(131), style: Theme.of(context).primaryTextTheme.headline3!.copyWith(fontSize: 16),)),
+                      Container(
+                        margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(15)),
+                        child: GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          padding: EdgeInsets.all(0.0),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 15.0,
+                            crossAxisSpacing: 15.0,
+                            mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
+                          ),
+                          itemCount: platforms.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                                onTap: () {
+                                  // print(val.selectedGameCondition);
+                                  // isPLatform ?
+                                  // Provider.of<CustomSearchModel>(context,
+                                  //     listen: false)
+                                  //     .addPlatform(
+                                  //     platforms.indexOf(platforms[index]),
+                                  //     platforms[index]['id']) : Provider.of<CustomSearchModel>(context, listen: false)
+                                  //     .addGameCondition(
+                                  //     game_conditions.indexOf(game_conditions[index]),
+                                  //     game_conditions[index]['API_Slug']) ;
+                                },
+                                child: CustomSelectingWidget(
+                                  titleText: platforms[index]['name'],
+                                  active: false
+                                ));
+                          },
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30.0),
                         child: Row(

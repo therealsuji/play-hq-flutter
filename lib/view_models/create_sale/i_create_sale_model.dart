@@ -2,11 +2,14 @@ import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/create_sale_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/helpers/app_utils.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
 
 class ICreateSaleModel extends CreateSaleModel {
@@ -20,7 +23,9 @@ class ICreateSaleModel extends CreateSaleModel {
   double _price = 0;
   String _remarks = '';
   bool _isFormValid = false;
-  dynamic _selectedGame = null;
+
+  List<GamePreferances> _selectedGames = [];
+
 
   Set<Map<String, dynamic>> _allConsoles =
       [...popularConsoles, ...nintendoConsoles, ...playStationPlatforms, ...xboxPlatforms].toSet();
@@ -159,8 +164,8 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   bool get isFormValid => _isFormValid;
 
-  @override
-  get selectedGame => _selectedGame;
+  //@override
+  // get selectedGame => _selectedGame;
 
   @override
   void validateForm() {
@@ -171,17 +176,28 @@ class ICreateSaleModel extends CreateSaleModel {
     _isFormValid = false;
   }
 
+  // @override
+  // void setSelectedGame(dynamic value) {
+  //   _selectedGame = value;
+  //   if (value != null) {
+  //     setSelectedGameCondition(GameCondition.values.enumFromString(_gameList[value].gameCondition));
+  //     setSelectedPlatform(_gameList[value].platform!.id);
+  //   } else {
+  //     setSelectedGameCondition(null);
+  //     setSelectedPlatform(null);
+  //     setPlatformIsExpanded(false);
+  //   }
+  //   notifyListeners();
+  // }
+
   @override
-  void setSelectedGame(dynamic value) {
-    _selectedGame = value;
-    if (value != null) {
-      setSelectedGameCondition(GameCondition.values.enumFromString(_gameList[value].gameCondition));
-      setSelectedPlatform(_gameList[value].platform!.id);
-    } else {
-      setSelectedGameCondition(null);
-      setSelectedPlatform(null);
-      setPlatformIsExpanded(false);
-    }
+  void addSelectedGame(GamePreferances game) {
+    _selectedGames.add(game);
     notifyListeners();
+    locator<NavigationService>().pushNamed(CREATE_SALE_ROUTE);
   }
+
+  @override
+  List<GamePreferances> get selectedGameList => _selectedGames;
+
 }

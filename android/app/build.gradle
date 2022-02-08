@@ -62,6 +62,9 @@ android {
     }
 
     buildTypes {
+        profile {
+            signingConfig signingConfigs.release
+        }
         release {
             signingConfig signingConfigs.release
         }

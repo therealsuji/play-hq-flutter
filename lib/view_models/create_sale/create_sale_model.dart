@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/create_sale_model.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
@@ -17,9 +18,9 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void setIsNegotiable(bool value);
 
-  dynamic get selectedGame;
+  // dynamic get selectedGame;
 
-  void setSelectedGame(dynamic value);
+  // void setSelectedGame(dynamic value);
 
   void setRemarks(String value);
 
@@ -27,7 +28,11 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void updateGame(int id);
 
-  void addGame(int id, String name, String image);
+  // void addGame(int id, String name, String image);
+
+  List<GamePreferances> get selectedGameList;
+
+  void addSelectedGame(GamePreferances game);
 
   void removeGame(int id);
 
