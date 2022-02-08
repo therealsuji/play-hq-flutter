@@ -623,7 +623,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         buttonText: "View Deal",
                         gradient: PRIMARY_GRADIENT,
                         textFontSize: 10.0,
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, SALE_DETAILS_ROUTE);
+                        },
                       ),
                     ],
                   ),
