@@ -51,3 +51,24 @@ extension ExceptionExtension on ExceptionTypes {
     }
   }
 }
+
+enum EndedOrderType {
+  ORDER_DETAILS,
+  BILLING,
+  GAME_LIST,
+}
+
+extension EndedOrderTypeExtension on EndedOrderType {
+  String get name {
+    switch (this) {
+      case EndedOrderType.ORDER_DETAILS:
+        return 'Order Details';
+      case EndedOrderType.BILLING:
+        return 'Billing';
+      case EndedOrderType.GAME_LIST:
+        return 'Game List';
+      default:
+        return "";
+    }
+  }
+}
