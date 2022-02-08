@@ -20,7 +20,7 @@ class SaleDetailsScreen extends StatefulWidget {
 }
 
 class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
-  int gamesCOunt = 1;
+  int gamesCount = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -47,11 +47,11 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                               viewportFraction: 0.9,
                               initialPage: 0,
                             ),
-                            itemCount: gamesCOunt,
+                            itemCount: gamesCount,
                             clipBehavior: Clip.none,
                             itemBuilder: (context, index) {
                               return Padding(
-                                padding: gamesCOunt == 1
+                                padding: gamesCount == 1
                                     ? EdgeInsets.zero
                                     : EdgeInsets.only(left: index == 0 ? 0 : 10.0, right: 10.0),
                                 child: _gameSlide(
@@ -59,7 +59,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                                     date: "12/03/2020",
                                     imageUrl: "https://wallpaperaccess.com/thumb/35386.jpg",
                                     platform: "PS4",
-                                    rating: "12",
+                                    rating: "12.0",
                                     title: "Spider Man 3"),
                               );
                             },
@@ -126,40 +126,40 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                       ],
                     ),
                   ),
-                  Positioned.fill(
-                    bottom: 0,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        width: double.infinity,
-                        color: Colors.black,
-                        height: ScreenUtils.getDesignHeight(70.0),
-                        padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Total Price",
-                                  style: Theme.of(context).primaryTextTheme.headline5!.copyWith(fontFamily: Neusa),
-                                ),
-                                GradientText("5200 LKR", gradient: GREEN_GRADIENT)
-                              ],
-                            ),
-                            CustomButton(
-                              buttonText: "Buy Now",
-                              onPressed: () => _openBottomSheet(),
-                              gradient: PRIMARY_GRADIENT,
-                              width: ScreenUtils.getDesignWidth(110.0),
-                              height: ScreenUtils.getDesignHeight(40.0),
-                            )
-                          ],
-                        ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      color: Colors.black,
+                      width: double.infinity,
+                      padding: EdgeInsets.symmetric(
+                        vertical: ScreenUtils.getDesignHeight(17.0),
+                        horizontal: ScreenUtils.getDesignWidth(24.0),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Total Price",
+                                style: Theme.of(context).primaryTextTheme.headline5!.copyWith(fontFamily: Neusa),
+                              ),
+                              GradientText("5200 LKR", gradient: GREEN_GRADIENT)
+                            ],
+                          ),
+                          CustomButton(
+                            buttonText: "Buy Now",
+                            onPressed: () => _openBottomSheet(),
+                            gradient: PRIMARY_GRADIENT,
+                            width: ScreenUtils.getDesignWidth(110.0),
+                            height: ScreenUtils.getDesignHeight(40.0),
+                          ),
+                        ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -242,13 +242,14 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
     );
   }
 
-  Widget _gameSlide(
-      {required String title,
-      required String imageUrl,
-      required String date,
-      required String platform,
-      required String condition,
-      required String rating}) {
+  Widget _gameSlide({
+    required String title,
+    required String imageUrl,
+    required String date,
+    required String platform,
+    required String condition,
+    required String rating,
+  }) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -283,9 +284,9 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                       child: Text(
                         date,
                         style: Theme.of(context).primaryTextTheme.headline2!.copyWith(
-                              fontSize: 16.0,
-                              color: PRIMARY_COLOR,
-                            ),
+                          fontSize: 16.0,
+                          color: PRIMARY_COLOR,
+                        ),
                       ),
                     ),
                   ],
@@ -322,8 +323,8 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                         Text(
                           condition,
                           style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
-                                color: PRIMARY_COLOR,
-                              ),
+                            color: PRIMARY_COLOR,
+                          ),
                         ),
                       ],
                     ),
@@ -345,7 +346,10 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                               style: Theme.of(context).primaryTextTheme.headline5,
                             ),
                           ),
-                          SvgPicture.asset(STAR_ICON),
+                          SvgPicture.asset(
+                            STAR_ICON,
+                            width: 12.0,
+                          ),
                         ],
                       ),
                     )
