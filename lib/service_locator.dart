@@ -18,6 +18,7 @@ import 'package:play_hq/repository/delegates/splash_delegate.dart';
 import 'package:play_hq/repository/repositories.dart';
 import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/services/base_managers/error.dart';
+import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/services/error_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 
@@ -27,6 +28,7 @@ void setupLocator() {
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<ErrorManager>(() => ErrorService());
   locator.registerLazySingleton(() => EventBus());
+  locator.registerLazySingleton<DialogService>(() => DialogService());
   locator.registerLazySingleton<PlacesService>(() => PlacesService());
   locator.registerLazySingleton<AuthService>(() => AuthService());
 

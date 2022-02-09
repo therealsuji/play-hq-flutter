@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_constants.dart';
@@ -11,6 +13,7 @@ import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/create_sale_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/helpers/app_utils.dart';
+import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
 
@@ -27,6 +30,9 @@ class ICreateSaleModel extends CreateSaleModel {
 
   List<GamePreferances> _selectedGames = [];
 
+  DialogService _dialogService = locator<DialogService>();
+
+
   final _createSale = locator<CreateSaleRepository>();
 
   @override
@@ -41,6 +47,11 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   String get remarks => _remarks;
 
+  Future doThings() async {
+    print('dialog called');
+    var dialogResult = await _dialogService.showDialog();
+    print('dialog closed');
+  }
 
   @override
   void createSale() async {
@@ -54,7 +65,10 @@ class ICreateSaleModel extends CreateSaleModel {
         games: _selectedGames);
     try {
       await _createSale.createSale(createSaleModel);
+      doThings();
+      print('Start Something');
       locator<EventBus>().fire(LoadingEvent.hide());
+
     } catch (e) {
       print(e.toString());
       locator<EventBus>().fire(LoadingEvent.hide());
