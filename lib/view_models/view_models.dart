@@ -1,5 +1,5 @@
 /// Model
-export 'package:play_hq/view_models/create_sale/create_sale_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 export 'package:play_hq/view_models/custom_address_search/custom_address_search_model.dart';
 export 'package:play_hq/view_models/custom_map/custom_map_model.dart';
 export 'package:play_hq/view_models/custom_search/custom_search_model.dart';
@@ -18,7 +18,7 @@ export 'package:play_hq/view_models/home_screen/home_screen_model.dart';
 export 'package:play_hq/view_models/orders/ended_orders_model/ended_orders_model.dart';
 
 /// Implementation
-export 'package:play_hq/view_models/create_sale/i_create_sale_model.dart';
+export 'package:play_hq/view_models/sales/create_sale/i_create_sale_model.dart';
 export 'package:play_hq/view_models/custom_address_search/i_custom_address_search_model.dart';
 export 'package:play_hq/view_models/custom_map/i_custom_map_model.dart';
 export 'package:play_hq/view_models/custom_search/i_custom_search_model.dart';

@@ -14,6 +14,7 @@ import 'package:play_hq/view_models/orders/active_orders_view_model/active_order
 import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_strings.dart';

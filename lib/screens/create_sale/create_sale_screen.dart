@@ -10,7 +10,7 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/screens/create_sale/widgets/create_sale_bottom_sheet_widget.dart';
 import 'package:play_hq/screens/create_sale/widgets/create_sale_confirm_bottom_sheet_widget.dart';
 import 'package:play_hq/screens/create_sale/widgets/sale_confirm_dialog.dart';
-import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_selecting_widget.dart';

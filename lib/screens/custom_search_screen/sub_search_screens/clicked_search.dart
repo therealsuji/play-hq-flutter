@@ -8,6 +8,7 @@ import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_loading_barrier_widget.dart';

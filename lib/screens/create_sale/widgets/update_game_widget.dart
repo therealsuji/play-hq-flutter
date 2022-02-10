@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';

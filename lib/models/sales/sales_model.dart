@@ -1,23 +1,31 @@
+import 'dart:convert';
+
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 
-import 'common_models/location_model.dart';
+import '../common_models/location_model.dart';
 
-class CreateSalePayload {
+
+List<SalesPayload> salesModelFromJson(String str) => List<SalesPayload>.from(json.decode(str).map((x) => SalesPayload.fromJson(x)));
+
+class SalesPayload {
+  int? id;
   double price;
-  String remarks;
+  String? remarks;
   bool negotiable;
   LocationModel location;
   List<GamePreferances> games;
 
-  CreateSalePayload({
+  SalesPayload({
+    this.id,
     required this.price,
-    required this.remarks,
+    this.remarks,
     required this.negotiable,
     required this.location,
     required this.games,
   });
 
-  factory CreateSalePayload.fromJson(Map<String, dynamic> json) => new CreateSalePayload(
+  factory SalesPayload.fromJson(Map<String, dynamic> json) => new SalesPayload(
+        id: json["id"],
         price: (json['price'] as num).toDouble(),
         remarks: json["remarks"],
         negotiable: json["negotiable"],

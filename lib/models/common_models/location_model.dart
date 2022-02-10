@@ -7,8 +7,10 @@ class LocationModel {
     this.lat,
     this.long,
     this.address,
+    this.id
   });
 
+  int? id;
   double? lat;
   double? long;
   String? address;
@@ -17,6 +19,7 @@ class LocationModel {
     lat: json["lat"].toDouble(),
     long: json["long"].toDouble(),
     address: json["address"],
+    id: json["id"]
   );
 
   Map<String, dynamic> toJson() => {
