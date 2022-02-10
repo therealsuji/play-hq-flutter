@@ -1,22 +1,16 @@
 import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
-import 'package:play_hq/repository/clients/create_sale_repository.dart';
+import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
-import 'package:play_hq/models/create_sale_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/helpers/app_utils.dart';
 import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 
 class ICreateSaleModel extends CreateSaleModel {
   bool _isNegotiable = false;
@@ -32,7 +26,8 @@ class ICreateSaleModel extends CreateSaleModel {
   List<GamePreferances> _selectedGames = [];
 
   DialogService _dialogService = locator<DialogService>();
-  final _createSale = locator<CreateSaleRepository>();
+
+  final _createSale = locator<SaleRepository>();
 
   ICreateSaleModel({GamePreferances? gamePreferances}) {
     if (gamePreferances?.id != null) {
@@ -62,7 +57,7 @@ class ICreateSaleModel extends CreateSaleModel {
   void createSale() async {
     locator<EventBus>().fire(LoadingEvent.show());
     LocationModel location = LocationModel(address: "SOMETIHING", lat: 123, long: 123);
-    CreateSalePayload createSaleModel = CreateSalePayload(
+    SalesPayload createSaleModel = SalesPayload(
         location: location,
         price: _price,
         remarks: _remarks,
