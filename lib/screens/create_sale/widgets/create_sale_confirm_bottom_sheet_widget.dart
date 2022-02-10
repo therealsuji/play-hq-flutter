@@ -50,7 +50,7 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                         style: Theme.of(context).primaryTextTheme.headline3,
                       ),
                       Text(
-                        "0" + model.gameList.length.toString(),
+                        "0",
                         style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
                               color: PRIMARY_COLOR,
                             ),
@@ -61,17 +61,17 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                     height: ScreenUtils.getDesignHeight(137.0),
                     margin: const EdgeInsets.only(top: 10.0),
                     child: ListView.builder(
-                        itemCount: model.gameList.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, idx) {
-                          return SelectGameItem(
-                            isSelected: false,
-                            imageURL: model.gameList[idx].boxImage,
-                            centerText: model.gameList[idx].title,
-                            titleText: model.consoleList
-                                .firstWhere((console) => console['id'] == model.gameList[idx].platform!.id)['name'],
-                            subtitleText: model.gameList[idx].gameCondition.replaceAll("_", " ").toUpperCase(),
-                          );
+                          return Container();
+                          // return SelectGameItem(
+                          //   isSelected: false,
+                          //   imageURL: model.gameList[idx].boxImage,
+                          //   centerText: model.gameList[idx].title,
+                          //   titleText: model.consoleList
+                          //       .firstWhere((console) => console['id'] == model.gameList[idx].platform!.id)['name'],
+                          //   subtitleText: model.gameList[idx].gameCondition.replaceAll("_", " ").toUpperCase(),
+                          // );
                         }),
                   ),
                   Padding(

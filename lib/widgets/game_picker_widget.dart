@@ -7,7 +7,9 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/search_argument_model.dart';
+import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
 import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
@@ -36,6 +38,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
   double _radius = 5;
   double _margin = 0;
 
+
   @override
   void initState() {
     _sliderController = ScrollController();
@@ -61,21 +64,24 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Padding(
-      padding: EdgeInsets.only(
-          top: ScreenUtils.getDesignHeight(15), bottom: widget.bottomMargin!),
-      child: Stack(
-        children: [
-          Container(
-            height: ScreenUtils.getDesignHeight(170),
-            margin: EdgeInsets.only(left: _margin, right: 24),
-            child: _getGameType(widget.gameType!),
-          ),
-          _searchGameType(widget.gameType!)
-        ],
-      ),
-    ));
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: SingleChildScrollView(
+          child: Padding(
+        padding: EdgeInsets.only(
+            top: ScreenUtils.getDesignHeight(15), bottom: widget.bottomMargin!),
+        child: Stack(
+          children: [
+            Container(
+              height: ScreenUtils.getDesignHeight(170),
+              margin: EdgeInsets.only(left: _margin, right: 24),
+              child: _getGameType(widget.gameType!),
+            ),
+            _searchGameType(widget.gameType!)
+          ],
+        ),
+      )),
+    );
   }
 
   Widget _searchGameType(GamePicker game) {
@@ -160,37 +166,33 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
           value: Provider.of<SetupSalesViewModel>(context),
           child: Consumer<SetupSalesViewModel>(
             builder: (_, val, __) {
-              return Container(
-                child: Consumer<SetupSalesViewModel>(
-                  builder: (_, values, __) {
-                    return ListView.separated(
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                              width: ScreenUtils.getDesignWidth(15));
-                        },
-                        padding: EdgeInsets.only(
-                            left: ScreenUtils.getDesignWidth(160)),
-                        controller: _sliderController,
-                        itemCount: values.selectedGameList.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GamePickerGames(
-                            backgroundUrl:
-                                values.selectedGameList[index].game.boxCover,
-                            gameName: values.selectedGameList[index].game.title,
-                            releaseDate:
-                                values.selectedGameList[index].game.releaseDate,
-                          );
-                        });
+              return ListView.separated(
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                        width: ScreenUtils.getDesignWidth(15));
                   },
-                ),
-              );
+                  padding: EdgeInsets.only(
+                      left: ScreenUtils.getDesignWidth(160)),
+                  controller: _sliderController,
+                  itemCount: val.selectedGameList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GamePickerGames(
+                      backgroundUrl:
+                      val.selectedGameList[index].game.boxCover,
+                      gameName: val.selectedGameList[index].game.title,
+                      releaseDate:
+                      val.selectedGameList[index].game.releaseDate,
+                    );
+                  });
             },
           ),
         );
       case GamePicker.CreateSale:
+        CreateSaleModel model =
+        Provider.of<CreateSaleModel>(context);
         return ChangeNotifierProvider.value(
-          value: Provider.of<CreateSaleModel>(context),
+          value: model,
           child: Consumer<CreateSaleModel>(
             builder: (_, val, __) {
               return ListView.separated(
@@ -203,10 +205,24 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                   itemCount: val.selectedGameList.length,
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (BuildContext context, int index) {
-                    return GamePickerGames(
-                      backgroundUrl: val.selectedGameList[index].game.boxCover,
-                      gameName: val.selectedGameList[index].game.title,
-                      releaseDate: val.selectedGameList[index].condition,
+                    return ChangeNotifierProvider.value(
+                      value: model,
+                      child: GestureDetector(
+                        onTap: () async{
+                          showModalBottomSheet<void>(
+                            isDismissible: true,
+                            context: context,
+                            builder: (context) {
+                              return UpdateGameBottomSheet(id: val.selectedGameList[index].id,createSaleModel: model,);
+                            },
+                          );
+                        },
+                        child: GamePickerGames(
+                          backgroundUrl: val.selectedGameList[index].game.boxCover,
+                          gameName: val.selectedGameList[index].game.title,
+                          releaseDate: val.selectedGameList[index].conditionName,
+                        ),
+                      ),
                     );
                   });
             },

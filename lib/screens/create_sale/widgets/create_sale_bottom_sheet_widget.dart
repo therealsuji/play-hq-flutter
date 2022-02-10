@@ -51,34 +51,34 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 10.0),
               child: Consumer<CreateSaleModel>(builder: (_, model, __) {
-                return GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 10.0,
-                    crossAxisSpacing: 10.0,
-                    mainAxisExtent: ScreenUtils.getDesignHeight(35.0),
-                  ),
-                  itemCount: model.consoleList.length + 1,
-                  itemBuilder: (context, index) {
-                    if (index == model.consoleList.length) {
-                      return GestureDetector(
-                        onTap: () {
-                          model.setPlatformIsExpanded(!model.platformIsExpanded);
-                        },
-                        child: _textButton(model.platformIsExpanded ? "- Less" : "+ More", false),
-                      );
-                    }
-                    return GestureDetector(
-                      onTap: () {
-                        model.setSelectedPlatform(model.consoleList.elementAt(index)['id']);
-                      },
-                      child: _textButton(model.consoleList.elementAt(index)['name'],
-                          model.selectedPlatform == model.consoleList.elementAt(index)['id']),
-                    );
-                  },
-                );
+                return Container();
+                // return GridView.builder(
+                //   physics: NeverScrollableScrollPhysics(),
+                //   shrinkWrap: true,
+                //   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                //     crossAxisCount: 3,
+                //     mainAxisSpacing: 10.0,
+                //     crossAxisSpacing: 10.0,
+                //     mainAxisExtent: ScreenUtils.getDesignHeight(35.0),
+                //   ),
+                //   itemCount: model.consoleList.length + 1,
+                //   itemBuilder: (context, index) {
+                //     if (index == model.consoleList.length) {
+                //       return GestureDetector(
+                //         onTap: () {
+                //           model.setPlatformIsExpanded(!model.platformIsExpanded);
+                //         },
+                //         child: _textButton(model.platformIsExpanded ? "- Less" : "+ More", false),
+                //       );
+                //     }
+                //     return GestureDetector(
+                //       onTap: () {
+                //       },
+                //       child: _textButton(model.consoleList.elementAt(index)['name'],
+                //           model.selectedPlatform == model.consoleList.elementAt(index)['id']),
+                //     );
+                //   },
+                // );
               }),
             ),
             Padding(
@@ -104,10 +104,9 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        model.setSelectedGameCondition(_game_condtion[index]['value']);
                       },
                       child: _textButton(
-                          _game_condtion[index]['name'], model.selectedGameCondition == _game_condtion[index]['value']),
+                          _game_condtion[index]['name'], '' == _game_condtion[index]['value']),
                     );
                   },
                 );
@@ -134,29 +133,29 @@ class CreateSaleBottomSheetWidget extends StatelessWidget {
               //     );
               //   })
             ],
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-              child: Consumer<CreateSaleModel>(builder: (_, model, __) {
-                return CustomButton(
-                  buttonText: "Save Game Details",
-                  buttonColor:
-                      (model.selectedGameCondition != null && model.selectedPlatform != null) ? null : Colors.grey,
-                  gradient:
-                      (model.selectedGameCondition != null && model.selectedPlatform != null) ? GREEN_GRADIENT : null,
-                  onPressed: () {
-                    if (model.selectedGameCondition != null && model.selectedPlatform != null) {
-                      // if (model.selectedGame != null) {
-                      //   model.updateGame(model.selectedGame);
-                      //   Navigator.pop(context);
-                      // } else {
-                      //   model.setSheetSaved(true);
-                      //   Navigator.pop(context);
-                      // }
-                    }
-                  },
-                );
-              }),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 20.0),
+            //   child: Consumer<CreateSaleModel>(builder: (_, model, __) {
+            //     return CustomButton(
+            //       buttonText: "Save Game Details",
+            //       buttonColor:
+            //           (model.selectedGameCondition != null && model.selectedPlatform != null) ? null : Colors.grey,
+            //       gradient:
+            //           (model.selectedGameCondition != null && model.selectedPlatform != null) ? GREEN_GRADIENT : null,
+            //       onPressed: () {
+            //         if (model.selectedGameCondition != null && model.selectedPlatform != null) {
+            //           // if (model.selectedGame != null) {
+            //           //   model.updateGame(model.selectedGame);
+            //           //   Navigator.pop(context);
+            //           // } else {
+            //           //   model.setSheetSaved(true);
+            //           //   Navigator.pop(context);
+            //           // }
+            //         }
+            //       },
+            //     );
+            //   }),
+            // ),
           ],
         ),
       ),
