@@ -85,7 +85,7 @@ class UpdateGameBottomSheet extends StatelessWidget {
     );
   }
 
-  showAlertDialog(BuildContext context , String title , String message , Function onPressed) {
+  showAlertDialog(BuildContext context , String title , String message , VoidCallback onPressed) {
     // set up the button
     Widget cancelButton = TextButton(
       child: Text("Cancel"),

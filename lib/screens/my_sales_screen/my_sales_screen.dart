@@ -22,6 +22,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: true,
+      top: false,
       child: Scaffold(
         backgroundColor: BACKGROUND_COLOR,
         appBar: CustomAppBarWidget(
@@ -64,6 +65,22 @@ class _MySalesScreenState extends State<MySalesScreen> {
         margin: EdgeInsets.symmetric(vertical: 20 , horizontal: 15),
         child: Column(
           children: [
+            Row(
+              children: gameImages.map((e) {
+                return Container(
+                  margin: EdgeInsets.only(right: 10),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset(
+                      '',
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              }).toList(),
+            )
           ],
         ),
       ),

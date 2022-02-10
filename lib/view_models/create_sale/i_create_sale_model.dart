@@ -132,7 +132,7 @@ class ICreateSaleModel extends CreateSaleModel {
     _selectedGames.removeWhere((game) => game.id == id);
     validateForm();
     notifyListeners();
-    locator<NavigationService>().pop();
+    // locator<NavigationService>().pop();
   }
 
   void updateGame(int id ){
