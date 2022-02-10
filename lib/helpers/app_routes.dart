@@ -90,7 +90,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<BuyGamesModel>(
           create: (context) => IBuyGamesModel(),
-          child: MySalesScreen(),
+          child: BuyGamesScreen(),
         ),
       );
     case SALE_DETAILS_ROUTE:

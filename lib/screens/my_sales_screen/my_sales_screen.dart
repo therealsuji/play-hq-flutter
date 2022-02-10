@@ -1,16 +1,13 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
 import 'package:play_hq/widgets/custom_app_bar_widget.dart';
-import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
 class MySalesScreen extends StatefulWidget {
@@ -61,33 +58,26 @@ class _MySalesScreenState extends State<MySalesScreen> {
                     ),
                   ),
                   Container(
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: val.fetchActiveSales.map((e) {
-                          return _gameForSaleWidget(salesPayload: e);
-                        }).toList(),
+                    child: CarouselSlider(
+                      items: val.fetchActiveSales.map((sale) {
+                        return _gameForSaleWidget(salesPayload: sale, index: val.fetchActiveSales.indexOf(sale));
+                      }).toList(),
+                      options: CarouselOptions(
+                        height: ScreenUtils.getDesignHeight(415),
+                        viewportFraction: 0.83,
+                        disableCenter: true,
+                        enableInfiniteScroll: false,
+                        initialPage: 0,
+                        reverse: false,
+                        autoPlay: false,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
                       ),
                     ),
-                  )
-                  // Container(
-                  //   height: ScreenUtils.getDesignHeight(340),
-                  //   margin: EdgeInsets.symmetric(horizontal: 24),
-                  //   child: ListView.separated(
-                  //   scrollDirection: Axis.horizontal,
-                  //     itemBuilder: (BuildContext context, int index) {
-                  //       return _gameForSaleWidget(
-                  //         salesPayload: val.fetchActiveSales[index],
-                  //       );
-                  //     },
-                  //     separatorBuilder: (BuildContext context, int index) {
-                  //       return SizedBox(
-                  //         width: 15,
-                  //       );
-                  //     },
-                  //     itemCount: val.fetchActiveSales.length,
-                  //   ),
-                  // )
+                  ),
                 ],
               ),
             );
@@ -99,14 +89,15 @@ class _MySalesScreenState extends State<MySalesScreen> {
 
   Widget _gameForSaleWidget({
     required SalesPayload salesPayload,
+    required int index,
   }) {
     return Container(
-      width: ScreenUtils.getDesignWidth(330),
+      // width: ScreenUtils.getDesignWidth(375),
       decoration: BoxDecoration(
         color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
         borderRadius: BorderRadius.circular(5),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+      margin: EdgeInsets.only(left: 0 , top: 20 , right: 0),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Container(
         child: Column(

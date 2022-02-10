@@ -7,7 +7,6 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/screens/create_sale/widgets/create_sale_bottom_sheet_widget.dart';
 import 'package:play_hq/screens/create_sale/widgets/create_sale_confirm_bottom_sheet_widget.dart';
 import 'package:play_hq/screens/create_sale/widgets/sale_confirm_dialog.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
@@ -233,20 +232,6 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
     );
   }
 
-  Future<void> showSalesBottomSheet() async {
-    CreateSaleModel model =
-        Provider.of<CreateSaleModel>(context, listen: false);
-    await showModalBottomSheet<void>(
-      isDismissible: false,
-      context: context,
-      builder: (context) {
-        return ChangeNotifierProvider.value(
-          value: model,
-          child: CreateSaleBottomSheetWidget(),
-        );
-      },
-    );
-  }
 
   showAlertDialog(BuildContext context) {
     // set up the button
