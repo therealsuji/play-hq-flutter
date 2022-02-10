@@ -280,9 +280,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               : ScreenUtils.getDesignWidth(15.0),
                         ),
                         child: GamesWidget(
-                          gameName: e.title,
-                          releaseDate: e.releaseDate.toString(),
-                          backgroundUrl: e.boxCover,
+                          gameName: e.games.first.game.title,
+                          releaseDate: e.price.toString(),
+                          backgroundUrl: e.games.first.game.boxCover,
                           gradient: GREEN_GRADIENT,
                         ),
                       );

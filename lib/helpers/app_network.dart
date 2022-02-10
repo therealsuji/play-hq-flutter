@@ -34,10 +34,11 @@ class Network {
 
       //Get the jwtToken from secure storage and if existing, add to the header
       String? bearerToken = await SecureStorage.readValue("jwtToken");
-      print(bearerToken);
       if (bearerToken != null && !noToken) {
         _headers.addAll({'Authorization': 'Bearer $bearerToken'});
       }
+
+      print('Bearer Token: $bearerToken');
 
       // Add new headers if there is to add
       if(headers != null && headers.isNotEmpty) {
@@ -80,7 +81,7 @@ class Network {
           break;
       }
 
-      print("Response Status Code: ${response.statusCode}");
+      print("Status Code: ${response.statusCode} Url: $url");
       print("Response Body: ${response.body}");
 
       return response;
