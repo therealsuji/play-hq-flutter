@@ -95,6 +95,20 @@ class _GameListBodyState extends State<GameListBody> {
             height: ScreenUtils.getDesignHeight(15.0),
           ),
           _sellerDetails(),
+          Spacer(),
+          SizedBox(
+            width: double.infinity,
+            height: ScreenUtils.getDesignHeight(53.0),
+            child: RaisedGradientButton(
+              buttonText: "Create Complaint",
+              gradient: ALERT_GRADIENT,
+              textFontSize: 14.0,
+              onPressed: () {},
+            ),
+          ),
+          SizedBox(
+            height: ScreenUtils.getDesignHeight(15.0),
+          ),
         ],
       ),
     );
