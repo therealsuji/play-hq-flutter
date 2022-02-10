@@ -123,6 +123,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
         builder: (context) => MultiProvider(
+          // TODO: Create one model for search and pass the selected data to specific screen @Damsara
           providers: [
             ChangeNotifierProvider<CustomSearchModel>(
               create: (context) => ICustomSearchModel(),
