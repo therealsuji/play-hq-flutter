@@ -3,6 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/screens/order_details/body/billing_body.dart';
+import 'package:play_hq/screens/order_details/body/game_list_body.dart';
+import 'package:play_hq/screens/order_details/body/order_details_body.dart';
 import 'package:play_hq/view_models/view_models.dart' show EndedOrderModel;
 import 'package:provider/provider.dart';
 
@@ -89,17 +92,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 builder: (_, type, __) {
                   switch (type) {
                     case EndedOrderType.ORDER_DETAILS:
-                      return Container(
-                        color: Colors.red,
-                      );
+                      return OrderDetailsBody();
                     case EndedOrderType.BILLING:
-                      return Container(
-                        color: Colors.green,
-                      );
+                      return BillingBody();
                     case EndedOrderType.GAME_LIST:
-                      return Container(
-                        color: Colors.blue,
-                      );
+                      return GameListBody();
                     default:
                       return Container();
                   }
