@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_strings.dart';
@@ -31,9 +32,13 @@ class ICreateSaleModel extends CreateSaleModel {
   List<GamePreferances> _selectedGames = [];
 
   DialogService _dialogService = locator<DialogService>();
-
-
   final _createSale = locator<CreateSaleRepository>();
+
+  ICreateSaleModel({GamePreferances? gamePreferances}) {
+    if (gamePreferances?.id != null) {
+      _selectedGames.add(gamePreferances!);
+    }
+  }
 
   @override
   get selectedPlatform => _selectedPlatform;
@@ -117,7 +122,7 @@ class ICreateSaleModel extends CreateSaleModel {
     getCurrentCondition(game.id ?? 0);
     validateForm();
     notifyListeners();
-    locator<NavigationService>().pushNamed(CREATE_SALE_ROUTE);
+    locator<NavigationService>().pushReplacement(CREATE_SALE_ROUTE, args: game);
   }
 
   @override
