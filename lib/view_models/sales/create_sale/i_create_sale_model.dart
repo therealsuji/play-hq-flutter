@@ -4,9 +4,9 @@ import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
+import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -27,8 +27,13 @@ class ICreateSaleModel extends CreateSaleModel {
 
   DialogService _dialogService = locator<DialogService>();
 
-
   final _createSale = locator<SaleRepository>();
+
+  ICreateSaleModel({GamePreferances? gamePreferances}) {
+    if (gamePreferances?.id != null) {
+      _selectedGames.add(gamePreferances!);
+    }
+  }
 
   @override
   get selectedPlatform => _selectedPlatform;
@@ -112,7 +117,7 @@ class ICreateSaleModel extends CreateSaleModel {
     getCurrentCondition(game.id ?? 0);
     validateForm();
     notifyListeners();
-    locator<NavigationService>().pushNamed(CREATE_SALE_ROUTE);
+    locator<NavigationService>().pushReplacement(CREATE_SALE_ROUTE, args: game);
   }
 
   @override
