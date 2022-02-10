@@ -38,7 +38,7 @@ class SaleDelegate extends SaleRepository{
   }
 
   @override
-  Future<List<SalesPayload>> getSales() async {
+  Future<List<SalesPayload>> fetchActiveSales() async {
     try {
       var response = await _networkCalls.performRequest(
           APIConfig.fetchAllActiveSales, HttpAction.GET);

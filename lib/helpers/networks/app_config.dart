@@ -33,6 +33,7 @@ class APIConfig {
   // Sales API
   static String createSale = '$_baseUrl' + "/sell-games";
   static String fetchAllActiveSales = '$_baseUrl' + "/sell-games/my-sales";
+  static String fetchSalesFromWishlist = '$_baseUrl' + "/sell-games/get-sales-from-wish-list";
 
   static String setupPurchase = '$_baseUrl' + "/user/set-preferences";
 

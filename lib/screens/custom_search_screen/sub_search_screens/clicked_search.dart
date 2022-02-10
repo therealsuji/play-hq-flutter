@@ -144,7 +144,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                         platforms[index]['id']) : Provider.of<CustomSearchModel>(context, listen: false)
                                     .addGameCondition(
                                     game_conditions.indexOf(game_conditions[index]),
-                                    game_conditions[index]['API_Slug']);
+                                    game_conditions[index]['API_Slug']!);
                               },
                               child: CustomSelectingWidget(
                                 titleText: isPLatform ? platforms[index]['name'] : game_conditions[index]['name'],

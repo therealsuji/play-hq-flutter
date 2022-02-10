@@ -15,6 +15,8 @@ import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_ord
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
+import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
+import 'package:play_hq/view_models/sales/get_sales/i_fetch_sales_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_strings.dart';
@@ -79,8 +81,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MY_SALES_ROUTE:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<MySalesModel>(
-          create: (context) => IMySalesModel(),
+        builder: (context) => ChangeNotifierProvider<MySalesViewModel>(
+          create: (context) => IMySalesViewModel(),
           child: MySalesScreen(),
         ),
       );
@@ -88,7 +90,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<BuyGamesModel>(
           create: (context) => IBuyGamesModel(),
-          child: MySalesScreen(),
+          child: BuyGamesScreen(),
         ),
       );
     case SALE_DETAILS_ROUTE:
