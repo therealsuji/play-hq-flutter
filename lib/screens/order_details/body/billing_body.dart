@@ -71,7 +71,12 @@ class _BillingBodyState extends State<BillingBody> {
     );
   }
 
-  Widget _labelWidget({required String label, required String value, LinearGradient? gradient, TextStyle? textStyle}) {
+  Widget _labelWidget({
+    required String label,
+    required String value,
+    LinearGradient? gradient,
+    TextStyle? textStyle,
+  }) {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: ScreenUtils.getDesignWidth(24.0),
