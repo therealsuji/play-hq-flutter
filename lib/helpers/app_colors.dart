@@ -62,6 +62,8 @@ const SECONDARY_GRADIENT = LinearGradient(
 );
 
 const GREEN_GRADIENT = LinearGradient(
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
   colors: [
     Color.fromRGBO(49, 197, 73, 1),
     Color.fromRGBO(20, 130, 43, 1),
