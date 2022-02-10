@@ -50,7 +50,7 @@ class UpdateGameBottomSheet extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                         onTap: () {
-                          createSaleModel?.changeCurrentCondition(game_conditions[index]['name']);
+                          createSaleModel?.changeCurrentCondition(game_conditions[index]['name']!);
                         },
                         child: CustomSelectingWidget(
                           titleText: game_conditions[index]['name'],

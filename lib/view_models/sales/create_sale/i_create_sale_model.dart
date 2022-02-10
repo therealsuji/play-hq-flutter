@@ -1,18 +1,13 @@
 import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
-import 'package:flutter/foundation.dart';
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/helpers/app_utils.dart';
 import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';

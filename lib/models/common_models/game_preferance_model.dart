@@ -25,7 +25,7 @@ class GamePreferances {
     game: GameModel.fromJson(json["game"]),
     platform: json["platform"] == null ? 0 : json["platform"],
     id: json["id"] == null ? 0 : json["id"],
-    conditionId: json["condition"] == '' ? '' : json["condition"],
+    conditionId: json["condition"] == null ? '' : json["condition"],
   );
 
   Map<String, dynamic> toJson() => {

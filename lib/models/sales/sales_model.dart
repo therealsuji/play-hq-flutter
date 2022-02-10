@@ -30,7 +30,7 @@ class SalesPayload {
         remarks: json["remarks"],
         negotiable: json["negotiable"],
         location: LocationModel.fromJson(json["location"]),
-        games: new List<GamePreferances>.from(json["games"].map((x) => GamePreferances.fromJson(x))),
+        games: json['games'] == null ? List<GamePreferances>.from(json["game_details"].map((x) => GamePreferances.fromJson(x))) : List<GamePreferances>.from(json["games"].map((x) => GamePreferances.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
