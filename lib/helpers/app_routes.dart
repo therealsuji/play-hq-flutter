@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/models/search_model/search_argument_model.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
 import 'package:play_hq/screens/profile_screens/notifications/notification_screen.dart';
@@ -16,14 +15,12 @@ import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.da
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:provider/provider.dart';
 
-import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/view_models.dart';
 
-ISetupPurchaseAccountModel _implSetupPurchaseAccount =
-    ISetupPurchaseAccountModel();
+ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
 ICreateSaleModel _implCreateSale = ICreateSaleModel();
 
@@ -44,9 +41,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => IHomeScreenModel(),
             ),
             ChangeNotifierProvider<MainProfileModel>(
-                create: (context) => IMainProfileModel()),
+              create: (context) => IMainProfileModel(),
+            ),
             ChangeNotifierProvider<ActiveOrdersViewModel>(
-                create: (context) => IActiveOrdersViewModel()),
+              create: (context) => IActiveOrdersViewModel(),
+            ),
           ],
           child: MainScreen(),
         ),
@@ -121,24 +120,24 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => MultiProvider(
-                  providers: [
-                    ChangeNotifierProvider<CustomSearchModel>(
-                      create: (context) => ICustomSearchModel(),
-                    ),
-                    ChangeNotifierProvider<SetupPurchaseAccountModel>(
-                      create: (context) => _implSetupPurchaseAccount,
-                    ),
-                    ChangeNotifierProvider<SetupSalesViewModel>(
-                      create: (context) => _implSetupSales,
-                    ),
-                    ChangeNotifierProvider<CreateSaleModel>(
-                      create: (context) => _implCreateSale,
-                    ),
-                  ],
-                  child: MainSearchScreen(
-                      values: settings.arguments as SearchArguments)));
-
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CustomSearchModel>(
+              create: (context) => ICustomSearchModel(),
+            ),
+            ChangeNotifierProvider<SetupPurchaseAccountModel>(
+              create: (context) => _implSetupPurchaseAccount,
+            ),
+            ChangeNotifierProvider<SetupSalesViewModel>(
+              create: (context) => _implSetupSales,
+            ),
+            ChangeNotifierProvider<CreateSaleModel>(
+              create: (context) => _implCreateSale,
+            ),
+          ],
+          child: MainSearchScreen(values: settings.arguments as SearchArguments),
+        ),
+      );
     case PAYMENT_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<PaymentModel>(
@@ -146,50 +145,65 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           child: PaymentScreen(),
         ),
       );
-
     case CUSTOM_ADDRESS_SEARCH_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => MultiProvider(providers: [
-          ChangeNotifierProvider<CustomAddressSearchModel>(
-              create: (context) => ICustomAddressSearchModel()),
-          ChangeNotifierProvider<SetupSalesViewModel>(
-              create: (context) => _implSetupSales),
-        ], child: CustomAddressSearchScreen()),
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CustomAddressSearchModel>(
+              create: (context) => ICustomAddressSearchModel(),
+            ),
+            ChangeNotifierProvider<SetupSalesViewModel>(
+                create: (context) => _implSetupSales),
+          ],
+          child: CustomAddressSearchScreen(),
+        ),
       );
-
     case CUSTOM_MAP_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => MultiProvider(providers: [
-                ChangeNotifierProvider<CustomMapModel>(
-                    create: (context) => ICustomMapModel()),
-                ChangeNotifierProvider<SetupSalesViewModel>(
-                    create: (context) => _implSetupSales)
-              ], child: CustomMapScreen()));
-
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<CustomMapModel>(
+              create: (context) => ICustomMapModel(),
+            ),
+            ChangeNotifierProvider<SetupSalesViewModel>(
+                create: (context) => _implSetupSales)
+          ],
+          child: CustomMapScreen(),
+        ),
+      );
     case AUTH_SCREEN:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<AuthenticationModel>(
-              create: (context) => IAuthenticationModel(),
-              child: AuthenticationScreen()));
-
+        builder: (context) => ChangeNotifierProvider<AuthenticationModel>(
+          create: (context) => IAuthenticationModel(),
+          child: AuthenticationScreen(),
+        ),
+      );
     case MAIN_ONBOARDING:
       return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
-              create: (context) => IMainOnbooardingModel(),
-              child: MainOnboarding()));
-
+        builder: (context) => ChangeNotifierProvider<MainOnboardingModel>(
+          create: (context) => IMainOnbooardingModel(),
+          child: MainOnboarding(),
+        ),
+      );
     case SETTINGS_SCREEN:
-      return MaterialPageRoute(builder: (context) => SettingsScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => SettingsScreen(),
+      );
     case NOTIFICATION_SCREEN:
-      return MaterialPageRoute(builder: (context) => NotificationScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => NotificationScreen(),
+      );
     case ORDERS_SCREEN:
-      return MaterialPageRoute(builder: (context) => OrdersScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => OrdersScreen(),
+      );
     case ORDER_DETAILS_SCREEN:
-      return MaterialPageRoute(builder: (context) => OrderDetailsScreen());
-
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<EndedOrderModel>(
+          create: (context) => IEndedOrderModel(),
+          child: OrderDetailsScreen(),
+        ),
+      );
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
