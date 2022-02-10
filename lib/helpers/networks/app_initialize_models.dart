@@ -1,6 +1,6 @@
 //Decide on the initialization data model based on the return response
 
-import 'package:play_hq/models/create_sale_model.dart';
+import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/onboarding_models/setup_purchase_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
@@ -14,8 +14,8 @@ class InitializeData {
         return UserModel.fromJson(json) as T;
       case SearchGame:
         return SearchGame.fromJson(json) as T;
-      case CreateSalePayload:
-        return CreateSalePayload.fromJson(json) as T;
+      case SalesPayload:
+        return SalesPayload.fromJson(json) as T;
       case SetupPurchaseModel:
         return SetupPurchaseModel.fromJson(json) as T;
       case OrdersModel:

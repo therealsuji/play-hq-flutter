@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
-import 'package:play_hq/models/create_sale_model.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
   double get price;

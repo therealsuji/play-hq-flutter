@@ -3,7 +3,7 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:provider/provider.dart';
 

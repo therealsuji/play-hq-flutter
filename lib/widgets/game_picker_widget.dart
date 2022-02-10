@@ -10,9 +10,9 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/search_argument_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
-import 'package:play_hq/view_models/create_sale/create_sale_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
+import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 

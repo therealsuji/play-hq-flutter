@@ -2,7 +2,7 @@ import 'package:http/http.dart';
 import 'package:play_hq/models/game_details_models/game_details_model.dart';
 import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 import 'package:play_hq/models/app_user_model.dart';
-import 'package:play_hq/models/create_sale_model.dart';
+import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/models/onboarding_models/setup_purchase_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
@@ -110,8 +110,8 @@ class Network {
         body: {"token": token, "fcmToken": fcmToken}, noToken: true);
   }
 
-  Future<CreateSalePayload> createSale(CreateSalePayload payload) async {
-    return await _performWebRequest<CreateSalePayload>(RequestType.post, APIConfig.createSale, body: payload);
+  Future<SalesPayload> createSale(SalesPayload payload) async {
+    return await _performWebRequest<SalesPayload>(RequestType.post, APIConfig.createSale, body: payload);
   }
 
   Future<SearchGame> searchGame(String params) async {
