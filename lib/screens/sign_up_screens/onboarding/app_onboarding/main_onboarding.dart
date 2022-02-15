@@ -46,7 +46,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                   builder: (context , value , child){
                     return Container(
                       margin: EdgeInsets.only(bottom: 20 , left: 24 , right: 24),
-                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE ,args: GamePicker.PurchaseWishlist),) : Row(
+                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE ,args: SearchType.SETUP_PURCHASES),) : Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           value.currentPage == 0 ? Container(
@@ -85,7 +85,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
               ],
             ),
             GestureDetector(
-              onTap: () => locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE , args: GamePicker.PurchaseWishlist),
+              onTap: () => locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE , args: SearchType.SETUP_PURCHASES),
               child: Container(
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40) , right: 24),

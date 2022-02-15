@@ -117,7 +117,6 @@ class ICreateSaleModel extends CreateSaleModel {
     getCurrentCondition(game.id ?? 0);
     validateForm();
     notifyListeners();
-    locator<NavigationService>().pushReplacement(CREATE_SALE_ROUTE, args: game);
   }
 
   @override

@@ -54,6 +54,6 @@ class ISplashModel extends SplashScreenModel {
 
   @override
   void navigateOnboarding() {
-    locator<NavigationService>().pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE , args: GamePicker.PurchaseWishlist);
+    locator<NavigationService>().pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE , args: SearchType.SETUP_PURCHASES);
   }
 }

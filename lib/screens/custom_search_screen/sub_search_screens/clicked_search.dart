@@ -3,6 +3,7 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
@@ -18,10 +19,9 @@ import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
 class ClickedSearch extends StatefulWidget {
-  final SearchGameScreens? values;
-  final bool? isPlatform;
+  final SearchType? values;
 
-  ClickedSearch({this.values , this.isPlatform = true});
+  ClickedSearch({this.values});
 
   @override
   _ClickedSearchState createState() => _ClickedSearchState();
@@ -59,11 +59,29 @@ class _ClickedSearchState extends State<ClickedSearch> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return widget.isPlatform! ? _platformBottomSheet(index , true) : _platformBottomSheet(index , false);
-                                  });
+                              switch (widget.values) {
+                                case SearchType.CREATE_SALE:
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return _platformBottomSheet(
+                                            index, false);
+                                      });
+                                  break;
+                                case SearchType.MAIN_SEARCH:
+                                  // TODO: Handle this case.
+                                  break;
+                                case SearchType.SETUP_PURCHASES:
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return _platformBottomSheet(
+                                            index, true);
+                                      });
+                                  break;
+                                default:
+                                  break;
+                              }
                             },
                             child: SearchGameItem(
                               releaseDate: val.gameList[index].released,
@@ -91,7 +109,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
     );
   }
 
-  Widget _platformBottomSheet(int index , bool isPLatform) {
+  Widget _platformBottomSheet(int index, bool isPLatform) {
     return ChangeNotifierProvider.value(
       value: Provider.of<CustomSearchModel>(context),
       child: Consumer<CustomSearchModel>(
@@ -131,54 +149,60 @@ class _ClickedSearchState extends State<ClickedSearch> {
                           crossAxisSpacing: 15.0,
                           mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
                         ),
-                        itemCount: isPLatform ? platforms.length : game_conditions.length,
+                        itemCount: isPLatform
+                            ? platforms.length
+                            : game_conditions.length,
                         itemBuilder: (context, index) {
                           return GestureDetector(
                               onTap: () {
-                                print(val.selectedGameCondition);
-                                isPLatform ?
-                                Provider.of<CustomSearchModel>(context,
-                                        listen: false)
-                                    .addPlatform(
-                                        platforms.indexOf(platforms[index]),
-                                        platforms[index]['id']) : Provider.of<CustomSearchModel>(context, listen: false)
-                                    .addGameCondition(
-                                    game_conditions.indexOf(game_conditions[index]),
-                                    game_conditions[index]['API_Slug']!);
+                                isPLatform
+                                    ? Provider.of<CustomSearchModel>(context,
+                                            listen: false)
+                                        .addPlatform(
+                                            platforms.indexOf(platforms[index]),
+                                            platforms[index]['id'])
+                                    : Provider.of<CustomSearchModel>(context,
+                                            listen: false)
+                                        .addGameCondition(
+                                            game_conditions.indexOf(
+                                                game_conditions[index]),
+                                            game_conditions[index]
+                                                ['API_Slug']!);
                               },
                               child: CustomSelectingWidget(
-                                titleText: isPLatform ? platforms[index]['name'] : game_conditions[index]['name'],
-                                active: isPLatform ? platforms.indexOf(platforms[index]) ==
-                                        val.selectedPlatform
-                                    ? true
-                                    : false : game_conditions.indexOf(game_conditions[index]) ==
-                                        val.selectedGameCondition ? true : false,
+                                titleText: isPLatform
+                                    ? platforms[index]['name']
+                                    : game_conditions[index]['name'],
+                                active: isPLatform
+                                    ? platforms.indexOf(platforms[index]) ==
+                                            val.selectedPlatform
+                                        ? true
+                                        : false
+                                    : game_conditions.indexOf(
+                                                game_conditions[index]) ==
+                                            val.selectedGameCondition
+                                        ? true
+                                        : false,
                               ));
                         },
                       )),
                   Container(
                       margin:
                           EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-                      child: CustomButton(
-                        buttonText: 'Confirm Game',
-                        gradient: GREEN_GRADIENT,
-                        onPressed: () {
-                          GamePreferances game = GamePreferances(game: addGamesToModel(val.gameList[index]), id: val.gameList[index].id, platform: val.selectedPlatformId , conditionId: game_conditions[val.selectedGameCondition]['API_Slug'] , conditionName: game_conditions[val.selectedGameCondition]['name']);
-                          dynamic finalGame = game;
-                          switch (widget.values) {
-                            case SearchGameScreens.SetupPurchase:
-                              Provider.of<SetupPurchaseAccountModel>(context, listen: false)
-                                  .addSelectedGame(finalGame);
-                              break;
-                            case SearchGameScreens.SetupSales:
-                              Provider.of<SetupSalesViewModel>(context, listen: false).addSelectedGame(finalGame);
-                              break;
-                            case SearchGameScreens.CreateSales:
-                              Provider.of<CreateSaleModel>(context, listen: false).addSelectedGame(finalGame);
-                              break;
-                            default:
-                              break;
-                          }
+                      child: Consumer<CustomSearchModel>(
+                        builder: (_, val, __) {
+                          return CustomButton(
+                            buttonText: 'Confirm Game',
+                            gradient: GREEN_GRADIENT,
+                            onPressed: () {
+                              Navigator.pop(context);
+                              Provider.of<CustomSearchModel>(context,
+                                      listen: false)
+                                  .addGameToList(SearchType.CREATE_SALE, index);
+                              // GamePreferances game = val.gameDetails;
+                              // isPLatform ? widget.values == SearchType.SETUP_PURCHASES ? Navigator.pushNamed(context, SETUP_PURCHASE_ACCOUNT_ROUTE) : Navigator.pushNamed(context, SETUP_SALES_ACCOUNT_ROUTE) : Navigator.pushNamed(context, CREATE_SALE_ROUTE , arguments: game);
+                            },
+                          );
                         },
                       ))
                 ],
@@ -190,20 +214,18 @@ class _ClickedSearchState extends State<ClickedSearch> {
     );
   }
 
-  GameModel addGamesToModel(GameDetails gameDetails){
+  GameModel addGamesToModel(GameDetails gameDetails) {
     List<int>? platformID = [];
     List<int>? genreID = [];
     gameDetails.platforms!.length > 0
-        ? gameDetails.platforms!
-        .forEach((element) {
-      platformID!.add(element.platform!.id!);
-    })
+        ? gameDetails.platforms!.forEach((element) {
+            platformID!.add(element.platform!.id!);
+          })
         : platformID = [];
     gameDetails.genres!.length > 0
-        ? gameDetails.genres!
-        .forEach((element) {
-      platformID!.add(element.id);
-    })
+        ? gameDetails.genres!.forEach((element) {
+            platformID!.add(element.id);
+          })
         : genreID = [];
     GameModel gameItem = GameModel(
         title: gameDetails.name,

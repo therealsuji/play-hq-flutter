@@ -259,7 +259,7 @@ class _SetupPurchaseAccountScreenState
                         ),
                         ChangeNotifierProvider.value(
                           value: Provider.of<SetupPurchaseAccountModel>(context),
-                          child: CustomGamePicker(gameType: GamePicker.PurchaseWishlist,),
+                          child: CustomGamePicker(gameType: SearchType.SETUP_PURCHASES,),
                         )
                       ],
                     ),

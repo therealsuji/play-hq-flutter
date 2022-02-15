@@ -6,13 +6,7 @@ enum HttpAction { GET, POST, PUT, PATCH, POST_ENCODED_URL, DELETE }
 
 enum SearchScreenStates { EMPTY, SUCCESS, NOTHING, LOADING, FAILED }
 
-enum SearchGameScreens { SetupPurchase, SetupSales, CreateSales , ProfileWishList , ProfileLibrary }
-
-enum GamePicker {
-  PurchaseWishlist,
-  SalesLibrary,
-  CreateSale
-}
+enum SearchType { MAIN_SEARCH, SETUP_PURCHASES, SETUP_SALES , CREATE_SALE}
 
 enum NotificationType {Information, Success, Failure, Warning}
 

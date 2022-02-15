@@ -8,7 +8,6 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
-import 'package:play_hq/models/search_model/search_argument_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
@@ -19,10 +18,11 @@ import 'package:provider/provider.dart';
 import 'game_picker_details_widget.dart';
 
 class CustomGamePicker extends StatefulWidget {
-  final GamePicker? gameType;
+  final SearchType? gameType;
   final double? bottomMargin;
+  final GamePreferances? game;
 
-  CustomGamePicker({this.gameType, this.bottomMargin = 30});
+  CustomGamePicker({this.gameType, this.bottomMargin = 30 , this.game});
 
   @override
   _CustomGamePickerState createState() => _CustomGamePickerState();
@@ -77,58 +77,36 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
               margin: EdgeInsets.only(left: _margin, right: 24),
               child: _getGameType(widget.gameType!),
             ),
-            _searchGameType(widget.gameType!)
+            _searchGameType()
           ],
         ),
       )),
     );
   }
 
-  Widget _searchGameType(GamePicker game) {
+  Widget _searchGameType() {
     return Positioned.fill(
       left: _selectingWidgetleftPos,
       child: Align(
         alignment: Alignment.centerLeft,
-        child: Consumer<CreateSaleModel>(
-          builder: (_, val, __) {
-            return GestureDetector(
-                onTap: () => checkSearchScreen(game , val.selectedGameList.length),
-                child: _selectingWidget(
-                    _selectingWidgetHeight, _selectingWidgetWidth));
-          },
-        ),
+        child: GestureDetector(
+            onTap: () async {
+              dynamic argumentData = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+                  arguments: widget.gameType);
+              if (argumentData != null) {
+                Provider.of<CreateSaleModel>(context, listen: false)
+                    .addSelectedGame(argumentData);
+              }
+            },
+            child: _selectingWidget(
+                _selectingWidgetHeight, _selectingWidgetWidth))
       ),
     );
   }
 
-  void checkSearchScreen(GamePicker game , int length){
+  Widget _getGameType(SearchType game) {
     switch (game) {
-      case GamePicker.PurchaseWishlist:
-        Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
-            arguments: SearchArguments(
-                states: SearchGameScreens.SetupPurchase));
-        break;
-      case GamePicker.SalesLibrary:
-        Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
-            arguments: SearchArguments(
-                states: SearchGameScreens.SetupSales));
-        break;
-      case GamePicker.CreateSale:
-         length == 3
-            ? showAlertDialog(context)
-            : Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
-            arguments: SearchArguments(
-                states: SearchGameScreens.CreateSales,
-                isPlatform: false));
-        break;
-      default:
-        break;
-    }
-  }
-
-  Widget _getGameType(GamePicker game) {
-    switch (game) {
-      case GamePicker.PurchaseWishlist:
+      case SearchType.SETUP_PURCHASES:
         return ChangeNotifierProvider.value(
           value: Provider.of<SetupPurchaseAccountModel>(context),
           child: Consumer<SetupPurchaseAccountModel>(
@@ -161,7 +139,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             },
           ),
         );
-      case GamePicker.SalesLibrary:
+      case SearchType.SETUP_SALES:
         return ChangeNotifierProvider.value(
           value: Provider.of<SetupSalesViewModel>(context),
           child: Consumer<SetupSalesViewModel>(
@@ -188,7 +166,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
             },
           ),
         );
-      case GamePicker.CreateSale:
+      case SearchType.CREATE_SALE:
         CreateSaleModel model =
         Provider.of<CreateSaleModel>(context);
         return ChangeNotifierProvider.value(

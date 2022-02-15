@@ -97,7 +97,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
           ),
           ChangeNotifierProvider.value(
             value: Provider.of<SetupSalesViewModel>(context),
-            child: CustomGamePicker(gameType: GamePicker.SalesLibrary,),
+            child: CustomGamePicker(gameType: SearchType.SETUP_SALES,),
           ),
           Container(
             margin: EdgeInsets.only(left: ScreenUtils.getDesignHeight(24), right: ScreenUtils.getDesignHeight(24)),
@@ -237,55 +237,55 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
     );
   }
 
-  Widget _libraryGames() {
-    final model = Provider.of<SetupSalesViewModel>(context);
-    return Container(
-      margin: EdgeInsets.only(top: 20),
-      height: ScreenUtils.getDesignHeight(160),
-      child: Row(
-        children: [
-          CustomDottedSelectorWidget(onPressed: () async {
-            dynamic gameDetails = await Navigator.pushNamed(
-                context, MAIN_SEARCH_SCREEN,
-                arguments: SearchGameScreens.SetupSales);
-            if (gameDetails != null) {
-              Provider.of<SetupSalesViewModel>(context, listen: false)
-                  .addSelectedGame(gameDetails);
-            }
-          }),
-          ChangeNotifierProvider.value(
-            value: model,
-            child: Consumer<SetupSalesViewModel>(
-              builder: (_, val, __) {
-                return val.selectedGameList.isEmpty
-                    ? Container()
-                    : Expanded(
-                        child: ListView.separated(
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 15,
-                              );
-                            },
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: val.selectedGameList.length,
-                            itemBuilder: (context, index) {
-                              return GamesWidget(
-                                gameName: val.selectedGameList[index].game.title,
-                                color: PRIMARY_COLOR,
-                                backgroundUrl:
-                                    val.selectedGameList[index].game.boxCover,
-                                releaseDate:
-                                    val.selectedGameList[index].game.releaseDate,
-                              );
-                            }),
-                      );
-              },
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  // Widget _libraryGames() {
+  //   final model = Provider.of<SetupSalesViewModel>(context);
+  //   return Container(
+  //     margin: EdgeInsets.only(top: 20),
+  //     height: ScreenUtils.getDesignHeight(160),
+  //     child: Row(
+  //       children: [
+  //         CustomDottedSelectorWidget(onPressed: () async {
+  //           dynamic gameDetails = await Navigator.pushNamed(
+  //               context, MAIN_SEARCH_SCREEN,
+  //               arguments: SearchType.ONBOARDING_SEARCH);
+  //           if (gameDetails != null) {
+  //             Provider.of<SetupSalesViewModel>(context, listen: false)
+  //                 .addSelectedGame(gameDetails);
+  //           }
+  //         }),
+  //         ChangeNotifierProvider.value(
+  //           value: model,
+  //           child: Consumer<SetupSalesViewModel>(
+  //             builder: (_, val, __) {
+  //               return val.selectedGameList.isEmpty
+  //                   ? Container()
+  //                   : Expanded(
+  //                       child: ListView.separated(
+  //                           separatorBuilder:
+  //                               (BuildContext context, int index) {
+  //                             return SizedBox(
+  //                               width: 15,
+  //                             );
+  //                           },
+  //                           physics: BouncingScrollPhysics(),
+  //                           scrollDirection: Axis.horizontal,
+  //                           itemCount: val.selectedGameList.length,
+  //                           itemBuilder: (context, index) {
+  //                             return GamesWidget(
+  //                               gameName: val.selectedGameList[index].game.title,
+  //                               color: PRIMARY_COLOR,
+  //                               backgroundUrl:
+  //                                   val.selectedGameList[index].game.boxCover,
+  //                               releaseDate:
+  //                                   val.selectedGameList[index].game.releaseDate,
+  //                             );
+  //                           }),
+  //                     );
+  //             },
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 }

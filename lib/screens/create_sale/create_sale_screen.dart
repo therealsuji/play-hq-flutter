@@ -7,6 +7,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/create_sale_confirm_bottom_sheet_widget.dart';
 import 'package:play_hq/screens/create_sale/widgets/sale_confirm_dialog.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
@@ -19,6 +20,11 @@ import 'package:play_hq/widgets/game_picker_widget.dart';
 import 'package:provider/provider.dart';
 
 class CreateSaleScreen extends StatefulWidget {
+
+  final GamePreferances? selectedGame;
+
+  CreateSaleScreen({this.selectedGame});
+
   @override
   _CreateSaleScreenState createState() => _CreateSaleScreenState();
 }
@@ -68,8 +74,9 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                   ChangeNotifierProvider.value(
                     value: Provider.of<CreateSaleModel>(context),
                     child: CustomGamePicker(
-                      gameType: GamePicker.CreateSale,
+                      gameType: SearchType.CREATE_SALE,
                       bottomMargin: 0,
+                      game: widget.selectedGame,
                     ),
                   ),
                   Padding(

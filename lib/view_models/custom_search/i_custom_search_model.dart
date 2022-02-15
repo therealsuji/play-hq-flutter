@@ -5,7 +5,10 @@ import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
+
+import '../../service_locator.dart';
 
 class ICustomSearchModel extends CustomSearchModel{
 
@@ -14,9 +17,12 @@ class ICustomSearchModel extends CustomSearchModel{
   List<GameModel> _wishListGames = [];
   final _networkCalls = Network.shared;
   late SearchGame value;
+  late GameModel game;
   SearchScreenStates _screenStates = SearchScreenStates.EMPTY;
-  SearchGameScreens? _gameScreens;
+  SearchType? _gameScreens;
   Timer? _debounce;
+
+  late GamePreferances _gameDetails;
 
   int _selectedPlatform = 10;
   int _selectedPlatformId = 0;
@@ -70,8 +76,7 @@ class ICustomSearchModel extends CustomSearchModel{
   // TODO: implement wishListGameList
   List<GameModel> get wishListGameList => _wishListGames;
 
-  @override
-  void addGameType(SearchGameScreens states) {
+  void addGameType(SearchType states) {
     _gameScreens = states;
     notifyListeners();
   }
@@ -81,6 +86,33 @@ class ICustomSearchModel extends CustomSearchModel{
     _selectedPlatform = index;
     _selectedPlatformId = platformId;
     notifyListeners();
+  }
+
+  GameModel addGamesToModel(GameDetails gameDetails){
+    List<int>? platformID = [];
+    List<int>? genreID = [];
+
+
+    if(gameDetails.platforms != null){
+      gameDetails.platforms!.forEach((element) {
+        platformID.add(element.platform!.id ?? 0);
+      });
+    }
+
+    if(gameDetails.genres != null){
+      gameDetails.genres!.forEach((element) {
+        genreID.add(element.id);
+      });
+    }
+    GameModel gameItem = GameModel(
+        title: gameDetails.name,
+        releaseDate: gameDetails.released,
+        apiId: gameDetails.id,
+        boxCover: gameDetails.image,
+        genres: genreID,
+        backgroundImage: gameDetails.image,
+        platforms: platformID);
+    return gameItem;
   }
 
   @override
@@ -101,5 +133,17 @@ class ICustomSearchModel extends CustomSearchModel{
 
   @override
   String get selectedGameConditionSlug => _gameConditionSlug;
+
+  @override
+  void addGameToList(SearchType type, int index) {
+    game = addGamesToModel(_searchedGames[index]);
+    _gameDetails = GamePreferances(game: game, platform: _selectedPlatform , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString());
+    locator<NavigationService>().pop(args: _gameDetails);
+    notifyListeners();
+  }
+
+  @override
+  // TODO: implement gameDetails
+  GamePreferances get gameDetails => _gameDetails;
 
 }

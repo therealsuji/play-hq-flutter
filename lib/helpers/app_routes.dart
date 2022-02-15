@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
-import 'package:play_hq/models/search_model/search_argument_model.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
 import 'package:play_hq/screens/profile_screens/notifications/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
@@ -140,7 +140,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               create: (context) => ICreateSaleModel(),
             ),
           ],
-          child: MainSearchScreen(values: settings.arguments as SearchArguments),
+          child: MainSearchScreen(values: settings.arguments as SearchType),
         ),
       );
     case PAYMENT_SCREEN:
