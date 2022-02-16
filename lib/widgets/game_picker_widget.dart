@@ -90,9 +90,13 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
         alignment: Alignment.centerLeft,
         child: GestureDetector(
             onTap: () async {
-              dynamic poppedGame = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+              final poppedGame = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
                   arguments: widget.gameType);
-              print('poppedGame: $poppedGame');
+
+              if(poppedGame != null) {
+                Provider.of<CreateSaleModel>(context, listen: false)
+                    .addSelectedGame(poppedGame as GamePreferances);
+              }
               },
             child: _selectingWidget(
                 _selectingWidgetHeight, _selectingWidgetWidth))

@@ -139,7 +139,6 @@ class ICustomSearchModel extends CustomSearchModel{
     game = addGamesToModel(_searchedGames[index]);
     _gameDetails = GamePreferances(game: game , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString());
     locator<NavigationService>().pop(args: _gameDetails);
-    notifyListeners();
   }
 
   @override
