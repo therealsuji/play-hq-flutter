@@ -15,6 +15,12 @@ import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
 class GameDetailsScreen extends StatefulWidget {
+
+  final int? gameId;
+
+  GameDetailsScreen({this.gameId});
+
+
   @override
   _GameDetailsScreenState createState() => _GameDetailsScreenState();
 }
@@ -24,7 +30,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   void initState() {
     super.initState();
     // TODO: Create Similar Games, OnTap for Company Tile and Genre Image
-    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(302);
+    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(widget.gameId ?? 0);
   }
 
   List<String> temp = ["1", "2", "3", "4", "5"];

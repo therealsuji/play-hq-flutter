@@ -31,6 +31,8 @@ class IHomeScreenModel extends HomeScreenModel {
         if(value.length > 0){
           _wishListGames = value;
           _eventBus.fire(LoadingEvent.hide());
+        }else{
+          _eventBus.fire(LoadingEvent.hide());
         }
         notifyListeners();
       });

@@ -21,10 +21,6 @@ import 'package:provider/provider.dart';
 
 class CreateSaleScreen extends StatefulWidget {
 
-  final GamePreferances? selectedGame;
-
-  CreateSaleScreen({this.selectedGame});
-
   @override
   _CreateSaleScreenState createState() => _CreateSaleScreenState();
 }

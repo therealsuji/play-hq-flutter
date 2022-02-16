@@ -154,7 +154,7 @@ class _MainScreenState extends State<MainScreen> {
                       characterImage: BUY_GAME_CHARACTER_IMAGE,
                       charcterAlignment: Alignment.bottomCenter,
                       backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () => Navigator.pushNamed(context, CREATE_SALE_ROUTE, arguments: GamePreferances(game: GameModel(), platform: 0)),
+                      callback: () => Navigator.pushNamed(context, CREATE_SALE_ROUTE),
                     ),
                     Spacer(
                       flex: 1,

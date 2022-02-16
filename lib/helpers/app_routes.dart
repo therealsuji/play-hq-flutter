@@ -58,7 +58,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameDetailsModel>(
           create: (context) => IGameDetailsModel(),
-          child: GameDetailsScreen(),
+          child: GameDetailsScreen(gameId: settings.arguments as int,),
         ),
       );
     case CREATE_TRADE_SCREEN:
@@ -75,7 +75,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
-          create: (context) => ICreateSaleModel(gamePreferances: settings.arguments as GamePreferances),
+          create: (context) => ICreateSaleModel(),
           child: CreateSaleScreen(),
         ),
       );

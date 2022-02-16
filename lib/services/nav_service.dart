@@ -10,7 +10,7 @@ class NavigationService {
   }
 
   void pop({Object? args}) {
-    _navigatorKey.currentState!.pop({args});
+    _navigatorKey.currentState!.pop(args);
   }
 
   Future<dynamic> pushReplacement(String routeName, {Object? args}) {

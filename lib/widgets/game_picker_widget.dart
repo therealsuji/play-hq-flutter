@@ -90,9 +90,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
         alignment: Alignment.centerLeft,
         child: GestureDetector(
             onTap: () async {
-              final poppedGame = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+              dynamic poppedGame = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
                   arguments: widget.gameType);
-
               if(poppedGame != null) {
                 Provider.of<CreateSaleModel>(context, listen: false)
                     .addSelectedGame(poppedGame as GamePreferances);
@@ -198,7 +197,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         child: GamePickerGames(
                           backgroundUrl: val.selectedGameList[index].game.boxCover,
                           gameName: val.selectedGameList[index].game.title,
-                          releaseDate: val.selectedGameList[index].conditionName,
+                          releaseDate: val.selectedGameList[index].conditionId,
                         ),
                       ),
                     );

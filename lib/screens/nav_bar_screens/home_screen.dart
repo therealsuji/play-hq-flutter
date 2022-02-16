@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -122,39 +123,42 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        Container(
-                          margin: EdgeInsets.only(
-                            top: ScreenUtils.getDesignHeight(25.0),
-                          ),
-                          width: double.infinity,
-                          height: ScreenUtils.getDesignHeight(50.0),
-                          decoration: BoxDecoration(
-                            color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
-                            borderRadius: BorderRadius.circular(5.0),
-                          ),
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: ScreenUtils.getDesignWidth(15.0),
-                                ),
-                                child: Icon(
-                                  Icons.search_rounded,
-                                  color: Colors.white.withOpacity(0.7),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  left: ScreenUtils.getDesignWidth(5.0),
-                                ),
-                                child: Text(
-                                  "Search Here...",
-                                  style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                    color: Colors.white.withOpacity(0.70),
+                        GestureDetector(
+                          onTap: () => locator<NavigationService>().pushNamed(MAIN_SEARCH_SCREEN , args: SearchType.MAIN_SEARCH),
+                          child: Container(
+                            margin: EdgeInsets.only(
+                              top: ScreenUtils.getDesignHeight(25.0),
+                            ),
+                            width: double.infinity,
+                            height: ScreenUtils.getDesignHeight(50.0),
+                            decoration: BoxDecoration(
+                              color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: ScreenUtils.getDesignWidth(15.0),
+                                  ),
+                                  child: Icon(
+                                    Icons.search_rounded,
+                                    color: Colors.white.withOpacity(0.7),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    left: ScreenUtils.getDesignWidth(5.0),
+                                  ),
+                                  child: Text(
+                                    "Search Here...",
+                                    style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
+                                      color: Colors.white.withOpacity(0.70),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         Padding(

@@ -7,6 +7,7 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
@@ -17,6 +18,8 @@ import 'package:play_hq/widgets/custom_search_item_widget.dart';
 import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../../service_locator.dart';
 
 class ClickedSearch extends StatefulWidget {
   final SearchType? values;
@@ -69,7 +72,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                       });
                                   break;
                                 case SearchType.MAIN_SEARCH:
-                                  // TODO: Handle this case.
+                                  locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: val.gameList[index].id);
                                   break;
                                 case SearchType.SETUP_PURCHASES:
                                   showModalBottomSheet(

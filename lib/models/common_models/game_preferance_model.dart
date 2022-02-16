@@ -30,7 +30,7 @@ class GamePreferances {
 
   Map<String, dynamic> toJson() => {
     "game": game.toJson(),
-    "platform": platform,
-    "condition": conditionId,
+    "platform": platform.toString(),
+    "condition": conditionName,
   };
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
@@ -57,6 +58,10 @@ class ICreateSaleModel extends CreateSaleModel {
   void createSale() async {
     locator<EventBus>().fire(LoadingEvent.show());
     LocationModel location = LocationModel(address: "SOMETIHING", lat: 123, long: 123);
+    _selectedGames.forEach((element) {
+      element.platform = _platformId;
+    });
+    print('Game Platform ${_selectedGames[0].platform}');
     SalesPayload createSaleModel = SalesPayload(
         location: location,
         price: _price,
@@ -113,7 +118,8 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void addSelectedGame(GamePreferances game) {
-    game = GamePreferances(game: game.game , platform: _platformId , conditionId: game.conditionId);
+    String conditionName = game_conditions.where((element) => element['API_Slug'] == game.conditionName).first['name'] ?? '';
+    game = GamePreferances(game: game.game, conditionId: conditionName , conditionName: game.conditionName);
     _selectedGames.add(game);
     getCurrentCondition(game.id ?? 0);
     validateForm();
