@@ -20,9 +20,8 @@ import 'game_picker_details_widget.dart';
 class CustomGamePicker extends StatefulWidget {
   final SearchType? gameType;
   final double? bottomMargin;
-  final GamePreferances? game;
 
-  CustomGamePicker({this.gameType, this.bottomMargin = 30 , this.game});
+  CustomGamePicker({this.gameType, this.bottomMargin = 30});
 
   @override
   _CustomGamePickerState createState() => _CustomGamePickerState();
@@ -91,13 +90,10 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
         alignment: Alignment.centerLeft,
         child: GestureDetector(
             onTap: () async {
-              dynamic argumentData = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
+              dynamic poppedGame = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
                   arguments: widget.gameType);
-              if (argumentData != null) {
-                Provider.of<CreateSaleModel>(context, listen: false)
-                    .addSelectedGame(argumentData);
-              }
-            },
+              print('poppedGame: $poppedGame');
+              },
             child: _selectingWidget(
                 _selectingWidgetHeight, _selectingWidgetWidth))
       ),

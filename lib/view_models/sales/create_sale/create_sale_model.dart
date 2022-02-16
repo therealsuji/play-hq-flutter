@@ -28,7 +28,7 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   int get selectedPlatform;
 
-  void setSelectedPlatform(int selecttedId , int platformId);
+  void setSelectedPlatform(int selectedId , int platformId);
 
   void createSale();
 

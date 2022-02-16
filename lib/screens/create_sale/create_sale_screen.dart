@@ -76,7 +76,6 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                     child: CustomGamePicker(
                       gameType: SearchType.CREATE_SALE,
                       bottomMargin: 0,
-                      game: widget.selectedGame,
                     ),
                   ),
                   Padding(

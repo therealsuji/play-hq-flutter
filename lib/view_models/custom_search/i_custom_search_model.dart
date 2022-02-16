@@ -137,13 +137,12 @@ class ICustomSearchModel extends CustomSearchModel{
   @override
   void addGameToList(SearchType type, int index) {
     game = addGamesToModel(_searchedGames[index]);
-    _gameDetails = GamePreferances(game: game, platform: _selectedPlatform , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString());
+    _gameDetails = GamePreferances(game: game , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString());
     locator<NavigationService>().pop(args: _gameDetails);
     notifyListeners();
   }
 
   @override
-  // TODO: implement gameDetails
   GamePreferances get gameDetails => _gameDetails;
 
 }

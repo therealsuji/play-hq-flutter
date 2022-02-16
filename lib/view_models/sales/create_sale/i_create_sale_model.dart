@@ -113,6 +113,7 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void addSelectedGame(GamePreferances game) {
+    game = GamePreferances(game: game.game , platform: _platformId , conditionId: game.conditionId);
     _selectedGames.add(game);
     getCurrentCondition(game.id ?? 0);
     validateForm();

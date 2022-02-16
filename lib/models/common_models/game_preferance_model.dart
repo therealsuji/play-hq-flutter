@@ -9,7 +9,7 @@ List<GamePreferances> gamePreferancesFromJson(String str) => List<GamePreferance
 class GamePreferances {
   GamePreferances({
     required this.game,
-    required this.platform,
+    this.platform,
     this.id,
     this.conditionId,
     this.conditionName,
@@ -17,7 +17,7 @@ class GamePreferances {
 
   GameModel game;
   int? id;
-  int platform;
+  int? platform;
   String? conditionId;
   String? conditionName;
 
