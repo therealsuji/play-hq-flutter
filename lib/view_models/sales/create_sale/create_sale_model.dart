@@ -14,6 +14,8 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   String get currentCondition;
 
+  bool get isAdded;
+
   void validateForm();
 
   void setPrice(double value);
@@ -26,6 +28,8 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void addSelectedGame(GamePreferances game);
 
+  void checkGame(GamePreferances gameDetails);
+
   int get selectedPlatform;
 
   void setSelectedPlatform(int selectedId , int platformId);
@@ -35,8 +39,6 @@ abstract class CreateSaleModel with ChangeNotifier {
   void removeGame(int id);
 
   void updateGame(int id);
-
-  void getCurrentCondition(int id);
 
   void changeCurrentCondition(String condition);
 

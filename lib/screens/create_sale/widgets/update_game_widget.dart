@@ -6,19 +6,25 @@ import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:provider/provider.dart';
 
-class UpdateGameBottomSheet extends StatelessWidget {
+class UpdateGameBottomSheet extends StatefulWidget {
 
   final int? id;
-  final CreateSaleModel? createSaleModel;
 
   UpdateGameBottomSheet({
-    @required this.id,
-    @required this.createSaleModel,
+    this.id,
   });
 
   @override
+  State<UpdateGameBottomSheet> createState() => _UpdateGameBottomSheetState();
+}
+
+class _UpdateGameBottomSheetState extends State<UpdateGameBottomSheet> {
+  @override
   Widget build(BuildContext context) {
+    print('Game ID is ${widget.id}');
+
     return Container(
         height: ScreenUtils.getDesignHeight(360),
         width: double.infinity,
@@ -34,34 +40,38 @@ class UpdateGameBottomSheet extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomTextWidget('Game Condition', isDynamic: false , width: ScreenUtils.getDesignWidth(115) , style: Theme.of(context).primaryTextTheme.headline4,),
-              Container(
-                margin: EdgeInsets.only(top: 30),
-                child: GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  padding: EdgeInsets.all(0.0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 15.0,
-                    crossAxisSpacing: 15.0,
-                    mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
-                  ),
-                  itemCount: game_conditions.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                        onTap: () {
-                          createSaleModel?.changeCurrentCondition(game_conditions[index]['name']!);
-                        },
-                        child: CustomSelectingWidget(
-                          titleText: game_conditions[index]['name'],
-                          active: createSaleModel!.currentCondition == game_conditions[index]['name'],
-                        ));
-                  },
-                ),
+              Consumer<CreateSaleModel>(
+                builder: (_ , val, __) {
+                  return Container(
+                    margin: EdgeInsets.only(top: 30),
+                    child: GridView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.all(0.0),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        mainAxisSpacing: 15.0,
+                        crossAxisSpacing: 15.0,
+                        mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
+                      ),
+                      itemCount: game_conditions.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                            onTap: () {
+                              Provider.of<CreateSaleModel>(context, listen: false).changeCurrentCondition(game_conditions[index]['name']!);
+                            },
+                            child: CustomSelectingWidget(
+                              titleText: game_conditions[index]['name'],
+                              active: val.currentCondition == game_conditions[index]['name'],
+                            ));
+                      },
+                    ),
+                  );
+                }
               ),
               GestureDetector(
                 onTap: () => showAlertDialog(context , 'Are you sure mate?' , 'Are you sure you want to delete this game?' , (){
-                  createSaleModel?.removeGame(id!);
+                  Provider.of<CreateSaleModel>(context, listen: false).removeGame(widget.id!);
                 }),
                 child: Container(
                   margin: EdgeInsets.only(top: 30),
@@ -72,7 +82,7 @@ class UpdateGameBottomSheet extends StatelessWidget {
                 margin: EdgeInsets.only(top: 30),
                 child: CustomButton(
                   buttonText: 'Update Game Details', gradient: GREEN_GRADIENT, onPressed: () {showAlertDialog(context, 'Update Condition?', 'You sure you want to change the games condition??', (){
-                    createSaleModel?.updateGame(id!);
+                    Provider.of<CreateSaleModel>(context, listen: false).updateGame(widget.id!);
                   });
                 },),
               ),
@@ -82,7 +92,7 @@ class UpdateGameBottomSheet extends StatelessWidget {
     );
   }
 
-  showAlertDialog(BuildContext context , String title , String message , VoidCallback onPressed) {
+  showAlertDialog(BuildContext context , String title , String message , VoidCallback clickedYes) {
     // set up the button
     Widget cancelButton = TextButton(
       child: Text("Cancel"),
@@ -94,7 +104,7 @@ class UpdateGameBottomSheet extends StatelessWidget {
     Widget okButton = TextButton(
       child: Text("Yes"),
       onPressed: () {
-        onPressed();
+        clickedYes();
         Navigator.pop(context);
       },
     );

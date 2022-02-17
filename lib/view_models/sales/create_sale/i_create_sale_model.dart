@@ -5,6 +5,7 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
+import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
@@ -23,6 +24,8 @@ class ICreateSaleModel extends CreateSaleModel {
   int _platformId = 0;
 
   String _currentCondition = '';
+
+  bool _isAdded = false;
 
   List<GamePreferances> _selectedGames = [];
 
@@ -48,12 +51,6 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   String get remarks => _remarks;
 
-  Future doThings() async {
-    print('dialog called');
-    var dialogResult = await _dialogService.showDialog();
-    print('dialog closed');
-  }
-
   @override
   void createSale() async {
     locator<EventBus>().fire(LoadingEvent.show());
@@ -70,8 +67,6 @@ class ICreateSaleModel extends CreateSaleModel {
         games: _selectedGames);
     try {
       await _createSale.createSale(createSaleModel);
-      doThings();
-      print('Start Something');
       locator<EventBus>().fire(LoadingEvent.hide());
 
     } catch (e) {
@@ -117,12 +112,12 @@ class ICreateSaleModel extends CreateSaleModel {
   }
 
   @override
-  void addSelectedGame(GamePreferances game) {
-    String conditionName = game_conditions.where((element) => element['API_Slug'] == game.conditionName).first['name'] ?? '';
-    game = GamePreferances(game: game.game, conditionId: conditionName , conditionName: game.conditionName);
-    _selectedGames.add(game);
-    getCurrentCondition(game.id ?? 0);
-    validateForm();
+  void addSelectedGame(GamePreferances gamePreferances) {
+      String conditionName = game_conditions.where((element) => element['API_Slug'] == gamePreferances.conditionName).first['name'] ?? '';
+      gamePreferances = GamePreferances(game: gamePreferances.game, conditionId: conditionName , conditionName: gamePreferances.conditionName);
+      getCurrentCondition(conditionName);
+      validateForm();
+      _selectedGames.add(gamePreferances);
     notifyListeners();
   }
 
@@ -134,17 +129,15 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void removeGame(int id) {
-    print('Game ID is $id');
-    _selectedGames.removeWhere((game) => game.id == id);
+    _selectedGames.removeWhere((game) => game.game.apiId == id);
     validateForm();
     notifyListeners();
-    // locator<NavigationService>().pop();
+    locator<NavigationService>().pop();
   }
 
-  void updateGame(int id ){
-    _selectedGames.where((element) => element.id == id).forEach((element) {
-      element.conditionName = _currentCondition;
-    });
+  @override
+  void updateGame(int id){
+    _selectedGames.firstWhere((element) => id == element.game.apiId).conditionId = _currentCondition;
     notifyListeners();
     locator<NavigationService>().pop();
   }
@@ -155,16 +148,27 @@ class ICreateSaleModel extends CreateSaleModel {
     notifyListeners();
   }
 
-
-  @override
-  void getCurrentCondition(int id) {
-    _selectedGames.where((element) => element.id == id).forEach((element) {
-      _currentCondition = element.conditionName ?? '';
-    });
+  void getCurrentCondition(String name) {
+    _currentCondition = name;
     notifyListeners();
   }
 
   @override
   String get currentCondition => _currentCondition;
+
+  @override
+  void checkGame(GamePreferances gamePreferances) {
+    int length = _selectedGames.where((element) => element.game.apiId == gamePreferances.game.apiId).length;
+    if(length > 0){
+      _isAdded = true;
+    }else{
+      _isAdded = false;
+    }
+    print('Is Added $isAdded');
+    notifyListeners();
+  }
+
+  @override
+  bool get isAdded => _isAdded;
 
 }

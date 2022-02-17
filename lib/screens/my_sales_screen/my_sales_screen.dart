@@ -154,7 +154,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 ),
                 Spacer(),
                 Text(
-                  "₹ ${salesPayload.games[0].platform}",
+                  " ${popularConsoles.firstWhere((element) => element['id'] == salesPayload.games[0].platform)['name']}",
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
               ],
@@ -173,7 +173,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                   ),
                   Spacer(),
                   Text(
-                    "₹ ${salesPayload.price}",
+                    "LKR ${salesPayload.price}",
                     style: Theme.of(context).primaryTextTheme.headline4,
                   ),
                 ],

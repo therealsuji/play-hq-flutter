@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
-import 'package:play_hq/managers/dialog_manager.dart';
 import 'package:provider/provider.dart';
 
 import 'package:places_service/places_service.dart';
@@ -146,16 +145,8 @@ class _PlayHqHeadState extends State<PlayHqHead> {
         onGenerateRoute: generateRoute,
         initialRoute: '/',
         builder: (context, child) {
-          return Navigator(
-            onGenerateRoute: (settings) {
-              return MaterialPageRoute(
-                builder: (context) => DialogManager(
-                  child: LoadingWidget(
-                    child: child,
-                  ),
-                ),
-              );
-            },
+          return LoadingWidget(
+            child: child,
           );
         },
       ),

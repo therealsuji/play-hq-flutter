@@ -9,12 +9,14 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
+import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../service_locator.dart';
 import 'game_picker_details_widget.dart';
 
 class CustomGamePicker extends StatefulWidget {
@@ -87,33 +89,39 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
       left: _selectingWidgetleftPos,
       child: Align(
           alignment: Alignment.centerLeft,
-          child: GestureDetector(
-              onTap: () async {
-                dynamic poppedGame = await Navigator.pushNamed(
-                    context, MAIN_SEARCH_SCREEN,
-                    arguments: widget.gameType);
-                if (poppedGame != null) {
-                  switch (widget.gameType) {
-                    case SearchType.CREATE_SALE:
-                      Provider.of<CreateSaleModel>(context, listen: false)
-                          .addSelectedGame(poppedGame as GamePreferances);
-                      break;
-                    case SearchType.SETUP_PURCHASES:
-                      Provider.of<SetupPurchaseAccountModel>(context,
-                              listen: false)
-                          .addSelectedGame(poppedGame as GamePreferances);
-                      break;
-                    case SearchType.SETUP_SALES:
-                      Provider.of<SetupSalesViewModel>(context, listen: false)
-                          .addSelectedGame(poppedGame as GamePreferances);
-                      break;
-                    default:
-                      break;
-                  }
-                }
-              },
-              child: _selectingWidget(
-                  _selectingWidgetHeight, _selectingWidgetWidth))),
+          child: Consumer<CreateSaleModel>(
+            builder: (_, val , __) {
+              return GestureDetector(
+                  onTap: () async {
+                    dynamic poppedGame = await Navigator.pushNamed(
+                        context, MAIN_SEARCH_SCREEN,
+                        arguments: widget.gameType);
+                    if (poppedGame != null) {
+                      switch (widget.gameType) {
+                        case SearchType.CREATE_SALE:
+                          Provider.of<CreateSaleModel>(context , listen: false).checkGame(poppedGame as GamePreferances);
+
+                          val.isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
+                              .addSelectedGame(poppedGame);
+                          break;
+                        case SearchType.SETUP_PURCHASES:
+                          Provider.of<SetupPurchaseAccountModel>(context,
+                                  listen: false)
+                              .addSelectedGame(poppedGame as GamePreferances);
+                          break;
+                        case SearchType.SETUP_SALES:
+                          Provider.of<SetupSalesViewModel>(context, listen: false)
+                              .addSelectedGame(poppedGame as GamePreferances);
+                          break;
+                        default:
+                          break;
+                      }
+                    }
+                  },
+                  child: _selectingWidget(
+                      _selectingWidgetHeight, _selectingWidgetWidth));
+            }
+          )),
     );
   }
 
@@ -177,47 +185,27 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
           ),
         );
       case SearchType.CREATE_SALE:
-        CreateSaleModel model = Provider.of<CreateSaleModel>(context);
-        return ChangeNotifierProvider.value(
-          value: model,
-          child: Consumer<CreateSaleModel>(
-            builder: (_, val, __) {
-              return ListView.separated(
-                  separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: ScreenUtils.getDesignWidth(15));
-                  },
-                  padding:
-                      EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
-                  controller: _sliderController,
-                  itemCount: val.selectedGameList.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ChangeNotifierProvider.value(
-                      value: model,
-                      child: GestureDetector(
-                        onTap: () async {
-                          showModalBottomSheet<void>(
-                            isDismissible: true,
-                            context: context,
-                            builder: (context) {
-                              return UpdateGameBottomSheet(
-                                id: val.selectedGameList[index].id,
-                                createSaleModel: model,
-                              );
-                            },
-                          );
-                        },
-                        child: GamePickerGames(
-                          backgroundUrl:
-                              val.selectedGameList[index].game.boxCover,
-                          gameName: val.selectedGameList[index].game.title,
-                          releaseDate: val.selectedGameList[index].conditionId,
-                        ),
-                      ),
-                    );
-                  });
-            },
-          ),
+        return Consumer<CreateSaleModel>(
+          builder: (_, val, __) {
+            return ListView.separated(
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(width: ScreenUtils.getDesignWidth(15));
+                },
+                padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
+                controller: _sliderController,
+                itemCount: val.selectedGameList.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context2, int index) {
+                  return GestureDetector(
+                    onTap: () => showBottomSheet(gameId: val.selectedGameList[index].game.apiId!),
+                    child: GamePickerGames(
+                      backgroundUrl: val.selectedGameList[index].game.boxCover,
+                      gameName: val.selectedGameList[index].game.title,
+                      releaseDate: val.selectedGameList[index].conditionId,
+                    ),
+                  );
+                });
+          },
         );
       default:
         return Container();
@@ -310,5 +298,21 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
         return alert;
       },
     );
+  }
+
+  void showBottomSheet({required int gameId}) {
+    showModalBottomSheet<void>(
+        isDismissible: true,
+        context: context,
+        builder: (_) {
+          return ChangeNotifierProvider.value(
+            value: Provider.of<CreateSaleModel>(context),
+            builder: (context, _) {
+              return UpdateGameBottomSheet(
+                id: gameId,
+              );
+            },
+          );
+        });
   }
 }

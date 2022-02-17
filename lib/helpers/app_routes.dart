@@ -26,7 +26,6 @@ import 'package:play_hq/view_models/view_models.dart';
 
 ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
-// ICreateSaleModel _implCreateSale = ICreateSaleModel();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch (settings.name) {
@@ -135,9 +134,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ),
             ChangeNotifierProvider<SetupSalesViewModel>(
               create: (context) => _implSetupSales,
-            ),
-            ChangeNotifierProvider<CreateSaleModel>(
-              create: (context) => ICreateSaleModel(),
             ),
           ],
           child: MainSearchScreen(values: settings.arguments as SearchType),

@@ -10,8 +10,9 @@ class CustomTextfieldWidget extends StatelessWidget {
   final TextInputType? type;
   final String? hintText;
   final String? labelText;
+  final String? suffixText;
 
-  CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type , this.hintText , this.labelText});
+  CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type , this.hintText , this.labelText , this.suffixText});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +55,7 @@ class CustomTextfieldWidget extends StatelessWidget {
           errorText: errorText,
           fillColor: MAIN_CONTAINER_COLOR.withOpacity(0.4),
           filled: true,
+          suffixText: suffixText,
           hintText: hintText,
           hintStyle: TextStyle(
             color: SUB_TEXT_COLOR.withOpacity(0.6),
@@ -63,7 +65,7 @@ class CustomTextfieldWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20),
+          contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20 , right: 12),
         ),
       ),
     );
