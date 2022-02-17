@@ -82,6 +82,14 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                             index, true);
                                       });
                                   break;
+                                case SearchType.SETUP_SALES:
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return _platformBottomSheet(
+                                            index, true);
+                                      });
+                                  break;
                                 default:
                                   break;
                               }
@@ -201,7 +209,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                               Navigator.pop(context);
                               Provider.of<CustomSearchModel>(context,
                                       listen: false)
-                                  .addGameToList(SearchType.CREATE_SALE, index);
+                                  .addGameToList(index);
                               // GamePreferances game = val.gameDetails;
                               // isPLatform ? widget.values == SearchType.SETUP_PURCHASES ? Navigator.pushNamed(context, SETUP_PURCHASE_ACCOUNT_ROUTE) : Navigator.pushNamed(context, SETUP_SALES_ACCOUNT_ROUTE) : Navigator.pushNamed(context, CREATE_SALE_ROUTE , arguments: game);
                             },

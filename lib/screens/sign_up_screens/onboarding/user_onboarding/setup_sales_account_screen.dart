@@ -83,14 +83,18 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   height: ScreenUtils.getDesignHeight(20),
                 ),
                 Spacer(),
-                CustomTextWidget(
-                  'None Selected',
-                  isDynamic: false,
-                  style: TextStyle(
-                      fontFamily: CircularBook,
-                      foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
-                      fontSize: 10),
-                  height: ScreenUtils.getDesignHeight(13),
+                Consumer<SetupSalesViewModel>(
+                  builder: (_ , val , __){
+                    return CustomTextWidget(
+                      val.selectedGameList.length == 0 ? 'None Selected' : val.selectedGameList.length.toString() + ' Selected',
+                      isDynamic: false,
+                      style: TextStyle(
+                          fontFamily: CircularBook,
+                          foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                          fontSize: 10),
+                      height: ScreenUtils.getDesignHeight(13),
+                    );
+                  },
                 ),
               ],
             ),

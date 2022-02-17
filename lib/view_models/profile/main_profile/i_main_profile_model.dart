@@ -30,14 +30,15 @@ class IMainProfileModel extends MainProfileModel {
       });
       await _mainProfileAPI.getLibraryGames().then((value) {
         if(value.length > 0){
-          _eventBus.fire(LoadingEvent.hide());
           print("WishList Games: ${value[0].game.title}");
           _libraryGames = value;
         }
+        _eventBus.fire(LoadingEvent.hide());
       });
       notifyListeners();
     }catch(e){
       print(e);
+      _eventBus.fire(LoadingEvent.hide());
     }
   }
 

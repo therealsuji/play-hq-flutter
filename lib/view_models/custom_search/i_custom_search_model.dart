@@ -135,9 +135,9 @@ class ICustomSearchModel extends CustomSearchModel{
   String get selectedGameConditionSlug => _gameConditionSlug;
 
   @override
-  void addGameToList(SearchType type, int index) {
+  void addGameToList(int index) {
     game = addGamesToModel(_searchedGames[index]);
-    _gameDetails = GamePreferances(game: game , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString());
+    _gameDetails = GamePreferances(game: game , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString(), platform: _selectedPlatform);
     locator<NavigationService>().pop(args: _gameDetails);
   }
 

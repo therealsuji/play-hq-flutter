@@ -244,15 +244,19 @@ class _SetupPurchaseAccountScreenState
                                 height: ScreenUtils.getDesignHeight(20),
                               ),
                               Spacer(),
-                              CustomTextWidget(
-                                'None Selected',
-                                isDynamic: false,
-                                style: TextStyle(
-                                    fontFamily: CircularBook,
-                                    foreground: Paint()
-                                      ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
-                                    fontSize: 10),
-                                height: ScreenUtils.getDesignHeight(13),
+                              Consumer<SetupPurchaseAccountModel>(
+                                builder: (_ , val , __){
+                                  return CustomTextWidget(
+                                    val.selectedGameList.length == 0 ? 'None Selected' : val.selectedGameList.length.toString() + ' Selected',
+                                    isDynamic: false,
+                                    style: TextStyle(
+                                        fontFamily: CircularBook,
+                                        foreground: Paint()
+                                          ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                                        fontSize: 10),
+                                    height: ScreenUtils.getDesignHeight(13),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -312,62 +316,6 @@ class _SetupPurchaseAccountScreenState
     );
   }
 
-  /*Widget _bottomSheet(String title, List<Map<String, dynamic>> list, PlatformSelection platform) {
-    return Container(
-      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: Text(
-              title,
-              style: Theme.of(context).primaryTextTheme.headline5?.copyWith(fontSize: 16)
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
-            child: Consumer<SetupPurchaseAccountModel>(
-              builder: (_ , val , __){
-                return GridView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    mainAxisSpacing: 15.0,
-                    crossAxisSpacing: 15.0,
-                    mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
-                  ),
-                  itemCount: list.length,
-                  itemBuilder: (context , index){
-                    return GestureDetector(
-                      onTap: () {
-                        val.addSelectedPlatforms(list.indexOf(list[index]), platform , list[index]);
-                      },
-                      child: CustomSelectingWidget(
-                          titleText: list[index]['name'],
-                          active: platform == PlatformSelection.PlayStation
-                              ? val.selectedPlaystationPlatforms.contains(list.indexOf(list[index]))
-                              : platform == PlatformSelection.Xbox
-                              ? val.selectedXboxPlatforms.contains(list.indexOf(list[index]))
-                              : val.selectedNintendoPlatforms.contains(list.indexOf(list[index])))
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-          Spacer(),
-          Container(
-            margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(40)),
-            child: CustomButton(
-              buttonText: 'Confirm',
-              gradient: GREEN_GRADIENT,
-            ),
-          ),
-        ],
-      ),
-    );
-  }*/
 
   Future<void> customAlert(
       {required BuildContext context, String? title, String? contentBody}) {

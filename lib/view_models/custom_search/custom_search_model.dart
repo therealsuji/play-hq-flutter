@@ -22,7 +22,7 @@ abstract class CustomSearchModel with ChangeNotifier{
 
   void addGameCondition(int index, String slug);
 
-  void addGameToList(SearchType type , int index);
+  void addGameToList(int index);
 
   GamePreferances get gameDetails;
 

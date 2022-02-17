@@ -49,25 +49,29 @@ class IAuthenticationModel extends AuthenticationModel {
     var fcmToken = await FirebaseMessaging.instance.getToken();
     log("fcmToken $fcmToken");
     log("firebaseToken $token");
-
     var credentials = {
       "token" : token,
       "fcmToken" : fcmToken,
     };
     if (token != null && fcmToken != null) {
-      UserModel? userData  = await _logintoBackend.backendLogin(credentials);
-      if(userData!.user!.setupDone != null && userData.user!.setupDone == true){
-        SecureStorage.writeValue("jwtToken", userData.jwt);
-        SecureStorage.writeValue("fcmToken", fcmToken);
-        SecureStorage.writeValue("setupDone", "Done");
+      try {
+        await _logintoBackend.backendLogin(credentials).then((value) {
+          if (value!.user!.setupDone != null && value.user!.setupDone == true) {
+            SecureStorage.writeValue("jwtToken", value.jwt);
+            SecureStorage.writeValue("fcmToken", fcmToken);
+            SecureStorage.writeValue("setupDone", "Done");
+            locator<NavigationService>().pushNamed(MAIN_SCREEN);
+          } else {
+            SecureStorage.writeValue("jwtToken", value.jwt);
+            SecureStorage.writeValue("fcmToken", fcmToken);
+            SecureStorage.writeValue("setupDone", "Not Done");
+            locator<NavigationService>().pushNamed(MAIN_ONBOARDING);
+          }
+          locator<EventBus>().fire(LoadingEvent.hide());
+        });
+      } catch (e) {
+        log("login error -> ${e}");
         locator<EventBus>().fire(LoadingEvent.hide());
-        locator<NavigationService>().pushNamed(MAIN_SCREEN);
-      }else{
-        SecureStorage.writeValue("jwtToken", userData.jwt);
-        SecureStorage.writeValue("fcmToken", fcmToken);
-        SecureStorage.writeValue("setupDone", "Not Done");
-        locator<EventBus>().fire(LoadingEvent.hide());
-        locator<NavigationService>().pushNamed(MAIN_ONBOARDING);
       }
     }else{
       log("token or fcmToken is null");

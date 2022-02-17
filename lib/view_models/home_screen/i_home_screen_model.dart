@@ -30,10 +30,8 @@ class IHomeScreenModel extends HomeScreenModel {
       await _homeApi.fetchSalesFromWishlist().then((value) {
         if(value.length > 0){
           _wishListGames = value;
-          _eventBus.fire(LoadingEvent.hide());
-        }else{
-          _eventBus.fire(LoadingEvent.hide());
         }
+        _eventBus.fire(LoadingEvent.hide());
         notifyListeners();
       });
     }catch(e){
