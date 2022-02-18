@@ -193,6 +193,8 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                           ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                         fontWeight: FontWeight.w700),
                   )
+
+
                 ],
               ),
             ),
