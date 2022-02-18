@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
 import 'package:play_hq/screens/profile_screens/notifications/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
@@ -57,8 +58,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameDetailsModel>(
           create: (context) => IGameDetailsModel(),
-          child: GameDetailsScreen(gameId: settings.arguments as int,),
-        ),
+          child: GameDetailsScreen(gameDetailsArguments: settings.arguments as GameDetailsArguments),),
       );
     case CREATE_TRADE_SCREEN:
       return MaterialPageRoute(

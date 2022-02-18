@@ -8,6 +8,8 @@ enum SearchScreenStates { EMPTY, SUCCESS, NOTHING, LOADING, FAILED }
 
 enum SearchType { MAIN_SEARCH, SETUP_PURCHASES, SETUP_SALES , CREATE_SALE}
 
+enum GameType {WISHLIST , LIBRARY}
+
 enum NotificationType {Information, Success, Failure, Warning}
 
 enum PlatformSelection { PlayStation, Xbox, Nintendo }

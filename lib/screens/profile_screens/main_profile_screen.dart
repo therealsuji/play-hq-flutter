@@ -3,9 +3,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
@@ -140,11 +142,14 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                     return val.fetchAllWishlistGames.length > 0 ? ListView.separated(
                       scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return GamesWidget(
-                            gameName: val.fetchAllWishlistGames[index].game.title ?? "",
-                            backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
-                            releaseDate: val.fetchAllWishlistGames[index].game.releaseDate ?? "",
-                            gradient: PRIMARY_GRADIENT,
+                          return GestureDetector(
+                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllWishlistGames[index].game.apiId , gameType: GameType.WISHLIST)),
+                            child: GamesWidget(
+                              gameName: val.fetchAllWishlistGames[index].game.title ?? "",
+                              backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
+                              releaseDate: val.fetchAllWishlistGames[index].game.releaseDate ?? "",
+                              gradient: PRIMARY_GRADIENT,
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
@@ -200,11 +205,14 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                     return val.fetchAllLibraryGames.length > 0 ? ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
-                          return GamesWidget(
-                            gameName: val.fetchAllLibraryGames[index].game.title ?? "",
-                            backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
-                            releaseDate: val.fetchAllLibraryGames[index].game.releaseDate ?? "",
-                            gradient: PRIMARY_GRADIENT,
+                          return GestureDetector(
+                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllLibraryGames[index].game.apiId ?? 0 , gameType: GameType.LIBRARY)),
+                            child: GamesWidget(
+                              gameName: val.fetchAllLibraryGames[index].game.title ?? "",
+                              backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
+                              releaseDate: val.fetchAllLibraryGames[index].game.releaseDate ?? "",
+                              gradient: PRIMARY_GRADIENT,
+                            ),
                           );
                         },
                         separatorBuilder: (BuildContext context, int index) {
