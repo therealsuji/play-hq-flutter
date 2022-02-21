@@ -14,116 +14,104 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            horizontal: ScreenUtils.getDesignWidth(24.0),
-            vertical: ScreenUtils.getDesignHeight(35.0),
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15.0),
-            color: POPUP_COLOR,
-          ),
-          child: Consumer<CreateSaleModel>(
-            builder: (_, model, __) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Sale Details Confirmation",
-                    style: Theme.of(context).primaryTextTheme.headline3,
+    return Container(
+        child: Consumer<CreateSaleModel>(
+          builder: (_, model, __) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Sale Details Confirmation",
+                  style: Theme.of(context).primaryTextTheme.headline3,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0, bottom: 25.0),
+                  // TODO change the text below
+                  child: Text(
+                    "We all make mistakes,so just check if you've given all the details accurately",
+                    style: Theme.of(context).primaryTextTheme.bodyText2?.copyWith(color: SubheadingText),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 10.0, bottom: 25.0),
-                    // TODO change the text below
-                    child: Text(
-                      "We all make mistakes,so just check if you've given all the details accurately",
-                      style: Theme.of(context).primaryTextTheme.bodyText2?.copyWith(color: SubheadingText),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Total Games",
+                      style: Theme.of(context).primaryTextTheme.headline3,
                     ),
-                  ),
-                  Row(
+                    Text(
+                      model.selectedGameList.length.toString(),
+                      style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
+                            color: PRIMARY_COLOR,
+                          ),
+                    )
+                  ],
+                ),
+                Container(
+                  height: ScreenUtils.getDesignHeight(137.0),
+                  margin: const EdgeInsets.only(top: 10.0),
+                  child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: model.selectedGameList.length,
+                      separatorBuilder: (_, __) => SizedBox(width: ScreenUtils.getDesignWidth(15.0)),
+                      itemBuilder: (context, idx) {
+                        return SelectGameItem(
+                          isSelected: false,
+                          imageURL: model.selectedGameList[idx].game.boxCover,
+                          titleText: model.selectedGameList[idx].game.title,
+                          subtitleText: model.selectedGameList[idx].conditionId!
+                        );
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Total Games",
+                        "Game Bundle Price",
                         style: Theme.of(context).primaryTextTheme.headline3,
                       ),
+                      GradientText(model.price.toString() + " LKR",
+                          style: Theme.of(context).primaryTextTheme.headline3, gradient: GREEN_GRADIENT),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       Text(
-                        "0",
-                        style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                              color: PRIMARY_COLOR,
-                            ),
+                        "Negotiable ?",
+                        style: Theme.of(context).primaryTextTheme.headline3,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: PRIMARY_COLOR,
+                          shape: BoxShape.circle,
+                        ),
+                        padding: const EdgeInsets.all(10),
+                        child: SvgPicture.asset(
+                          model.isNegotiable ? TICK_MARK_ICON : CROSS_MARK_ICON,
+                          color: Colors.white,
+                          height: ScreenUtils.getDesignHeight(10.0),
+                        ),
                       )
                     ],
                   ),
-                  Container(
-                    height: ScreenUtils.getDesignHeight(137.0),
-                    margin: const EdgeInsets.only(top: 10.0),
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, idx) {
-                          return Container();
-                          // return SelectGameItem(
-                          //   isSelected: false,
-                          //   imageURL: model.gameList[idx].boxImage,
-                          //   centerText: model.gameList[idx].title,
-                          //   titleText: model.consoleList
-                          //       .firstWhere((console) => console['id'] == model.gameList[idx].platform!.id)['name'],
-                          //   subtitleText: model.gameList[idx].gameCondition.replaceAll("_", " ").toUpperCase(),
-                          // );
-                        }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: CustomButton(
+                    onPressed: () => Provider.of<CreateSaleModel>(context , listen: false).createSale(),
+                    buttonText: "Details are Correct",
+                    gradient: GREEN_GRADIENT,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Game Bundle Price",
-                          style: Theme.of(context).primaryTextTheme.headline3,
-                        ),
-                        GradientText(model.price.toString() + " LKR",
-                            style: Theme.of(context).primaryTextTheme.headline3, gradient: GREEN_GRADIENT),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Negotiable ?",
-                          style: Theme.of(context).primaryTextTheme.headline3,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: PRIMARY_COLOR,
-                            shape: BoxShape.circle,
-                          ),
-                          padding: const EdgeInsets.all(10),
-                          child: SvgPicture.asset(
-                            model.isNegotiable ? TICK_MARK_ICON : CROSS_MARK_ICON,
-                            color: Colors.white,
-                            height: ScreenUtils.getDesignHeight(10.0),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 25.0),
-                    child: CustomButton(
-                      onPressed: () => Navigator.pop(context, true),
-                      buttonText: "Details are Correct",
-                      gradient: GREEN_GRADIENT,
-                    ),
-                  )
-                ],
-              );
-            },
-          )),
-    );
+                )
+              ],
+            );
+          },
+        ));
   }
 }

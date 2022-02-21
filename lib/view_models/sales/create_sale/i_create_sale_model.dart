@@ -1,11 +1,8 @@
-import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
@@ -58,7 +55,6 @@ class ICreateSaleModel extends CreateSaleModel {
     _selectedGames.forEach((element) {
       element.platform = _platformId;
     });
-    print('Game Platform ${_selectedGames[0].platform}');
     SalesPayload createSaleModel = SalesPayload(
         location: location,
         price: _price,
@@ -68,7 +64,6 @@ class ICreateSaleModel extends CreateSaleModel {
     try {
       await _createSale.createSale(createSaleModel);
       locator<EventBus>().fire(LoadingEvent.hide());
-
     } catch (e) {
       print(e.toString());
       locator<EventBus>().fire(LoadingEvent.hide());

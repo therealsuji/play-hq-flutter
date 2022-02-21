@@ -213,9 +213,28 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                               builder: (_, formValid, __) {
                                 return CustomButton(
                                   onPressed: () async{
-                                    formValid ? Provider.of<CreateSaleModel>(context,
-                                        listen: false)
-                                        .createSale() : showAlertDialog(context);
+                                    formValid ? showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        context: context, builder: (_){
+                                      return ChangeNotifierProvider.value(
+                                          value: Provider.of<CreateSaleModel>(context),
+                                          child: Wrap(
+                                            children: [
+                                              Container(
+                                                  width: double.infinity,
+                                                  height: ScreenUtils.getDesignHeight(520),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: ScreenUtils.getDesignWidth(24.0),
+                                                    vertical: ScreenUtils.getDesignHeight(35.0),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(15.0),
+                                                    color: POPUP_COLOR,
+                                                  ),
+                                                  child: CreateSaleConfirmBottomSheet()),
+                                            ],
+                                          ));
+                                    }) : showAlertDialog(context);
                                   },
                                   buttonText: "Create Sale",
                                   gradient: formValid ? GREEN_GRADIENT : null,
