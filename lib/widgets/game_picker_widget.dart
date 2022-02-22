@@ -90,37 +90,40 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
       child: Align(
           alignment: Alignment.centerLeft,
           child: Consumer<CreateSaleModel>(
-            builder: (_, val , __) {
+            builder: (_ , val , __){
               return GestureDetector(
                   onTap: () async {
-                    dynamic poppedGame = await Navigator.pushNamed(
-                        context, MAIN_SEARCH_SCREEN,
-                        arguments: widget.gameType);
-                    if (poppedGame != null) {
-                      switch (widget.gameType) {
-                        case SearchType.CREATE_SALE:
-                          Provider.of<CreateSaleModel>(context , listen: false).checkGame(poppedGame as GamePreferances);
-
-                          val.isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
-                              .addSelectedGame(poppedGame);
-                          break;
-                        case SearchType.SETUP_PURCHASES:
-                          Provider.of<SetupPurchaseAccountModel>(context,
-                                  listen: false)
-                              .addSelectedGame(poppedGame as GamePreferances);
-                          break;
-                        case SearchType.SETUP_SALES:
-                          Provider.of<SetupSalesViewModel>(context, listen: false)
-                              .addSelectedGame(poppedGame as GamePreferances);
-                          break;
-                        default:
-                          break;
-                      }
+                    switch (widget.gameType) {
+                      case SearchType.CREATE_SALE:
+                        dynamic salesResult = await Navigator.pushNamed(
+                            context, MAIN_SEARCH_SCREEN,
+                            arguments: widget.gameType);
+                        Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as GamePreferances);
+                        Provider.of(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
+                            .addSelectedGame(salesResult);
+                        break;
+                      case SearchType.SETUP_PURCHASES:
+                        dynamic purchaseResult = await Navigator.pushNamed(
+                            context, MAIN_SEARCH_SCREEN,
+                            arguments: widget.gameType);
+                        Provider.of<SetupPurchaseAccountModel>(context,
+                            listen: false)
+                            .addSelectedGame(purchaseResult as GamePreferances);
+                        break;
+                      case SearchType.SETUP_SALES:
+                        dynamic saleResult = await Navigator.pushNamed(
+                            context, MAIN_SEARCH_SCREEN,
+                            arguments: widget.gameType);
+                        Provider.of<SetupSalesViewModel>(context, listen: false)
+                            .addSelectedGame(saleResult as GamePreferances);
+                        break;
+                      default:
+                        break;
                     }
                   },
                   child: _selectingWidget(
                       _selectingWidgetHeight, _selectingWidgetWidth));
-            }
+            },
           )),
     );
   }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/services/dialog_service.dart';
+import 'package:play_hq/widgets/alerts/alert_dialog.dart';
 import 'package:play_hq/widgets/alerts/alert_requests.dart';
 import 'package:play_hq/widgets/alerts/alert_response.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class _DialogManagerState extends State<DialogManager> {
   DialogService _dialogService = locator<DialogService>();
   @override
   void initState() {
+    _dialogService.registerDialogListener(_showDialog);
     super.initState();
   }
   @override
@@ -23,22 +26,15 @@ class _DialogManagerState extends State<DialogManager> {
     return widget.child!;
   }
 
-  void showDialog(AlertRequest request) {
-    Alert(
+  void _showDialog(AlertRequest request) {
+    CustomAlert(
         context: context,
         title: request.title,
         desc: request.description,
+        type : request.alertType,
+        buttonText: request.buttonTitle,
         closeFunction: () =>
-            _dialogService.dialogComplete(AlertResponse(confirmed: false)),
-        buttons: [
-          DialogButton(
-            child: Text(request.buttonTitle),
-            onPressed: () {
-              _dialogService.dialogComplete(AlertResponse(confirmed: true));
-              Navigator.of(context).pop();
-            },
-          )
-        ]).show();
+            _dialogService.dialogComplete(AlertResponse(confirmed: false)), onTap: () {}).show();
   }
 
 }

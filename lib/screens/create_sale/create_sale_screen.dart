@@ -8,6 +8,8 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/create_sale/widgets/create_sale_confirm_bottom_sheet_widget.dart';
 import 'package:play_hq/screens/create_sale/widgets/sale_confirm_dialog.dart';
+import 'package:play_hq/service_locator.dart';
+import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
@@ -234,7 +236,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                                                   child: CreateSaleConfirmBottomSheet()),
                                             ],
                                           ));
-                                    }) : showAlertDialog(context);
+                                    }) : null;
                                   },
                                   buttonText: "Create Sale",
                                   gradient: formValid ? GREEN_GRADIENT : null,
@@ -252,43 +254,6 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
         ],
       ),
     );
-  }
-
-
-  showAlertDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Nope"),
-      content: Text("You need to fill all the required details"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  Future<void> showCompleteDialog() async {
-    await showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) {
-          return SaleConfirmDialog();
-        });
   }
 
   Future<bool> showSalesConfirmBottomSheet() async {

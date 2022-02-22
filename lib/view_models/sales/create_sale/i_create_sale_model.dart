@@ -1,6 +1,7 @@
 
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
@@ -50,23 +51,43 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void createSale() async {
-    locator<EventBus>().fire(LoadingEvent.show());
-    LocationModel location = LocationModel(address: "SOMETIHING", lat: 123, long: 123);
-    _selectedGames.forEach((element) {
-      element.platform = _platformId;
-    });
-    SalesPayload createSaleModel = SalesPayload(
-        location: location,
-        price: _price,
-        remarks: _remarks,
-        negotiable: _isNegotiable,
-        games: _selectedGames);
-    try {
-      await _createSale.createSale(createSaleModel);
-      locator<EventBus>().fire(LoadingEvent.hide());
-    } catch (e) {
-      print(e.toString());
-      locator<EventBus>().fire(LoadingEvent.hide());
+    if(_isFormValid){
+      locator<EventBus>().fire(LoadingEvent.show());
+      LocationModel location = LocationModel(address: "SOMETIHING", lat: 123, long: 123);
+      _selectedGames.forEach((element) {
+        element.platform = _platformId;
+      });
+      SalesPayload createSaleModel = SalesPayload(
+          location: location,
+          price: _price,
+          remarks: _remarks,
+          negotiable: _isNegotiable,
+          games: _selectedGames);
+      try {
+        await _createSale.createSale(createSaleModel);
+        locator<EventBus>().fire(LoadingEvent.hide());
+      } catch (e) {
+        print(e.toString());
+        locator<EventBus>().fire(LoadingEvent.hide());
+      }
+    }else{
+      print('form is not valid');
+      showDialog();
+    }
+  }
+
+  Future showDialog() async {
+    print('dialog called');
+    var dialogResult = await _dialogService.showDialog(
+      title: 'Nope, not yet :(',
+      description: 'Please fill in all the required fields to create a sale',
+      buttonTitle: 'Okay',
+      type: AlertType.ERROR,
+    );
+    if (dialogResult.confirmed!) {
+      print('User has confirmed');
+    } else {
+      print('User cancelled the dialog');
     }
   }
 

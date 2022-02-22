@@ -9,9 +9,9 @@ import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/splash_screen/splash_screen_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ISplashModel extends SplashScreenModel {
-
   final _splashAPI = locator<SplashRepository>();
 
   @override
@@ -36,13 +36,20 @@ class ISplashModel extends SplashScreenModel {
       }
     });
 
+    final prefs = await SharedPreferences.getInstance();
+
+    if (prefs.getBool('first_run') ?? true) {
+      await SecureStorage.deleteAll();
+      prefs.setBool('first_run', false);
+    }
+
     await _splashAPI.renewJwtToken().then((value) {
       var localToken = value.jwt!;
       if (FirebaseAuth.instance.currentUser != null && localToken != null) {
         SecureStorage.writeValue('jwtToken', value.jwt);
-        if(value.user!.setupDone!){
-          navigateMainScreen();
-        }else{
+        if (value.user!.setupDone!) {
+          navigateOnboarding();
+        } else {
           navigateOnboarding();
         }
       }
@@ -54,6 +61,7 @@ class ISplashModel extends SplashScreenModel {
 
   @override
   void navigateOnboarding() {
-    locator<NavigationService>().pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE , args: SearchType.SETUP_PURCHASES);
+    locator<NavigationService>().pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE,
+        args: SearchType.SETUP_PURCHASES);
   }
 }

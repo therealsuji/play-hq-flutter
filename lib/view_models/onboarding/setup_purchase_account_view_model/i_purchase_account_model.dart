@@ -129,7 +129,6 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   void addSelectedGame(GamePreferances game) {
     _selectedGames.add(game);
     notifyListeners();
-    locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE);
   }
 
   @override

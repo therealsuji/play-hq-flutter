@@ -61,7 +61,6 @@ class ISetupSalesModel extends SetupSalesViewModel{
     _selectedAddress = addresses[0].street.toString();
     _selectedLatitude = tappedPoint.latitude;
     _selectedLongitude = tappedPoint.longitude;
-    locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
     notifyListeners();
   }
 
