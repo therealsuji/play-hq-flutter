@@ -66,10 +66,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case PURCHASE_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<SetupPurchaseAccountModel>(
-          create: (context) => _implSetupPurchaseAccount,
-          child: SetupPurchaseAccountScreen(),
-        ),
+        builder: (context) => MultiProvider(
+            providers: [
+          ChangeNotifierProvider<SetupPurchaseAccountModel>(
+            create: (context) => ISetupPurchaseAccountModel(),
+          ),
+          ChangeNotifierProvider<CreateSaleModel>(
+            create: (context) => ICreateSaleModel(),
+          ),
+        ],
+        child: SetupPurchaseAccountScreen(),
+        )
       );
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
@@ -101,10 +108,16 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<SetupSalesViewModel>(
-          create: (context) => _implSetupSales,
+        builder: (context) => MultiProvider(providers: [
+          ChangeNotifierProvider<SetupSalesViewModel>(
+            create: (context) => _implSetupSales,
+          ),
+          ChangeNotifierProvider<CreateSaleModel>(
+            create: (context) => ICreateSaleModel(),
+          ),
+        ],
           child: SetupSalesAccountScreen(),
-        ),
+        )
       );
     case CREATE_TRADE_SCREEN:
       return MaterialPageRoute(

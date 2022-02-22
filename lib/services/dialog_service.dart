@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/widgets/alerts/alert_requests.dart';
 import 'package:play_hq/widgets/alerts/alert_response.dart';
 class DialogService {
@@ -13,9 +14,10 @@ class DialogService {
   /// Calls the dialog listener and returns a Future that will wait for dialogComplete.
   Future<AlertResponse> showDialog({String? title,
     String? description,
-    String buttonTitle = 'Ok',}) {
+    String? buttonTitle = 'Ok',
+    AlertType type = AlertType.GENERAL}){
     _dialogCompleter = Completer<AlertResponse>();
-    _showDialogListener!(AlertRequest(buttonTitle: title! , description: description! , title: buttonTitle) );
+    _showDialogListener!(AlertRequest(title: title! , description: description! , alertType: type , buttonTitle: buttonTitle!) );
     return _dialogCompleter!.future;
   }
   /// Completes the _dialogCompleter to resume the Future's execution call
