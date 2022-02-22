@@ -17,5 +17,5 @@ abstract class GameDetailsModel with ChangeNotifier {
 
   GameScreenshotModal get gameScreenshots;
 
-  List<int> get selectedPlatforms;
+  int get selectedPlatformId;
 }

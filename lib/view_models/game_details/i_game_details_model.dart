@@ -16,7 +16,7 @@ class IGameDetailsModel extends GameDetailsModel {
   GameDetailModel _gameDetailsModel = GameDetailModel();
   GameScreenshotModal _gameScreenshotModal = GameScreenshotModal();
 
-  List<int> _platformIdList = [];
+  int _platformId = 0;
 
   @override
   Future<void> getGameDetails(int id) async {
@@ -49,11 +49,15 @@ class IGameDetailsModel extends GameDetailsModel {
   void addToLibrary() async {
 
     var body = {
-      "title": _gameDetailsModel.nameOriginal,
-      "box_cover": _gameDetailsModel.backgroundImage,
-      "release_date": DateFormat('dd/MM/yyyy').format(DateTime.parse(_gameDetailsModel.released!)),
-      "api_id": _gameDetailsModel.id,
-      "platforms": _platformIdList
+      "game": {
+        "title": _gameDetailsModel.nameOriginal,
+        "api_id": _gameDetailsModel.id,
+        "box_cover": _gameDetailsModel.backgroundImage,
+        "platforms": _gameDetailsModel.platforms!.map((e) => e.id).toList(),
+        "genres": _gameDetailsModel.genres!.map((e) => e.id).toList(),
+        "release_date": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
+      },
+      "platform": _platformId
     };
 
     _eventBus.fire(LoadingEvent.show());
@@ -67,11 +71,15 @@ class IGameDetailsModel extends GameDetailsModel {
   void addToWishList() async {
 
     var body = {
-      "title": "${_gameDetailsModel.nameOriginal}",
-      "box_cover": "${_gameDetailsModel.backgroundImage}",
-      "release_date": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
-      "api_id": _gameDetailsModel.id,
-      "platforms": _platformIdList
+      "game": {
+        "title": _gameDetailsModel.nameOriginal,
+        "api_id": _gameDetailsModel.id,
+        "box_cover": _gameDetailsModel.backgroundImage,
+        "platforms": _gameDetailsModel.platforms!.map((e) => e.id).toList(),
+        "genres": _gameDetailsModel.genres!.map((e) => e.id).toList(),
+        "release_date": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
+      },
+      "platform": _platformId
     };
 
     _eventBus.fire(LoadingEvent.show());
@@ -83,16 +91,12 @@ class IGameDetailsModel extends GameDetailsModel {
 
   @override
   void selectedPlatform(int platformId) {
-    if(_platformIdList.contains(platformId)){
-      _platformIdList.remove(platformId);
-    }else{
-      _platformIdList.add(platformId);
-    }
+    _platformId = platformId;
     notifyListeners();
   }
 
   @override
-  List<int> get selectedPlatforms => _platformIdList;
+  int get selectedPlatformId => _platformId;
 
   @override
   GameDetailModel get gameDetails => _gameDetailsModel;
