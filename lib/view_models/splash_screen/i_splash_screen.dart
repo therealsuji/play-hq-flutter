@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:play_hq/helpers/app_enums.dart';
@@ -48,7 +46,7 @@ class ISplashModel extends SplashScreenModel {
       if (FirebaseAuth.instance.currentUser != null && localToken != null) {
         SecureStorage.writeValue('jwtToken', value.jwt);
         if (value.user!.setupDone!) {
-          navigateOnboarding();
+          navigateMainScreen();
         } else {
           navigateOnboarding();
         }

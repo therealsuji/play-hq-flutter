@@ -16,7 +16,7 @@ class CustomAlert {
   final String? title;
   final String? desc;
   final String? buttonText;
-  final VoidCallback? onTap;
+  final VoidCallback? onPressed;
   final Widget content;
 
   /// Alert dialog's buttons
@@ -35,7 +35,7 @@ class CustomAlert {
     this.id,
     required this.type,
     this.padding,
-    required this.onTap,
+    this.onPressed,
     this.image,
     this.title,
     this.buttonText,
@@ -72,23 +72,65 @@ class CustomAlert {
   _showAlertBody(type) {
     switch (type) {
       case AlertType.SUCCESS:
-        return _showSuccessAlert(title, desc, onTap, buttonText);
+        return _showSuccessAlert(title, desc, buttonText);
       case AlertType.ERROR:
-        return _showErrorAlert(title, desc, onTap, buttonText);
+        return _showErrorAlert(title, desc, onPressed, buttonText);
     }
   }
 
-  _showSuccessAlert(title, desc, onTap, buttonText) {
+  _showSuccessAlert(title, desc, buttonText) {
     return AlertDialog(
       backgroundColor: POPUP_COLOR,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      insetPadding: EdgeInsets.zero,
-      content: Container(
-        height: 100,
-        width: double.infinity,
-      ),
+          borderRadius: BorderRadius.all(Radius.circular(5.0))),
+      content: Builder(builder: (context) {
+        return Container(
+          height: ScreenUtils.getDesignHeight(130),
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Text(
+                desc,
+                style: TextStyle(
+                    color: SUB_TEXT_COLOR,
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              ElevatedButton(
+                  style:
+                  ElevatedButton.styleFrom(primary: Colors.transparent , shadowColor: Colors.transparent),
+                  onPressed: (){
+                    dismiss();
+                    onPressed!();
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        buttonText,
+                        style: TextStyle(color: Colors.blue, fontSize: 14),
+                      ),
+                    ),
+                  ))
+            ],
+          ),
+        );
+      }),
     );
   }
 

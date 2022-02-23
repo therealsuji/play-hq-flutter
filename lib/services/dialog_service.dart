@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/widgets/alerts/alert_requests.dart';
 import 'package:play_hq/widgets/alerts/alert_response.dart';
@@ -15,9 +16,10 @@ class DialogService {
   Future<AlertResponse> showDialog({String? title,
     String? description,
     String? buttonTitle = 'Ok',
+    VoidCallback? onPressed,
     AlertType type = AlertType.GENERAL}){
     _dialogCompleter = Completer<AlertResponse>();
-    _showDialogListener!(AlertRequest(title: title! , description: description! , alertType: type , buttonTitle: buttonTitle!) );
+    _showDialogListener!(AlertRequest(title: title! , description: description! , alertType: type , buttonTitle: buttonTitle! , onPressed: onPressed) );
     return _dialogCompleter!.future;
   }
   /// Completes the _dialogCompleter to resume the Future's execution call

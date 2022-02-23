@@ -34,7 +34,8 @@ class _DialogManagerState extends State<DialogManager> {
         type : request.alertType,
         buttonText: request.buttonTitle,
         closeFunction: () =>
-            _dialogService.dialogComplete(AlertResponse(confirmed: false)), onTap: () {}).show();
+            _dialogService.dialogComplete(AlertResponse(confirmed: false)),
+        onPressed: request.onPressed).show();
   }
 
 }

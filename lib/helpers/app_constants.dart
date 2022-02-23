@@ -127,6 +127,7 @@ const List<Map<String, dynamic>> popularConsoles = [
   {'id': 187, 'name': 'PlayStation 5'},
   {'id': 186, 'name': 'Xbox Series S/X'},
   {'id': 18, 'name': 'PlayStation 4'},
+  {'id': 16 , 'name': 'PlayStation 03'},
   {'id': 7, 'name': 'Nintendo Switch'},
   {'id': 1, 'name': 'Xbox One'},
 ];

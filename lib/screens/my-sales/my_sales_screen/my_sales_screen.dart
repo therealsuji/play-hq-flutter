@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
@@ -18,8 +19,6 @@ class MySalesScreen extends StatefulWidget {
 }
 
 class _MySalesScreenState extends State<MySalesScreen> {
-  var gamesCOunt = 2;
-
   @override
   void initState() {
     Provider.of<MySalesViewModel>(context, listen: false).fetchAllSales();
@@ -60,7 +59,9 @@ class _MySalesScreenState extends State<MySalesScreen> {
                   Container(
                     child: CarouselSlider(
                       items: val.fetchActiveSales.map((sale) {
-                        return _gameForSaleWidget(salesPayload: sale, index: val.fetchActiveSales.indexOf(sale));
+                        return _gameForSaleWidget(
+                            salesPayload: sale,
+                            index: val.fetchActiveSales.indexOf(sale));
                       }).toList(),
                       options: CarouselOptions(
                         height: ScreenUtils.getDesignHeight(415),
@@ -97,17 +98,19 @@ class _MySalesScreenState extends State<MySalesScreen> {
         color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
         borderRadius: BorderRadius.circular(5),
       ),
-      margin: EdgeInsets.only(left: 0 , top: 20 , right: 0),
+      margin: EdgeInsets.only(left: 0, top: 20, right: 0),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Container(
         child: Column(
           children: [
             Row(
                 children: salesPayload.games.map((saleDetails) {
-                  print('Condition Name : ${saleDetails.conditionId}');
-
               return _gameCard(
-                  saleDetails.game, game_conditions.where((element) => element['API_Slug'] == saleDetails.conditionId).first['name']!);
+                  saleDetails.game,
+                  game_conditions
+                      .where((element) =>
+                          element['API_Slug'] == saleDetails.conditionId)
+                      .first['name']!);
             }).toList()),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
@@ -204,6 +207,9 @@ class _MySalesScreenState extends State<MySalesScreen> {
                   CustomButton(
                     buttonText: 'View Details',
                     textFontSize: 12,
+                    onPressed: () => Navigator.pushNamed(
+                        context, MY_SALES_DETAILS_SCREEN,
+                        arguments: salesPayload),
                     height: 45,
                     width: ScreenUtils.getDesignWidth(120),
                     gradient: PRIMARY_GRADIENT,

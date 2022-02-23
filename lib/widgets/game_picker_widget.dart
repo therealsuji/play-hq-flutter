@@ -99,7 +99,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                             context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
                         Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as GamePreferances);
-                        Provider.of(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
+                        Provider.of<CreateSaleModel>(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
                             .addSelectedGame(salesResult);
                         break;
                       case SearchType.SETUP_PURCHASES:
