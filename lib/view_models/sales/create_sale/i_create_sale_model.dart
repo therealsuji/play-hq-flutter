@@ -2,6 +2,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
@@ -52,8 +53,8 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   void createSale() async {
     if(_isFormValid){
-      locator<EventBus>().fire(LoadingEvent.show());
-      LocationModel location = LocationModel(address: "SOMETIHING", lat: 123, long: 123);
+      // locator<EventBus>().fire(LoadingEvent.show());
+      LocationModel location = LocationModel(address: "Something", lat: 123, long: 123);
       _selectedGames.forEach((element) {
         element.platform = _platformId;
       });
@@ -66,6 +67,7 @@ class ICreateSaleModel extends CreateSaleModel {
       try {
         await _createSale.createSale(createSaleModel);
         locator<EventBus>().fire(LoadingEvent.hide());
+        successSale();
       } catch (e) {
         print(e.toString());
         locator<EventBus>().fire(LoadingEvent.hide());
@@ -73,6 +75,23 @@ class ICreateSaleModel extends CreateSaleModel {
     }else{
       print('form is not valid');
       showDialog();
+    }
+  }
+
+  Future successSale() async {
+    var dialogResult = await _dialogService.showDialog(
+      title: 'Alright we got your sale',
+      description: 'We will send you notification when someone wants to buy your game',
+      buttonTitle: 'Back to Home',
+      type: AlertType.SUCCESS,
+      onPressed: () {
+        locator<NavigationService>().pushNamed(MAIN_SCREEN);
+      },
+    );
+    if (dialogResult.confirmed!) {
+      print('User has confirmed');
+    } else {
+      print('User cancelled the dialog');
     }
   }
 

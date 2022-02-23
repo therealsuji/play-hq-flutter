@@ -27,6 +27,7 @@ const String NOTIFICATION_SCREEN = 'notification';
 const String ORDERS_SCREEN = 'orders';
 const String ORDER_DETAILS_SCREEN = 'orderDetails';
 const String BUY_GAMES_SCREEN = 'buyGames';
+const String MY_SALES_DETAILS_SCREEN = 'mysaleDetails';
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';
