@@ -33,9 +33,12 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.white,
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                        ),
                       ),
                       Container(
                         margin: EdgeInsets.only(left: 3),
