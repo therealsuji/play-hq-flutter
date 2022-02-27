@@ -82,10 +82,11 @@ class ActiveOrdersWidget extends StatelessWidget {
                         child: Text(
                           '${orderDetails!.dueDate}',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: Neusa),
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontFamily: Neusa,
+                          ),
                         ),
                       ),
                     ],
@@ -135,8 +136,9 @@ class ActiveOrdersWidget extends StatelessWidget {
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(3),
-                          gradient: PRIMARY_GRADIENT),
+                        borderRadius: BorderRadius.circular(3),
+                        gradient: PRIMARY_GRADIENT,
+                      ),
                       child: Center(
                         child: Text(
                           'Order Details',
@@ -161,9 +163,10 @@ class ActiveOrdersWidget extends StatelessWidget {
   Widget _gameCard(Game gameDetails) {
     return Container(
       margin: EdgeInsets.only(
-          right: orderDetails!.games!.length < 3
-              ? ScreenUtils.getDesignWidth(15)
-              : 0),
+        right: orderDetails!.games!.length < 3
+            ? ScreenUtils.getDesignWidth(15)
+            : 0,
+      ),
       height: ScreenUtils.getDesignHeight(120),
       width: ScreenUtils.getDesignWidth(90),
       decoration: BoxDecoration(
@@ -181,17 +184,19 @@ class ActiveOrdersWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               gradient: LinearGradient(
-                  colors: [Colors.black, Colors.transparent],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter),
+                colors: [Colors.black, Colors.transparent],
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+              ),
             ),
           ),
           Container(
             height: ScreenUtils.getDesignHeight(120),
             width: ScreenUtils.getDesignWidth(90),
             margin: EdgeInsets.symmetric(
-                horizontal: ScreenUtils.getDesignHeight(10),
-                vertical: ScreenUtils.getDesignHeight(10)),
+              horizontal: ScreenUtils.getDesignHeight(10),
+              vertical: ScreenUtils.getDesignHeight(10),
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,

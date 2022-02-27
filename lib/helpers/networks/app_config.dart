@@ -43,6 +43,10 @@ class APIConfig {
 
   static String get addLibraryGames => '$_baseUrl' + '/library-games/set';
 
+  static String get addToWishList => '$_baseUrl' + '/wish-list-games';
+
+  static String get addToLibrary => '$_baseUrl' + '/library-games';
+
   static String getGenres = '$_rawgAPI' +
       '/genres?ordering=&page=1&page_size=30&' +
       'key=$_RAWG_API_KEY';
@@ -58,8 +62,6 @@ class APIConfig {
   static String gameScreenshots(int id) {
     return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
   }
-
-  static String get addToWishList => '$_baseUrl' + '/wish-list-games/set';
 
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';

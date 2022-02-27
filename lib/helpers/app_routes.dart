@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/screens/my-sales/my_sales_details_screen/my_sales_details_screen.dart';
@@ -141,19 +140,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => MultiProvider(
-          // TODO: Create one model for search and pass the selected data to specific screen @Damsara
-          providers: [
-            ChangeNotifierProvider<CustomSearchModel>(
-              create: (context) => ICustomSearchModel(),
-            ),
-            ChangeNotifierProvider<SetupPurchaseAccountModel>(
-              create: (context) => _implSetupPurchaseAccount,
-            ),
-            ChangeNotifierProvider<SetupSalesViewModel>(
-              create: (context) => _implSetupSales,
-            ),
-          ],
+        builder: (context) => ChangeNotifierProvider<CustomSearchModel>(
+          create: (context) => ICustomSearchModel(),
           child: MainSearchScreen(values: settings.arguments as SearchType),
         ),
       );

@@ -29,7 +29,6 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    // TODO: Create Similar Games, OnTap for Company Tile and Genre Image
     Provider.of<GameDetailsModel>(context, listen: false)
         .getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
   }
@@ -615,8 +614,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     builder: (_, model, __) {
                       return CustomSelectingWidget(
                         titleText: platformList[index].name,
-                        active: model.selectedPlatforms
-                            .contains(platformList[index].id),
+                        active: model.selectedPlatformId == platformList[index].id,
                       );
                     },
                   ),
