@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/widgets/active_game_sales_widget.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -79,16 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   "Welcome Damsara,",
-                                  style: Theme.of(context).primaryTextTheme.headline2,
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline2,
                                 ),
                                 SizedBox(
                                   height: ScreenUtils.getDesignHeight(2.0),
                                 ),
                                 Text(
                                   "Any particular games you’d like to\nbuy today?",
-                                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                                    color: Colors.white.withOpacity(0.60),
-                                  ),
+                                  style: Theme.of(context)
+                                      .primaryTextTheme
+                                      .headline4!
+                                      .copyWith(
+                                        color: Colors.white.withOpacity(0.60),
+                                      ),
                                 ),
                               ],
                             ),
@@ -124,7 +129,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(MAIN_SEARCH_SCREEN , args: SearchType.MAIN_SEARCH),
+                          onTap: () => locator<NavigationService>().pushNamed(
+                              MAIN_SEARCH_SCREEN,
+                              args: SearchType.MAIN_SEARCH),
                           child: Container(
                             margin: EdgeInsets.only(
                               top: ScreenUtils.getDesignHeight(25.0),
@@ -152,9 +159,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   child: Text(
                                     "Search Here...",
-                                    style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                      color: Colors.white.withOpacity(0.70),
-                                    ),
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .headline5!
+                                        .copyWith(
+                                          color: Colors.white.withOpacity(0.70),
+                                        ),
                                   ),
                                 ),
                               ],
@@ -177,7 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>()
+                                    .pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
                                 child: Container(
@@ -188,7 +199,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>()
+                                    .pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
                                 child: Container(
@@ -199,7 +211,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>()
+                                    .pushNamed(GAME_DETAILS_SCREEN),
                               ),
                             ],
                           ),
@@ -217,8 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 right: ScreenUtils.getDesignWidth(24.0),
               ),
               child: Text(
-                "Top Games",
-                style: Theme.of(context).primaryTextTheme.headline4,
+                "Recommended for you",
+                style: Theme.of(context).primaryTextTheme.headline3,
               ),
             ),
             Padding(
@@ -232,10 +245,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   disableCenter: true,
                   viewportFraction: 0.85,
                   autoPlay: true,
-                  onPageChanged: (index, _) => Provider.of<HomeScreenModel>(context, listen: false)
-                      .onCarouselPageChanged(index),
+                  onPageChanged: (index, _) =>
+                      Provider.of<HomeScreenModel>(context, listen: false)
+                          .onCarouselPageChanged(index),
                 ),
-                items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
+                items:
+                    temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
               ),
             ),
             Padding(
@@ -260,8 +275,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "From your Wishlist",
+                    "Best Solo Deals",
+                    style: Theme.of(context).primaryTextTheme.headline3,
+                  ),
+                  GradientText(
+                    "View All",
+                    gradient: PRIMARY_GRADIENT,
                     style: Theme.of(context).primaryTextTheme.headline4,
+                  ),
+                ],
+              ),
+            ),
+            // Consumer<HomeScreenModel>(
+            //   builder: (_, model, __) {
+            //     return SingleChildScrollView(
+            //       scrollDirection: Axis.horizontal,
+            //       child: Row(
+            //         children: model.wishListGames.map((e) {
+            //           return Padding(
+            //             padding: EdgeInsets.only(
+            //               top: ScreenUtils.getDesignHeight(20.0),
+            //               left: model.wishListGames.indexOf(e) == 0 ? ScreenUtils.getDesignWidth(24.0)
+            //                   : ScreenUtils.getDesignWidth(15.0),
+            //             ),
+            //             child: GamesWidget(
+            //               gameName: e.games.first.game.title,
+            //               releaseDate: e.price.toString(),
+            //               backgroundUrl: e.games.first.game.boxCover,
+            //               gradient: GREEN_GRADIENT,
+            //             ),
+            //           );
+            //         }).toList(),
+            //       ),
+            //     );
+            //   }
+            // ),
+            _learnMoreContainer(),
+            Container(
+              margin: EdgeInsets.only(
+                top: ScreenUtils.getDesignHeight(30.0),
+                left: ScreenUtils.getDesignWidth(24.0),
+                right: ScreenUtils.getDesignWidth(24.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Sales in Wishlist",
+                    style: Theme.of(context).primaryTextTheme.headline3,
                   ),
                   GradientText(
                     "View All",
@@ -272,30 +333,22 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             Consumer<HomeScreenModel>(
-              builder: (_, model, __) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: model.wishListGames.map((e) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          top: ScreenUtils.getDesignHeight(20.0),
-                          left: model.wishListGames.indexOf(e) == 0 ? ScreenUtils.getDesignWidth(24.0)
-                              : ScreenUtils.getDesignWidth(15.0),
-                        ),
-                        child: GamesWidget(
-                          gameName: e.games.first.game.title,
-                          releaseDate: e.price.toString(),
-                          backgroundUrl: e.games.first.game.boxCover,
-                          gradient: GREEN_GRADIENT,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+              builder: (_, val, __) {
+                return Container(
+                  margin: EdgeInsets.only(left: 24, top: 15),
+                  height:ScreenUtils.getDesignHeight(205),
+                  child: ListView.separated(
+                    separatorBuilder: (_, __) => SizedBox(
+                      width: ScreenUtils.getDesignHeight(15.0),
+                    ),
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context , int index){
+                    return ActiveGameSalesWidget(salesPayload: val.wishListGames[index]);
+                  }, itemCount: val.wishListGames.length,),
                 );
-              }
+              },
             ),
-            _learnMoreContainer(),
             Padding(
               padding: EdgeInsets.only(
                 top: ScreenUtils.getDesignHeight(30.0),
@@ -377,16 +430,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: ScreenUtils.getDesignWidth(150.0),
                     child: Text(
                       "Call of Duty: Modern Warfare",
-                      style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                        fontSize: 16.0,
-                      ),
+                      style: Theme.of(context)
+                          .primaryTextTheme
+                          .headline4!
+                          .copyWith(
+                            fontSize: 16.0,
+                          ),
                     ),
                   ),
                   Text(
                     "12/09/2019",
-                    style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                      color: SUB_TEXT_COLOR.withOpacity(0.6),
-                    ),
+                    style:
+                        Theme.of(context).primaryTextTheme.headline4!.copyWith(
+                              color: SUB_TEXT_COLOR.withOpacity(0.6),
+                            ),
                   ),
                 ],
               ),
@@ -437,9 +494,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         "Colombo 06",
-                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          color: SUB_TEXT_COLOR.withOpacity(0.6),
-                        ),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline4!
+                            .copyWith(
+                              color: SUB_TEXT_COLOR.withOpacity(0.6),
+                            ),
                       ),
                     ],
                   ),
@@ -598,16 +658,22 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text(
                         "Bundle Price",
-                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          fontSize: 10.0,
-                        ),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline4!
+                            .copyWith(
+                              fontSize: 10.0,
+                            ),
                       ),
                       GradientText(
                         "5200.00 LKR",
                         gradient: GREEN_GRADIENT,
-                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                          fontSize: 16.0,
-                        ),
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline4!
+                            .copyWith(
+                              fontSize: 16.0,
+                            ),
                       ),
                     ],
                   ),

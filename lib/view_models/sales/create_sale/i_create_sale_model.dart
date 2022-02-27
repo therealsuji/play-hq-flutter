@@ -53,7 +53,7 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   void createSale() async {
     if(_isFormValid){
-      // locator<EventBus>().fire(LoadingEvent.show());
+      locator<EventBus>().fire(LoadingEvent.show());
       LocationModel location = LocationModel(address: "Something", lat: 123, long: 123);
       _selectedGames.forEach((element) {
         element.platform = _platformId;
