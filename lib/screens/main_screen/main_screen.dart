@@ -30,7 +30,9 @@ class _MainScreenState extends State<MainScreen> {
           showSelectedLabels: false,
           showUnselectedLabels: false,
           backgroundColor: MAIN_CONTAINER_COLOR,
-          onTap: (index) => Provider.of<TabNavigationModel>(context, listen: false).changeTab(index),
+          onTap: (index) =>
+              Provider.of<TabNavigationModel>(context, listen: false)
+                  .changeTab(index),
           currentIndex: Provider.of<TabNavigationModel>(context).currentPage,
           items: [
             BottomNavigationBarItem(
@@ -141,20 +143,22 @@ class _MainScreenState extends State<MainScreen> {
                   children: [
                     _bottomSheetBtn(
                       name: "My Sales",
-                      characterImage: BUY_GAME_CHARACTER_IMAGE,
+                      characterImage: MY_SALES_CHARACTER_IMAGE,
                       charcterAlignment: Alignment.bottomLeft,
-                      backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () => Navigator.pushNamed(context, MY_SALES_ROUTE),
+                      backgroundGradient: SECONDARY_GRADIENT,
+                      callback: () =>
+                          Navigator.pushNamed(context, MY_SALES_ROUTE),
                     ),
                     Spacer(
                       flex: 1,
                     ),
                     _bottomSheetBtn(
                       name: "Create Sale",
-                      characterImage: BUY_GAME_CHARACTER_IMAGE,
+                      characterImage: CREATE_SALES_CHARACTER_IMAGE,
                       charcterAlignment: Alignment.bottomCenter,
                       backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () => Navigator.pushNamed(context, CREATE_SALE_ROUTE),
+                      callback: () =>
+                          Navigator.pushNamed(context, CREATE_SALE_ROUTE),
                     ),
                     Spacer(
                       flex: 1,
@@ -162,9 +166,10 @@ class _MainScreenState extends State<MainScreen> {
                     _bottomSheetBtn(
                       name: "Buy Games",
                       characterImage: BUY_GAME_CHARACTER_IMAGE,
-                      charcterAlignment: Alignment.bottomRight,
-                      backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () => Navigator.pushNamed(context, BUY_GAMES_SCREEN),
+                      charcterAlignment: Alignment.centerRight,
+                      backgroundGradient: SECONDARY_GRADIENT,
+                      callback: () =>
+                          Navigator.pushNamed(context, BUY_GAMES_SCREEN),
                     ),
                   ],
                 ),
@@ -196,46 +201,50 @@ class _MainScreenState extends State<MainScreen> {
   Widget _bottomSheetBtn(
       {required String name,
       required String characterImage,
-      required Alignment charcterAlignment,
       required LinearGradient backgroundGradient,
+      required Alignment charcterAlignment,
       required VoidCallback callback}) {
     return Expanded(
       flex: 5,
       child: GestureDetector(
-        onTap: () {
-          // pop the sheet before navigating
-          Navigator.pop(context);
-          callback();
-        },
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(6.0),
-          clipBehavior: Clip.antiAlias,
+          onTap: () {
+            // pop the sheet before navigating
+            Navigator.pop(context);
+            callback();
+          },
           child: Container(
             decoration: BoxDecoration(
               gradient: backgroundGradient,
+              borderRadius: BorderRadius.circular(5),
             ),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Text(name, style: Theme.of(context).textTheme.headline6!.copyWith(color: Colors.white)),
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: charcterAlignment,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: ScreenUtils.getDesignHeight(90.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Stack(
+                children: [
+                  Container(
+                    child: Align(
+                      alignment: charcterAlignment,
+                      child: Image.asset(
+                        characterImage,
                       ),
-                      child: Image.asset(characterImage),
                     ),
                   ),
-                )
-              ],
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Align(
+                        alignment: Alignment.topCenter,
+                        child: Text(
+                          name,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        )),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ),
-      ),
+          )),
     );
   }
 }
