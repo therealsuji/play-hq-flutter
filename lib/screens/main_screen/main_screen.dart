@@ -157,8 +157,7 @@ class _MainScreenState extends State<MainScreen> {
                       characterImage: CREATE_SALES_CHARACTER_IMAGE,
                       charcterAlignment: Alignment.bottomCenter,
                       backgroundGradient: PRIMARY_GRADIENT,
-                      callback: () =>
-                          Navigator.pushNamed(context, CREATE_SALE_ROUTE),
+                      callback: () => Navigator.pushNamed(context, CREATE_SALE_ROUTE),
                     ),
                     Spacer(
                       flex: 1,

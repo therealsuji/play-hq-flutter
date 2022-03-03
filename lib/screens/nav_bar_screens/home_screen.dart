@@ -183,8 +183,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: ScreenUtils.getDesignWidth(99.0),
                                   width: ScreenUtils.getDesignWidth(99.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.amber,
                                     borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                          height: ScreenUtils.getDesignWidth(99.0),
+                                          width: ScreenUtils.getDesignWidth(99.0),
+                                          child: Image.asset('assets/images/category_1.png' , fit: BoxFit.fill,)),
+                                    ],
                                   ),
                                 ),
                                 onTap: () => locator<NavigationService>()
@@ -195,8 +202,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: ScreenUtils.getDesignWidth(99.0),
                                   width: ScreenUtils.getDesignWidth(99.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.amber,
                                     borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                          height: ScreenUtils.getDesignWidth(99.0),
+                                          width: ScreenUtils.getDesignWidth(99.0),
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(5.0),
+                                              child: Image.asset('assets/images/category_2.png' , fit: BoxFit.fill,))),
+                                    ],
                                   ),
                                 ),
                                 onTap: () => locator<NavigationService>()
@@ -207,8 +223,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: ScreenUtils.getDesignWidth(99.0),
                                   width: ScreenUtils.getDesignWidth(99.0),
                                   decoration: BoxDecoration(
-                                    color: Colors.amber,
                                     borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                          height: ScreenUtils.getDesignWidth(99.0),
+                                          width: ScreenUtils.getDesignWidth(99.0),
+                                          child: ClipRRect(
+                                              borderRadius: BorderRadius.circular(5.0),
+                                              child: Image.asset('assets/images/category_3.png' , fit: BoxFit.fill,))),
+                                    ],
                                   ),
                                 ),
                                 onTap: () => locator<NavigationService>()
