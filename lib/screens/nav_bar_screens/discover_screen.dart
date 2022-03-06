@@ -4,11 +4,25 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/view_models/discover/discover_view_model.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
+import 'package:provider/provider.dart';
 
-class DiscoverScreen extends StatelessWidget {
+class DiscoverScreen extends StatefulWidget {
+  @override
+  State<DiscoverScreen> createState() => _DiscoverScreenState();
+}
+
+class _DiscoverScreenState extends State<DiscoverScreen> {
+
+  @override
+  void initState() {
+    Provider.of<DiscoverViewModel>(context, listen: false).fetchNewlyReleasedGames();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

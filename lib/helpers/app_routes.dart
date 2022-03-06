@@ -11,6 +11,8 @@ import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication
 import 'package:play_hq/screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
 import 'package:play_hq/view_models/authentication/authentication_model.dart';
 import 'package:play_hq/view_models/authentication/i_authentication_model.dart';
+import 'package:play_hq/view_models/discover/discover_view_model.dart';
+import 'package:play_hq/view_models/discover/i_discover_view_model.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
@@ -53,6 +55,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ),
             ChangeNotifierProvider<ActiveOrdersViewModel>(
               create: (context) => IActiveOrdersViewModel(),
+            ),
+            ChangeNotifierProvider<DiscoverViewModel>(
+              create: (context) => IDiscoverViewModel(),
             ),
           ],
           child: MainScreen(),
