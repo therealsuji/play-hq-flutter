@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:hive/hive.dart';
 import 'package:play_hq/models/common_models/genres_model.dart';
 
@@ -15,24 +17,19 @@ class SearchGame {
   List<GameDetails>? get data => _data;
 }
 
-@HiveType(typeId: 0)
-class GameDetails extends HiveObject {
-  @HiveField(0)
+GameDetails gameDetailsFromJson(String str) => GameDetails.fromJson(json.decode(str));
+class GameDetails {
+
   String? name;
 
-  @HiveField(1)
   String? released;
 
-  @HiveField(2)
   String? image;
 
-  @HiveField(3)
   int? id;
 
-  @HiveField(4)
   List<PlatformElement>? platforms;
   
-  @HiveField(5)
   List<Genres>? genres;
 
   GameDetails.fromJson(Map<String, dynamic> json) {

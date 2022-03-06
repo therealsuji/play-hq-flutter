@@ -109,7 +109,7 @@ class DiscoverScreen extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: 3,
           itemBuilder: (context, index) {
-            return _categoryItem();
+            return _categoryItem(discoverComponents[index]['name'], discoverComponents[index]['gradient'] , discoverComponents[index]['imagePath']);
           },
           separatorBuilder: (context, index) {
             return SizedBox(
@@ -121,11 +121,14 @@ class DiscoverScreen extends StatelessWidget {
     );
   }
 
-  Widget _categoryItem(){
+  Widget _categoryItem(String categoryName , LinearGradient gradient , String imagePath){
     return Container(
       height: ScreenUtils.getDesignHeight(180),
-      width: ScreenUtils.getDesignWidth(155),
-      color: Colors.red,
+      width: ScreenUtils.getDesignWidth(156),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(ScreenUtils.getDesignWidth(5)),
+        gradient: gradient
+      ),
     );
   }
 

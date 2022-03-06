@@ -1,3 +1,5 @@
+import 'package:play_hq/helpers/app_colors.dart';
+
 const List<Map<String, dynamic>> playStationPlatforms = [
   {'id': 187, 'name': 'PlayStation 5'},
   {'id': 18, 'name': 'PlayStation 4'},
@@ -19,6 +21,12 @@ const List<Map<String, dynamic>> xboxPlatforms = [
   {'id': 1, 'name': 'Xbox One'},
   {'id': 14, 'name': 'Xbox 360'},
   {'id': 80, 'name': 'Xbox'}
+];
+
+const List<Map<String, dynamic>> discoverComponents = [
+  {'name': 'Top Rated Games', 'gradient': GRADIENT_COMPONENT_1 , 'imagePath': '' ,},
+  {'name': 'Most Anticipated Games', 'gradient': GRADIENT_COMPONENT_2 , 'imagePath': '' ,},
+  {'name': 'Games of 2022', 'gradient': GRADIENT_COMPONENT_3 , 'imagePath': '' ,}
 ];
 
 const List<Map<String, dynamic>> testerGames = [

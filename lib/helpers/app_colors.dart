@@ -79,6 +79,37 @@ const ALERT_GRADIENT = LinearGradient(
   ],
 );
 
+// Gradients for the Discover Component
+
+const GRADIENT_COMPONENT_1 = LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [
+    Color.fromRGBO(255, 204, 58, 1),
+    Color.fromRGBO(255, 147, 15, 1),
+  ],
+);
+
+const GRADIENT_COMPONENT_2 = LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [
+    Color.fromRGBO(252, 87, 82, 1),
+    Color.fromRGBO(255, 15, 123, 1),
+  ],
+);
+
+const GRADIENT_COMPONENT_3 = LinearGradient(
+  begin: Alignment.bottomCenter,
+  end: Alignment.topCenter,
+  colors: [
+    Color.fromRGBO(156, 146, 252, 1),
+    Color.fromRGBO(67, 156, 251, 1),
+  ],
+);
+
+
+
 final Shader textPrimaryGradient = LinearGradient(
   colors: <Color>[Color(0xFFF84592), Color(0xFFD23163)],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));

@@ -25,6 +25,32 @@ class APIConfig {
     }
   }
 
+  /// Urls that are needed from the RAWG API
+  static String getGenres = '$_rawgAPI' +
+      '/genres?ordering=&page=1&page_size=30&' +
+      'key=$_RAWG_API_KEY';
+
+  static String getSearchResults(String params) {
+    return '$_rawgAPI' + '/games?page=1&search=$params' + '&key=$_RAWG_API_KEY';
+  }
+
+  static String gameDetails(int id) {
+    return '$_rawgAPI' + '/games/$id' + '?key=$_RAWG_API_KEY';
+  }
+
+  static String gameScreenshots(int id) {
+    return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
+  }
+
+  static String getNewReleases = '$_rawgAPI' + '/games?ordering=&page=1&page_size=30&' +
+      'key=$_RAWG_API_KEY';
+
+
+
+
+
+  /// Urls needed from the PlayHQ Backend
+
   //authenticate user
   static String login = '$_baseUrl' + "/firebase/auth";
 
@@ -46,22 +72,6 @@ class APIConfig {
   static String get addToWishList => '$_baseUrl' + '/wish-list-games';
 
   static String get addToLibrary => '$_baseUrl' + '/library-games';
-
-  static String getGenres = '$_rawgAPI' +
-      '/genres?ordering=&page=1&page_size=30&' +
-      'key=$_RAWG_API_KEY';
-
-  static String getSearchResults(String params) {
-    return '$_rawgAPI' + '/games?page=1&search=$params' + '&key=$_RAWG_API_KEY';
-  }
-
-  static String gameDetails(int id) {
-    return '$_rawgAPI' + '/games/$id' + '?key=$_RAWG_API_KEY';
-  }
-
-  static String gameScreenshots(int id) {
-    return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
-  }
 
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';

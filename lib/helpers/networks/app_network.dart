@@ -105,15 +105,6 @@ class Network {
     }
   }
 
-  Future<UserModel> loginUser(token, fcmToken) async {
-    return await _performWebRequest<UserModel>(RequestType.post, APIConfig.login,
-        body: {"token": token, "fcmToken": fcmToken}, noToken: true);
-  }
-
-  Future<SalesPayload> createSale(SalesPayload payload) async {
-    return await _performWebRequest<SalesPayload>(RequestType.post, APIConfig.createSale, body: payload);
-  }
-
   Future<SearchGame> searchGame(String params) async {
     return await _performWebRequest<SearchGame>(RequestType.get, APIConfig.getSearchResults(params));
   }
