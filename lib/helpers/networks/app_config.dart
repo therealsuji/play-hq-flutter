@@ -1,3 +1,5 @@
+import 'package:play_hq/models/common_models/date_filter_model.dart';
+
 import 'app_configurations.dart';
 
 class APIConfig {
@@ -42,12 +44,10 @@ class APIConfig {
     return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
   }
 
-  static String getNewReleases = '$_rawgAPI' + '/games?ordering=&page=1&page_size=30&' +
-      'key=$_RAWG_API_KEY';
-
-
-
-
+  static String getNewReleases(DateFilter dateFilter) {
+    return '$_rawgAPI' + '/games?dates=${dateFilter.year}-${dateFilter.startMonth}-01,${dateFilter.year}-${dateFilter.endMonth}-25' +
+        '&key=$_RAWG_API_KEY';
+  }
 
   /// Urls needed from the PlayHQ Backend
 

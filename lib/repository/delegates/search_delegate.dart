@@ -19,9 +19,9 @@ class SearchDelegate extends SearchRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<RawgGameDetails> fetchNewlyReleasedGames() async {
+  Future<RawgGameDetails> searchGame(String name) async {
     try{
-      var response = await _networkCalls.performRequest(APIConfig.getNewReleases, HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getSearchResults(name), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());

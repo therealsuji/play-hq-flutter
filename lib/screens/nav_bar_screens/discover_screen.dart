@@ -59,27 +59,31 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 ],
               ),
             ),
-            Container(
-              height: ScreenUtils.getDesignHeight(165),
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: testerGames.length,
-                  itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(
-                    top: ScreenUtils.getDesignHeight(20.0),
-                    left: index == 0 ? ScreenUtils.getDesignWidth(24.0)
-                        : ScreenUtils.getDesignWidth(15.0),
-                    right: index == testerGames.length ? ScreenUtils.getDesignWidth(24.0) : ScreenUtils.getDesignWidth(0)
-                  ),
-                  child: GamesWidget(
-                    gameName: testerGames[index]['name'],
-                    releaseDate: testerGames[index]['releaseDate'],
-                    backgroundUrl: testerGames[index]['coverImage'],
-                    gradient: PRIMARY_GRADIENT,
-                  ),
+            Consumer<DiscoverViewModel>(
+              builder: (_ , val , __) {
+                return Container(
+                  height: ScreenUtils.getDesignHeight(155),
+                  child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: testerGames.length,
+                      itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        top: ScreenUtils.getDesignHeight(15.0),
+                        left: index == 0 ? ScreenUtils.getDesignWidth(24.0)
+                            : ScreenUtils.getDesignWidth(15.0),
+                        right: index == val.newlyReleasedGames.length ? ScreenUtils.getDesignWidth(24.0) : ScreenUtils.getDesignWidth(0)
+                      ),
+                      child: GamesWidget(
+                        gameName: val.newlyReleasedGames[index].name,
+                        releaseDate: val.newlyReleasedGames[index].released,
+                        backgroundUrl: val.newlyReleasedGames[index].backgroundImage,
+                        gradient: PRIMARY_GRADIENT,
+                      ),
+                    );
+                  }),
                 );
-              }),
+              }
             ),
             Container(
               alignment: Alignment.centerLeft,

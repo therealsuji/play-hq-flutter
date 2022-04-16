@@ -23,8 +23,7 @@ class GamesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtils.getDesignWidth(105.0),
-      height: ScreenUtils.getDesignHeight(160.0),
+      width: ScreenUtils.getDesignWidth(99.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(3.0),
         child: Stack(
