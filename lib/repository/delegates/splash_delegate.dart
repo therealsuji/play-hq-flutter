@@ -16,11 +16,10 @@ class SplashDelegate extends SplashRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<UserModel> renewJwtToken() async {
+  Future<AuthUserModel> renewJwtToken() async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.renewJwt, HttpAction.GET);
-      return compute(userDetailsfromModel, response.body);
+      var response = await _networkCalls.performRequest(APIConfig.renewJwt, HttpAction.POST);
+      return compute(authUserModelFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();

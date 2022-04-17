@@ -22,7 +22,7 @@ class APIConfig {
         break;
       case Environment.STAGE:
         _rawgAPI = "https://api.rawg.io/api";
-        _baseUrl = "https://play-hq.herokuapp.com";
+        _baseUrl = "https://play-hq-285011.el.r.appspot.com";
         break;
     }
   }
@@ -52,16 +52,15 @@ class APIConfig {
   /// Urls needed from the PlayHQ Backend
 
   //authenticate user
-  static String login = '$_baseUrl' + "/firebase/auth";
-
-  static String renewJwt = '$_baseUrl' + "/firebase/renew-token";
+  static String login = '$_baseUrl' + "/auth/firebase";
+  static String renewJwt = '$_baseUrl' + "/auth/refresh";
 
   // Sales API
   static String createSale = '$_baseUrl' + "/sell-games";
   static String fetchAllActiveSales = '$_baseUrl' + "/sell-games/my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sell-games/get-sales-from-wish-list";
 
-  static String setupPurchase = '$_baseUrl' + "/user/set-preferences";
+  static String setupPurchase = '$_baseUrl' + "/users/preferences";
 
   static String setupSales = '$_baseUrl' + "/user/set-details";
 

@@ -10,8 +10,6 @@ import 'package:play_hq/models/search_model/app_search_game_model.dart';
 class InitializeData {
   static T fromJson<T>(dynamic json) {
     switch (T) {
-      case UserModel:
-        return UserModel.fromJson(json) as T;
       case SearchGame:
         return SearchGame.fromJson(json) as T;
       case SalesPayload:

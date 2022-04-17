@@ -22,8 +22,8 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   int? _releaseDateCount;
 
   // Lists for the API call
-  List<int> _genreList = [];
-  List<int> _platformList = [];
+  List<String> _genreList = [];
+  List<String> _platformList = [];
   List<ReleaseDate> _releaseDateList = [];
 
   List<int> _selectedGenres = [];
@@ -40,18 +40,17 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   void addSelectedGenres(index , Map<String , dynamic> genre) {
     if(_selectedGenres.contains(index)) {
       _selectedGenres.remove(index);
-      _genreList.remove(genre['id']);
+      _genreList.remove(genre['id'].toString());
     }else{
       if(_selectedGenres.length >= 5){
         return;
       }else{
         _selectedGenres.add(index);
-        _genreList.add(genre['id']);
+        _genreList.add(genre['id'].toString());
       }
     }
     _genreCount = _selectedGenres.length;
     notifyListeners();
-    print("Selected Genres " + _genreList.toString());
   }
 
   @override
@@ -80,14 +79,14 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   void addSelectedPlatforms(int index , Map<String , dynamic> platform) {
     if(_selectedPlatforms.contains(index)) {
       _selectedPlatforms.remove(index);
-      _platformList.remove(platform['id']);
+      _platformList.remove(platform['id'].toString());
     }else{
       if(_selectedPlatforms.length >= 3) {
         return;
       }
       else{
         _selectedPlatforms.add(index);
-        _platformList.add(platform['id']);
+        _platformList.add(platform['id'].toString());
       }
     }
     notifyListeners();
@@ -151,9 +150,9 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
     _eventBus.fire(LoadingEvent.show());
 
     var gamePreferances = {
-      "genres" : _selectedGenres,
+      "genres" : _genreList,
       "release_dates" : _releaseDateList,
-      "platforms" : _selectedPlatforms
+      "platforms" : _platformList
     };
 
     try {

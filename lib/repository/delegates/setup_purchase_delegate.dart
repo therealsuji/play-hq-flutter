@@ -39,7 +39,7 @@ class SetupPurchaseDelegate extends SetupPurchaseRepository {
   @override
   Future<void> setGamePreferences(Map<String, dynamic> body) async {
     try{
-      await _networkCalls.performRequest(APIConfig.setupPurchase, HttpAction.PATCH, body: body);
+      await _networkCalls.performRequest(APIConfig.setupPurchase, HttpAction.PUT, body: body);
     }
     on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());

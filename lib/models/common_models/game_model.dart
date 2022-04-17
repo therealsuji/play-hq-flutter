@@ -9,6 +9,7 @@ class GameModel {
     this.boxCover,
     this.platforms,
     this.genres,
+    this.images,
     this.releaseDate,
     this.backgroundImage,
   });
@@ -19,6 +20,7 @@ class GameModel {
   List<int>? platforms;
   List<int>? genres;
   String? releaseDate;
+  List<String>? images;
   String? backgroundImage;
 
   factory GameModel.fromJson(Map<String, dynamic> json) => GameModel(
@@ -29,6 +31,7 @@ class GameModel {
     genres: json["genres"] == null ? List.empty() : List<int>.from(json["genres"].map((x) => x)),
     releaseDate: json["release_date"],
     backgroundImage: json["background_image"],
+    images:json["images"] == null ? List.empty() : List<String>.from(json["images"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +42,7 @@ class GameModel {
     "api_id": apiId,
     "platforms": List<int>.from(platforms!.map((x) => x)),
     "genres": List<int>.from(genres!.map((x) => x)),
+    "images": List<String>.from(images!.map((x) => x)),
   };
 }
 
