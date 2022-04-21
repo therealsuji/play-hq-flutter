@@ -3,6 +3,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
+import 'package:play_hq/models/common_models/game_preference_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/repository/clients/main_profile_screen_repository.dart';
@@ -14,8 +15,8 @@ class IMainProfileModel extends MainProfileModel {
   final _eventBus = locator<EventBus>();
   final _mainProfileAPI = locator<MainProfileScreenRepository>();
 
-  List<FakePreferances> _wishlistGames = [];
-  List<FakePreferances> _libraryGames = [];
+  List<GamePreferences> _wishlistGames = [];
+  List<GamePreferences> _libraryGames = [];
 
   @override
   void getMyGames() async{
@@ -43,10 +44,10 @@ class IMainProfileModel extends MainProfileModel {
   }
 
   @override
-  List<FakePreferances> get fetchAllWishlistGames => _wishlistGames;
+  List<GamePreferences> get fetchAllWishlistGames => _wishlistGames;
 
   @override
-  List<FakePreferances> get fetchAllLibraryGames => _libraryGames;
+  List<GamePreferences> get fetchAllLibraryGames => _libraryGames;
 
 
 }

@@ -58,11 +58,13 @@ class IAuthenticationModel extends AuthenticationModel {
         await _logintoBackend.backendLogin(credentials).then((value) {
           if (value!.user!.isSetupDone != null && value.user!.isSetupDone == true) {
             SecureStorage.writeValue("jwtToken", value.token!.accessToken);
+            SecureStorage.writeValue("refreshToken", value.token!.refreshToken);
             SecureStorage.writeValue("fcmToken", fcmToken);
             SecureStorage.writeValue("setupDone", "Done");
             locator<NavigationService>().pushNamed(MAIN_SCREEN);
           } else {
             SecureStorage.writeValue("jwtToken", value.token!.accessToken);
+            SecureStorage.writeValue("refreshToken", value.token!.refreshToken);
             SecureStorage.writeValue("fcmToken", fcmToken);
             SecureStorage.writeValue("setupDone", "Not Done");
             locator<NavigationService>().pushNamed(MAIN_ONBOARDING);

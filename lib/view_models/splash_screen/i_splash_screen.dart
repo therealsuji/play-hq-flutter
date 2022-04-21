@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_secure_storage.dart';
+import 'package:play_hq/models/common_models/auth_token_model.dart';
 import 'package:play_hq/repository/clients/splash_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
@@ -41,7 +42,15 @@ class ISplashModel extends SplashScreenModel {
       prefs.setBool('first_run', false);
     }
 
-    await _splashAPI.renewJwtToken().then((value) {
+    String accessToken = await SecureStorage.readValue("jwtToken") ?? '';
+    String refreshToken = await SecureStorage.readValue("refreshToken") ?? '';
+
+    AuthTokenModel authTokens = AuthTokenModel(
+        refreshToken: refreshToken,
+        accessToken: accessToken
+    );
+
+    await _splashAPI.renewJwtToken(authTokens).then((value) {
       var localToken = value.token!.accessToken;
       if (FirebaseAuth.instance.currentUser != null && localToken != null) {
         SecureStorage.writeValue('jwtToken', value.token!.accessToken);

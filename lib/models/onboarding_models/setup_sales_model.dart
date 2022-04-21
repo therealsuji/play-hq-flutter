@@ -10,26 +10,29 @@ class SetupSalesModel {
     this.location,
     this.phoneNumber,
     this.displayName,
-    this.fullName,
+    this.firstName,
+    this.lastName,
   });
 
   LocationModel? location;
   String? phoneNumber;
   String? displayName;
-  String? fullName;
+  String? firstName;
+  String? lastName;
 
   factory SetupSalesModel.fromJson(Map<String, dynamic> json) => SetupSalesModel(
     location: LocationModel.fromJson(json["location"]),
-    phoneNumber: json["phone_number"],
-    displayName: json["display_name"],
-    fullName: json["full_name"],
+    phoneNumber: json["phoneNumber"],
+    displayName: json["displayName"],
+    firstName: json["firstName"],
+    lastName: json["lastName"],
   );
 
   Map<String, dynamic> toJson() => {
     "location": location!.toJson(),
-    "phone_number": phoneNumber,
-    "display_name": displayName,
-    "full_name": fullName,
+    "phoneNumber": phoneNumber,
+    "displayName": displayName,
+    "firstName": firstName,
+    "lastName": lastName,
   };
-
 }

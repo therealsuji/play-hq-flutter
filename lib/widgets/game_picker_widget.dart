@@ -116,7 +116,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                             context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
                         Provider.of<SetupSalesViewModel>(context, listen: false)
-                            .addSelectedGame(saleResult as FakePreferances);
+                            .addSelectedGame(saleResult as GamePreferences);
                         break;
                       default:
                         break;

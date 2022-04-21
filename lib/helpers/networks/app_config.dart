@@ -62,7 +62,7 @@ class APIConfig {
 
   static String setupPurchase = '$_baseUrl' + "/users/preferences";
 
-  static String setupSales = '$_baseUrl' + "/user/set-details";
+  static String setupSales = '$_baseUrl' + "/users/update";
 
   static String addWishListGames = '$_baseUrl' + "/wish-list-games/set";
 

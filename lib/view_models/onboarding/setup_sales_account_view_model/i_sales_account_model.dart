@@ -4,6 +4,7 @@ import 'package:hive/hive.dart';
 import 'package:places_service/places_service.dart';
 import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/models/app_user_model.dart';
+import 'package:play_hq/models/common_models/game_preference_model.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
@@ -24,7 +25,7 @@ class ISetupSalesModel extends SetupSalesViewModel{
   final _eventBus = locator<EventBus>();
   final _placesService = locator<PlacesService>();
 
-  List<FakePreferances> _selectedGames = [];
+  List<GamePreferences> _selectedGames = [];
 
   String _selectedAddress = '';
   double _selectedLatitude = 0.0;
@@ -79,10 +80,15 @@ class ISetupSalesModel extends SetupSalesViewModel{
         long: _selectedLongitude,
       );
 
+      var names = _fullName.split(' ');
+      String firstName = names[0];
+      String lastName = names[1];
+
       SetupSalesModel _setupSalesModel = SetupSalesModel(
         phoneNumber: _mobileNumber,
         displayName: _displayName,
-        fullName: _fullName,
+        firstName: firstName,
+        lastName: lastName,
         location: locationModel,
       );
 
@@ -99,14 +105,14 @@ class ISetupSalesModel extends SetupSalesViewModel{
   }
 
   @override
-  void addSelectedGame(FakePreferances game) {
+  void addSelectedGame(GamePreferences game) {
     _selectedGames.add(game);
     notifyListeners();
     locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
   }
 
   @override
-  List<FakePreferances> get selectedGameList => _selectedGames;
+  List<GamePreferences> get selectedGameList => _selectedGames;
 
   @override
   void addDisplayName(String displayName) {
