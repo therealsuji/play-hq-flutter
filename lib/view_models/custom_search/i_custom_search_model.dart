@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
+import 'package:play_hq/models/common_models/game_preference_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
@@ -22,7 +24,7 @@ class ICustomSearchModel extends CustomSearchModel{
   SearchType? _gameScreens;
   Timer? _debounce;
 
-  late GamePreferances _gameDetails;
+  late GamePreferences _gameDetails;
 
   int _selectedPlatform = 10;
   int _selectedPlatformId = 0;
@@ -91,11 +93,15 @@ class ICustomSearchModel extends CustomSearchModel{
   GameModel addGamesToModel(GameDetails gameDetails){
     List<int>? platformID = [];
     List<int>? genreID = [];
+    List<String>? images = [];
 
 
     if(gameDetails.platforms != null){
       gameDetails.platforms!.forEach((element) {
-        platformID.add(element.platform!.id ?? 0);
+        platforms.forEach((platform) {
+          if(element.platform!.id == platform['id']){
+            platformID.add(element.platform!.id ?? 0);          }
+        });
       });
     }
 
@@ -111,6 +117,7 @@ class ICustomSearchModel extends CustomSearchModel{
         boxCover: gameDetails.image,
         genres: genreID,
         backgroundImage: gameDetails.image,
+        images: images,
         platforms: platformID);
     return gameItem;
   }
@@ -137,11 +144,11 @@ class ICustomSearchModel extends CustomSearchModel{
   @override
   void addGameToList(int index) {
     game = addGamesToModel(_searchedGames[index]);
-    _gameDetails = GamePreferances(game: game , conditionName: _gameConditionSlug , conditionId: _selectedGameCondition.toString(), platform: _selectedPlatform);
+    _gameDetails = GamePreferences(game: game , platform: _selectedPlatformId);
     locator<NavigationService>().pop(args: _gameDetails);
   }
 
   @override
-  GamePreferances get gameDetails => _gameDetails;
+  GamePreferences get gameDetails => _gameDetails;
 
 }

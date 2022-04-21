@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/main_profile_screen_repository.dart';
 import 'package:play_hq/services/base_managers/error.dart';
@@ -16,7 +16,7 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<List<GamePreferances>> getLibraryGames() async {
+  Future<List<FakePreferances>> getLibraryGames() async {
     try {
       var response = await _networkCalls.performRequest(
           APIConfig.getLibraryGames(), HttpAction.GET);
@@ -38,7 +38,7 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   }
 
   @override
-  Future<List<GamePreferances>> getWishListGames() async {
+  Future<List<FakePreferances>> getWishListGames() async {
     try {
       var response = await _networkCalls.performRequest(
           APIConfig.getWishListGames(), HttpAction.GET);

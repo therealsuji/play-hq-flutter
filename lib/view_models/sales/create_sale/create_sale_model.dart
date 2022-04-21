@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
   double get price;
@@ -24,11 +24,11 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void setRemarks(String value);
 
-  List<GamePreferances> get selectedGameList;
+  List<FakePreferances> get selectedGameList;
 
-  void addSelectedGame(GamePreferances game);
+  void addSelectedGame(FakePreferances game);
 
-  void checkGame(GamePreferances gameDetails);
+  void checkGame(FakePreferances gameDetails);
 
   int get selectedPlatform;
 

@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -169,8 +169,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                               onTap: () {
                                 isPLatform
                                     ? Provider.of<CustomSearchModel>(context,
-                                            listen: false)
-                                        .addPlatform(
+                                            listen: false).addPlatform(
                                             platforms.indexOf(platforms[index]),
                                             platforms[index]['id'])
                                     : Provider.of<CustomSearchModel>(context,
@@ -208,9 +207,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                             gradient: GREEN_GRADIENT,
                             onPressed: () {
                               Navigator.pop(context);
-                              Provider.of<CustomSearchModel>(context,
-                                      listen: false)
-                                  .addGameToList(index);
+                              Provider.of<CustomSearchModel>(context, listen: false).addGameToList(index);
                               // GamePreferances game = val.gameDetails;
                               // isPLatform ? widget.values == SearchType.SETUP_PURCHASES ? Navigator.pushNamed(context, SETUP_PURCHASE_ACCOUNT_ROUTE) : Navigator.pushNamed(context, SETUP_SALES_ACCOUNT_ROUTE) : Navigator.pushNamed(context, CREATE_SALE_ROUTE , arguments: game);
                             },

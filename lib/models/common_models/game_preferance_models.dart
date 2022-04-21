@@ -4,10 +4,10 @@ import 'dart:convert';
 
 import 'package:play_hq/models/common_models/game_model.dart';
 
-List<GamePreferances> gamePreferancesFromJson(String str) => List<GamePreferances>.from(json.decode(str).map((x) => GamePreferances.fromJson(x)));
+List<FakePreferances> gamePreferancesFromJson(String str) => List<FakePreferances>.from(json.decode(str).map((x) => FakePreferances.fromJson(x)));
 
-class GamePreferances {
-  GamePreferances({
+class FakePreferances {
+  FakePreferances({
     required this.game,
     this.platform,
     this.id,
@@ -21,7 +21,7 @@ class GamePreferances {
   String? conditionId;
   String? conditionName;
 
-  factory GamePreferances.fromJson(Map<String, dynamic> json) => GamePreferances(
+  factory FakePreferances.fromJson(Map<String, dynamic> json) => FakePreferances(
     game: GameModel.fromJson(json["game"]),
     platform: json["platform"] == null ? 0 : json["platform"],
     id: json["id"] == null ? 0 : json["id"],

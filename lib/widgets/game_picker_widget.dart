@@ -7,7 +7,8 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
+import 'package:play_hq/models/common_models/game_preference_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
 import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
@@ -98,7 +99,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         dynamic salesResult = await Navigator.pushNamed(
                             context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
-                        Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as GamePreferances);
+                        Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as FakePreferances);
                         Provider.of<CreateSaleModel>(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
                             .addSelectedGame(salesResult);
                         break;
@@ -108,14 +109,14 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                             arguments: widget.gameType);
                         Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
-                            .addSelectedGame(purchaseResult as GamePreferances);
+                            .addSelectedGame(purchaseResult as GamePreferences);
                         break;
                       case SearchType.SETUP_SALES:
                         dynamic saleResult = await Navigator.pushNamed(
                             context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
                         Provider.of<SetupSalesViewModel>(context, listen: false)
-                            .addSelectedGame(saleResult as GamePreferances);
+                            .addSelectedGame(saleResult as FakePreferances);
                         break;
                       default:
                         break;
@@ -151,7 +152,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         itemBuilder: (BuildContext context, int index) {
                           return GamePickerGames(
                             backgroundUrl:
-                                values.selectedGameList[index].game.boxCover,
+                                values.selectedGameList[index].game.backgroundImage,
                             gameName: values.selectedGameList[index].game.title,
                             releaseDate:
                                 values.selectedGameList[index].game.releaseDate,

@@ -10,7 +10,6 @@ import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/models/common_models/date_filter_model.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
-import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/repository/clients/discover_repository.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 

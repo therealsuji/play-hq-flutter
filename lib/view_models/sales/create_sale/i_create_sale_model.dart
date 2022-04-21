@@ -3,7 +3,7 @@ import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
@@ -26,13 +26,13 @@ class ICreateSaleModel extends CreateSaleModel {
 
   bool _isAdded = false;
 
-  List<GamePreferances> _selectedGames = [];
+  List<FakePreferances> _selectedGames = [];
 
   DialogService _dialogService = locator<DialogService>();
 
   final _createSale = locator<SaleRepository>();
 
-  ICreateSaleModel({GamePreferances? gamePreferances}) {
+  ICreateSaleModel({FakePreferances? gamePreferances}) {
     if (gamePreferances?.id != null) {
       _selectedGames.add(gamePreferances!);
     }
@@ -147,9 +147,9 @@ class ICreateSaleModel extends CreateSaleModel {
   }
 
   @override
-  void addSelectedGame(GamePreferances gamePreferances) {
+  void addSelectedGame(FakePreferances gamePreferances) {
       String conditionName = game_conditions.where((element) => element['API_Slug'] == gamePreferances.conditionName).first['name'] ?? '';
-      gamePreferances = GamePreferances(game: gamePreferances.game, conditionId: conditionName , conditionName: gamePreferances.conditionName);
+      gamePreferances = FakePreferances(game: gamePreferances.game, conditionId: conditionName , conditionName: gamePreferances.conditionName);
       getCurrentCondition(conditionName);
       validateForm();
       _selectedGames.add(gamePreferances);
@@ -157,7 +157,7 @@ class ICreateSaleModel extends CreateSaleModel {
   }
 
   @override
-  List<GamePreferances> get selectedGameList => _selectedGames;
+  List<FakePreferances> get selectedGameList => _selectedGames;
 
   @override
   int get platformId => _platformId;
@@ -192,7 +192,7 @@ class ICreateSaleModel extends CreateSaleModel {
   String get currentCondition => _currentCondition;
 
   @override
-  void checkGame(GamePreferances gamePreferances) {
+  void checkGame(FakePreferances gamePreferances) {
     int length = _selectedGames.where((element) => element.game.apiId == gamePreferances.game.apiId).length;
     if(length > 0){
       _isAdded = true;
