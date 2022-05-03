@@ -1,3 +1,5 @@
+import 'package:play_hq/models/common_models/date_filter_model.dart';
+
 import 'app_configurations.dart';
 
 class APIConfig {
@@ -20,7 +22,7 @@ class APIConfig {
         break;
       case Environment.STAGE:
         _rawgAPI = "https://api.rawg.io/api";
-        _baseUrl = "https://play-hq.herokuapp.com";
+        _baseUrl = "https://play-hq-285011.el.r.appspot.com";
         break;
     }
   }
@@ -42,28 +44,25 @@ class APIConfig {
     return '$_rawgAPI' + '/games/$id/screenshots' + '?key=$_RAWG_API_KEY';
   }
 
-  static String getNewReleases = '$_rawgAPI' + '/games?ordering=&page=1&page_size=30&' +
-      'key=$_RAWG_API_KEY';
-
-
-
-
+  static String getNewReleases(DateFilter dateFilter) {
+    return '$_rawgAPI' + '/games?dates=${dateFilter.year}-${dateFilter.startMonth}-01,${dateFilter.year}-${dateFilter.endMonth}-25' +
+        '&key=$_RAWG_API_KEY';
+  }
 
   /// Urls needed from the PlayHQ Backend
 
   //authenticate user
-  static String login = '$_baseUrl' + "/firebase/auth";
-
-  static String renewJwt = '$_baseUrl' + "/firebase/renew-token";
+  static String login = '$_baseUrl' + "/auth/firebase";
+  static String renewJwt = '$_baseUrl' + "/auth/refresh";
 
   // Sales API
   static String createSale = '$_baseUrl' + "/sell-games";
   static String fetchAllActiveSales = '$_baseUrl' + "/sell-games/my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sell-games/get-sales-from-wish-list";
 
-  static String setupPurchase = '$_baseUrl' + "/user/set-preferences";
+  static String setupPurchase = '$_baseUrl' + "/users/preferences";
 
-  static String setupSales = '$_baseUrl' + "/user/set-details";
+  static String setupSales = '$_baseUrl' + "/users/update";
 
   static String addWishListGames = '$_baseUrl' + "/wish-list-games/set";
 

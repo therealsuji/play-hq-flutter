@@ -20,10 +20,10 @@ class AuthenticationDelegate extends AuthenticationRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<UserModel?> backendLogin(Map<String, dynamic> body) async{
+  Future<AuthUserModel?> backendLogin(Map<String, dynamic> body) async{
     try{
       var response = await _networkCalls.performRequest(APIConfig.login, HttpAction.POST , body: body);
-      return compute(user_model.userDetailsfromModel , response.body);
+      return compute(authUserModelFromJson , response.body);
     }on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       return null;

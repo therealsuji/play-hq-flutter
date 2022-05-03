@@ -10,12 +10,12 @@ class ReleaseDate {
   String? toDate;
 
   factory ReleaseDate.fromJson(Map<String, dynamic> json) => ReleaseDate(
-    fromDate: json["from_date"],
-    toDate: json["to_date"],
+    fromDate: json["fromDate"],
+    toDate: json["toDate"],
   );
 
   Map<String, dynamic> toJson() => {
-    "from_date": fromDate,
-    "to_date": toDate,
+    "fromDate": fromDate,
+    "toDate": toDate,
   };
 }

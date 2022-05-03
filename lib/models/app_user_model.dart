@@ -1,174 +1,101 @@
+// To parse this JSON data, do
+//
+//     final authUserModel = authUserModelFromJson(jsonString);
 
 import 'dart:convert';
 
-import 'package:play_hq/models/common_models/release_date_model.dart';
+AuthUserModel authUserModelFromJson(String str) => AuthUserModel.fromJson(json.decode(str));
 
-UserModel userDetailsfromModel(String str) => UserModel.fromJson(json.decode(str));
+String authUserModelToJson(AuthUserModel data) => json.encode(data.toJson());
 
-class UserModel {
-  UserModel({
+class AuthUserModel {
+  AuthUserModel({
     this.user,
-    this.jwt,
+    this.token,
   });
 
-  UserClass? user;
-  String? jwt;
+  User? user;
+  Token? token;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        user: json["user"] == null ? null : UserClass.fromJson(json["user"]),
-        jwt: json["jwt"] == null ? null : json["jwt"],
-      );
+  factory AuthUserModel.fromJson(Map<String, dynamic> json) => AuthUserModel(
+    user: User.fromJson(json["user"]),
+    token: Token.fromJson(json["token"]),
+  );
 
   Map<String, dynamic> toJson() => {
-        "user": user == null ? null : user!.toJson(),
-        "jwt": jwt == null ? null : jwt,
-      };
+    "user": user!.toJson(),
+    "token": token!.toJson(),
+  };
 }
 
-class UserClass {
-  UserClass(
-      {this.username,
-      this.email,
-      this.provider,
-      this.phoneNumber,
-      this.notificationToken,
-      this.name,
-      this.prefGenres,
-      this.prefReleaseDates,
-      this.prefPlatforms,
-      this.location,
-      this.setupDone});
+class Token {
+  Token({
+    this.expiresIn,
+    this.accessToken,
+    this.refreshToken,
+  });
 
-  String? username;
+  int? expiresIn;
+  String? accessToken;
+  String? refreshToken;
+
+  factory Token.fromJson(Map<String, dynamic> json) => Token(
+    expiresIn: json["expiresIn"],
+    accessToken: json["accessToken"],
+    refreshToken: json["refreshToken"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "expiresIn": expiresIn,
+    "accessToken": accessToken,
+    "refreshToken": refreshToken,
+  };
+}
+
+class User {
+  User({
+    this.firstName,
+    this.lastName,
+    this.role,
+    this.email,
+    this.avatar,
+    this.phone,
+    this.isSetupDone,
+    this.location,
+    this.displayName,
+  });
+
+  dynamic firstName;
+  dynamic lastName;
+  String? role;
   String? email;
-  String? provider;
-  dynamic phoneNumber;
-  dynamic notificationToken;
-  dynamic name;
-  List<PrefGenre>? prefGenres;
-  List<ReleaseDate>? prefReleaseDates;
-  List<PrefPlatform>? prefPlatforms;
-  Location? location;
-  bool? setupDone;
+  dynamic avatar;
+  String? phone;
+  bool? isSetupDone;
+  dynamic location;
+  dynamic displayName;
 
-  factory UserClass.fromJson(Map<String, dynamic> json) => UserClass(
-      username: json["username"] == null ? null : json["username"],
-      email: json["email"] == null ? null : json["email"],
-      provider: json["provider"] == null ? null : json["provider"],
-      phoneNumber: json["phone_number"],
-      notificationToken: json["notification_token"],
-      name: json["name"],
-      prefGenres: json["pref_genres"] == null
-          ? null
-          : List<PrefGenre>.from(
-              json["pref_genres"].map((x) => PrefGenre.fromJson(x))),
-      prefReleaseDates: json["pref_release_dates"] == null
-          ? null
-          : List<ReleaseDate>.from(
-              json["pref_release_dates"].map((x) => ReleaseDate.fromJson(x))),
-      prefPlatforms: json["pref_platforms"] == null
-          ? null
-          : List<PrefPlatform>.from(
-              json["pref_platforms"].map((x) => PrefPlatform.fromJson(x))),
-      location:
-          json["location"] == null ? null : Location.fromJson(json["location"]),
-      setupDone: json["setup_done"] == null ? false : json["setup_done"]);
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    firstName: json["firstName"],
+    lastName: json["lastName"],
+    role: json["role"],
+    email: json["email"],
+    avatar: json["avatar"],
+    phone: json["phone"],
+    isSetupDone: json["isSetupDone"],
+    location: json["location"],
+    displayName: json["displayName"],
+  );
 
   Map<String, dynamic> toJson() => {
-        "username": username == null ? null : username,
-        "email": email == null ? null : email,
-        "provider": provider == null ? null : provider,
-        "phone_number": phoneNumber,
-        "notification_token": notificationToken,
-        "name": name,
-        "pref_genres": prefGenres == null
-            ? null
-            : List<dynamic>.from(prefGenres!.map((x) => x.toJson())),
-        "pref_release_dates": prefReleaseDates == null
-            ? null
-            : List<dynamic>.from(prefReleaseDates!.map((x) => x.toJson())),
-        "pref_platforms": prefPlatforms == null
-            ? null
-            : List<dynamic>.from(prefPlatforms!.map((x) => x.toJson())),
-        "location": location == null ? null : location!.toJson(),
-        "setupDone": setupDone == null ? false : setupDone
-      };
-}
-
-class Location {
-  Location({
-    this.id,
-    this.lat,
-    this.long,
-    this.address,
-  });
-
-  int? id;
-  double? lat;
-  double? long;
-  String? address;
-
-  factory Location.fromJson(Map<String, dynamic> json) => Location(
-        id: json["id"] == null ? null : json["id"],
-        lat: json["lat"] == null ? null : json["lat"].toDouble(),
-        long: json["long"] == null ? null : json["long"].toDouble(),
-        address: json["address"] == null ? null : json["address"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "lat": lat == null ? null : lat,
-        "long": long == null ? null : long,
-        "address": address == null ? null : address,
-      };
-}
-
-class PrefGenre {
-  PrefGenre({
-    this.id,
-    this.name,
-    this.imageBackground,
-  });
-
-  int? id;
-  String? name;
-  String? imageBackground;
-
-  factory PrefGenre.fromJson(Map<String, dynamic> json) => PrefGenre(
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
-        imageBackground:
-            json["image_background"] == null ? null : json["image_background"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "image_background": imageBackground == null ? null : imageBackground,
-      };
-}
-
-class PrefPlatform {
-  PrefPlatform({
-    this.id,
-    this.name,
-    this.platformName,
-  });
-
-  int? id;
-  String? name;
-  String? platformName;
-
-  factory PrefPlatform.fromJson(Map<String, dynamic> json) => PrefPlatform(
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
-        platformName:
-            json["platform_name"] == null ? null : json["platform_name"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
-        "platform_name": platformName == null ? null : platformName,
-      };
+    "firstName": firstName,
+    "lastName": lastName,
+    "role": role,
+    "email": email,
+    "avatar": avatar,
+    "phone": phone,
+    "isSetupDone": isSetupDone,
+    "location": location,
+    "displayName": displayName,
+  };
 }

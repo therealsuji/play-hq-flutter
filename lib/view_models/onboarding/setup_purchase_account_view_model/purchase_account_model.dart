@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
+import 'package:play_hq/models/common_models/game_preference_model.dart';
 
 
 abstract class SetupPurchaseAccountModel with ChangeNotifier{
@@ -29,9 +30,9 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
 
   void addReleaseDates(int index , Map<String, dynamic> releaseDates);
 
-  List<GamePreferances> get selectedGameList;
+  List<GamePreferences> get selectedGameList;
 
-  void addSelectedGame(GamePreferances game);
+  void addSelectedGame(GamePreferences game);
 
   void performAPIRequest();
 

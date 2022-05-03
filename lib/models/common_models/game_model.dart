@@ -9,6 +9,7 @@ class GameModel {
     this.boxCover,
     this.platforms,
     this.genres,
+    this.images,
     this.releaseDate,
     this.backgroundImage,
   });
@@ -19,24 +20,27 @@ class GameModel {
   List<int>? platforms;
   List<int>? genres;
   String? releaseDate;
+  List<String>? images;
   String? backgroundImage;
 
   factory GameModel.fromJson(Map<String, dynamic> json) => GameModel(
     title: json["title"] == null ? null : json["title"],
-    apiId: json["api_id"],
-    boxCover: json["box_cover"],
+    apiId: json["apiId"] == null ? null : json["apiId"],
+    boxCover: json["boxCover"] == null ? null : json["boxCover"],
     platforms:json["platforms"] == null ? List.empty() : List<int>.from(json["platforms"].map((x) => x)),
     genres: json["genres"] == null ? List.empty() : List<int>.from(json["genres"].map((x) => x)),
-    releaseDate: json["release_date"],
-    backgroundImage: json["background_image"],
+    releaseDate: json["releaseDate"] == null ? null : json["releaseDate"],
+    backgroundImage: json["backgroundImage"] == null ? null : json["backgroundImage"],
+    images:json["images"] == null ? List.empty() : List<String>.from(json["images"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
     "title": title,
-    "box_cover": boxCover,
-    "release_date": releaseDate,
-    "background_image": backgroundImage,
-    "api_id": apiId,
+    "boxCover": boxCover,
+    "releaseDate": releaseDate,
+    "backgroundImage": backgroundImage,
+    "apiId": apiId,
+    "images": List<int>.from(images!.map((x) => x)),
     "platforms": List<int>.from(platforms!.map((x) => x)),
     "genres": List<int>.from(genres!.map((x) => x)),
   };

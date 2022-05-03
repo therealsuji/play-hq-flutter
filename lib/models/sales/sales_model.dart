@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
 
 import '../common_models/location_model.dart';
 
@@ -13,7 +13,7 @@ class SalesPayload {
   String? remarks;
   bool negotiable;
   LocationModel location;
-  List<GamePreferances> games;
+  List<FakePreferances> games;
 
   SalesPayload({
     this.id,
@@ -30,7 +30,7 @@ class SalesPayload {
         remarks: json["remarks"],
         negotiable: json["negotiable"],
         location: LocationModel.fromJson(json["location"]),
-        games: json['games'] == null ? List<GamePreferances>.from(json["game_details"].map((x) => GamePreferances.fromJson(x))) : List<GamePreferances>.from(json["games"].map((x) => GamePreferances.fromJson(x))),
+        games: json['games'] == null ? List<FakePreferances>.from(json["game_details"].map((x) => FakePreferances.fromJson(x))) : List<FakePreferances>.from(json["games"].map((x) => FakePreferances.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {

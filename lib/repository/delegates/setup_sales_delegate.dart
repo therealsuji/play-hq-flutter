@@ -6,7 +6,8 @@ import 'dart:io';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
+import 'package:play_hq/models/common_models/game_preference_model.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/models/onboarding_models/setup_sales_model.dart';
 import 'package:play_hq/repository/clients/setup_sales_repository.dart';
@@ -19,7 +20,7 @@ class SetupSalesDelegate extends SetupSalesRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<void> setLibraryGames(List<GamePreferances> body) async {
+  Future<void> setLibraryGames(List<GamePreferences> body) async {
     try{
       await _networkCalls.performRequest(APIConfig.addLibraryGames, HttpAction.POST, body: body);
     }
@@ -40,7 +41,7 @@ class SetupSalesDelegate extends SetupSalesRepository {
   @override
   Future<void> setProfileDetails (SetupSalesModel body) async{
     try{
-      await _networkCalls.performRequest(APIConfig.setupSales, HttpAction.PATCH, body: body);
+      await _networkCalls.performRequest(APIConfig.setupSales, HttpAction.PUT, body: body);
     }
     on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());

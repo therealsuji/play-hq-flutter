@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_model.dart';
+import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/screens/profile_screens/main_profile_screen.dart';
 import 'package:play_hq/screens/profile_screens/tester_screen.dart';
 import 'package:play_hq/screens/screens.dart';
