@@ -27,6 +27,7 @@ class IGameDetailsModel extends GameDetailsModel {
 
       await _gameDetailsApi.getGameDetails(id).then((model) {
         if(model != null){
+          print("Release Date " + model.gameDetails!.released!);
           _gameDetailsModel = model.gameDetails!;
           _gameScreenshotModal = model.gameScreenshots!;
         }

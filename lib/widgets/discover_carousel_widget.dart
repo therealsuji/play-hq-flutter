@@ -21,7 +21,7 @@ class DiscoverCarouselWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      overflow: Overflow.visible,
+
       children: [
         // container aligned to the bottom of the stack with background
         Positioned(

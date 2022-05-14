@@ -9,6 +9,7 @@ class GamesWidget extends StatelessWidget {
   final String? backgroundUrl;
   final String? gameName;
   final String? releaseDate;
+  final String? price;
   final Color? color;
   final Gradient? gradient;
 
@@ -17,6 +18,7 @@ class GamesWidget extends StatelessWidget {
     this.releaseDate,
     this.backgroundUrl,
     this.color,
+    this.price,
     this.gradient,
   });
 
@@ -82,7 +84,7 @@ class GamesWidget extends StatelessWidget {
                       child: color != null
                           ? Text(
                               releaseDate == null
-                                  ? 'Not mentioned'
+                                  ? price == null ? 'Not mentioned' : price!
                                   : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
                               style: TextStyle(
                                 fontFamily: Neusa,
@@ -92,7 +94,9 @@ class GamesWidget extends StatelessWidget {
                               ),
                             )
                           : GradientText(
-                        releaseDate != null ? DateTime.parse(releaseDate!).format('dd-MM-yyyy') : "",
+                        releaseDate == null
+                            ? price == null ? 'Not mentioned' : price!
+                            : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
                               gradient: gradient!,
                               style: Theme.of(context)
                                   .primaryTextTheme

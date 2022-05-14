@@ -16,6 +16,9 @@ import 'package:play_hq/widgets/custom_selecting_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
+import 'package:play_hq/helpers/app_utils.dart';
+
+
 class GameDetailsScreen extends StatefulWidget {
   final GameDetailsArguments? gameDetailsArguments;
 
@@ -29,8 +32,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<GameDetailsModel>(context, listen: false)
-        .getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
+    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
   }
 
   List<String> temp = ["1", "2", "3", "4", "5"];
@@ -212,28 +214,28 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     ),
                   ),
                   _subHeadingContainer(title: "Similar Games"),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: temp.map((e) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: ScreenUtils.getDesignHeight(15.0),
-                            left: ScreenUtils.getDesignWidth(
-                              temp.indexOf(e) == 0 ? 24.0 : 15.0,
-                            ),
-                          ),
-                          child: GamesWidget(
-                            backgroundUrl:
-                                "https://i.stack.imgur.com/y9DpT.jpg",
-                            gameName: "Test",
-                            releaseDate: "4200 LKR",
-                            gradient: GREEN_GRADIENT,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
+                  // SingleChildScrollView(
+                  //   scrollDirection: Axis.horizontal,
+                  //   child: Row(
+                  //     children: temp.map((e) {
+                  //       return Padding(
+                  //         padding: EdgeInsets.only(
+                  //           top: ScreenUtils.getDesignHeight(15.0),
+                  //           left: ScreenUtils.getDesignWidth(
+                  //             temp.indexOf(e) == 0 ? 24.0 : 15.0,
+                  //           ),
+                  //         ),
+                  //         child: GamesWidget(
+                  //           backgroundUrl:
+                  //               "https://i.stack.imgur.com/y9DpT.jpg",
+                  //           gameName: "Test",
+                  //           price: "4200 LKR",
+                  //           gradient: GREEN_GRADIENT,
+                  //         ),
+                  //       );
+                  //     }).toList(),
+                  //   ),
+                  // ),
                 ],
               ),
             ],
@@ -344,8 +346,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 ),
                 GradientText(
                   releaseDate != null
-                      ? DateFormat('dd/MM/yyyy')
-                          .format(DateTime.parse(releaseDate))
+                      ? releaseDate.isNotEmpty ? DateTime.parse(releaseDate).format('dd-MM-yyyy') : "Not Mentioned"
                       : "",
                   gradient: PRIMARY_GRADIENT,
                   style: Theme.of(context).primaryTextTheme.headline4,
