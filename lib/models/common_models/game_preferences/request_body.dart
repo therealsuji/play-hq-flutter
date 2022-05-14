@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:play_hq/models/common_models/game_model.dart';
 
-List<GamePreferences> gamePreferencesFromJson(String str) => List<GamePreferences>.from(json.decode(str).map((x) => GamePreferences.fromJson(x)));
+List<GamePreferencesRequest> gamePreferencesFromJson(String str) => List<GamePreferencesRequest>.from(json.decode(str).map((x) => GamePreferencesRequest.fromJson(x)));
 
-class GamePreferences {
-  GamePreferences({
+class GamePreferencesRequest {
+  GamePreferencesRequest({
     required this.game,
     this.platform,
   });
@@ -13,7 +13,7 @@ class GamePreferences {
   GameModel game;
   int? platform;
 
-  factory GamePreferences.fromJson(Map<String, dynamic> json) => GamePreferences(
+  factory GamePreferencesRequest.fromJson(Map<String, dynamic> json) => GamePreferencesRequest(
     game: GameModel.fromJson(json["game"]),
     platform: json["platform"],
   );

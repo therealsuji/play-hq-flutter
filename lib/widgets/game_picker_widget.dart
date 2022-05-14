@@ -8,7 +8,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
-import 'package:play_hq/models/common_models/game_preference_model.dart';
+import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
 import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
@@ -109,14 +109,14 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                             arguments: widget.gameType);
                         Provider.of<SetupPurchaseAccountModel>(context,
                             listen: false)
-                            .addSelectedGame(purchaseResult as GamePreferences);
+                            .addSelectedGame(purchaseResult as GamePreferencesRequest);
                         break;
                       case SearchType.SETUP_SALES:
                         dynamic saleResult = await Navigator.pushNamed(
                             context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
                         Provider.of<SetupSalesViewModel>(context, listen: false)
-                            .addSelectedGame(saleResult as GamePreferences);
+                            .addSelectedGame(saleResult as GamePreferencesRequest);
                         break;
                       default:
                         break;

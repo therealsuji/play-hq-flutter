@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
-import 'package:play_hq/models/common_models/game_preference_model.dart';
+import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
@@ -24,7 +24,7 @@ class ICustomSearchModel extends CustomSearchModel{
   SearchType? _gameScreens;
   Timer? _debounce;
 
-  late GamePreferences _gameDetails;
+  late GamePreferencesRequest _gameDetails;
 
   int _selectedPlatform = 10;
   int _selectedPlatformId = 0;
@@ -144,11 +144,11 @@ class ICustomSearchModel extends CustomSearchModel{
   @override
   void addGameToList(int index) {
     game = addGamesToModel(_searchedGames[index]);
-    _gameDetails = GamePreferences(game: game , platform: _selectedPlatformId);
+    _gameDetails = GamePreferencesRequest(game: game , platform: _selectedPlatformId);
     locator<NavigationService>().pop(args: _gameDetails);
   }
 
   @override
-  GamePreferences get gameDetails => _gameDetails;
+  GamePreferencesRequest get gameDetails => _gameDetails;
 
 }

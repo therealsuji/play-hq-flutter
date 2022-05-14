@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_preference_model.dart';
+import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/common_models/release_date_model.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
@@ -30,7 +30,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> _selectedGenres = [];
   List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
-  List<GamePreferences> _selectedGames = [];
+  List<GamePreferencesRequest> _selectedGames = [];
 
   final _setupPurchasesAPI = locator<SetupPurchaseRepository>();
   final _eventBus = locator<EventBus>();
@@ -124,13 +124,13 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> get selectedReleaseDates => _selectedReleaseDates;
 
   @override
-  void addSelectedGame(GamePreferences game) {
+  void addSelectedGame(GamePreferencesRequest game) {
     _selectedGames.add(game);
     notifyListeners();
   }
 
   @override
-  List<GamePreferences> get selectedGameList => _selectedGames;
+  List<GamePreferencesRequest> get selectedGameList => _selectedGames;
 
   @override
   int? get genreCount => _genreCount;

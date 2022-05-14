@@ -3,7 +3,8 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
-import 'package:play_hq/models/common_models/game_preference_model.dart';
+import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
+import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/repository/clients/main_profile_screen_repository.dart';
@@ -15,8 +16,8 @@ class IMainProfileModel extends MainProfileModel {
   final _eventBus = locator<EventBus>();
   final _mainProfileAPI = locator<MainProfileScreenRepository>();
 
-  List<GamePreferences> _wishlistGames = [];
-  List<GamePreferences> _libraryGames = [];
+  List<Data> _wishlistGames = [];
+  List<Data> _libraryGames = [];
 
   @override
   void getMyGames() async{
@@ -24,30 +25,28 @@ class IMainProfileModel extends MainProfileModel {
       _eventBus.fire(LoadingEvent.show());
 
       await _mainProfileAPI.getWishListGames().then((value) {
-        if(value.length > 0){
-          print("WishList Games: ${value[0].game.title}");
-          _wishlistGames = value;
+        if(value.data.isNotEmpty){
+          _wishlistGames = value.data;
         }
       });
       await _mainProfileAPI.getLibraryGames().then((value) {
-        if(value.length > 0){
-          print("WishList Games: ${value[0].game.title}");
-          _libraryGames = value;
+        if(value.data.isNotEmpty){
+          _libraryGames = value.data;
         }
         _eventBus.fire(LoadingEvent.hide());
       });
       notifyListeners();
     }catch(e){
-      print(e);
+      print("Exception is here {$e}");
       _eventBus.fire(LoadingEvent.hide());
     }
   }
 
   @override
-  List<GamePreferences> get fetchAllWishlistGames => _wishlistGames;
+  List<Data> get fetchAllWishlistGames => _wishlistGames;
 
   @override
-  List<GamePreferences> get fetchAllLibraryGames => _libraryGames;
+  List<Data> get fetchAllLibraryGames => _libraryGames;
 
 
 }

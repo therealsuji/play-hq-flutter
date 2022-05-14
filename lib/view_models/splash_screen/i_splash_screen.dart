@@ -54,6 +54,7 @@ class ISplashModel extends SplashScreenModel {
       var localToken = value.token!.accessToken;
       if (FirebaseAuth.instance.currentUser != null && localToken != null) {
         SecureStorage.writeValue('jwtToken', value.token!.accessToken);
+        SecureStorage.writeValue('refreshToken', value.token!.refreshToken);
         if (value.user!.isSetupDone!) {
           navigateMainScreen();
         } else {

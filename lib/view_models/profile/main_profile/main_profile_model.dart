@@ -2,15 +2,14 @@
 
 
 import 'package:flutter/cupertino.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
-import 'package:play_hq/models/common_models/game_preference_model.dart';
+import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
 
 abstract class MainProfileModel with ChangeNotifier {
 
-  List<GamePreferences> get fetchAllWishlistGames;
+  List<Data> get fetchAllWishlistGames;
 
   void getMyGames();
 
-  List<GamePreferences> get fetchAllLibraryGames;
+  List<Data> get fetchAllLibraryGames;
 
 }
