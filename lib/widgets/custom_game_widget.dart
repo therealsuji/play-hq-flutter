@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
-
+import 'package:play_hq/helpers/app_utils.dart';
 import 'gradient_text_widget.dart';
 
 class GamesWidget extends StatelessWidget {
@@ -83,7 +83,7 @@ class GamesWidget extends StatelessWidget {
                           ? Text(
                               releaseDate == null
                                   ? 'Not mentioned'
-                                  : releaseDate!,
+                                  : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
                               style: TextStyle(
                                 fontFamily: Neusa,
                                 fontSize: 12.0,
@@ -92,7 +92,7 @@ class GamesWidget extends StatelessWidget {
                               ),
                             )
                           : GradientText(
-                              releaseDate ?? "",
+                        releaseDate != null ? DateTime.parse(releaseDate!).format('dd-MM-yyyy') : "",
                               gradient: gradient!,
                               style: Theme.of(context)
                                   .primaryTextTheme

@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 
 extension EnumTransform on List {
   T? enumFromString<T>(String value) {
@@ -15,3 +16,10 @@ extension StringExtension on String {
         .join(" ");
   }
 }
+
+extension DateTimeExtension on DateTime {
+  String format(String format) {
+    return DateFormat(format).format(this);
+  }
+}
+
