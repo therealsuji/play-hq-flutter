@@ -5,13 +5,14 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_network.dart';
+import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/repository/clients/search_repository.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 
+import '../../models/search_model/app_search_game_model.dart';
 import '../../service_locator.dart';
 
 class SearchDelegate extends SearchRepository {
@@ -19,10 +20,10 @@ class SearchDelegate extends SearchRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<RawgGameDetails> searchGame(String name) async {
+  Future<SearchGame> searchGame(String name) async {
     try{
       var response = await _networkCalls.performRequest(APIConfig.getSearchResults(name), HttpAction.GET);
-      return compute(rawgGameDetailsFromJson, response.body);
+      return compute(searchGamefromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();

@@ -135,6 +135,6 @@ class IGameDetailsModel extends GameDetailsModel {
   }
 
   @override
-  GameStatus get gameStatus => _gameStatus!;
+  GameStatus get gameStatus => _gameStatus;
 
 }

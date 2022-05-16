@@ -6,7 +6,7 @@ import 'package:play_hq/models/game_status.dart';
 import 'package:play_hq/service_locator.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_network.dart';
+import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
 
 import 'package:play_hq/models/errors/exceptions.dart';

@@ -5,6 +5,8 @@ import 'package:play_hq/models/common_models/genres_model.dart';
 
 part 'app_search_game_model.g.dart';
 
+SearchGame searchGamefromJson(String str) => SearchGame.fromJson(json.decode(str));
+
 class SearchGame {
   List<GameDetails>? _data;
 

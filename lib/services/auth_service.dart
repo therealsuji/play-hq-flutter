@@ -2,14 +2,11 @@ import 'dart:developer';
 
 import 'package:event_bus/event_bus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
-import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';

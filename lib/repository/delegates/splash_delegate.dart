@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_network.dart';
+import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/errors/exceptions.dart';

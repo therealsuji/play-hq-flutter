@@ -55,7 +55,7 @@ class IMainProfileModel extends MainProfileModel {
 
   @override
   // TODO: implement userDetails
-  UserDetails get userDetails => _userDetails!;
+  UserDetails get userDetails => _userDetails;
 
 
 }

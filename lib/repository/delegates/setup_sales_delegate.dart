@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_network.dart';
+import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
