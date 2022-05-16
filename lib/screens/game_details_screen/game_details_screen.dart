@@ -8,6 +8,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/models/common_models/rawg_platform_model.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
+import 'package:play_hq/models/game_status.dart';
 import 'package:play_hq/view_models/game_details/game_details_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
@@ -29,10 +30,17 @@ class GameDetailsScreen extends StatefulWidget {
 }
 
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
+  }
+
   @override
   void initState() {
     super.initState();
-    Provider.of<GameDetailsModel>(context, listen: false).getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
   }
 
   List<String> temp = ["1", "2", "3", "4", "5"];
@@ -134,13 +142,18 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       );
                     },
                   ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: ScreenUtils.getDesignHeight(25.0),
-                      right: ScreenUtils.getDesignWidth(24.0),
-                      left: ScreenUtils.getDesignWidth(24.0),
-                    ),
-                    child: _buttonContainer(),
+                  Consumer<GameDetailsModel>(
+                    builder: (_, status, __){
+                      print('status: ${status.gameStatus.gameLibrary}');
+                      return Padding(
+                        padding: EdgeInsets.only(
+                          top: ScreenUtils.getDesignHeight(25.0),
+                          right: ScreenUtils.getDesignWidth(24.0),
+                          left: ScreenUtils.getDesignWidth(24.0),
+                        ),
+                        child: _buttonContainer(status.gameStatus),
+                      );
+                    },
                   ),
                   _companyContainer(),
                   _subHeadingContainer(title: "Genre", paddingTop: 30.0),
@@ -245,64 +258,65 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
     );
   }
 
-  Widget _buttonContainer() {
-    switch (widget.gameDetailsArguments!.gameType) {
-      case GameType.WISHLIST:
-        return CustomButton(
-          buttonText: "Remove from Wishlist",
-          buttonColor: Colors.red,
-          height: ScreenUtils.getDesignHeight(40.0),
-          textFontSize: 10.0,
-          width: double.infinity,
-          onPressed: () {},
-        );
-      case GameType.LIBRARY:
-        return CustomButton(
-          buttonText: "Remove from Library",
-          buttonColor: Colors.red,
-          height: ScreenUtils.getDesignHeight(40.0),
-          textFontSize: 10.0,
-          width: double.infinity,
-          onPressed: () {},
-        );
-      default:
-        return Row(
-          children: [
-            Expanded(
-              child: CustomButton(
-                buttonText: "Add to Wishlist",
-                gradient: SECONDARY_GRADIENT,
-                height: ScreenUtils.getDesignHeight(40.0),
-                textFontSize: 10.0,
-                onPressed: () {
-                  _showPlatformBottomSheet(
-                    onPressed:
-                        Provider.of<GameDetailsModel>(context, listen: false)
-                            .addToWishList,
-                  );
-                },
-              ),
-            ),
-            SizedBox(
-              width: ScreenUtils.getDesignWidth(15.0),
-            ),
-            Expanded(
-              child: CustomButton(
-                buttonText: "Add to Library",
-                gradient: PRIMARY_GRADIENT,
-                height: ScreenUtils.getDesignHeight(40.0),
-                textFontSize: 10.0,
-                onPressed: () {
-                  _showPlatformBottomSheet(
-                    onPressed:
-                        Provider.of<GameDetailsModel>(context, listen: false)
-                            .addToLibrary,
-                  );
-                },
-              ),
-            ),
-          ],
-        );
+  Widget _buttonContainer(GameStatus status) {
+    if (status.gameLibrary) {
+      return CustomButton(
+                 buttonText: "Remove from Library",
+                 buttonColor: Colors.red,
+                 height: ScreenUtils.getDesignHeight(40.0),
+                 textFontSize: 10.0,
+                 width: double.infinity,
+                 onPressed: () {},
+               );
+    }
+    else if(status.wishList) {
+      return CustomButton(
+        buttonText: "Remove from Wishlist",
+        buttonColor: Colors.red,
+        height: ScreenUtils.getDesignHeight(40.0),
+        textFontSize: 10.0,
+        width: double.infinity,
+        onPressed: () {},
+      );
+    }
+    else {
+      return Row(
+                 children: [
+                  Expanded(
+                     child: CustomButton(
+                       buttonText: "Add to Wishlist",
+                       gradient: SECONDARY_GRADIENT,
+                       height: ScreenUtils.getDesignHeight(40.0),
+                       textFontSize: 10.0,
+                       onPressed: () {
+                         _showPlatformBottomSheet(
+                           onPressed:
+                               Provider.of<GameDetailsModel>(context, listen: false)
+                                   .addToWishList,
+                         );
+                       },
+                     ),
+                   ),
+                  SizedBox(
+                    width: ScreenUtils.getDesignWidth(15.0),
+                  ),
+                  Expanded(
+                    child: CustomButton(
+                      buttonText: "Add to Library",
+                      gradient: PRIMARY_GRADIENT,
+                      height: ScreenUtils.getDesignHeight(40.0),
+                      textFontSize: 10.0,
+                      onPressed: () {
+                        _showPlatformBottomSheet(
+                          onPressed:
+                              Provider.of<GameDetailsModel>(context, listen: false)
+                                  .addToLibrary,
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
     }
   }
 

@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'common_models/user/user_details.dart';
+
 AuthUserModel authUserModelFromJson(String str) => AuthUserModel.fromJson(json.decode(str));
 
 String authUserModelToJson(AuthUserModel data) => json.encode(data.toJson());
@@ -14,11 +16,11 @@ class AuthUserModel {
     this.token,
   });
 
-  User? user;
+  UserDetails? user;
   Token? token;
 
   factory AuthUserModel.fromJson(Map<String, dynamic> json) => AuthUserModel(
-    user: User.fromJson(json["user"]),
+    user: UserDetails.fromJson(json["user"]),
     token: Token.fromJson(json["token"]),
   );
 
@@ -52,50 +54,4 @@ class Token {
   };
 }
 
-class User {
-  User({
-    this.firstName,
-    this.lastName,
-    this.role,
-    this.email,
-    this.avatar,
-    this.phone,
-    this.isSetupDone,
-    this.location,
-    this.displayName,
-  });
 
-  dynamic firstName;
-  dynamic lastName;
-  String? role;
-  String? email;
-  dynamic avatar;
-  String? phone;
-  bool? isSetupDone;
-  dynamic location;
-  dynamic displayName;
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    role: json["role"],
-    email: json["email"],
-    avatar: json["avatar"],
-    phone: json["phone"],
-    isSetupDone: json["isSetupDone"],
-    location: json["location"],
-    displayName: json["displayName"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "firstName": firstName,
-    "lastName": lastName,
-    "role": role,
-    "email": email,
-    "avatar": avatar,
-    "phone": phone,
-    "isSetupDone": isSetupDone,
-    "location": location,
-    "displayName": displayName,
-  };
-}

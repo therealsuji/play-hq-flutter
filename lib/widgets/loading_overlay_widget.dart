@@ -25,11 +25,11 @@ class LoadingWidget extends StatelessWidget {
               child: Stack(
                 children: <Widget>[
                   Container(
-                      child: const ModalBarrier(dismissible: false, color:  Color.fromRGBO(0, 0, 0, 0.5),)),
+                      child: const ModalBarrier(dismissible: false, color:  BACKGROUND_COLOR)),
                   Center(
                     child: Container(
-                        height: ScreenUtils.getDesignHeight(120),
-                        width: ScreenUtils.getDesignWidth(120),
+                        height: ScreenUtils.getDesignHeight(100),
+                        width: ScreenUtils.getDesignWidth(100),
                         child: Lottie.asset('assets/animations/loading.json')),
                   )
                 ],

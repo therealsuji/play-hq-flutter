@@ -55,6 +55,8 @@ class APIConfig {
   static String login = '$_baseUrl' + "/auth/firebase";
   static String renewJwt = '$_baseUrl' + "/auth/refresh";
 
+  static String getUserDetails = '$_baseUrl' + "/v1/auth/me";
+
   // Sales API
   static String createSale = '$_baseUrl' + "/sell-games";
   static String fetchAllActiveSales = '$_baseUrl' + "/sell-games/my-sales";
@@ -64,6 +66,7 @@ class APIConfig {
 
   static String setupSales = '$_baseUrl' + "/users/update";
 
+  // User Games APIs
   static String addWishListGames = '$_baseUrl' + "/wish-list-games/set";
 
   static String get addLibraryGames => '$_baseUrl' + '/library-games/set';
@@ -72,6 +75,10 @@ class APIConfig {
 
   static String get addToLibrary => '$_baseUrl' + '/library-games';
 
+  static String deleteWishListGame(String id) => '$_baseUrl' + '/wish-list-games/$id';
+
+  static String deleteLibraryGame(String id) => '$_baseUrl' + '/wish-list-games/$id';
+
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';
   }
@@ -79,4 +86,7 @@ class APIConfig {
   static String getLibraryGames() {
     return '$_baseUrl' + '/library-games';
   }
+
+  static String getGameStatus(int id) => '$_baseUrl' + '/list/check/$id';
+
 }

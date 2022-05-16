@@ -11,6 +11,8 @@ import 'package:play_hq/repository/clients/main_profile_screen_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 
+import '../../../models/common_models/user/user_details.dart';
+
 class IMainProfileModel extends MainProfileModel {
 
   final _eventBus = locator<EventBus>();
@@ -18,9 +20,10 @@ class IMainProfileModel extends MainProfileModel {
 
   List<Data> _wishlistGames = [];
   List<Data> _libraryGames = [];
+  late UserDetails _userDetails = UserDetails(displayName: "" , firstName: "" , lastName: "" , avatar: "");
 
   @override
-  void getMyGames() async{
+  void getProfileDetails() async{
     try{
       _eventBus.fire(LoadingEvent.show());
 
@@ -29,6 +32,8 @@ class IMainProfileModel extends MainProfileModel {
           _wishlistGames = value.data;
         }
       });
+      await _mainProfileAPI.getUserDetails().then((value) => _userDetails = value);
+      print("User Avatar: ${_userDetails.avatar}");
       await _mainProfileAPI.getLibraryGames().then((value) {
         if(value.data.isNotEmpty){
           _libraryGames = value.data;
@@ -47,6 +52,10 @@ class IMainProfileModel extends MainProfileModel {
 
   @override
   List<Data> get fetchAllLibraryGames => _libraryGames;
+
+  @override
+  // TODO: implement userDetails
+  UserDetails get userDetails => _userDetails!;
 
 
 }

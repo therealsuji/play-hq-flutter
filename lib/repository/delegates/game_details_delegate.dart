@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:play_hq/models/game_status.dart';
 import 'package:play_hq/service_locator.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
@@ -86,6 +87,64 @@ class GameDetailsDelegate extends GameDetailsRepository {
       locator<ErrorManager>().setError(PlayHQGeneralException(
         errorText: e.toString(),
       ));
+    }
+  }
+
+  @override
+  Future<void> deleteLibraryGame(String id) async {
+    try{
+      await _networkCalls.performRequest(APIConfig.deleteLibraryGame(id), HttpAction.DELETE);
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+    }
+  }
+
+  @override
+  Future<void> deleteWishListGame(String id) async {
+    try{
+      await _networkCalls.performRequest(APIConfig.deleteWishListGame(id), HttpAction.DELETE);
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+    }
+  }
+
+  @override
+  Future<GameStatus> getGameStatus(int id) async {
+    try {
+      var response = await _networkCalls.performRequest(
+          APIConfig.getGameStatus(id), HttpAction.GET);
+      return compute(gameStatusFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
     }
   }
 }

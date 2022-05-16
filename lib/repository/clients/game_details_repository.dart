@@ -1,4 +1,5 @@
 import 'package:play_hq/models/game_details_models/get_game_details.dart';
+import 'package:play_hq/models/game_status.dart';
 
 abstract class GameDetailsRepository {
 
@@ -7,4 +8,10 @@ abstract class GameDetailsRepository {
   Future<void> setGameWishList(Map<String, dynamic> body);
 
   Future<void> setGameLibrary(Map<String, dynamic> body);
+
+  Future<void> deleteWishListGame(String id);
+
+  Future<void> deleteLibraryGame(String id);
+
+  Future<GameStatus> getGameStatus(int id);
 }

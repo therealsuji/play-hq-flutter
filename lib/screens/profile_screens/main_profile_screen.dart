@@ -24,7 +24,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<MainProfileModel>(context, listen: false).getMyGames();
+    Provider.of<MainProfileModel>(context, listen: false).getProfileDetails();
   }
 
   @override
@@ -73,10 +73,14 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 ],
               ),
             ),
-            _userDetails(
-                'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEZrATmgHOi5ls0YCCQBTkocia_atSw0X-Q&usqp=CAU',
-                'Damsara Perera',
-                '@Damasu007'),
+            Consumer<MainProfileModel>(
+              builder: (_ , profileDetails , __){
+                return _userDetails(
+                    profileDetails.userDetails.avatar == "" ? "https://i.stack.imgur.com/y9DpT.jpg" : profileDetails.userDetails.avatar!,
+                    profileDetails.userDetails.firstName! + ' ' + profileDetails.userDetails.lastName!,
+                    profileDetails.userDetails.displayName!);
+              },
+            ),
             Container(
               margin: EdgeInsets.only(
                   top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
@@ -143,7 +147,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                       scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
-                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllWishlistGames[index].game.apiId , gameType: GameType.WISHLIST)),
+                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllWishlistGames[index].game.apiId)),
                             child: GamesWidget(
                               gameName: val.fetchAllWishlistGames[index].game.title ?? "",
                               backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
@@ -193,8 +197,6 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                           ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                         fontWeight: FontWeight.w700),
                   )
-
-
                 ],
               ),
             ),
@@ -208,7 +210,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
-                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllLibraryGames[index].game.apiId ?? 0 , gameType: GameType.LIBRARY)),
+                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllLibraryGames[index].game.apiId ?? 0)),
                             child: GamesWidget(
                               gameName: val.fetchAllLibraryGames[index].game.title ?? "",
                               backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
@@ -290,7 +292,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
           Container(
             margin: EdgeInsets.only(top: 5),
             child: Text(
-              username,
+              "@$username",
               style: TextStyle(
                   fontWeight: FontWeight.w700,
                   color: Colors.white.withOpacity(0.6),
