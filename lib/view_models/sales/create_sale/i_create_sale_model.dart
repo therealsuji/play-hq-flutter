@@ -1,11 +1,8 @@
-
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/models/loading_event_model.dart';
@@ -13,9 +10,11 @@ import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 
+import '../../../models/sales/sales_payload_model.dart';
+
 class ICreateSaleModel extends CreateSaleModel {
   bool _isNegotiable = false;
-  double _price = 0;
+  int _price = 0;
   String _remarks = '';
   bool _isFormValid = false;
 
@@ -26,14 +25,14 @@ class ICreateSaleModel extends CreateSaleModel {
 
   bool _isAdded = false;
 
-  List<FakePreferances> _selectedGames = [];
+  List<GameElement> _selectedGames = [];
 
   DialogService _dialogService = locator<DialogService>();
 
   final _createSale = locator<SaleRepository>();
 
-  ICreateSaleModel({FakePreferances? gamePreferances}) {
-    if (gamePreferances?.id != null) {
+  ICreateSaleModel({GameElement? gamePreferances}) {
+    if (gamePreferances?.game!.apiId != null) {
       _selectedGames.add(gamePreferances!);
     }
   }
@@ -45,25 +44,25 @@ class ICreateSaleModel extends CreateSaleModel {
   bool get isNegotiable => _isNegotiable;
 
   @override
-  double get price => _price;
+  int get price => _price;
 
   @override
   String get remarks => _remarks;
 
   @override
   void createSale() async {
-    if(_isFormValid){
+    if (_isFormValid) {
       locator<EventBus>().fire(LoadingEvent.show());
-      LocationModel location = LocationModel(address: "Something", lat: 123, long: 123);
-      _selectedGames.forEach((element) {
-        element.platform = _platformId;
-      });
+      print("Game Status ${_selectedGames[0].status}");
+      LocationModel location =
+          LocationModel(address: "Something", lat: 123, long: 123);
       SalesPayload createSaleModel = SalesPayload(
+          gameElement: _selectedGames,
+          platform: _platformId,
           location: location,
           price: _price,
           remarks: _remarks,
-          negotiable: _isNegotiable,
-          games: _selectedGames);
+          negotiable: _isNegotiable);
       try {
         await _createSale.createSale(createSaleModel);
         locator<EventBus>().fire(LoadingEvent.hide());
@@ -72,7 +71,7 @@ class ICreateSaleModel extends CreateSaleModel {
         print(e.toString());
         locator<EventBus>().fire(LoadingEvent.hide());
       }
-    }else{
+    } else {
       print('form is not valid');
       showDialog();
     }
@@ -81,7 +80,8 @@ class ICreateSaleModel extends CreateSaleModel {
   Future successSale() async {
     var dialogResult = await _dialogService.showDialog(
       title: 'Alright we got your sale',
-      description: 'We will send you notification when someone wants to buy your game',
+      description:
+          'We will send you notification when someone wants to buy your game',
       buttonTitle: 'Back to Home',
       type: AlertType.SUCCESS,
       onPressed: () {
@@ -125,7 +125,7 @@ class ICreateSaleModel extends CreateSaleModel {
   }
 
   @override
-  void setPrice(double value) {
+  void setPrice(int value) {
     _price = value;
     validateForm();
     notifyListeners();
@@ -142,37 +142,45 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void validateForm() {
-    _isFormValid = _price > 0 && _selectedPlatform!= 10 && _selectedGames.length > 0;
+    _isFormValid =
+        _price > 0 && _selectedPlatform != 10 && _selectedGames.length > 0;
     notifyListeners();
   }
 
   @override
-  void addSelectedGame(FakePreferances gamePreferances) {
-      String conditionName = game_conditions.where((element) => element['API_Slug'] == gamePreferances.conditionName).first['name'] ?? '';
-      gamePreferances = FakePreferances(game: gamePreferances.game, conditionId: conditionName , conditionName: gamePreferances.conditionName);
-      getCurrentCondition(conditionName);
-      validateForm();
-      _selectedGames.add(gamePreferances);
+  void addSelectedGame(GameElement gameElement) {
+    String conditionName = game_conditions
+            .where((element) => element['API_Slug'] == gameElement.status)
+            .first['name'] ??
+        '';
+    gameElement = GameElement(
+        game: gameElement.game!,
+        status: gameElement.status,
+        statusName: conditionName);
+    getCurrentCondition(conditionName);
+    validateForm();
+    _selectedGames.add(gameElement);
     notifyListeners();
   }
 
   @override
-  List<FakePreferances> get selectedGameList => _selectedGames;
+  List<GameElement> get selectedGameList => _selectedGames;
 
   @override
   int get platformId => _platformId;
 
   @override
   void removeGame(int id) {
-    _selectedGames.removeWhere((game) => game.game.apiId == id);
+    _selectedGames.removeWhere((game) => game.game!.apiId == id);
     validateForm();
-    notifyListeners();
     locator<NavigationService>().pop();
+    notifyListeners();
   }
 
   @override
-  void updateGame(int id){
-    _selectedGames.firstWhere((element) => id == element.game.apiId).conditionId = _currentCondition;
+  void updateGame(int id) {
+    _selectedGames.firstWhere((element) => id == element.game!.apiId).statusName =
+        _currentCondition;
     notifyListeners();
     locator<NavigationService>().pop();
   }
@@ -192,11 +200,13 @@ class ICreateSaleModel extends CreateSaleModel {
   String get currentCondition => _currentCondition;
 
   @override
-  void checkGame(FakePreferances gamePreferances) {
-    int length = _selectedGames.where((element) => element.game.apiId == gamePreferances.game.apiId).length;
-    if(length > 0){
+  void checkGame(GameElement gameElement) {
+    int length = _selectedGames
+        .where((element) => element.game!.apiId == gameElement.game!.apiId)
+        .length;
+    if (length > 0) {
       _isAdded = true;
-    }else{
+    } else {
       _isAdded = false;
     }
     print('Is Added $isAdded');
@@ -206,4 +216,6 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   bool get isAdded => _isAdded;
 
+  @override
+  int get gameCount => _selectedGames.length;
 }

@@ -207,7 +207,7 @@ class _ClickedSearchState extends State<ClickedSearch> {
                             gradient: GREEN_GRADIENT,
                             onPressed: () {
                               Navigator.pop(context);
-                              Provider.of<CustomSearchModel>(context, listen: false).addGameToList(index);
+                              Provider.of<CustomSearchModel>(context, listen: false).addGameToSale(index);
                               // GamePreferances game = val.gameDetails;
                               // isPLatform ? widget.values == SearchType.SETUP_PURCHASES ? Navigator.pushNamed(context, SETUP_PURCHASE_ACCOUNT_ROUTE) : Navigator.pushNamed(context, SETUP_SALES_ACCOUNT_ROUTE) : Navigator.pushNamed(context, CREATE_SALE_ROUTE , arguments: game);
                             },

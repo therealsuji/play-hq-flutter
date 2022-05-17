@@ -1,8 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
+import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
+import 'package:play_hq/models/orders_model/orders.dart';
+
+import '../../../models/sales/sales_payload_model.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
-  double get price;
+  int get price;
 
   bool get isNegotiable;
 
@@ -18,17 +22,17 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void validateForm();
 
-  void setPrice(double value);
+  void setPrice(int value);
 
   void setIsNegotiable(bool value);
 
   void setRemarks(String value);
 
-  List<FakePreferances> get selectedGameList;
+  List<GameElement> get selectedGameList;
 
-  void addSelectedGame(FakePreferances game);
+  void addSelectedGame(GameElement game);
 
-  void checkGame(FakePreferances gameDetails);
+  void checkGame(GameElement gameDetails);
 
   int get selectedPlatform;
 
@@ -39,6 +43,8 @@ abstract class CreateSaleModel with ChangeNotifier {
   void removeGame(int id);
 
   void updateGame(int id);
+
+  int get gameCount;
 
   void changeCurrentCondition(String condition);
 

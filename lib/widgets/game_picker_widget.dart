@@ -9,6 +9,7 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';
 import 'package:play_hq/services/dialog_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
@@ -96,12 +97,16 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                   onTap: () async {
                     switch (widget.gameType) {
                       case SearchType.CREATE_SALE:
-                        dynamic salesResult = await Navigator.pushNamed(
-                            context, MAIN_SEARCH_SCREEN,
-                            arguments: widget.gameType);
-                        Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as FakePreferances);
-                        Provider.of<CreateSaleModel>(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
-                            .addSelectedGame(salesResult);
+                        if(val.gameCount >= 3 ){
+                          showGameCapAlert(context);
+                        }else{
+                          dynamic salesResult = await Navigator.pushNamed(
+                              context, MAIN_SEARCH_SCREEN,
+                              arguments: widget.gameType);
+                          Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as GameElement);
+                          Provider.of<CreateSaleModel>(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
+                              .addSelectedGame(salesResult);
+                        }
                         break;
                       case SearchType.SETUP_PURCHASES:
                         dynamic purchaseResult = await Navigator.pushNamed(
@@ -201,11 +206,11 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context2, int index) {
                   return GestureDetector(
-                    onTap: () => showBottomSheet(gameId: val.selectedGameList[index].game.apiId!),
+                    onTap: () => showBottomSheet(gameId: val.selectedGameList[index].game!.apiId!),
                     child: GamePickerGames(
-                      backgroundUrl: val.selectedGameList[index].game.boxCover,
-                      gameName: val.selectedGameList[index].game.title,
-                      releaseDate: val.selectedGameList[index].conditionId,
+                      backgroundUrl: val.selectedGameList[index].game!.boxCover,
+                      gameName: val.selectedGameList[index].game!.title,
+                      releaseDate: val.selectedGameList[index].statusName,
                     ),
                   );
                 });
@@ -282,14 +287,41 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
     Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.of(context, rootNavigator: true).pop();
       },
     );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("Ah Ah Ah"),
-      content: Text("Sorry bro, only 3 games at a time"),
+      title: Text("Wait Hold Up"),
+      content: Text("You've already added this game to your list"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showGameCapAlert(BuildContext context) {
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Ah ah Ah"),
+      content: Text("Can't add more than 3 games to a sale , sorry :)"),
       actions: [
         okButton,
       ],

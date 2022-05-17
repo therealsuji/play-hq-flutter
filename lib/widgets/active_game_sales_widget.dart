@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/raised_gradient_button_widget.dart';
 
@@ -38,7 +38,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
                 borderRadius: BorderRadius.circular(5),
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl: widget.salesPayload!.games[0].game.boxCover ?? '',)),
+                  imageUrl: widget.salesPayload!.gameElement![0].game!.boxCover ?? '',)),
           )),
           Positioned(
               left: 0,
@@ -98,7 +98,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
                             style: Theme.of(context).primaryTextTheme.headline4,
                           ),
                           Text(
-                            '${widget.salesPayload!.location.address}',
+                            '${widget.salesPayload!.location!.address}',
                             style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                               color: SUB_TEXT_COLOR.withOpacity(0.6),
                             ),
@@ -132,7 +132,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextWidget(widget.salesPayload!.games.length > 1 ? '${widget.salesPayload!.games[0].game.title} Bundle' : widget.salesPayload!.games[0].game.title ?? '', isDynamic: true , style: TextStyle(fontSize: 22, shadows: <Shadow>[
+          CustomTextWidget(widget.salesPayload!.gameElement!.length > 1 ? '${widget.salesPayload!.gameElement![0].game!.title} Bundle' : widget.salesPayload!.gameElement![0].game!.title ?? '', isDynamic: true , style: TextStyle(fontSize: 22, shadows: <Shadow>[
             Shadow(
               offset: Offset(0.0, 3.0),
               blurRadius: 10.0,
@@ -141,7 +141,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
           ], height: 1.1, fontFamily: Neusa ,fontWeight: FontWeight.bold , color: Colors.white), maxWidth: ScreenUtils.getDesignWidth(160), minWidth: ScreenUtils.getDesignWidth(30),),
           Container(
             margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(3)),
-            child: widget.salesPayload!.games.length == 1 ? CustomTextWidget('${widget.salesPayload!.games[0].game.releaseDate}', isDynamic: true , style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500 , color: PRIMARY_COLOR, shadows: <Shadow>[
+            child: widget.salesPayload!.gameElement!.length == 1 ? CustomTextWidget('${widget.salesPayload!.gameElement![0].game!.releaseDate}', isDynamic: true , style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500 , color: PRIMARY_COLOR, shadows: <Shadow>[
             Shadow(
             offset: Offset(0.0, 3.0),
               blurRadius: 10.0,

@@ -57,9 +57,9 @@ class CreateSaleConfirmBottomSheet extends StatelessWidget {
                       itemBuilder: (context, idx) {
                         return SelectGameItem(
                           isSelected: false,
-                          imageURL: model.selectedGameList[idx].game.boxCover,
-                          titleText: model.selectedGameList[idx].game.title,
-                          subtitleText: model.selectedGameList[idx].conditionId!
+                          imageURL: model.selectedGameList[idx].game!.boxCover,
+                          titleText: model.selectedGameList[idx].game!.title,
+                          subtitleText: model.selectedGameList[idx].status!
                         );
                       }),
                 ),

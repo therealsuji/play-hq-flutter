@@ -50,7 +50,6 @@ class APIConfig {
   }
 
   /// Urls needed from the PlayHQ Backend
-
   //authenticate user
   static String login = '$_baseUrl' + "/auth/firebase";
   static String renewJwt = '$_baseUrl' + "/auth/refresh";
@@ -58,7 +57,7 @@ class APIConfig {
   static String getUserDetails = '$_baseUrl' + "/v1/auth/me";
 
   // Sales API
-  static String createSale = '$_baseUrl' + "/sell-games";
+  static String createSale = '$_baseUrl' + "/sales";
   static String fetchAllActiveSales = '$_baseUrl' + "/sell-games/my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sell-games/get-sales-from-wish-list";
 

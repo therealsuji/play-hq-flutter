@@ -70,9 +70,11 @@ class _UpdateGameBottomSheetState extends State<UpdateGameBottomSheet> {
                 }
               ),
               GestureDetector(
-                onTap: () => showAlertDialog(context , 'Are you sure mate?' , 'Are you sure you want to delete this game?' , (){
-                  Provider.of<CreateSaleModel>(context, listen: false).removeGame(widget.id!);
-                }),
+                onTap: () {
+                  showAlertDialog(context , 'Are you sure mate?' , 'Are you sure you want to delete this game?' , (){
+                    Provider.of<CreateSaleModel>(context, listen: false).removeGame(widget.id!);
+                  });
+                },
                 child: Container(
                   margin: EdgeInsets.only(top: 30),
                   child: Center(child: CustomTextWidget('DELETE GAME', isDynamic: false , width: ScreenUtils.getDesignWidth(115) , style: Theme.of(context).primaryTextTheme.headline3!.copyWith(color: Colors.red),)),
@@ -97,7 +99,7 @@ class _UpdateGameBottomSheetState extends State<UpdateGameBottomSheet> {
     Widget cancelButton = TextButton(
       child: Text("Cancel"),
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.of(context, rootNavigator: true).pop();
       },
     );
 
@@ -105,7 +107,7 @@ class _UpdateGameBottomSheetState extends State<UpdateGameBottomSheet> {
       child: Text("Yes"),
       onPressed: () {
         clickedYes();
-        Navigator.pop(context);
+        Navigator.of(context, rootNavigator: true).pop();
       },
     );
 

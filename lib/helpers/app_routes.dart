@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/my-sales/my_sales_details_screen/my_sales_details_screen.dart';
 import 'package:play_hq/screens/my-sales/my_sales_screen/my_sales_screen.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
@@ -19,6 +19,8 @@ import 'package:play_hq/view_models/orders/active_orders_view_model/active_order
 import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
+import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
+import 'package:play_hq/view_models/profile/settings/settings_view_model.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
 import 'package:play_hq/view_models/sales/get_sales/i_fetch_sales_view_model.dart';
@@ -199,7 +201,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case SETTINGS_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => SettingsScreen(),
+        builder: (context) => ChangeNotifierProvider<SettingsViewModel>(
+            create: (context) => ISettingsViewModel(),
+            child: SettingsScreen()),
       );
     case NOTIFICATION_SCREEN:
       return MaterialPageRoute(

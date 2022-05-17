@@ -1,9 +1,9 @@
-import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 
 abstract class SaleRepository{
 
   Future<void> createSale(SalesPayload body);
 
-  Future<List<SalesPayload>> fetchActiveSales();
+  //Future<List<SalesPayload>> fetchActiveSales();
 
 }

@@ -25,6 +25,8 @@ abstract class CustomSearchModel with ChangeNotifier{
 
   void addGameToList(int index);
 
+  void addGameToSale(int index);
+
   GamePreferencesRequest get gameDetails;
 
   int get selectedGameCondition;

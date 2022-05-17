@@ -5,6 +5,7 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
@@ -26,6 +27,7 @@ class ICustomSearchModel extends CustomSearchModel{
   SearchRepository _searchGameAPI = locator<SearchRepository>();
 
   late GamePreferencesRequest _gameDetails;
+  late GameElement _saleElementDetails;
 
   int _selectedPlatform = 10;
   int _selectedPlatformId = 0;
@@ -149,7 +151,16 @@ class ICustomSearchModel extends CustomSearchModel{
     locator<NavigationService>().pop(args: _gameDetails);
   }
 
+
+
   @override
   GamePreferencesRequest get gameDetails => _gameDetails;
+
+  @override
+  void addGameToSale(int index) {
+    game = addGamesToModel(_searchedGames[index]);
+    _saleElementDetails = GameElement(game: game , status: _gameConditionSlug);
+    locator<NavigationService>().pop(args: _saleElementDetails);
+  }
 
 }

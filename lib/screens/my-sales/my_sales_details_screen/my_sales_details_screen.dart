@@ -4,7 +4,7 @@ import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/game_picker_details_widget.dart';
 
@@ -43,7 +43,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                       Container(
                         margin: EdgeInsets.only(left: 3),
                         child: Text(
-                          'My Sales ID: ${widget.salesPayload?.id}',
+                          'My Sales ID: ${widget.salesPayload?.price}',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 18,
@@ -63,11 +63,11 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                         return Container(
                           width: ScreenUtils.getDesignWidth(100),
                           child: GamePickerGames(
-                            gameName: widget.salesPayload?.games[index].game.title,
+                            gameName: widget.salesPayload?.gameElement![index].game!.title,
                             backgroundUrl:
-                                widget.salesPayload?.games[index].game.boxCover,
+                                widget.salesPayload?.gameElement![index].game!.boxCover,
                             releaseDate:
-                            game_conditions.firstWhere((element) => element['API_Slug'] == widget.salesPayload!.games[0].conditionId)['name']
+                            game_conditions.firstWhere((element) => element['API_Slug'] == widget.salesPayload!.gameElement![0].status)['name']
                           ),
                         );
                       },
@@ -76,7 +76,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                           width: 15,
                         );
                       },
-                      itemCount: widget.salesPayload?.games.length ?? 0,
+                      itemCount: widget.salesPayload?.gameElement!.length ?? 0,
                     ),
                   ),
                   Container(
@@ -93,7 +93,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                           ),
                         ),
                         Text(
-                          '${widget.salesPayload!.price.round()} \LKR',
+                          '${widget.salesPayload!.price} \LKR',
                           style: TextStyle(
                             color: Colors.lightGreenAccent,
                             fontSize: 14,
@@ -126,7 +126,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                           ),
                         ),
                         Text(
-                          "${popularConsoles.firstWhere((element) => element['id'] == widget.salesPayload!.games[0].platform)['name']}",
+                          "${popularConsoles.firstWhere((element) => element['id'] == widget.salesPayload!.gameElement![0])['name']}",
                           style: TextStyle(
                             color: SUB_TEXT_COLOR,
                             fontSize: 14,
@@ -197,7 +197,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                         ),
                         padding: const EdgeInsets.all(10),
                         child: SvgPicture.asset(
-                          widget.salesPayload!.negotiable ? TICK_MARK_ICON : CROSS_MARK_ICON,
+                          widget.salesPayload!.negotiable! ? TICK_MARK_ICON : CROSS_MARK_ICON,
                           color: Colors.white,
                           height: ScreenUtils.getDesignHeight(10.0),
                         ),

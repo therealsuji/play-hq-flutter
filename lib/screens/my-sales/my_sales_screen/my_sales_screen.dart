@@ -5,7 +5,7 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
 import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
@@ -104,12 +104,12 @@ class _MySalesScreenState extends State<MySalesScreen> {
         child: Column(
           children: [
             Row(
-                children: salesPayload.games.map((saleDetails) {
+                children: salesPayload.gameElement!.map((saleDetails) {
               return _gameCard(
-                  saleDetails.game,
+                  saleDetails.game!,
                   game_conditions
                       .where((element) =>
-                          element['API_Slug'] == saleDetails.conditionId)
+                          element['API_Slug'] == saleDetails.status)
                       .first['name']!);
             }).toList()),
             Container(
@@ -157,7 +157,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 ),
                 Spacer(),
                 Text(
-                  " ${popularConsoles.firstWhere((element) => element['id'] == salesPayload.games[0].platform)['name']}",
+                  " ${popularConsoles.firstWhere((element) => element['id'] == salesPayload.gameElement![0].game!.platforms![0])['name']}",
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
               ],

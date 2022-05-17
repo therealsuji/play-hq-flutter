@@ -2,7 +2,7 @@
 
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/models/sales/sales_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 
 import '../../../service_locator.dart';
@@ -24,12 +24,12 @@ class IMySalesViewModel extends MySalesViewModel {
     try{
       _eventBus.fire(LoadingEvent.show());
 
-      await _salesAPI.fetchActiveSales().then((value) {
-        if(value.length > 0){
-          _activeSales = value;
-          _eventBus.fire(LoadingEvent.hide());
-        }
-      });
+      // await _salesAPI.fetchActiveSales().then((value) {
+      //   if(value.length > 0){
+      //     _activeSales = value;
+      //     _eventBus.fire(LoadingEvent.hide());
+      //   }
+      // });
       notifyListeners();
     }catch(e){
       print(e);

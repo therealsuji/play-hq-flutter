@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<HomeScreenModel>(context, listen: false).getWishListGames();
+    //Provider.of<HomeScreenModel>(context, listen: false).getWishListGames();
   }
 
   @override
