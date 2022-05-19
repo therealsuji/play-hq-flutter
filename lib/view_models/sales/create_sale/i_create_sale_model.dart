@@ -53,7 +53,6 @@ class ICreateSaleModel extends CreateSaleModel {
   void createSale() async {
     if (_isFormValid) {
       locator<EventBus>().fire(LoadingEvent.show());
-      print("Game Status ${_selectedGames[0].status}");
       LocationModel location =
           LocationModel(address: "Something", lat: 123, long: 123);
       SalesPayload createSaleModel = SalesPayload(

@@ -204,6 +204,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                         CustomTextfieldWidget(
                           type: TextInputType.multiline,
                           hideText: false,
+                          onChanged: (String value) => val.setRemarks(value),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 40.0),

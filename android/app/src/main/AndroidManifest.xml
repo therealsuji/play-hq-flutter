@@ -7,13 +7,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
-        android:name="io.flutter.embedding.android.FlutterActivity"
-        android:label="Play HQ"
-        android:icon="@mipmap/ic_launcher">
+            android:name="${applicationName}"
+            android:label="Play HQ"
+            android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBowE9CgMXTZENG7qyemAH_FUpU9F19MNo"/>
         <activity
-            android:name=".MainActivity"
+            android:name="io.flutter.embedding.android.FlutterActivity"
             android:launchMode="singleTop"
             android:theme="@style/LaunchTheme"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"

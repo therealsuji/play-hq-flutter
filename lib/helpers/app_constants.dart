@@ -10,7 +10,7 @@ const List<Map<String, dynamic>> playStationPlatforms = [
 ];
 
 const List<Map<String , String>> game_conditions = [
-  {'name': 'Mint Condition' , 'API_Slug': 'MINT_SEALED'},
+  {'name': 'Mint Condition' , 'API_Slug': 'MINT'},
   {'name': 'Very New' , 'API_Slug': 'VERY_NEW'},
   {'name': 'Kinda Used' , 'API_Slug': 'KINDA_USED'},
   {'name': 'Playable' , 'API_Slug': 'PLAYABLE'},
