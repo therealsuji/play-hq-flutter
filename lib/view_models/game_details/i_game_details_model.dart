@@ -1,5 +1,6 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:intl/intl.dart';
+import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/game_details_models/game_details_model.dart';
 import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 import 'package:play_hq/models/game_status.dart';
@@ -8,6 +9,8 @@ import 'package:play_hq/repository/clients/game_details_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/game_details/game_details_model.dart';
+
+import '../../models/game_details_models/game_details_arguments.dart';
 
 class IGameDetailsModel extends GameDetailsModel {
 
@@ -108,22 +111,21 @@ class IGameDetailsModel extends GameDetailsModel {
   GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
 
   @override
-  void deleteLibraryGame(String id) async {
+  void deleteLibraryGame(int id) async {
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.deleteLibraryGame(id);
-    getGameStatus(id as int);
+    getGameStatus(id);
     _eventBus.fire(LoadingEvent.hide());
-    locator<NavigationService>().pop();
+    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: id));
   }
 
   @override
-  void deleteWishListGame(String id) async {
+  void deleteWishListGame(int id) async {
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.deleteWishListGame(id);
-    getGameStatus(id as int);
+    getGameStatus(id);
     _eventBus.fire(LoadingEvent.hide());
-
-    locator<NavigationService>().pop();
+    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN  , args: GameDetailsArguments(gameId: id));
   }
 
   @override

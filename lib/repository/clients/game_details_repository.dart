@@ -9,9 +9,9 @@ abstract class GameDetailsRepository {
 
   Future<void> setGameLibrary(Map<String, dynamic> body);
 
-  Future<void> deleteWishListGame(String id);
+  Future<void> deleteWishListGame(int id);
 
-  Future<void> deleteLibraryGame(String id);
+  Future<void> deleteLibraryGame(int id);
 
   Future<GameStatus> getGameStatus(int id);
 }

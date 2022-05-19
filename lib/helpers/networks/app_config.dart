@@ -74,9 +74,9 @@ class APIConfig {
 
   static String get addToLibrary => '$_baseUrl' + '/library-games';
 
-  static String deleteWishListGame(String id) => '$_baseUrl' + '/wish-list-games/$id';
+  static String deleteWishListGame(int id) => '$_baseUrl' + '/wish-list-games/$id';
 
-  static String deleteLibraryGame(String id) => '$_baseUrl' + '/wish-list-games/$id';
+  static String deleteLibraryGame(int id) => '$_baseUrl' + '/library-games/$id';
 
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';

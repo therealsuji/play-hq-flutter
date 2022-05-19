@@ -91,7 +91,7 @@ class GameDetailsDelegate extends GameDetailsRepository {
   }
 
   @override
-  Future<void> deleteLibraryGame(String id) async {
+  Future<void> deleteLibraryGame(int id) async {
     try{
       await _networkCalls.performRequest(APIConfig.deleteLibraryGame(id), HttpAction.DELETE);
     }
@@ -109,7 +109,7 @@ class GameDetailsDelegate extends GameDetailsRepository {
   }
 
   @override
-  Future<void> deleteWishListGame(String id) async {
+  Future<void> deleteWishListGame(int id) async {
     try{
       await _networkCalls.performRequest(APIConfig.deleteWishListGame(id), HttpAction.DELETE);
     }

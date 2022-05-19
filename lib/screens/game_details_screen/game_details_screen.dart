@@ -266,7 +266,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                  height: ScreenUtils.getDesignHeight(40.0),
                  textFontSize: 10.0,
                  width: double.infinity,
-                 onPressed: () {},
+                 onPressed: () {
+                   showAlertDialog(context, "Are you sure?", "Do you really want to remove your game from your library?", () {
+                     Provider.of<GameDetailsModel>(context, listen: false).deleteLibraryGame(widget.gameDetailsArguments!.gameId ?? 0);
+                   });
+                 },
                );
     }
     else if(status.wishList) {
@@ -276,7 +280,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         height: ScreenUtils.getDesignHeight(40.0),
         textFontSize: 10.0,
         width: double.infinity,
-        onPressed: () {},
+        onPressed: () {
+          showAlertDialog(context, "Are you sure?", "Do you really want to remove your game from your wishlist?", () {
+            Provider.of<GameDetailsModel>(context, listen: false).deleteWishListGame(widget.gameDetailsArguments!.gameId ?? 0);
+          });
+        },
       );
     }
     else {
@@ -651,6 +659,42 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context , String title , String message , VoidCallback clickedYes) {
+    // set up the button
+    Widget cancelButton = TextButton(
+      child: Text("No"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    Widget okButton = TextButton(
+      child: Text("Yes"),
+      onPressed: () {
+        clickedYes();
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(message),
+      actions: [
+        cancelButton,
+        okButton
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

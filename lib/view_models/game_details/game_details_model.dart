@@ -13,9 +13,9 @@ abstract class GameDetailsModel with ChangeNotifier {
 
   void addToWishList();
 
-  void deleteWishListGame(String id);
+  void deleteWishListGame(int id);
 
-  void deleteLibraryGame(String id);
+  void deleteLibraryGame(int id);
 
   void getGameStatus(int id);
 
