@@ -31,9 +31,10 @@ class IGameDetailsModel extends GameDetailsModel {
 
       await _gameDetailsApi.getGameDetails(id).then((model) {
         if(model != null){
-          print("Release Date " + model.gameDetails!.released!);
+          model.gameDetails!.platforms!.removeWhere((element) => element.id == 4);
           _gameDetailsModel = model.gameDetails!;
           _gameScreenshotModal = model.gameScreenshots!;
+          notifyListeners();
         }
       });
       await _gameDetailsApi.getGameStatus(id).then((model) {
@@ -54,45 +55,57 @@ class IGameDetailsModel extends GameDetailsModel {
   @override
   void addToLibrary() async {
 
+
     var body = {
       "game": {
         "title": _gameDetailsModel.nameOriginal,
-        "api_id": _gameDetailsModel.id,
-        "box_cover": _gameDetailsModel.backgroundImage,
+        "apiId": _gameDetailsModel.id,
+        "boxCover": _gameDetailsModel.backgroundImage,
+        "backgroundImage": _gameDetailsModel.backgroundImage,
+        "images": [],
         "platforms": _gameDetailsModel.platforms!.map((e) => e.id).toList(),
         "genres": _gameDetailsModel.genres!.map((e) => e.id).toList(),
-        "release_date": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
+        "releaseDate": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
       },
       "platform": _platformId
     };
+
+    print('body is $body');
 
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.setGameLibrary(body);
     _eventBus.fire(LoadingEvent.hide());
 
-    locator<NavigationService>().pop();
+    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: _gameDetailsModel.id));
   }
 
   @override
   void addToWishList() async {
 
+    print('releaseDate ' + _gameDetailsModel.released!);
+
     var body = {
       "game": {
         "title": _gameDetailsModel.nameOriginal,
-        "api_id": _gameDetailsModel.id,
-        "box_cover": _gameDetailsModel.backgroundImage,
+        "apiId": _gameDetailsModel.id,
+        "boxCover": _gameDetailsModel.backgroundImage,
+        "backgroundImage": _gameDetailsModel.backgroundImage,
+        "images": [],
         "platforms": _gameDetailsModel.platforms!.map((e) => e.id).toList(),
         "genres": _gameDetailsModel.genres!.map((e) => e.id).toList(),
-        "release_date": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
+        "releaseDate": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
       },
       "platform": _platformId
     };
+
+    print('Body ' + body.toString());
+
 
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.setGameWishList(body);
     _eventBus.fire(LoadingEvent.hide());
 
-    locator<NavigationService>().pop();
+    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: _gameDetailsModel.id));
   }
 
   @override
