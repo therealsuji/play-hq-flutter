@@ -22,7 +22,7 @@ class IHomeScreenModel extends HomeScreenModel {
   }
 
   @override
-  void getWishListGames() async{
+  void loadAPICalls() async{
 
     try{
       _eventBus.fire(LoadingEvent.show());

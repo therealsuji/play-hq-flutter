@@ -8,7 +8,7 @@ abstract class HomeScreenModel extends ChangeNotifier {
 
   int get carouselPageIndex;
 
-  void getWishListGames();
+  void loadAPICalls();
 
   List<SalesPayload> get wishListGames;
 }
