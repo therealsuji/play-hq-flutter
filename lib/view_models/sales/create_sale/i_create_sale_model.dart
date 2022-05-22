@@ -14,7 +14,7 @@ import '../../../models/sales/sales_payload_model.dart';
 
 class ICreateSaleModel extends CreateSaleModel {
   bool _isNegotiable = false;
-  int _price = 0;
+  double _price = 0;
   String _remarks = '';
   bool _isFormValid = false;
 
@@ -44,7 +44,7 @@ class ICreateSaleModel extends CreateSaleModel {
   bool get isNegotiable => _isNegotiable;
 
   @override
-  int get price => _price;
+  double get price => _price;
 
   @override
   String get remarks => _remarks;
@@ -124,7 +124,7 @@ class ICreateSaleModel extends CreateSaleModel {
   }
 
   @override
-  void setPrice(int value) {
+  void setPrice(double value) {
     _price = value;
     validateForm();
     notifyListeners();

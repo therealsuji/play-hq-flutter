@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
-import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
-
 import '../../../models/sales/sales_payload_model.dart';
 
 abstract class CreateSaleModel with ChangeNotifier {
-  int get price;
+  double get price;
 
   bool get isNegotiable;
 
@@ -22,7 +18,7 @@ abstract class CreateSaleModel with ChangeNotifier {
 
   void validateForm();
 
-  void setPrice(int value);
+  void setPrice(double value);
 
   void setIsNegotiable(bool value);
 

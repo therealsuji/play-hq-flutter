@@ -3,9 +3,6 @@ import 'dart:convert';
 import 'package:play_hq/models/common_models/game_model.dart';
 import '../common_models/location_model.dart';
 
-
-import 'dart:convert';
-
 SalesPayload salesPayloadFromJson(String str) => SalesPayload.fromJson(json.decode(str));
 
 String salesPayloadToJson(SalesPayload data) => json.encode(data.toJson());
@@ -18,11 +15,13 @@ class SalesPayload {
     this.negotiable,
     this.remarks,
     this.location,
+    this.finalPrice,
   });
 
 
   List<GameElement>? gameElement;
-  int? price;
+  double? price;
+  double? finalPrice;
   int? platform;
   bool? negotiable;
   String? remarks;
@@ -35,6 +34,7 @@ class SalesPayload {
     negotiable: json["negotiable"],
     remarks: json["remarks"],
     location: LocationModel.fromJson(json["location"]),
+    finalPrice: json['finalPrice'],
   );
 
   Map<String, dynamic> toJson() => {

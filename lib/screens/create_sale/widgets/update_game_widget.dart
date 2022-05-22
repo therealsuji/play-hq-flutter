@@ -83,9 +83,8 @@ class _UpdateGameBottomSheetState extends State<UpdateGameBottomSheet> {
               Container(
                 margin: EdgeInsets.only(top: 30),
                 child: CustomButton(
-                  buttonText: 'Update Game Details', gradient: GREEN_GRADIENT, onPressed: () {showAlertDialog(context, 'Update Condition?', 'You sure you want to change the games condition??', (){
-                    Provider.of<CreateSaleModel>(context, listen: false).updateGame(widget.id!);
-                  });
+                  buttonText: 'Update Game Details', gradient: GREEN_GRADIENT, onPressed: () {
+                  Provider.of<CreateSaleModel>(context, listen: false).updateGame(widget.id!);
                 },),
               ),
             ],
