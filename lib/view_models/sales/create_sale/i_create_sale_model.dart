@@ -56,7 +56,7 @@ class ICreateSaleModel extends CreateSaleModel {
       LocationModel location =
           LocationModel(address: "Something", lat: 123, long: 123);
       SalesPayload createSaleModel = SalesPayload(
-          gameElement: _selectedGames,
+          gameList: _selectedGames,
           platform: _platformId,
           location: location,
           price: _price,

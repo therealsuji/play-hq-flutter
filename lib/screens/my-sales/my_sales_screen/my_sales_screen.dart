@@ -104,7 +104,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
         child: Column(
           children: [
             Row(
-                children: salesPayload.gameElement!.map((saleDetails) {
+                children: salesPayload.gameList!.map((saleDetails) {
               return _gameCard(
                   saleDetails.game!,
                   game_conditions
@@ -157,7 +157,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 ),
                 Spacer(),
                 Text(
-                  " ${popularConsoles.firstWhere((element) => element['id'] == salesPayload.gameElement![0].game!.platforms![0])['name']}",
+                  " ${popularConsoles.firstWhere((element) => element['id'] == salesPayload.gameList![0].game!.platforms![0])['name']}",
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
               ],
