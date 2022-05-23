@@ -45,8 +45,12 @@ class APIConfig {
   }
 
   static String getNewReleases(DateFilter dateFilter) {
-    return '$_rawgAPI' + '/games?dates=${dateFilter.year}-${dateFilter.startMonth}-01,${dateFilter.year}-${dateFilter.endMonth}-25' +
-        '&key=$_RAWG_API_KEY';
+    return '$_rawgAPI' + '/games?dates=${dateFilter.year}-02-01,${dateFilter.year}-${dateFilter.endMonth}-25' +
+        '&page_size=9&key=$_RAWG_API_KEY';
+  }
+
+  static String getFPSGames(){
+    return '$_rawgAPI' + '/games?dates=2019-09-01,2021-09-30&page_size=9&genres=2&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
   /// Urls needed from the PlayHQ Backend

@@ -16,6 +16,8 @@ enum PlatformSelection { PlayStation, Xbox, Nintendo }
 
 enum GameCondition { MINT_SEALED, VERY_NEW, KINDA_USED, PLAYABLE }
 
+enum DiscoverCategory { TOP_RATED_GAMES, MOST_ANTICIPATED_GAMES, GAMES_OF_2022 }
+
 enum OrderTrack { AWAITING, DELIVERING, RECEIVED }
 
 enum AlertType {CONFIRMATION, SUCCESS, ERROR , GENERAL}

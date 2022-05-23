@@ -37,5 +37,4 @@ class _DialogManagerState extends State<DialogManager> {
             _dialogService.dialogComplete(AlertResponse(confirmed: false)),
         onPressed: request.onPressed).show();
   }
-
 }

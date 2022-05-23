@@ -1,5 +1,7 @@
 import 'package:play_hq/helpers/app_colors.dart';
 
+import 'app_enums.dart';
+
 const List<Map<String, dynamic>> playStationPlatforms = [
   {'id': 187, 'name': 'PlayStation 5'},
   {'id': 18, 'name': 'PlayStation 4'},
@@ -24,9 +26,9 @@ const List<Map<String, dynamic>> xboxPlatforms = [
 ];
 
 const List<Map<String, dynamic>> discoverComponents = [
-  {'name': 'Top Rated Games', 'gradient': GRADIENT_COMPONENT_1 , 'imagePath': '' ,},
-  {'name': 'Most Anticipated Games', 'gradient': GRADIENT_COMPONENT_2 , 'imagePath': '' ,},
-  {'name': 'Games of 2022', 'gradient': GRADIENT_COMPONENT_3 , 'imagePath': '' ,}
+  {'name': 'Top Rated Games', 'gradient': GRADIENT_COMPONENT_1 , 'imagePath': 'assets/images/discovery_category_1.png' , 'category' : DiscoverCategory.TOP_RATED_GAMES},
+  {'name': 'Most Anticipated Games', 'gradient': GRADIENT_COMPONENT_2 , 'imagePath': 'assets/images/discovery_category_2.png' , 'category' : DiscoverCategory.MOST_ANTICIPATED_GAMES},
+  {'name': 'Games of 2022', 'gradient': GRADIENT_COMPONENT_3 , 'imagePath': 'assets/images/discovery_category_3.png' , 'category' : DiscoverCategory.GAMES_OF_2022},
 ];
 
 const List<Map<String, dynamic>> testerGames = [

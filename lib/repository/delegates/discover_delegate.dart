@@ -40,4 +40,25 @@ class DiscoverDelegate implements DiscoverRepository {
       );
     }
   }
+
+  @override
+  Future<RawgGameDetails> fetchFPSGames() async {
+    try{
+      var response = await _networkCalls.performRequest(APIConfig.getFPSGames(), HttpAction.GET);
+      return compute(rawgGameDetailsFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
 }

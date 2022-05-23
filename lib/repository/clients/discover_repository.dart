@@ -9,4 +9,6 @@ abstract class DiscoverRepository{
 
   Future<RawgGameDetails> fetchNewlyReleasedGames(DateFilter date);
 
+  Future<RawgGameDetails> fetchFPSGames();
+
 }

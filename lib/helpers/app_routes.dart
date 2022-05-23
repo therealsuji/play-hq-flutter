@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/screens/game_lists/game_list_screen.dart';
 import 'package:play_hq/screens/my-sales/my_sales_details_screen/my_sales_details_screen.dart';
 import 'package:play_hq/screens/my-sales/my_sales_screen/my_sales_screen.dart';
 import 'package:play_hq/screens/order_details/order_details_screen.dart';
@@ -226,6 +227,10 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           create: (context) => ISalesDetailsViewModel(),
           child: MySalesDetailsScreen(salesPayload: settings.arguments as SalesPayload,),
         ),
+      );
+    case GAME_LIST_SCREEN:
+      return MaterialPageRoute(
+        builder: (context) => GameListScreen(),
       );
     default:
       return MaterialPageRoute(
