@@ -10,6 +10,7 @@ import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 
+import '../../models/sales/my_sales_payload.dart';
 import '../../service_locator.dart';
 
 class SaleDelegate extends SaleRepository{
@@ -37,27 +38,27 @@ class SaleDelegate extends SaleRepository{
     }
   }
 
-  // @override
-  // Future<List<SalesPayload>> fetchActiveSales() async {
-  //   try {
-  //     var response = await _networkCalls.performRequest(
-  //         APIConfig.fetchAllActiveSales, HttpAction.GET);
-  //     return compute(salesPayloadFromJson, response.body);
-  //   } on TimeoutException {
-  //     locator<ErrorManager>().setError(PlayHQTimeoutException());
-  //     throw PlayHQTimeoutException();
-  //   } on SocketException {
-  //     locator<ErrorManager>().setError(PlayHQSocketException());
-  //     throw PlayHQSocketException();
-  //   } catch (e) {
-  //     locator<ErrorManager>().setError(PlayHQGeneralException(
-  //       errorText: e.toString(),
-  //     ));
-  //     throw PlayHQGeneralException(
-  //       errorText: e.toString(),
-  //     );
-  //   }
-  // }
+  @override
+  Future<MySalesPayload> fetchActiveSales() async {
+    try {
+      var response = await _networkCalls.performRequest(
+          APIConfig.fetchAllActiveSales, HttpAction.GET);
+      return compute(mySalesPayloadFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
 
 
 }

@@ -24,15 +24,16 @@ class IMySalesViewModel extends MySalesViewModel {
     try{
       _eventBus.fire(LoadingEvent.show());
 
-      // await _salesAPI.fetchActiveSales().then((value) {
-      //   if(value.length > 0){
-      //     _activeSales = value;
-      //     _eventBus.fire(LoadingEvent.hide());
-      //   }
-      // });
+      await _salesAPI.fetchActiveSales().then((value) {
+        if(value.saleItems!.length > 0){
+          _activeSales = value.saleItems!;
+          _eventBus.fire(LoadingEvent.hide());
+        }
+      });
       notifyListeners();
     }catch(e){
       print(e);
+      _eventBus.fire(LoadingEvent.hide());
     }
   }
 

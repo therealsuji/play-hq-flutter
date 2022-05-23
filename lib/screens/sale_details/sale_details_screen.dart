@@ -6,7 +6,6 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/sale_details/widgets/sale_details_bottom_sheet.dart';
-import 'package:play_hq/view_models/sale_details/sale_details_model.dart';
 import 'package:play_hq/widgets/custom_app_bar_widget.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
@@ -151,7 +150,7 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
                           ),
                           CustomButton(
                             buttonText: "Buy Now",
-                            onPressed: () => _openBottomSheet(),
+                            // onPressed: () => _openBottomSheet(),
                             gradient: PRIMARY_GRADIENT,
                             width: ScreenUtils.getDesignWidth(110.0),
                             height: ScreenUtils.getDesignHeight(40.0),
@@ -363,18 +362,18 @@ class _SaleDetailsScreenState extends State<SaleDetailsScreen> {
     );
   }
 
-  Future<void> _openBottomSheet() async {
-    SaleDetailsModel model = Provider.of<SaleDetailsModel>(context, listen: false);
-    await showModalBottomSheet<void>(
-      isDismissible: false,
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return ChangeNotifierProvider.value(
-          value: model,
-          child: SaleDetailsBottomSheet(),
-        );
-      },
-    );
-  }
+  // Future<void> _openBottomSheet() async {
+  //   SaleDetailsModel model = Provider.of<SaleDetailsModel>(context, listen: false);
+  //   await showModalBottomSheet<void>(
+  //     isDismissible: false,
+  //     context: context,
+  //     isScrollControlled: true,
+  //     builder: (context) {
+  //       return ChangeNotifierProvider.value(
+  //         value: model,
+  //         child: SaleDetailsBottomSheet(),
+  //       );
+  //     },
+  //   );
+  // }
 }

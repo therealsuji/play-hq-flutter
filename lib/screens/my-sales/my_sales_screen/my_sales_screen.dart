@@ -197,7 +197,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                   Container(
                     margin: EdgeInsets.only(right: 15),
                     child: Text(
-                      "DELETE GAME",
+                      "DELETE SALE",
                       style: Theme.of(context)
                           .primaryTextTheme
                           .headline4!

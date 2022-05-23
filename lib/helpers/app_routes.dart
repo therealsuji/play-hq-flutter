@@ -116,10 +116,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case SALE_DETAILS_ROUTE:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<SaleDetailsModel>(
-          create: (context) => ISaleDetailsModel(),
-          child: SaleDetailsScreen(),
-        ),
+        builder: (context) => SaleDetailsScreen(),
       );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
