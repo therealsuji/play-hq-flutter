@@ -17,19 +17,19 @@ class RawgGameDetails {
   int? count;
   String? next;
   String? previous;
-  List<Result>? results;
+  List<GameResults>? results;
 
   factory RawgGameDetails.fromJson(Map<String, dynamic> json) => RawgGameDetails(
     count: json["count"],
     next: json["next"],
     previous: json["previous"],
-    results: List<Result>.from(json["results"].map((x) => Result.fromJson(x))),
+    results: List<GameResults>.from(json["results"].map((x) => GameResults.fromJson(x))),
   );
 
 }
 
-class Result {
-  Result({
+class GameResults {
+  GameResults({
     this.id,
     this.name,
     this.released,
@@ -45,7 +45,7 @@ class Result {
   String? backgroundImage;
   double? rating;
 
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
+  factory GameResults.fromJson(Map<String, dynamic> json) => GameResults(
     id: json["id"],
     name: json["name"],
     released: json["released"],

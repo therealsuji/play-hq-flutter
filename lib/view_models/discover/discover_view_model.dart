@@ -6,8 +6,8 @@ abstract class DiscoverViewModel extends ChangeNotifier {
 
   void performAPIs();
 
-  List<Result> get newlyReleasedGames;
+  List<GameResults> get newlyReleasedGames;
 
-  List<Result> get fpsGames;
+  List<GameResults> get fpsGames;
 
 }

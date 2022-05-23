@@ -17,8 +17,8 @@ class IDiscoverViewModel extends DiscoverViewModel{
   final _discoverAPI = locator<DiscoverRepository>();
   final _eventBus = locator<EventBus>();
 
-  List<Result> _newlyReleasedGames = [];
-  List<Result> _fpsGames = [];
+  List<GameResults> _newlyReleasedGames = [];
+  List<GameResults> _fpsGames = [];
 
   @override
   void performAPIs() async{
@@ -54,9 +54,9 @@ class IDiscoverViewModel extends DiscoverViewModel{
   }
 
   @override
-  List<Result> get newlyReleasedGames => _newlyReleasedGames;
+  List<GameResults> get newlyReleasedGames => _newlyReleasedGames;
 
   @override
-  List<Result> get fpsGames => _fpsGames;
+  List<GameResults> get fpsGames => _fpsGames;
 
 }

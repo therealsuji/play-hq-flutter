@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/game_lists/game_list_screen.dart';
@@ -14,6 +15,8 @@ import 'package:play_hq/view_models/authentication/authentication_model.dart';
 import 'package:play_hq/view_models/authentication/i_authentication_model.dart';
 import 'package:play_hq/view_models/discover/discover_view_model.dart';
 import 'package:play_hq/view_models/discover/i_discover_view_model.dart';
+import 'package:play_hq/view_models/game_lists/game_list_view_model.dart';
+import 'package:play_hq/view_models/game_lists/i_game_list_view_model.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
@@ -230,7 +233,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case GAME_LIST_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => GameListScreen(),
+        builder: (context) => ChangeNotifierProvider<GameListViewModel>(
+            create: (context) => IGameListViewModel(),
+            child: GameListScreen(gameListArguments: settings.arguments as GameListArguments,)),
       );
     default:
       return MaterialPageRoute(

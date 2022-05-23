@@ -53,6 +53,18 @@ class APIConfig {
     return '$_rawgAPI' + '/games?dates=2019-09-01,2021-09-30&page_size=9&genres=2&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
+  static String getTopRatedGames(){
+    return '$_rawgAPI' + '/games?dates=2018-01-01,2022-12-31&ordering=-rating&ordering=-added' + '&key=$_RAWG_API_KEY';
+  }
+
+  static String getUpcomingGames(){
+    return '$_rawgAPI' + '/games?dates=2022-06-01,2026-12-31&ordering=-added' + '&key=$_RAWG_API_KEY';
+  }
+
+  static String getGamesOf2022(){
+    return '$_rawgAPI' + '/games?dates=2022-01-01,2022-12-31&ordering=-added' + '&key=$_RAWG_API_KEY';
+  }
+
   /// Urls needed from the PlayHQ Backend
   //authenticate user
   static String login = '$_baseUrl' + "/auth/firebase";

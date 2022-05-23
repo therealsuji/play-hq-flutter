@@ -5,6 +5,7 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/discover/discover_view_model.dart';
@@ -207,7 +208,8 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 discoverComponents[index]['name'],
                 discoverComponents[index]['gradient'],
                 discoverComponents[index]['imagePath'],
-                discoverComponents[index]['category']
+                discoverComponents[index]['category'],
+                discoverComponents[index]['apiType'],
             );
           },
           separatorBuilder: (context, index) {
@@ -224,9 +226,9 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   Widget _categoryItem(
-      String categoryName, LinearGradient gradient, String imagePath , DiscoverCategory category) {
+      String categoryName, LinearGradient gradient, String imagePath , DiscoverCategory category , GameLists apiType) {
     return GestureDetector(
-      onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN),
+      onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN , args: GameListArguments(screenTitle: categoryName , apiType: apiType)),
       child: Container(
         height: ScreenUtils.getDesignHeight(180),
         width: ScreenUtils.getDesignWidth(156),
