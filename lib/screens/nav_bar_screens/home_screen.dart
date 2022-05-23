@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
-import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_assets.dart';
@@ -26,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    //Provider.of<HomeScreenModel>(context, listen: false).getWishListGames();
+    Provider.of<HomeScreenModel>(context, listen: false).loadAPICalls();
   }
 
   @override

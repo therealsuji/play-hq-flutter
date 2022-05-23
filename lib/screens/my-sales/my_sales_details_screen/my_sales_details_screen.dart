@@ -63,11 +63,11 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                         return Container(
                           width: ScreenUtils.getDesignWidth(100),
                           child: GamePickerGames(
-                            gameName: widget.salesPayload?.gameElement![index].game!.title,
+                            gameName: widget.salesPayload?.gameList![index].game!.title,
                             backgroundUrl:
-                                widget.salesPayload?.gameElement![index].game!.boxCover,
+                                widget.salesPayload?.gameList![index].game!.boxCover,
                             releaseDate:
-                            game_conditions.firstWhere((element) => element['API_Slug'] == widget.salesPayload!.gameElement![0].status)['name']
+                            game_conditions.firstWhere((element) => element['API_Slug'] == widget.salesPayload!.gameList![0].status)['name']
                           ),
                         );
                       },
@@ -76,7 +76,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                           width: 15,
                         );
                       },
-                      itemCount: widget.salesPayload?.gameElement!.length ?? 0,
+                      itemCount: widget.salesPayload?.gameList!.length ?? 0,
                     ),
                   ),
                   Container(
@@ -126,7 +126,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                           ),
                         ),
                         Text(
-                          "${popularConsoles.firstWhere((element) => element['id'] == widget.salesPayload!.gameElement![0])['name']}",
+                          "${popularConsoles.firstWhere((element) => element['id'] == widget.salesPayload!.gameList![0])['name']}",
                           style: TextStyle(
                             color: SUB_TEXT_COLOR,
                             fontSize: 14,

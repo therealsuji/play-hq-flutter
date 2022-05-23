@@ -114,7 +114,7 @@ class _CreateSaleScreenState extends State<CreateSaleScreen> {
                             hintText: "Enter the price",
                             suffixText: 'LKR',
                             onChanged: (value) => value != ""
-                                ? model.setPrice(int.parse(value))
+                                ? model.setPrice(double.parse(value))
                                 : model.setPrice(0),
                           );
                         }),
