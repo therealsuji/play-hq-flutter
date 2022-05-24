@@ -368,7 +368,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context , int index){
-                    return ActiveGameSalesWidget(salesPayload: val.wishListGames[index]);
+                    return GestureDetector(
+                        onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.wishListGames[index]),
+                        child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index]));
                   }, itemCount: val.wishListGames.length,),
                 );
               },

@@ -4,7 +4,7 @@ export 'package:play_hq/screens/custom_map_screen/custom_map_screen.dart';
 export 'package:play_hq/screens/custom_search_screen/main_search_screen.dart';
 export 'package:play_hq/screens/order_tracking_screens/order_tracking_screen.dart';
 export 'package:play_hq/screens/payment/payment_screen.dart';
-export 'package:play_hq/screens/sale_details/sale_details_screen.dart';
+export 'package:play_hq/screens/sale_details/game_sale_details_screen.dart';
 export 'package:play_hq/screens/trades/create_trade_screen.dart';
 export 'package:play_hq/screens/game_details_screen/game_details_screen.dart';
 export 'package:play_hq/screens/main_screen/main_screen.dart';

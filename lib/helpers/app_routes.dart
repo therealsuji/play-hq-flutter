@@ -116,7 +116,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case SALE_DETAILS_ROUTE:
       return MaterialPageRoute(
-        builder: (context) => SaleDetailsScreen(),
+        builder: (context) => GameSaleDetailsScreen(),
       );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
@@ -234,6 +234,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             create: (context) => IGameListViewModel(),
             child: GameListScreen(gameListArguments: settings.arguments as GameListArguments,)),
       );
+      case GAME_SALE_DETAILS_SCREEN:
+        return MaterialPageRoute(
+          builder: (context) => GameSaleDetailsScreen(gameSalePayload: settings.arguments as SalesPayload,),
+        );
+
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(
