@@ -39,10 +39,10 @@ class SaleDelegate extends SaleRepository{
   }
 
   @override
-  Future<MySalesPayload> fetchActiveSales() async {
+  Future<MySalesPayload> fetchMyActiveSales() async {
     try {
       var response = await _networkCalls.performRequest(
-          APIConfig.fetchAllActiveSales, HttpAction.GET);
+          APIConfig.fetchMyActiveSales, HttpAction.GET);
       return compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());

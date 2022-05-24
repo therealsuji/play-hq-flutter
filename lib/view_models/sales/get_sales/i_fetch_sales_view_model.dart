@@ -24,7 +24,7 @@ class IMySalesViewModel extends MySalesViewModel {
     try{
       _eventBus.fire(LoadingEvent.show());
 
-      await _salesAPI.fetchActiveSales().then((value) {
+      await _salesAPI.fetchMyActiveSales().then((value) {
         if(value.saleItems!.length > 0){
           _activeSales = value.saleItems!;
           _eventBus.fire(LoadingEvent.hide());

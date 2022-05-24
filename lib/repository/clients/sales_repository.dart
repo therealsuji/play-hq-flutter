@@ -5,6 +5,6 @@ abstract class SaleRepository{
 
   Future<void> createSale(SalesPayload body);
 
-  Future<MySalesPayload> fetchActiveSales();
+  Future<MySalesPayload> fetchMyActiveSales();
 
 }
