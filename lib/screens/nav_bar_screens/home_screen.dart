@@ -16,6 +16,8 @@ import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:play_hq/widgets/raised_gradient_button_widget.dart';
 
+import '../../widgets/custom_game_widget.dart';
+
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -310,30 +312,31 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            // Consumer<HomeScreenModel>(
-            //   builder: (_, model, __) {
-            //     return SingleChildScrollView(
-            //       scrollDirection: Axis.horizontal,
-            //       child: Row(
-            //         children: model.wishListGames.map((e) {
-            //           return Padding(
-            //             padding: EdgeInsets.only(
-            //               top: ScreenUtils.getDesignHeight(20.0),
-            //               left: model.wishListGames.indexOf(e) == 0 ? ScreenUtils.getDesignWidth(24.0)
-            //                   : ScreenUtils.getDesignWidth(15.0),
-            //             ),
-            //             child: GamesWidget(
-            //               gameName: e.games.first.game.title,
-            //               releaseDate: e.price.toString(),
-            //               backgroundUrl: e.games.first.game.boxCover,
-            //               gradient: GREEN_GRADIENT,
-            //             ),
-            //           );
-            //         }).toList(),
-            //       ),
-            //     );
-            //   }
-            // ),
+            Consumer<HomeScreenModel>(
+              builder: (_, val, __) {
+                return Container(
+                  margin: EdgeInsets.only(left: 24, top: 15),
+                  height:ScreenUtils.getDesignHeight(140),
+                  child: ListView.separated(
+                    separatorBuilder: (_, __) => SizedBox(
+                      width: ScreenUtils.getDesignHeight(15.0),
+                    ),
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context , int index){
+                      return GestureDetector(
+                        onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.soloGames[index]),
+                        child: GamesWidget(
+                          gameName: val.soloGames[index].gameList?[0].game!.title,
+                          price: val.soloGames[index].price.toString(),
+                          backgroundUrl: val.soloGames[index].gameList?[0].game!.boxCover,
+                          gradient: GREEN_GRADIENT,
+                        ),
+                      );
+                    }, itemCount: val.soloGames.length,),
+                );
+              },
+            ),
             _learnMoreContainer(),
             Container(
               margin: EdgeInsets.only(

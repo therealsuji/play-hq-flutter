@@ -26,6 +26,7 @@ class GamesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: ScreenUtils.getDesignWidth(99.0),
+      height: ScreenUtils.getDesignHeight(160),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(3.0),
         child: Stack(
@@ -38,7 +39,7 @@ class GamesWidget extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.cover,
                     image: NetworkImage(
-                      backgroundUrl!,
+                      backgroundUrl ?? 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
                     ),
                   ),
                 ),

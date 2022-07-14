@@ -11,4 +11,6 @@ abstract class HomeScreenModel extends ChangeNotifier {
   void loadAPICalls();
 
   List<SalesPayload> get wishListGames;
+
+  List<SalesPayload> get soloGames;
 }

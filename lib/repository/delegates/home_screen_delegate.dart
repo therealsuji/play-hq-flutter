@@ -38,4 +38,30 @@ class HomeDelegate implements HomeRepository {
       );
     }
   }
+
+  @override
+  Future<PagedResult<SalesPayload>> getSoloGames() async{
+    try {
+      var response =
+          await _networkCalls.performRequest(APIConfig.fetchSoloGames(), HttpAction.GET);
+      var sales = await compute(listSalesPayloadFromJson, response.body);
+      PagedResult<SalesPayload> result = await PagedResult(sales, response.body).getResult();
+      return result;
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
+
+
 }

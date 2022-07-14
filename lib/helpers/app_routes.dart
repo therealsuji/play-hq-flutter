@@ -236,7 +236,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
       case GAME_SALE_DETAILS_SCREEN:
         return MaterialPageRoute(
-          builder: (context) => GameSaleDetailsScreen(gameSalePayload: settings.arguments as SalesPayload,),
+          builder: (context) => ChangeNotifierProvider<SalesDetailsViewModel>(
+              create: (context) => ISalesDetailsViewModel(),
+              child: GameSaleDetailsScreen(gameSalePayload: settings.arguments as SalesPayload,)),
         );
 
     default:

@@ -90,12 +90,18 @@ class APIConfig {
 
   static String get addToLibrary => '$_baseUrl' + '/library-games';
 
+  static String get orders => '$_baseUrl' + '/orders';
+
   static String deleteWishListGame(int id) => '$_baseUrl' + '/wish-list-games/$id';
 
   static String deleteLibraryGame(int id) => '$_baseUrl' + '/library-games/$id';
 
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';
+  }
+
+  static String fetchSoloGames(){
+    return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';
   }
 
   static String getLibraryGames() {
