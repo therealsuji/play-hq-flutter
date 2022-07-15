@@ -13,4 +13,6 @@ abstract class HomeScreenModel extends ChangeNotifier {
   List<SalesPayload> get wishListGames;
 
   List<SalesPayload> get soloGames;
+
+  List<SalesPayload> get bundleGames;
 }

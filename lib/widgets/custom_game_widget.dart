@@ -12,12 +12,16 @@ class GamesWidget extends StatelessWidget {
   final String? price;
   final Color? color;
   final Gradient? gradient;
+  final double? height;
+  final double? width;
 
   GamesWidget({
     this.gameName,
     this.releaseDate,
     this.backgroundUrl,
     this.color,
+    this.height = 160,
+    this.width = 100,
     this.price,
     this.gradient,
   });
@@ -25,16 +29,16 @@ class GamesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: ScreenUtils.getDesignWidth(99.0),
-      height: ScreenUtils.getDesignHeight(160),
+      width: ScreenUtils.getDesignWidth(width!),
+      height: ScreenUtils.getDesignHeight(height!),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(3.0),
         child: Stack(
           children: [
             Positioned.fill(
               child: Container(
-                width: ScreenUtils.getDesignWidth(105.0),
-                height: ScreenUtils.getDesignHeight(160.0),
+                width: ScreenUtils.getDesignWidth(width!),
+                height: ScreenUtils.getDesignHeight(height!),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
@@ -48,8 +52,8 @@ class GamesWidget extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: Container(
-                width: ScreenUtils.getDesignWidth(105.0),
-                height: ScreenUtils.getDesignHeight(160.0),
+                width: ScreenUtils.getDesignWidth(width!),
+                height: ScreenUtils.getDesignHeight(height!),
                 padding: EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
@@ -63,7 +67,7 @@ class GamesWidget extends StatelessWidget {
             Positioned(
               bottom: 0.0,
               child: Container(
-                width: ScreenUtils.getDesignWidth(105.0),
+                width: ScreenUtils.getDesignWidth(width!),
                 padding: EdgeInsets.only(left: 9.0, bottom: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

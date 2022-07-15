@@ -7,4 +7,7 @@ abstract class HomeRepository {
   Future<PagedResult<SalesPayload>> getSalesFromWishList();
 
   Future<PagedResult<SalesPayload>> getSoloGames();
+
+  Future<PagedResult<SalesPayload>> getBundleGames();
+
 }

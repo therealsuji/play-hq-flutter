@@ -12,10 +12,10 @@ class IHomeScreenModel extends HomeScreenModel {
   final _homeApi = locator<HomeRepository>();
   final _eventBus = locator<EventBus>();
 
-
   int _carouselPageIndex = 0;
   List<SalesPayload> _wishListGames = [];
   List<SalesPayload> _soloGames = [];
+  List<SalesPayload> _bundleGames = [];
 
   @override
   void onCarouselPageChanged(int index) {
@@ -28,24 +28,25 @@ class IHomeScreenModel extends HomeScreenModel {
 
     try{
       _eventBus.fire(LoadingEvent.show());
-
       await _homeApi.getSalesFromWishList().then((value) {
         if(value.data.length > 0){
           _wishListGames = value.data;
         }
       });
-
       await _homeApi.getSoloGames().then((val){
         if(val.data.length > 0){
           _soloGames = val.data;
         }
-        print("First Game ${_soloGames[0].gameList?[0].game!.title}");
-        _eventBus.fire(LoadingEvent.hide());
-        notifyListeners();
       });
-
+      await _homeApi.getBundleGames().then((game) {
+        if(game.data.length > 0){
+          _bundleGames = game.data;
+        }
+        notifyListeners();
+        _eventBus.fire(LoadingEvent.hide());
+      });
     }catch(e){
-      print(e);
+      print("Error Given " + e.toString());
       _eventBus.fire(LoadingEvent.hide());
     }
   }
@@ -58,4 +59,7 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   List<SalesPayload> get soloGames => _soloGames;
+
+  @override
+  List<SalesPayload> get bundleGames => _bundleGames;
 }

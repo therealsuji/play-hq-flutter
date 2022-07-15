@@ -104,6 +104,10 @@ class APIConfig {
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';
   }
 
+  static String fetchBundleGames(){
+    return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=bundle';
+  }
+
   static String getLibraryGames() {
     return '$_baseUrl' + '/library-games';
   }

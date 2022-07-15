@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
+import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_assets.dart';
@@ -27,6 +30,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
     Provider.of<HomeScreenModel>(context, listen: false).loadAPICalls();
   }
 
@@ -389,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     "Game Bundles",
-                    style: Theme.of(context).primaryTextTheme.headline4,
+                    style: Theme.of(context).primaryTextTheme.headline3,
                   ),
                   GradientText(
                     "View All",
@@ -399,7 +408,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            _gameBundlesContainer(),
+            Consumer<HomeScreenModel>(
+              builder: (_, game, __) {
+                return Container(
+                  margin: EdgeInsets.only(left: 24, top: 15 , right: game.bundleGames.length > 1 ? 0 : 24),
+                  height:ScreenUtils.getDesignHeight(380),
+                  width: ScreenUtils.bodyWidth,
+                  child: ListView.separated(
+                    separatorBuilder: (_, __) => SizedBox(
+                      width: ScreenUtils.getDesignHeight(15.0),
+                    ),
+                    padding: EdgeInsets.zero,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context , int index){
+                      return _gameBundlesContainer(game.bundleGames[index]);
+                    }, itemCount: game.bundleGames.length,),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -617,121 +643,101 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _gameBundlesContainer() {
+  Widget _gameBundlesContainer(SalesPayload salesPayload) {
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: ScreenUtils.getDesignHeight(15.0),
-        horizontal: ScreenUtils.getDesignWidth(24.0),
       ),
-      height: ScreenUtils.getDesignHeight(222.0),
-      child: Stack(
+      width: ScreenUtils.getDesignWidth(327),
+      decoration: BoxDecoration(
+        color: MAIN_CONTAINER_COLOR,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Container(
-            padding: EdgeInsets.only(
-              top: ScreenUtils.getDesignHeight(15.0),
-              left: ScreenUtils.getDesignWidth(12.0),
-              right: ScreenUtils.getDesignWidth(12.0),
-            ),
-            height: ScreenUtils.getDesignHeight(198.0),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: MAIN_CONTAINER_COLOR,
-              borderRadius: BorderRadius.circular(5.0),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  width: ScreenUtils.getDesignWidth(92.0),
-                  height: ScreenUtils.getDesignHeight(127.0),
-                  color: Colors.amber,
-                ),
-                Container(
-                  width: ScreenUtils.getDesignWidth(92.0),
-                  height: ScreenUtils.getDesignHeight(127.0),
-                  color: Colors.amber,
-                ),
-                Container(
-                  width: ScreenUtils.getDesignWidth(92.0),
-                  height: ScreenUtils.getDesignHeight(127.0),
-                  color: Colors.amber,
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            left: ScreenUtils.getDesignWidth(12.0),
-            right: ScreenUtils.getDesignWidth(12.0),
-            bottom: 0.0,
+          Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: ScreenUtils.getDesignWidth(10.0),
+              padding: EdgeInsets.only(
+                top: ScreenUtils.getDesignHeight(15.0),
+                left: ScreenUtils.getDesignWidth(12.0),
+                right: ScreenUtils.getDesignWidth(12.0),
               ),
-              height: ScreenUtils.getDesignHeight(65.0),
               decoration: BoxDecoration(
                 color: MAIN_CONTAINER_COLOR,
                 borderRadius: BorderRadius.circular(5.0),
-                border: Border.all(
-                  color: SUB_TEXT_COLOR.withOpacity(0.6),
-                  width: 1.5,
-                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Bundle Price",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .headline4!
-                            .copyWith(
-                              fontSize: 10.0,
-                            ),
-                      ),
-                      GradientText(
-                        "5200.00 LKR",
-                        gradient: GREEN_GRADIENT,
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .headline4!
-                            .copyWith(
-                              fontSize: 16.0,
-                            ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(
-                          right: ScreenUtils.getDesignWidth(24.0),
-                        ),
-                        color: SUB_TEXT_COLOR.withOpacity(0.4),
-                        height: ScreenUtils.getDesignHeight(41.0),
-                        width: ScreenUtils.getDesignWidth(1.0),
-                      ),
-                      CustomButton(
-                        height: ScreenUtils.getDesignHeight(33.0),
-                        width: ScreenUtils.getDesignWidth(94.0),
-                        buttonText: "View Deal",
-                        gradient: PRIMARY_GRADIENT,
-                        textFontSize: 10.0,
-                        onPressed: () {
-                          Navigator.pushNamed(context, SALE_DETAILS_ROUTE);
-                        },
-                      ),
-                    ],
-                  ),
-                ],
+              child: Container(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: salesPayload.gameList!.map((e) {
+                    return GamesWidget(
+                      height: 130,
+                      width: 90,
+                      gameName: e.game!.title,
+                      price: e.status,
+                      backgroundUrl: e.game!.boxCover,
+                      gradient: PRIMARY_GRADIENT,
+                    );
+                  }).toList(),
+                ),
               ),
             ),
           ),
+          Container(
+            margin: EdgeInsets.only(top: 15 , left: 15, right: 15 , bottom: 30),
+            height: 1.5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+              gradient: PRIMARY_GRADIENT
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                CustomTextWidget("Platform" , isDynamic: false, style: Theme.of(context).primaryTextTheme.headline3, ),
+                Spacer(),
+                CustomTextWidget(platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name'] ?? 'Not Found', isDynamic: false, style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),)
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 20 , left: 15, right: 15 , bottom: 20),
+            height: 1.5,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                color: SUB_TEXT_COLOR
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              children: [
+                CustomTextWidget("Price" , isDynamic: false, style: Theme.of(context).primaryTextTheme.headline3, ),
+                Spacer(),
+                GradientText(salesPayload.price.toString() , gradient: GREEN_GRADIENT , style: Theme.of(context).primaryTextTheme.headline4,)
+              ],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 15 , vertical: 25),
+            child: Row(
+              children: [
+                Spacer(),
+                Container(
+                  height: ScreenUtils.getDesignHeight(40),
+                  width: ScreenUtils.getDesignWidth(100),
+                  decoration: BoxDecoration(
+                    gradient: PRIMARY_GRADIENT,
+                    borderRadius: BorderRadius.circular(5)
+                  ),
+                  child: Center(child: Text('More Details' , style: TextStyle(fontWeight: FontWeight.w500 , color: Colors.white),)),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );
