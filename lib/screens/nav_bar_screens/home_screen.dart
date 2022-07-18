@@ -333,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context , int index){
-                      return GestureDetector(
+                      return val.soloGames.length != 0 ? GestureDetector(
                         onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.soloGames[index]),
                         child: GamesWidget(
                           gameName: val.soloGames[index].gameList?[0].game!.title,
@@ -341,6 +341,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           backgroundUrl: val.soloGames[index].gameList?[0].game!.boxCover,
                           gradient: GREEN_GRADIENT,
                         ),
+                      ) : Center(
+                        child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
                       );
                     }, itemCount: val.soloGames.length,),
                 );
@@ -380,9 +382,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context , int index){
-                    return GestureDetector(
+                    return val.bundleGames.length != 0 ? GestureDetector(
                         onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.wishListGames[index]),
-                        child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index]));
+                        child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index])) : Center(
+                      child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
+                      );;
                   }, itemCount: val.wishListGames.length,),
                 );
               },
@@ -421,7 +425,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context , int index){
-                      return _gameBundlesContainer(game.bundleGames[index]);
+                      return game.bundleGames.length != 0 ? _gameBundlesContainer(game.bundleGames[index]) : Center(
+                        child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
+                      );
                     }, itemCount: game.bundleGames.length,),
                 );
               },

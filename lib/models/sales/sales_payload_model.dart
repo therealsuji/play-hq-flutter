@@ -80,14 +80,28 @@ class GameElement {
 }
 
 class Seller {
-  Seller({this.avatar, this.rating, this.id});
+  Seller(
+      {this.avatar,
+      this.rating,
+      this.id,
+      this.displayName,
+      this.address,
+      this.phoneNumber});
 
   String? avatar;
   double? rating;
   String? id;
+  String? displayName;
+  String? address;
+  String? phoneNumber;
 
-  factory Seller.fromJson(Map<String, dynamic> json) =>
-      Seller(avatar: json["avatar"], rating: json["rating"], id: json['id']);
+  factory Seller.fromJson(Map<String, dynamic> json) => Seller(
+      avatar: json["avatar"],
+      rating: json["rating"],
+      id: json['id'],
+      displayName: json['displayName'],
+      address: json['adddress'],
+      phoneNumber: json['phone']);
 
   Map<String, dynamic> toJson() => {
         "avatar": avatar,

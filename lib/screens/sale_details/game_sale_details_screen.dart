@@ -134,7 +134,7 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Seller Name", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text("Thenuka Perera", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                      child: Text(widget.gameSalePayload!.seller!.displayName ?? 'Not Mentioned', style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
                                 ],
                               ),
                             ),
@@ -146,7 +146,7 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Address", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text("${widget.gameSalePayload!.location!.address}", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                      child: Text("${widget.gameSalePayload!.seller!.address ?? "Not mentioned"}", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
                                 ],
                               ),
                             ),
@@ -158,10 +158,11 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Ratings", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text("${widget.gameSalePayload!.seller!.rating.toString()}", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                      child: Text((widget.gameSalePayload!.seller!.rating ?? "No ratings yet").toString(), style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
                                 ],
                               ),
                             ),
+                            CustomButton(buttonText: 'View Profile')
                           ],
                         ),
                       ),

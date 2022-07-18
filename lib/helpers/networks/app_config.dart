@@ -100,6 +100,8 @@ class APIConfig {
     return '$_baseUrl' + '/wish-list-games';
   }
 
+  static String getOrdersForSale(String saleId) => '$_baseUrl' + '/orders/orders-for-sale/$saleId';
+
   static String fetchSoloGames(){
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';
   }

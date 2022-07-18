@@ -21,6 +21,8 @@ import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
+import 'package:play_hq/view_models/orders/order_requests/i_order_request_view_model.dart';
+import 'package:play_hq/view_models/orders/order_requests/order_request_view_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
 import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
@@ -37,7 +39,8 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/view_models.dart';
 
-ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
+ISetupPurchaseAccountModel _implSetupPurchaseAccount =
+    ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -73,7 +76,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameDetailsModel>(
           create: (context) => IGameDetailsModel(),
-          child: GameDetailsScreen(gameDetailsArguments: settings.arguments as GameDetailsArguments),),
+          child: GameDetailsScreen(
+              gameDetailsArguments: settings.arguments as GameDetailsArguments),
+        ),
       );
     case CREATE_TRADE_SCREEN:
       return MaterialPageRoute(
@@ -81,18 +86,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case PURCHASE_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => MultiProvider(
-            providers: [
-          ChangeNotifierProvider<SetupPurchaseAccountModel>(
-            create: (context) => ISetupPurchaseAccountModel(),
-          ),
-          ChangeNotifierProvider<CreateSaleModel>(
-            create: (context) => ICreateSaleModel(),
-          ),
-        ],
-        child: SetupPurchaseAccountScreen(),
-        )
-      );
+          builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<SetupPurchaseAccountModel>(
+                    create: (context) => ISetupPurchaseAccountModel(),
+                  ),
+                  ChangeNotifierProvider<CreateSaleModel>(
+                    create: (context) => ICreateSaleModel(),
+                  ),
+                ],
+                child: SetupPurchaseAccountScreen(),
+              ));
     case CREATE_SALE_ROUTE:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
@@ -120,17 +124,17 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case SALES_ACCOUNT_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => MultiProvider(providers: [
-          ChangeNotifierProvider<SetupSalesViewModel>(
-            create: (context) => _implSetupSales,
-          ),
-          ChangeNotifierProvider<CreateSaleModel>(
-            create: (context) => ICreateSaleModel(),
-          ),
-        ],
-          child: SetupSalesAccountScreen(),
-        )
-      );
+          builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<SetupSalesViewModel>(
+                    create: (context) => _implSetupSales,
+                  ),
+                  ChangeNotifierProvider<CreateSaleModel>(
+                    create: (context) => ICreateSaleModel(),
+                  ),
+                ],
+                child: SetupSalesAccountScreen(),
+              ));
     case CREATE_TRADE_SCREEN:
       return MaterialPageRoute(
         builder: (context) => CreateTradeScreen(),
@@ -203,8 +207,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case SETTINGS_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SettingsViewModel>(
-            create: (context) => ISettingsViewModel(),
-            child: SettingsScreen()),
+            create: (context) => ISettingsViewModel(), child: SettingsScreen()),
       );
     case NOTIFICATION_SCREEN:
       return MaterialPageRoute(
@@ -223,23 +226,35 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case MY_SALES_DETAILS_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<SalesDetailsViewModel>(
-          create: (context) => ISalesDetailsViewModel(),
-          child: MySalesDetailsScreen(salesPayload: settings.arguments as SalesPayload,),
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<SalesDetailsViewModel>(
+                create: (context) => ISalesDetailsViewModel()),
+            ChangeNotifierProvider<OrderRequestViewModel>(
+                create: (context) => IOrderRequestsViewModel()
+            )
+          ],
+          child: MySalesDetailsScreen(
+            salesPayload: settings.arguments as SalesPayload,
+          ),
         ),
       );
     case GAME_LIST_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameListViewModel>(
             create: (context) => IGameListViewModel(),
-            child: GameListScreen(gameListArguments: settings.arguments as GameListArguments,)),
+            child: GameListScreen(
+              gameListArguments: settings.arguments as GameListArguments,
+            )),
       );
-      case GAME_SALE_DETAILS_SCREEN:
-        return MaterialPageRoute(
-          builder: (context) => ChangeNotifierProvider<SalesDetailsViewModel>(
-              create: (context) => ISalesDetailsViewModel(),
-              child: GameSaleDetailsScreen(gameSalePayload: settings.arguments as SalesPayload,)),
-        );
+    case GAME_SALE_DETAILS_SCREEN:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<SalesDetailsViewModel>(
+            create: (context) => ISalesDetailsViewModel(),
+            child: GameSaleDetailsScreen(
+              gameSalePayload: settings.arguments as SalesPayload,
+            )),
+      );
 
     default:
       return MaterialPageRoute(

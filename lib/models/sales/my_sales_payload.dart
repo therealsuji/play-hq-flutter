@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 
+import '../common_models/metadata_model.dart';
+
 
 MySalesPayload mySalesPayloadFromJson(String str) => MySalesPayload.fromJson(json.decode(str));
 

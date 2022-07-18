@@ -23,14 +23,14 @@ class ActiveOrdersWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: orderDetails!.games!.length < 3
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.spaceBetween,
-              children: orderDetails!.games!.map((game) {
-                return _gameCard(game);
-              }).toList(),
-            ),
+            // Row(
+            //   mainAxisAlignment: orderDetails!.games!.length < 3
+            //       ? MainAxisAlignment.start
+            //       : MainAxisAlignment.spaceBetween,
+            //   children: orderDetails!.games!.map((game) {
+            //     return _gameCard(game);
+            //   }).toList(),
+            // ),
             Container(
               margin: EdgeInsets.only(top: 15),
               child: Row(
@@ -52,7 +52,8 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          '${orderDetails!.price}',
+                          //'${orderDetails!.price}',
+                          'Price',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -80,7 +81,8 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          '${orderDetails!.dueDate}',
+                          //'${orderDetails!.dueDate}',
+                          'Date',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -160,72 +162,72 @@ class ActiveOrdersWidget extends StatelessWidget {
     );
   }
 
-  Widget _gameCard(Game gameDetails) {
-    return Container(
-      margin: EdgeInsets.only(
-        right: orderDetails!.games!.length < 3
-            ? ScreenUtils.getDesignWidth(15)
-            : 0,
-      ),
-      height: ScreenUtils.getDesignHeight(120),
-      width: ScreenUtils.getDesignWidth(90),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage('${gameDetails.coverImage}'),
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: Stack(
-        children: [
-          Container(
-            height: ScreenUtils.getDesignHeight(120),
-            width: ScreenUtils.getDesignWidth(90),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              gradient: LinearGradient(
-                colors: [Colors.black, Colors.transparent],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-              ),
-            ),
-          ),
-          Container(
-            height: ScreenUtils.getDesignHeight(120),
-            width: ScreenUtils.getDesignWidth(90),
-            margin: EdgeInsets.symmetric(
-              horizontal: ScreenUtils.getDesignHeight(10),
-              vertical: ScreenUtils.getDesignHeight(10),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  child: Text(
-                    '${gameDetails.name}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    '${gameDetails.releaseDate}',
-                    style: TextStyle(
-                      color: PRIMARY_COLOR,
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  // Widget _gameCard(Game gameDetails) {
+  //   return Container(
+  //     margin: EdgeInsets.only(
+  //       right: orderDetails!.games!.length < 3
+  //           ? ScreenUtils.getDesignWidth(15)
+  //           : 0,
+  //     ),
+  //     height: ScreenUtils.getDesignHeight(120),
+  //     width: ScreenUtils.getDesignWidth(90),
+  //     decoration: BoxDecoration(
+  //       image: DecorationImage(
+  //         image: NetworkImage('${gameDetails.coverImage}'),
+  //         fit: BoxFit.cover,
+  //       ),
+  //       borderRadius: BorderRadius.circular(5),
+  //     ),
+  //     child: Stack(
+  //       children: [
+  //         Container(
+  //           height: ScreenUtils.getDesignHeight(120),
+  //           width: ScreenUtils.getDesignWidth(90),
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(5),
+  //             gradient: LinearGradient(
+  //               colors: [Colors.black, Colors.transparent],
+  //               begin: Alignment.bottomCenter,
+  //               end: Alignment.topCenter,
+  //             ),
+  //           ),
+  //         ),
+  //         Container(
+  //           height: ScreenUtils.getDesignHeight(120),
+  //           width: ScreenUtils.getDesignWidth(90),
+  //           margin: EdgeInsets.symmetric(
+  //             horizontal: ScreenUtils.getDesignHeight(10),
+  //             vertical: ScreenUtils.getDesignHeight(10),
+  //           ),
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               Container(
+  //                 child: Text(
+  //                   '${gameDetails.name}',
+  //                   style: TextStyle(
+  //                     color: Colors.white,
+  //                     fontSize: 10,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ),
+  //               Container(
+  //                 child: Text(
+  //                   '${gameDetails.releaseDate}',
+  //                   style: TextStyle(
+  //                     color: PRIMARY_COLOR,
+  //                     fontSize: 10,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 }

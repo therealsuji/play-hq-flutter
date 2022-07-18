@@ -1,62 +1,78 @@
-// To parse this JSON data, do
-//
-//     final orders = ordersFromJson(jsonString);
+
 
 import 'dart:convert';
 
-List<OrdersModel> ordersFromJson(String str) => List<OrdersModel>.from(json.decode(str).map((x) => OrdersModel.fromJson(x)));
+import 'package:play_hq/models/common_models/metadata_model.dart';
+import 'package:play_hq/models/common_models/ordering_user.dart';
+
+OrdersModel ordersModelFromJson(String str) => OrdersModel.fromJson(json.decode(str));
+
+String ordersModelToJson(OrdersModel data) => json.encode(data.toJson());
 
 class OrdersModel {
   OrdersModel({
-    this.games,
-    this.price,
-    this.platform,
-    this.type,
-    this.status,
-    this.dueDate
+    this.data,
+    this.meta,
   });
 
-  List<Game>? games;
-  String? price;
-  String? platform;
-  String? type;
-  String? status;
-  String? dueDate;
+  List<Order>? data;
+  MetaData? meta;
 
   factory OrdersModel.fromJson(Map<String, dynamic> json) => OrdersModel(
-    games: List<Game>.from(json["games"].map((x) => Game.fromJson(x))),
-    price: json["price"],
-    platform: json["platform"],
-    type: json["type"],
-    status: json["status"],
-    dueDate: json["due_date"],
+    data: List<Order>.from(json["data"].map((x) => Order.fromJson(x))),
+    meta: MetaData.fromJson(json["meta"]),
   );
+
+  Map<String, dynamic> toJson() => {
+    "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+    "meta": meta!.toJson(),
+  };
 }
 
-class Game {
-  Game({
+class Order {
+  Order({
     this.id,
-    this.name,
-    this.releaseDate,
-    this.coverImage,
+    this.deliveryDate,
+    this.buyer,
+    this.seller,
+    this.saleId,
+    this.orderDate,
+    this.status,
+    this.saleType,
+    this.proposedPrice,
   });
 
-  int? id;
-  String? name;
-  String? releaseDate;
-  String? coverImage;
+  String? id;
+  dynamic deliveryDate;
+  OrderingUser? buyer;
+  OrderingUser? seller;
+  String? saleId;
+  DateTime? orderDate;
+  String? status;
+  String? saleType;
+  dynamic proposedPrice;
 
-  factory Game.fromJson(Map<String, dynamic> json) => Game(
+  factory Order.fromJson(Map<String, dynamic> json) => Order(
     id: json["id"],
-    name: json["name"],
-    releaseDate: json["releaseDate"],
-    coverImage: json["coverImage"],
+    deliveryDate: json["deliveryDate"],
+    buyer: OrderingUser.fromJson(json["buyer"]),
+    seller: OrderingUser.fromJson(json["seller"]),
+    saleId: json["saleId"],
+    orderDate: DateTime.parse(json["orderDate"]),
+    status: json["status"],
+    saleType: json["saleType"],
+    proposedPrice: json["proposedPrice"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": name,
-    "releaseDate": releaseDate,
-    "coverImage": coverImage,
+    "deliveryDate": deliveryDate,
+    "buyer": buyer!.toJson(),
+    "seller": seller!.toJson(),
+    "saleId": saleId,
+    "orderDate": orderDate!.toIso8601String(),
+    "status": status,
+    "saleType": saleType,
+    "proposedPrice": proposedPrice,
   };
 }
