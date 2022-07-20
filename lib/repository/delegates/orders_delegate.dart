@@ -21,17 +21,25 @@ class OrdersDelegate extends OrdersRepository{
 
 
   @override
-  Future<List<OrdersModel>> fetchAllActiveOrders() async {
-    try{
-
-      List<OrdersModel> testerOrderMap = [];
-
-      testerOrders.map((e) => testerOrderMap.add(OrdersModel.fromJson(e))).toList();
-
-      return Future.value(testerOrderMap);
-
-    }catch(e){
-      throw UnimplementedError();    }
+  Future<OrdersModel> fetchAllActiveSalesOrders() async {
+    try {
+      var response = await _networkCalls.performRequest(
+          APIConfig.fetchAllActiveSaleOrders(), HttpAction.GET);
+      return compute(ordersModelFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
   }
 
   @override
@@ -91,6 +99,28 @@ class OrdersDelegate extends OrdersRepository{
       locator<ErrorManager>().setError(PlayHQGeneralException(
         errorText: e.toString(),
       ));
+    }
+  }
+
+  @override
+  Future<OrdersModel> fetchAllActivePurchaseOrders() async{
+    try {
+      var response = await _networkCalls.performRequest(
+          APIConfig.fetchAllActivePurchaseOrders(), HttpAction.GET);
+      return compute(ordersModelFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
     }
   }
 

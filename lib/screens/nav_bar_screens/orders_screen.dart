@@ -22,7 +22,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<ActiveOrdersViewModel>().fetchActiveOrders();
+    context.read<ActiveOrdersViewModel>().fetchAllActiveOrders();
   }
 
 
@@ -91,57 +91,66 @@ class _OrdersScreenState extends State<OrdersScreen> {
             ],
           ),
         ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
-          decoration: BoxDecoration(
-            color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
-            borderRadius: BorderRadius.circular(3),
-          ),
-          height: ScreenUtils.getDesignHeight(40),
-          width: double.infinity,
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                    width: ScreenUtils.getDesignWidth(75),
-                    decoration: BoxDecoration(
-                        gradient: PRIMARY_GRADIENT,
-                        borderRadius: BorderRadius.circular(3.0)),
-                    child: Center(
-                      child: Text(
-                        'Purchases',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 10,
+        Consumer<ActiveOrdersViewModel>(
+          builder: (_ , val , __){
+            return Container(
+              margin: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(3),
+              ),
+              height: ScreenUtils.getDesignHeight(40),
+              width: double.infinity,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Container(
+                        width: ScreenUtils.getDesignWidth(75),
+                        decoration: BoxDecoration(
+                            gradient: val.page == 0 ? PRIMARY_GRADIENT : null,
+                            color: val.page == 0 ? null : MAIN_CONTAINER_COLOR.withOpacity(0.6),
+                            borderRadius: BorderRadius.circular(3.0)),
+                        child: Center(
+                          child: Text(
+                            'Purchases',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 10,
+                            ),
+                          ),
+                        )),
+                    flex: 1,
+                  ),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: val.page == 0 ? null : PRIMARY_GRADIENT,
+                          color: val.page == 0 ? MAIN_CONTAINER_COLOR.withOpacity(0.6) : null,
+                          borderRadius: BorderRadius.circular(5)),
+                      child: Center(
+                        child: Text(
+                          'Sales',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10,
+                          ),
                         ),
                       ),
-                    )),
-                flex: 1,
-              ),
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      borderRadius: BorderRadius.circular(5)),
-                  child: Center(
-                    child: Text(
-                      'Sales',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 10,
-                      ),
                     ),
+                    flex: 1,
                   ),
-                ),
-                flex: 1,
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
         Expanded(
           child: PageView(
+            physics: ScrollPhysics(),
+            onPageChanged: (val){
+              Provider.of<ActiveOrdersViewModel>(context , listen: false).pageChanged(val);
+            },
             children: [_purchases(), _sales()],
           ),
         ),
@@ -152,43 +161,50 @@ class _OrdersScreenState extends State<OrdersScreen> {
   Widget _purchases() {
     return Column(
       children: [
-        Container(
-          height: ScreenUtils.getDesignHeight(55),
-          width: double.infinity,
-          color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 24),
-            child: Center(
-              child: Row(children: [
-                CustomTextWidget(
-                  'Active Purchases',
-                  isDynamic: false,
-                  width: ScreenUtils.getDesignWidth(100),
-                  style: Theme.of(context).primaryTextTheme.headline2,
-                ),
-                Container(
-                    height: 20,
-                    width: 20,
-                    margin:
-                        EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: PRIMARY_GRADIENT,
+        Consumer<ActiveOrdersViewModel>(
+          builder: (_ , val , __){
+            return  Container(
+              height: ScreenUtils.getDesignHeight(55),
+              width: double.infinity,
+              color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                child: Center(
+                  child: Row(children: [
+                    CustomTextWidget(
+                      'Active Purchases',
+                      isDynamic: false,
+                      width: ScreenUtils.getDesignWidth(100),
+                      style: Theme.of(context).primaryTextTheme.headline2,
                     ),
-                    child: Center(
-                      child: Text(
-                        '2',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )),
-                Spacer(),
-              ]),
-            ),
-          ),
+                    Visibility(
+                      visible: val.activePurchaseOrderList.isEmpty ? false : true,
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          margin:
+                          EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: PRIMARY_GRADIENT,
+                          ),
+                          child: Center(
+                            child: Text(
+                              val.activePurchaseOrderList.length.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          )),
+                    ),
+                    Spacer(),
+                  ]),
+                ),
+              ),
+            );
+          },
         ),
         Expanded(
           child: Container(
@@ -199,7 +215,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       return ActiveOrdersWidget(
-                        orderDetails: model.activeOrderList[index],
+                        orderDetails: model.activePurchaseOrderList[index],
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
@@ -207,7 +223,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                         height: 15,
                       );
                     },
-                    itemCount: model.activeOrderList.length);
+                    itemCount: model.activePurchaseOrderList.length);
               },
             ),
           ),
@@ -218,7 +234,75 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
   Widget _sales() {
     return Column(
-      children: [],
+      children: [
+        Consumer<ActiveOrdersViewModel>(
+          builder: (_ , val , __){
+            return  Container(
+              height: ScreenUtils.getDesignHeight(55),
+              width: double.infinity,
+              color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 24),
+                child: Center(
+                  child: Row(children: [
+                    CustomTextWidget(
+                      'Active Sales',
+                      isDynamic: false,
+                      width: ScreenUtils.getDesignWidth(70),
+                      style: Theme.of(context).primaryTextTheme.headline2,
+                    ),
+                    Visibility(
+                      visible: val.activeSaleOrderList.isEmpty ? false : true,
+                      child: Container(
+                          height: 20,
+                          width: 20,
+                          margin:
+                          EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: PRIMARY_GRADIENT,
+                          ),
+                          child: Center(
+                            child: Text(
+                              val.activeSaleOrderList.length.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                            ),
+                          )),
+                    ),
+                    Spacer(),
+                  ]),
+                ),
+              ),
+            );
+          },
+        ),
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(left: 24 , right: 24 , top: 15),
+            child: Consumer<ActiveOrdersViewModel>(
+              builder: (_ , model, __){
+                return ListView.separated(
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ActiveOrdersWidget(
+                        orderDetails: model.activeSaleOrderList[index],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(
+                        height: 15,
+                      );
+                    },
+                    itemCount: model.activeSaleOrderList.length);
+              },
+            ),
+          ),
+        )
+      ],
     );
   }
 }

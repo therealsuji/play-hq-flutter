@@ -106,7 +106,7 @@ class APIConfig {
 
   static String getOrdersForSale(String saleId) => '$_baseUrl' + '/orders/orders-for-sale/$saleId';
 
-  static String fetchAllActiveSaleOrders() => '_$_baseUrl' + '/orders?type=sale&status=ACCEPTED';
+  static String fetchAllActiveSaleOrders() => '$_baseUrl' + '/orders?type=sale&status=ACCEPTED';
 
   static String fetchAllActivePurchaseOrders() => '$_baseUrl' + '/orders?type=purchase&status=ACCEPTED';
 

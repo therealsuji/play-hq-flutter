@@ -5,8 +5,14 @@ import 'package:play_hq/models/orders_model/orders.dart';
 
 abstract class ActiveOrdersViewModel with ChangeNotifier{
 
-  List<OrdersModel> get activeOrderList;
+  List<Order> get activeSaleOrderList;
 
-  void fetchActiveOrders();
+  List<Order> get activePurchaseOrderList;
+
+  void pageChanged(int index);
+
+  int get page;
+
+  void fetchAllActiveOrders();
 
 }

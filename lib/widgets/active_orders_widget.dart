@@ -6,7 +6,7 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
 
 class ActiveOrdersWidget extends StatelessWidget {
-  final OrdersModel? orderDetails;
+  final Order? orderDetails;
 
   const ActiveOrdersWidget({Key? key, this.orderDetails}) : super(key: key);
 
@@ -52,8 +52,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          //'${orderDetails!.price}',
-                          'Price',
+                          '${orderDetails!.proposedPrice}',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -81,8 +80,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          //'${orderDetails!.dueDate}',
-                          'Date',
+                          '${orderDetails!.deliveryDate}',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
