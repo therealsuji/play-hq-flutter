@@ -56,4 +56,42 @@ class OrdersDelegate extends OrdersRepository{
     }
   }
 
+  @override
+  Future<void> acceptPurchaseRequest(String id) async{
+    try{
+      await _networkCalls.performRequest(APIConfig.acceptPurchaseRequest(id), HttpAction.GET);
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      print('error ' + e.toString());
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+    }
+  }
+
+  @override
+  Future<void> rejectPurchaseRequest(String id) async{
+    try{
+      await _networkCalls.performRequest(APIConfig.rejectPurchaseRequest(id), HttpAction.GET);
+    }
+    on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+    }
+    on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+    }
+    catch(e){
+      print('error ' + e.toString());
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+    }
+  }
+
 }

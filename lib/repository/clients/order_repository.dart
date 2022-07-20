@@ -8,4 +8,8 @@ abstract class OrdersRepository {
 
   Future<OrdersModel> fetchOrder(String id);
 
+  Future<void> acceptPurchaseRequest(String id);
+
+  Future<void> rejectPurchaseRequest(String id);
+
 }

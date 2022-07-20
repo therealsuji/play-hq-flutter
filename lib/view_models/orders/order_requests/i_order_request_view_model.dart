@@ -2,6 +2,7 @@
 
 
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/src/widgets/scroll_controller.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/repository/clients/order_repository.dart';
 import 'package:play_hq/view_models/orders/order_requests/order_request_view_model.dart';
@@ -16,6 +17,10 @@ class IOrderRequestsViewModel extends OrderRequestViewModel {
   // API Calls and Loading Overlay
   final _eventBus = locator<EventBus>();
   final _ordersAPI = locator<OrdersRepository>();
+
+  ScrollController _scrollController = new ScrollController();
+
+  bool _atEdge = false;
 
   @override
   void getOrderRequests(String saleId) async{
@@ -37,5 +42,45 @@ class IOrderRequestsViewModel extends OrderRequestViewModel {
 
   @override
   List<Order> get orderRequests => _ordersModel;
+
+  @override
+  void acceptPurchaseRequest(String id) async{
+    try{
+      _eventBus.fire(LoadingEvent.show());
+
+      await _ordersAPI.acceptPurchaseRequest(id).then((value) {
+        _eventBus.fire(LoadingEvent.hide());
+      });
+      notifyListeners();
+    }catch(e){
+      print(e);
+      _eventBus.fire(LoadingEvent.hide());
+    }
+  }
+
+  @override
+  void rejectPurchaseRequest(String id) async{
+    try{
+      _eventBus.fire(LoadingEvent.show());
+
+      await _ordersAPI.rejectPurchaseRequest(id).then((value) {
+        _eventBus.fire(LoadingEvent.hide());
+      });
+      notifyListeners();
+    }catch(e){
+      print(e);
+      _eventBus.fire(LoadingEvent.hide());
+    }
+  }
+
+  @override
+  // TODO: implement atEdge
+  bool get atEdge => _atEdge;
+
+  @override
+  void checkEdge(bool position) {
+    _atEdge = position;
+    notifyListeners();
+  }
 
 }

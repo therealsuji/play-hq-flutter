@@ -100,7 +100,15 @@ class APIConfig {
     return '$_baseUrl' + '/wish-list-games';
   }
 
+  static String acceptPurchaseRequest(String id) => '$_baseUrl' + '/orders/update-status/seller/$id/ACCEPTED';
+
+  static String rejectPurchaseRequest(String id) => '$_baseUrl' + '/orders/update-status/seller/$id/REJECTED';
+
   static String getOrdersForSale(String saleId) => '$_baseUrl' + '/orders/orders-for-sale/$saleId';
+
+  static String fetchAllActiveSaleOrders() => '_$_baseUrl' + '/orders?type=sale&status=ACCEPTED';
+
+  static String fetchAllActivePurchaseOrders() => '$_baseUrl' + '/orders?type=purchase&status=ACCEPTED';
 
   static String fetchSoloGames(){
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';

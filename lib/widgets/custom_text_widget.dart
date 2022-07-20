@@ -36,10 +36,13 @@ class CustomTextWidget extends StatelessWidget {
             width: width,
             child: FittedBox(
               fit: BoxFit.fitWidth,
-              child: Text(
-                text,
-                style: style,
-                textAlign: align == null ? TextAlign.start : align,
+              child: Container(
+                constraints: BoxConstraints(minHeight: 5 , minWidth: 5),
+                child: Text(
+                  text,
+                  style: style,
+                  textAlign: align == null ? TextAlign.start : align,
+                ),
               ),
             ),
           );

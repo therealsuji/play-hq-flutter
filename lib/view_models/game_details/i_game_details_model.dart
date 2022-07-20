@@ -99,6 +99,7 @@ class IGameDetailsModel extends GameDetailsModel {
     };
 
     print('Body ' + body.toString());
+    print('Platform ${_platformId.toString()}');
 
 
     _eventBus.fire(LoadingEvent.show());
