@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class OrderDetailsBody extends StatefulWidget {
-  const OrderDetailsBody({Key? key}) : super(key: key);
+class GameDetailsBody extends StatefulWidget {
+  const GameDetailsBody({Key? key}) : super(key: key);
 
   @override
-  _OrderDetailsBodyState createState() => _OrderDetailsBodyState();
+  _GameDetailsBodyState createState() => _GameDetailsBodyState();
 }
 
-class _OrderDetailsBodyState extends State<OrderDetailsBody> {
+class _GameDetailsBodyState extends State<GameDetailsBody> {
   @override
   Widget build(BuildContext context) {
     return Container(

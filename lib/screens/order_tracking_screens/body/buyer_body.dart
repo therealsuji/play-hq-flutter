@@ -63,7 +63,7 @@ class _BuyerBodyState extends State<BuyerBody> {
             top: ScreenUtils.getDesignHeight(120.0),
           ),
           child: CustomButton(
-            buttonText: "I want to Cancel",
+            buttonText: "Complete Order",
             gradient: PRIMARY_GRADIENT,
             textFontSize: 14.0,
           ),

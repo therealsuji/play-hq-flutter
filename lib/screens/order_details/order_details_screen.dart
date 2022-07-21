@@ -6,6 +6,7 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/order_details/body/billing_body.dart';
 import 'package:play_hq/screens/order_details/body/game_list_body.dart';
 import 'package:play_hq/screens/order_details/body/order_details_body.dart';
+import 'package:play_hq/view_models/orders/order_details_view_model/order_details_view_model.dart';
 import 'package:play_hq/view_models/view_models.dart' show EndedOrderModel;
 import 'package:provider/provider.dart';
 
@@ -64,7 +65,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 color: MAIN_CONTAINER_COLOR,
                 borderRadius: BorderRadius.circular(3.0),
               ),
-              child: Selector<EndedOrderModel, EndedOrderType>(
+              child: Selector<OrderDetailsViewModel, EndedOrderType>(
                   selector: (_, m) => m.bodyType,
                   builder: (_, bodyType, __) {
                     return Row(
@@ -87,16 +88,16 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
               ),
             ),
             Expanded(
-              child: Selector<EndedOrderModel, EndedOrderType>(
+              child: Selector<OrderDetailsViewModel, EndedOrderType>(
                 selector: (_, m) => m.bodyType,
                 builder: (_, type, __) {
                   switch (type) {
                     case EndedOrderType.ORDER_DETAILS:
-                      return OrderDetailsBody();
+                      return OrderListBody();
                     case EndedOrderType.BILLING:
                       return BillingBody();
                     case EndedOrderType.GAME_LIST:
-                      return GameListBody();
+                      return GameDetailsBody();
                     default:
                       return Container();
                   }
@@ -123,13 +124,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           child: Center(
             child: Text(
               type.name,
-              style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
-                fontSize: 10.0,
-              ),
+              style: Theme.of(context).primaryTextTheme.headline5!
             ),
           ),
         ),
-        onTap: () => context.read<EndedOrderModel>().setBodyType(type),
+        onTap: () => context.read<OrderDetailsViewModel>().setBodyType(type),
       ),
     );
   }

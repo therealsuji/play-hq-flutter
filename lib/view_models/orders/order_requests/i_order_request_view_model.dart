@@ -73,14 +73,4 @@ class IOrderRequestsViewModel extends OrderRequestViewModel {
     }
   }
 
-  @override
-  // TODO: implement atEdge
-  bool get atEdge => _atEdge;
-
-  @override
-  void checkEdge(bool position) {
-    _atEdge = position;
-    notifyListeners();
-  }
-
 }

@@ -24,7 +24,7 @@ class RaisedGradientButton extends StatelessWidget {
       height: ScreenUtils.getDesignHeight(45),
       decoration: BoxDecoration(
         gradient: gradient,
-        borderRadius: BorderRadius.circular(3),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Material(
         color: Colors.transparent,

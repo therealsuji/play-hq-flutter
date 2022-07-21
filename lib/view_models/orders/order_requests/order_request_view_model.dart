@@ -11,10 +11,6 @@ abstract class OrderRequestViewModel with ChangeNotifier{
 
   void rejectPurchaseRequest(String id);
 
-  void checkEdge(bool position);
-
-  bool get atEdge;
-
   List<Order> get orderRequests;
 
 }

@@ -108,24 +108,27 @@ class ActiveOrdersWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: ScreenUtils.getDesignHeight(40),
-                    width: ScreenUtils.getDesignWidth(140),
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      border: Border.all(
-                        color: PRIMARY_COLOR,
-                        width: 1,
+                  GestureDetector(
+                    onTap: () => Navigator.pushNamed(context , ORDER_TRACKING_SCREEN),
+                    child: Container(
+                      height: ScreenUtils.getDesignHeight(40),
+                      width: ScreenUtils.getDesignWidth(140),
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(
+                          color: PRIMARY_COLOR,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(3),
                       ),
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Track Order',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w700,
+                      child: Center(
+                        child: Text(
+                          'Track Order',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),

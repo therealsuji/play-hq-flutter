@@ -21,6 +21,7 @@ import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
+import 'package:play_hq/view_models/orders/order_details_view_model/order_details_view_model.dart';
 import 'package:play_hq/view_models/orders/order_requests/i_order_request_view_model.dart';
 import 'package:play_hq/view_models/orders/order_requests/order_request_view_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
@@ -38,6 +39,8 @@ import 'package:play_hq/helpers/app_strings.dart';
 
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/view_models.dart';
+
+import '../view_models/orders/order_details_view_model/i_order_details_view_model.dart';
 
 ISetupPurchaseAccountModel _implSetupPurchaseAccount =
     ISetupPurchaseAccountModel();
@@ -219,8 +222,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case ORDER_DETAILS_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<EndedOrderModel>(
-          create: (context) => IEndedOrderModel(),
+        builder: (context) => ChangeNotifierProvider<OrderDetailsViewModel>(
+          create: (context) => IOrderDetailsViewModel(),
           child: OrderDetailsScreen(),
         ),
       );

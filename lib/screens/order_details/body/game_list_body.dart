@@ -6,14 +6,14 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:play_hq/widgets/raised_gradient_button_widget.dart';
 
-class GameListBody extends StatefulWidget {
-  const GameListBody({Key? key}) : super(key: key);
+class OrderListBody extends StatefulWidget {
+  const OrderListBody({Key? key}) : super(key: key);
 
   @override
-  _GameListBodyState createState() => _GameListBodyState();
+  _OrderListBodyState createState() => _OrderListBodyState();
 }
 
-class _GameListBodyState extends State<GameListBody> {
+class _OrderListBodyState extends State<OrderListBody> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -96,14 +96,17 @@ class _GameListBodyState extends State<GameListBody> {
           ),
           _sellerDetails(),
           Spacer(),
-          SizedBox(
-            width: double.infinity,
-            height: ScreenUtils.getDesignHeight(53.0),
-            child: RaisedGradientButton(
-              buttonText: "Create Complaint",
-              gradient: ALERT_GRADIENT,
-              textFontSize: 14.0,
-              onPressed: () {},
+          Container(
+            margin: EdgeInsets.only(bottom: 30),
+            child: SizedBox(
+              width: double.infinity,
+              height: ScreenUtils.getDesignHeight(53.0),
+              child: RaisedGradientButton(
+                buttonText: "Create Complaint",
+                gradient: ALERT_GRADIENT,
+                textFontSize: 14.0,
+                onPressed: () {},
+              ),
             ),
           ),
           SizedBox(
