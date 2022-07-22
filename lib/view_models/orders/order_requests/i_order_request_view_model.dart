@@ -18,10 +18,6 @@ class IOrderRequestsViewModel extends OrderRequestViewModel {
   final _eventBus = locator<EventBus>();
   final _ordersAPI = locator<OrdersRepository>();
 
-  ScrollController _scrollController = new ScrollController();
-
-  bool _atEdge = false;
-
   @override
   void getOrderRequests(String saleId) async{
     try{
@@ -30,9 +26,9 @@ class IOrderRequestsViewModel extends OrderRequestViewModel {
       await _ordersAPI.fetchOrder(saleId).then((value) {
         if(value.data!.length > 0){
           _ordersModel = value.data!;
-          _eventBus.fire(LoadingEvent.hide());
         }
       });
+      _eventBus.fire(LoadingEvent.hide());
       notifyListeners();
     }catch(e){
       print(e);

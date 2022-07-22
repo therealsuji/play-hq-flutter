@@ -57,27 +57,18 @@ class _MySalesScreenState extends State<MySalesScreen> {
                     ),
                   ),
                   Container(
-                    child: CarouselSlider(
-                      items: val.fetchActiveSales.map((sale) {
-                        return _gameForSaleWidget(
-                            salesPayload: sale,
-                            index: val.fetchActiveSales.indexOf(sale));
-                      }).toList(),
-                      options: CarouselOptions(
-                        height: ScreenUtils.getDesignHeight(415),
-                        viewportFraction: 0.83,
-                        disableCenter: true,
-                        enableInfiniteScroll: false,
-                        initialPage: 0,
-                        reverse: false,
-                        autoPlay: false,
-                        autoPlayInterval: Duration(seconds: 3),
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
+                    height: ScreenUtils.getDesignHeight(385),
+                    width: ScreenUtils.bodyWidth,
+                    margin: EdgeInsets.only(left: 24),
+                    child: ListView.separated(
                         scrollDirection: Axis.horizontal,
-                      ),
-                    ),
+                        itemBuilder: (BuildContext context , int index){
+                      return _gameForSaleWidget(salesPayload: val.fetchActiveSales[index]);
+                    }, separatorBuilder: (BuildContext context , int index){
+                      return SizedBox(
+                        width: ScreenUtils.getDesignWidth(15),
+                      );
+                    }, itemCount: val.fetchActiveSales.length),
                   ),
                 ],
               ),
@@ -90,20 +81,22 @@ class _MySalesScreenState extends State<MySalesScreen> {
 
   Widget _gameForSaleWidget({
     required SalesPayload salesPayload,
-    required int index,
   }) {
     return Container(
-      // width: ScreenUtils.getDesignWidth(375),
+      width: ScreenUtils.getDesignWidth(326),
       decoration: BoxDecoration(
         color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
         borderRadius: BorderRadius.circular(5),
       ),
-      margin: EdgeInsets.only(left: 0, top: 20, right: 0),
+      margin: EdgeInsets.only( top: 20),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Container(
+        width: ScreenUtils.bodyWidth,
         child: Column(
           children: [
             Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: salesPayload.gameList!.map((saleDetails) {
               return _gameCard(
                   saleDetails.game!,
@@ -194,14 +187,17 @@ class _MySalesScreenState extends State<MySalesScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
-                    margin: EdgeInsets.only(right: 15),
-                    child: Text(
-                      "DELETE SALE",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .headline4!
-                          .copyWith(color: Colors.red),
+                  GestureDetector(
+                    onTap: () => Provider.of<MySalesViewModel>(context , listen: false).deleteSale(salesPayload.saleId ?? ''),
+                    child: Container(
+                      margin: EdgeInsets.only(right: 15),
+                      child: Text(
+                        "DELETE SALE",
+                        style: Theme.of(context)
+                            .primaryTextTheme
+                            .headline4!
+                            .copyWith(color: Colors.red),
+                      ),
                     ),
                   ),
                   CustomButton(
@@ -225,8 +221,6 @@ class _MySalesScreenState extends State<MySalesScreen> {
 
   Widget _gameCard(GameModel gameDetails, String condition) {
     return Container(
-      margin:
-          EdgeInsets.only(right: 2 < 3 ? ScreenUtils.getDesignWidth(15) : 0),
       height: ScreenUtils.getDesignHeight(120),
       width: ScreenUtils.getDesignWidth(90),
       decoration: BoxDecoration(
@@ -239,8 +233,6 @@ class _MySalesScreenState extends State<MySalesScreen> {
       child: Stack(
         children: [
           Container(
-            height: ScreenUtils.getDesignHeight(120),
-            width: ScreenUtils.getDesignWidth(90),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               gradient: LinearGradient(

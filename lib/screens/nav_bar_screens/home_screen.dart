@@ -386,7 +386,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.wishListGames[index]),
                         child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index])) : Center(
                       child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
-                      );;
+                      );
                   }, itemCount: val.wishListGames.length,),
                 );
               },

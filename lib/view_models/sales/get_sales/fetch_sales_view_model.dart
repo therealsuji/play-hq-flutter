@@ -9,4 +9,6 @@ abstract class MySalesViewModel with ChangeNotifier {
 
   void fetchAllSales();
 
+  void deleteSale(String id);
+
 }

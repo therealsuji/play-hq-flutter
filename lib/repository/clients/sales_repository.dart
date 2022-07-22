@@ -11,4 +11,6 @@ abstract class SaleRepository{
 
   Future<OrdersModel> fetchOrdersForSales(String salesId);
 
+  Future<void> deleteSale(String id);
+
 }
