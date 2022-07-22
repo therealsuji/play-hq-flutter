@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/models/game_status.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/service_locator.dart';
 
 import 'package:play_hq/helpers/app_enums.dart';
@@ -15,6 +16,8 @@ import 'package:play_hq/models/game_details_models/get_game_details.dart';
 import 'package:play_hq/models/game_details_models/game_details_model.dart';
 import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 import 'package:play_hq/repository/repositories.dart' show GameDetailsRepository;
+
+import '../../models/sales/my_sales_payload.dart';
 
 class GameDetailsDelegate extends GameDetailsRepository {
 
@@ -132,6 +135,28 @@ class GameDetailsDelegate extends GameDetailsRepository {
       var response = await _networkCalls.performRequest(
           APIConfig.getGameStatus(id), HttpAction.GET);
       return compute(gameStatusFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<MySalesPayload> getSalesFromGame(int id) async{
+    try {
+      var response = await _networkCalls.performRequest(
+          APIConfig.getSalesFromGame(id), HttpAction.GET);
+      return compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();

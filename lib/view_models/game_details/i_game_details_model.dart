@@ -5,6 +5,7 @@ import 'package:play_hq/models/game_details_models/game_details_model.dart';
 import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
 import 'package:play_hq/models/game_status.dart';
 import 'package:play_hq/models/loading_event_model.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/repository/clients/game_details_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -18,6 +19,7 @@ class IGameDetailsModel extends GameDetailsModel {
   final _gameDetailsApi = locator<GameDetailsRepository>();
 
   GameDetailModel _gameDetailsModel = GameDetailModel();
+  List<SalesPayload> _salesPayload = [];
   GameScreenshotModal _gameScreenshotModal = GameScreenshotModal();
 
   GameStatus _gameStatus = GameStatus(gameLibrary: false, wishList: false);
@@ -40,6 +42,11 @@ class IGameDetailsModel extends GameDetailsModel {
       await _gameDetailsApi.getGameStatus(id).then((model) {
         _gameStatus = model;}
       );
+
+      await _gameDetailsApi.getSalesFromGame(id).then((value) {
+        _salesPayload = value.saleItems ?? [];
+      });
+
       _eventBus.fire(LoadingEvent.hide());
       notifyListeners();
     }catch (e) {
@@ -152,5 +159,8 @@ class IGameDetailsModel extends GameDetailsModel {
 
   @override
   GameStatus get gameStatus => _gameStatus;
+
+  @override
+  List<SalesPayload> get getSalesFromGame => _salesPayload;
 
 }

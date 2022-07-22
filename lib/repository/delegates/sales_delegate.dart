@@ -83,5 +83,25 @@ class SaleDelegate extends SaleRepository{
     }
   }
 
+  @override
+  Future<void> deleteSale(String id) async {
+    try {
+      await _networkCalls.performRequest(APIConfig.deleteMySale(id), HttpAction.DELETE);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
+
 
 }

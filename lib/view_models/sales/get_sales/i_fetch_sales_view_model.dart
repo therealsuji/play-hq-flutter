@@ -37,4 +37,23 @@ class IMySalesViewModel extends MySalesViewModel {
     }
   }
 
+  @override
+  void deleteSale(String id) async{
+    try{
+      _eventBus.fire(LoadingEvent.show());
+      await _salesAPI.deleteSale(id).then((value) {
+         _salesAPI.fetchMyActiveSales().then((value) {
+          if(value.saleItems!.length > 0){
+            _activeSales = value.saleItems!;
+            _eventBus.fire(LoadingEvent.hide());
+          }
+        });
+      });
+      notifyListeners();
+    }catch(e){
+      print(e);
+      _eventBus.fire(LoadingEvent.hide());
+    }
+  }
+
 }

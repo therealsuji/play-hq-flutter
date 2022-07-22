@@ -74,6 +74,9 @@ class APIConfig {
 
   // Sales API
   static String createSale = '$_baseUrl' + "/sales";
+
+  static String getSalesFromGame(int id) => '$_baseUrl' + '/sales/for-game/$id';
+
   static String fetchMyActiveSales = '$_baseUrl' + "/sales/get-my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sales/from-wish-list";
 
@@ -95,6 +98,8 @@ class APIConfig {
   static String deleteWishListGame(int id) => '$_baseUrl' + '/wish-list-games/$id';
 
   static String deleteLibraryGame(int id) => '$_baseUrl' + '/library-games/$id';
+
+  static String deleteMySale(String id) => '$_baseUrl' + '/sales/$id';
 
   static String getWishListGames() {
     return '$_baseUrl' + '/wish-list-games';

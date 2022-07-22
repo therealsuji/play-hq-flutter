@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
@@ -70,6 +71,25 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
                 Spacer(),
                 Spacer(),
                 _gameDetails(),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(20) , vertical: ScreenUtils.getDesignHeight(7)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.max,
+                    children: widget.salesPayload!.gameList!.map((e) {
+                      return Container(
+                        width: ScreenUtils.getDesignWidth(92),
+                        height: ScreenUtils.getDesignHeight(30),
+                        decoration: BoxDecoration(
+                            color: MAIN_CONTAINER_COLOR.withOpacity(0.8),
+                            border: Border.all(color: PRIMARY_COLOR),
+                            borderRadius: BorderRadius.circular(3)
+                        ),
+                        child: Center(child: Text(e.game!.title ?? '' , textAlign: TextAlign.center , style: TextStyle(fontSize: 9 , color: Colors.white, fontWeight: FontWeight.w600),)),
+                      );
+                    }).toList()
+                  ),
+                ),
                 Spacer(),
                 Container(
                   height: ScreenUtils.getDesignHeight(65.0),
@@ -98,7 +118,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
                             style: Theme.of(context).primaryTextTheme.headline4,
                           ),
                           Text(
-                            '${widget.salesPayload!.location!.address}',
+                            platforms.firstWhere((element) => element['id'] == widget.salesPayload!.platform)['name'],
                             style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                               color: SUB_TEXT_COLOR.withOpacity(0.6),
                             ),
@@ -128,7 +148,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
 
   Widget _gameDetails(){
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(15)),
+      margin: EdgeInsets.symmetric(horizontal: ScreenUtils.getDesignWidth(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
