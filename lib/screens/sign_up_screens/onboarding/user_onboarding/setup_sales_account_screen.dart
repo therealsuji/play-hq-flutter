@@ -172,21 +172,25 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       Consumer<SetupSalesViewModel>(
                         builder: (_, value, __) {
                           return Container(
-                            width: ScreenUtils.getDesignWidth(110),
                             margin: EdgeInsets.only(left: 15),
-                            child: CustomTextWidget(
-                              value.selectedAddress.isEmpty
-                                  ? 'Add your location'
-                                  : value.selectedAddress,
-                              isDynamic: true,
-                              maxWidth: ScreenUtils.getDesignWidth(120),
-                              minWidth: ScreenUtils.getDesignWidth(30),
+                            child: value.selectedAddress.isEmpty ? CustomTextWidget(
+                              'Please add your location',
+                              isDynamic: false,
+                              width: ScreenUtils.getDesignWidth(130),
                               style: TextStyle(
                                   fontFamily: CircularBook,
                                   fontWeight: FontWeight.w500,
                                   color: SUB_TEXT_COLOR,
                                   fontSize: 12),
                               height: ScreenUtils.getDesignHeight(15),
+                            ) : CustomTextWidget(value.selectedAddress, isDynamic: true,
+                              maxWidth: ScreenUtils.getDesignWidth(150),
+                              minWidth: ScreenUtils.getDesignWidth(50),
+                              style: TextStyle(
+                                  fontFamily: CircularBook,
+                                  fontWeight: FontWeight.w500,
+                                  color: SUB_TEXT_COLOR,
+                                  fontSize: 12),
                             ),
                           );
                         },

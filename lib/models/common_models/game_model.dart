@@ -17,8 +17,8 @@ class GameModel {
   String? title;
   int? apiId;
   String? boxCover;
-  List<int>? platforms;
-  List<int>? genres;
+  List<dynamic>? platforms;
+  List<dynamic>? genres;
   String? releaseDate;
   List<String>? images;
   String? backgroundImage;
@@ -27,8 +27,8 @@ class GameModel {
     title: json["title"] == null ? null : json["title"],
     apiId: json["apiId"] == null ? null : json["apiId"],
     boxCover: json["boxCover"] == null ? null : json["boxCover"],
-    platforms:json["platforms"] == null ? List.empty() : List<int>.from(json["platforms"].map((x) => x['id'])),
-    genres: json["genres"] == null ? List.empty() : List<int>.from(json["genres"].map((x) => x['id'])),
+    platforms:json["platforms"] == null ? List.empty() : json['platforms'],
+    genres: json["genres"] == null ? List.empty() :json['genres'],
     releaseDate: json["releaseDate"] == null ? null : json["releaseDate"],
     backgroundImage: json["backgroundImage"] == null ? null : json["backgroundImage"],
     images:json["images"] == null ? List.empty() : List<String>.from(json["images"].map((x) => x)),
@@ -41,8 +41,8 @@ class GameModel {
     "backgroundImage": backgroundImage,
     "apiId": apiId,
     "images": List<int>.from(images!.map((x) => x)),
-    "platforms": List<int>.from(platforms!.map((x) => x)),
-    "genres": List<int>.from(genres!.map((x) => x)),
+    "platforms": platforms!,
+    "genres": genres!,
   };
 }
 

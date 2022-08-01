@@ -1,3 +1,4 @@
+import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
@@ -18,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    APICacheManager().emptyCache();
     ScreenUtils.setScreenSizes(context);
     return Scaffold(
       backgroundColor: BACKGROUND_COLOR,

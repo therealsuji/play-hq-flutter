@@ -49,7 +49,7 @@ class SalesPayload {
       finalPrice: json["finalPrice"] != null
           ? double.parse(json["finalPrice"].toString())
           : null,
-      seller: Seller.fromJson(json['seller']));
+      seller: json['seller'] != null ? Seller.fromJson(json['seller']) : null);
 
   Map<String, dynamic> toJson() => {
         "list": List<dynamic>.from(gameList!.map((x) => x.toJson())),

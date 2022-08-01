@@ -564,7 +564,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         child: Text(
           name,
           style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                fontSize: 8.0,
+                fontSize: 10.0,
               ),
         ),
       ),

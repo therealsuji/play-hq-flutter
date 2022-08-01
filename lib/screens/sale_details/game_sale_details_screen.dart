@@ -52,6 +52,7 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                         height: ScreenUtils.getDesignHeight(140.0),
                         width: double.infinity,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: widget.gameSalePayload!.gameList!.map((game) {
                             return GamesWidget(
                               gameName: game.game!.title,
@@ -162,7 +163,9 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                 ],
                               ),
                             ),
-                            CustomButton(buttonText: 'View Profile')
+                            Container(
+                                margin: EdgeInsets.only(top: 20),
+                                child: CustomButton(buttonText: 'View Profile' , gradient: PRIMARY_GRADIENT,))
                           ],
                         ),
                       ),

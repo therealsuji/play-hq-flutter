@@ -382,7 +382,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context , int index){
-                    return val.bundleGames.length != 0 ? GestureDetector(
+                    return val.wishListGames.length != 0 ? GestureDetector(
                         onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.wishListGames[index]),
                         child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index])) : Center(
                       child: Text('No games available yet' , style: TextStyle(color: Colors.white),),

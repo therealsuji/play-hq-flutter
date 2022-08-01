@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:event_bus/event_bus.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive/hive.dart';
 import 'package:places_service/places_service.dart';
+import 'package:play_hq/helpers/app_save_locally.dart';
 import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
@@ -17,6 +20,7 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ISetupSalesModel extends SetupSalesViewModel{
 
@@ -49,8 +53,12 @@ class ISetupSalesModel extends SetupSalesViewModel{
     _selectedLongitude = place.lng!;
     _selectedLatitude = place.lat!;
 
+    LocationModel location = new LocationModel(address: _selectedAddress , lat: _selectedLatitude , long: _selectedLongitude);
+
+    AppSharedPreferences().createLocalData('location', location);
+
     notifyListeners();
-    locator<NavigationService>().pop();
+    locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN);
   }
 
   @override
@@ -62,6 +70,13 @@ class ISetupSalesModel extends SetupSalesViewModel{
     _selectedAddress = addresses[0].street.toString();
     _selectedLatitude = tappedPoint.latitude;
     _selectedLongitude = tappedPoint.longitude;
+
+    LocationModel location = new LocationModel(address: _selectedAddress , lat: _selectedLatitude , long: _selectedLongitude);
+
+    print('This is the location address ${location.address}');
+
+    AppSharedPreferences().createLocalData('location', location);
+
     notifyListeners();
   }
 

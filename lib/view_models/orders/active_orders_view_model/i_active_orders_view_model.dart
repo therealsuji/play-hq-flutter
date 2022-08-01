@@ -1,9 +1,4 @@
-
-
-import 'dart:ffi';
-
 import 'package:event_bus/event_bus.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/repository/clients/order_repository.dart';
 import 'package:play_hq/service_locator.dart';
@@ -25,17 +20,18 @@ class IActiveOrdersViewModel extends ActiveOrdersViewModel {
   void fetchAllActiveOrders() async {
     _eventBus.fire(LoadingEvent.show());
     await _ordersAPI.fetchAllActiveSalesOrders().then((value) {
-      if(value.data!.length > 0){
+      if(value.data!.length > 0) {
         _activeSaleOrders = value.data ?? [];
-        _ordersAPI.fetchAllActivePurchaseOrders().then((val){
-          if(val.data!.length > 0){
-            _activePurchaseOrders = value.data ?? [];
-          }
-          notifyListeners();
-          _eventBus.fire(LoadingEvent.hide());
-        });
       }
     });
+
+    await _ordersAPI.fetchAllActivePurchaseOrders().then((val){
+      if(val.data!.length > 0) {
+        _activePurchaseOrders = val.data ?? [];
+      }
+    });
+    _eventBus.fire(LoadingEvent.hide());
+    notifyListeners();
   }
 
   @override
@@ -45,7 +41,6 @@ class IActiveOrdersViewModel extends ActiveOrdersViewModel {
   List<Order> get activeSaleOrderList => _activeSaleOrders;
 
   @override
-  // TODO: implement page
   int get page => _page;
 
   @override

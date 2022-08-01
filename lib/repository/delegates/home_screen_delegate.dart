@@ -12,17 +12,17 @@ import 'package:play_hq/repository/clients/home_screen_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 
+import '../../models/sales/my_sales_payload.dart';
+
 class HomeDelegate implements HomeRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<PagedResult<SalesPayload>> getSalesFromWishList() async {
+  Future<MySalesPayload> getSalesFromWishList() async {
     try {
       var response =
           await _networkCalls.performRequest(APIConfig.fetchSalesFromWishlist, HttpAction.GET);
-      var sales = await compute(listSalesPayloadFromJson, response.body);
-      PagedResult<SalesPayload> result = await PagedResult(sales, response.body).getResult();
-      return result;
+      return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();
@@ -40,13 +40,10 @@ class HomeDelegate implements HomeRepository {
   }
 
   @override
-  Future<PagedResult<SalesPayload>> getSoloGames() async{
+  Future<MySalesPayload> getSoloGames() async{
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.fetchSoloGames(), HttpAction.GET);
-      var sales = await compute(listSalesPayloadFromJson, response.body);
-      PagedResult<SalesPayload> result = await PagedResult(sales, response.body).getResult();
-      return result;
+      var response = await _networkCalls.performRequest(APIConfig.fetchSoloGames(), HttpAction.GET);
+      return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();
@@ -64,13 +61,11 @@ class HomeDelegate implements HomeRepository {
   }
 
   @override
-  Future<PagedResult<SalesPayload>> getBundleGames() async {
+  Future<MySalesPayload> getBundleGames() async {
     try {
       var response =
           await _networkCalls.performRequest(APIConfig.fetchBundleGames(), HttpAction.GET);
-      var sales = await compute(listSalesPayloadFromJson, response.body);
-      PagedResult<SalesPayload> result = await PagedResult(sales, response.body).getResult();
-      return result;
+      return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();

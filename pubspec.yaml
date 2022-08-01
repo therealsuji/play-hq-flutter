@@ -26,6 +26,8 @@ dependencies:
   get_it: 7.2.0
   event_bus: 2.0.0
   dartz: 0.10.1
+  api_cache_manager: ^1.0.2
+  flutter_hooks: ^0.18.5+1
 
   # Firebase
   firebase_core: 1.4.0
