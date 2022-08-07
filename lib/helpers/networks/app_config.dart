@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/date_filter_model.dart';
 
 import 'app_configurations.dart';
@@ -14,7 +16,7 @@ class APIConfig {
     switch (environment) {
       case Environment.DEV:
         _rawgAPI = "https://api.rawg.io/api";
-        _baseUrl = "http://192.168.1.3:1337";
+        _baseUrl = "http://localhost:3001";
         break;
       case Environment.QA:
         _rawgAPI = "https://api.rawg.io/api";
@@ -79,6 +81,11 @@ class APIConfig {
 
   static String fetchMyActiveSales = '$_baseUrl' + "/sales/get-my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sales/from-wish-list";
+
+  static String fetchSalesForUsersOrders({int page = 1, required SaleOrderType type, OrderStatus? status}){
+    return "$_baseUrl/sales/get-sales-for-user-orders?page=$page&type=${describeEnum(type).toLowerCase()}" +
+        (status != null ? "&status=${describeEnum(status)}" : "");
+  }
 
   static String setupPurchase = '$_baseUrl' + "/users/preferences";
 

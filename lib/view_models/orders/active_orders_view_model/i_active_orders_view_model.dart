@@ -1,44 +1,26 @@
 import 'package:event_bus/event_bus.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
-import 'package:play_hq/repository/clients/order_repository.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/repository/clients/sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
 
+import '../../../helpers/app_enums.dart';
 import '../../../models/loading_event_model.dart';
 
 class IActiveOrdersViewModel extends ActiveOrdersViewModel {
-
-  final _ordersAPI = locator<OrdersRepository>();
+  final _salesAPI = locator<SaleRepository>();
   final _eventBus = locator<EventBus>();
 
-  List<Order> _activeSaleOrders = [];
-  List<Order> _activePurchaseOrders =[];
+  List<SalesPayload> _activeSaleOrders = [];
+  List<SalesPayload> _activePurchaseOrders = [];
 
   int _page = 0;
 
   @override
-  void fetchAllActiveOrders() async {
-    _eventBus.fire(LoadingEvent.show());
-    await _ordersAPI.fetchAllActiveSalesOrders().then((value) {
-      if(value.data!.length > 0) {
-        _activeSaleOrders = value.data ?? [];
-      }
-    });
-
-    await _ordersAPI.fetchAllActivePurchaseOrders().then((val){
-      if(val.data!.length > 0) {
-        _activePurchaseOrders = val.data ?? [];
-      }
-    });
-    _eventBus.fire(LoadingEvent.hide());
-    notifyListeners();
-  }
+  List<SalesPayload> get activePurchaseOrderList => _activePurchaseOrders;
 
   @override
-  List<Order> get activePurchaseOrderList => _activePurchaseOrders;
-
-  @override
-  List<Order> get activeSaleOrderList => _activeSaleOrders;
+  List<SalesPayload> get activeSaleOrderList => _activeSaleOrders;
 
   @override
   int get page => _page;
@@ -47,5 +29,32 @@ class IActiveOrdersViewModel extends ActiveOrdersViewModel {
   void pageChanged(int index) {
     _page = index;
     notifyListeners();
+  }
+
+  @override
+  void fetchPurchaseOrders() async {
+    _eventBus.fire(LoadingEvent.show());
+    await _salesAPI
+        .fetchSalesFromUserOrders(1, SaleOrderType.SALE, OrderStatus.PLACED)
+        .then((value) {
+      if (value.data.length > 0) {
+        _activeSaleOrders = value.data;
+      }
+    });
+
+    await _salesAPI
+        .fetchSalesFromUserOrders(1, SaleOrderType.PURCHASE, OrderStatus.PLACED)
+        .then((value) {
+      if (value.data.length > 0) {
+        _activePurchaseOrders = value.data;
+      }
+    });
+    _eventBus.fire(LoadingEvent.hide());
+    notifyListeners();
+  }
+
+  @override
+  void fetchSaleOrders() {
+    // TODO: implement fetchSaleOrders
   }
 }

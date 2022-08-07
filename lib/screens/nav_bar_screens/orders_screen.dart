@@ -19,10 +19,13 @@ class OrdersScreen extends StatefulWidget {
 
 class _OrdersScreenState extends State<OrdersScreen> {
 
+  PageController orderPageViewController = PageController();
+
   @override
   void initState() {
     super.initState();
-    context.read<ActiveOrdersViewModel>().fetchAllActiveOrders();
+    context.read<ActiveOrdersViewModel>().fetchPurchaseOrders();
+    context.read<ActiveOrdersViewModel>().fetchSaleOrders();
   }
 
 
@@ -92,7 +95,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
           ),
         ),
         Consumer<ActiveOrdersViewModel>(
-          builder: (_ , val , __){
+          builder: (_, val, __) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 30, horizontal: 24),
               decoration: BoxDecoration(
@@ -103,43 +106,53 @@ class _OrdersScreenState extends State<OrdersScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Container(
-                        width: ScreenUtils.getDesignWidth(75),
+                    child: GestureDetector(
+                      onTap: () {
+                        orderPageViewController.animateToPage(0, duration: Duration(milliseconds: 700), curve: Curves.fastLinearToSlowEaseIn);
+                       },
+                      child: Container(
+                          width: ScreenUtils.getDesignWidth(75),
+                          decoration: BoxDecoration(
+                              gradient: val.page == 0 ? PRIMARY_GRADIENT : null,
+                              color: val.page == 0 ? null : MAIN_CONTAINER_COLOR.withOpacity(0.6),
+                              borderRadius: BorderRadius.circular(3.0)),
+                          child: Center(
+                            child: Text(
+                              'Purchases',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 10,
+                              ),
+                            ),
+                          )),
+                    ),
+                    flex: 1,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        orderPageViewController.animateToPage(1, duration: Duration(milliseconds: 700), curve: Curves.fastLinearToSlowEaseIn);
+                      },
+                      child: Container(
                         decoration: BoxDecoration(
-                            gradient: val.page == 0 ? PRIMARY_GRADIENT : null,
-                            color: val.page == 0 ? null : MAIN_CONTAINER_COLOR.withOpacity(0.6),
-                            borderRadius: BorderRadius.circular(3.0)),
+                            gradient: val.page == 0 ? null : PRIMARY_GRADIENT,
+                            color: val.page == 0 ? MAIN_CONTAINER_COLOR.withOpacity(0.6) : null,
+                            borderRadius: BorderRadius.circular(5)),
                         child: Center(
                           child: Text(
-                            'Purchases',
+                            'Sales',
                             style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 10,
                             ),
                           ),
-                        )),
-                    flex: 1,
-                  ),
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          gradient: val.page == 0 ? null : PRIMARY_GRADIENT,
-                          color: val.page == 0 ? MAIN_CONTAINER_COLOR.withOpacity(0.6) : null,
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Center(
-                        child: Text(
-                          'Sales',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 10,
-                          ),
                         ),
                       ),
                     ),
                     flex: 1,
-                  ),
+                  )
                 ],
               ),
             );
@@ -151,6 +164,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
             onPageChanged: (val){
               Provider.of<ActiveOrdersViewModel>(context , listen: false).pageChanged(val);
             },
+            controller: orderPageViewController,
             children: [_purchases(), _sales()],
           ),
         ),
@@ -215,8 +229,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       return ActiveOrdersWidget(
-                        orderDetails: model.activePurchaseOrderList[index],
-                      );
+                        dueDate: "TODO",
+                        gameList: model.activePurchaseOrderList[index].gameList ?? [],
+                        price: model.activePurchaseOrderList[index].price.toString(),
+                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(
@@ -289,7 +305,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       return ActiveOrdersWidget(
-                        orderDetails: model.activeSaleOrderList[index],
+                        dueDate: "TODO",
+                        gameList: model.activeSaleOrderList[index].gameList ?? [],
+                        price: model.activeSaleOrderList[index].price.toString(),
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {

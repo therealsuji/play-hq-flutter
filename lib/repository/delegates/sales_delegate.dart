@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
+import 'package:play_hq/models/common_models/page_model.dart';
 import 'package:play_hq/models/orders_model/orders.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
@@ -14,15 +15,13 @@ import 'package:play_hq/services/base_managers/error.dart';
 import '../../models/sales/my_sales_payload.dart';
 import '../../service_locator.dart';
 
-class SaleDelegate extends SaleRepository{
-
+class SaleDelegate extends SaleRepository {
   final _networkCalls = Network.shared;
-
 
   @override
   Future<void> createSale(SalesPayload body) async {
     try {
-      await _networkCalls.performRequest(APIConfig.createSale, HttpAction.POST , body: body);
+      await _networkCalls.performRequest(APIConfig.createSale, HttpAction.POST, body: body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();
@@ -42,7 +41,8 @@ class SaleDelegate extends SaleRepository{
   @override
   Future<MySalesPayload> fetchMyActiveSales() async {
     try {
-      var response = await _networkCalls.performRequest(APIConfig.fetchMyActiveSales, HttpAction.GET);
+      var response =
+          await _networkCalls.performRequest(APIConfig.fetchMyActiveSales, HttpAction.GET);
       return compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -61,10 +61,10 @@ class SaleDelegate extends SaleRepository{
   }
 
   @override
-  Future<OrdersModel> fetchOrdersForSales(String saleId) async{
+  Future<OrdersModel> fetchOrdersForSales(String saleId) async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.getOrdersForSale(saleId), HttpAction.GET);
+      var response =
+          await _networkCalls.performRequest(APIConfig.getOrdersForSale(saleId), HttpAction.GET);
       return compute(ordersModelFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -102,5 +102,29 @@ class SaleDelegate extends SaleRepository{
     }
   }
 
-
+  @override
+  Future<PagedResult<SalesPayload>> fetchSalesFromUserOrders(
+      int page, SaleOrderType saleOrderType, OrderStatus? saleStatus) async {
+    try {
+      var response = await _networkCalls.performRequest(
+          APIConfig.fetchSalesForUsersOrders(page: page,type: saleOrderType, status: saleStatus),
+          HttpAction.GET);
+      List<SalesPayload> sales = await compute(listSalesPayloadFromJson, response.body);
+      PagedResult<SalesPayload> result = await PagedResult<SalesPayload>(sales, response.body).getResult();
+      return result;
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
 }

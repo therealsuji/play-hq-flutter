@@ -3,12 +3,20 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/widgets/custom_game_widget.dart';
 
 class ActiveOrdersWidget extends StatelessWidget {
-  final Order? orderDetails;
+  final List<GameElement> gameList;
+  final String price;
+  final String dueDate;
 
-  const ActiveOrdersWidget({Key? key, this.orderDetails}) : super(key: key);
+  const ActiveOrdersWidget({
+    Key? key,
+    required this.gameList,
+    required this.price,
+    required this.dueDate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +31,16 @@ class ActiveOrdersWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Row(
-            //   mainAxisAlignment: orderDetails!.games!.length < 3
-            //       ? MainAxisAlignment.start
-            //       : MainAxisAlignment.spaceBetween,
-            //   children: orderDetails!.games!.map((game) {
-            //     return _gameCard(game);
-            //   }).toList(),
-            // ),
+            Wrap(
+                spacing: 10,
+                children: gameList.map((game) {
+                  return GamesWidget(
+                    gameName: game.game.title,
+                    releaseDate: game.game.releaseDate,
+                    backgroundUrl:game.game.boxCover,
+                    gradient: PRIMARY_GRADIENT,
+                  );
+                }).toList()),
             Container(
               margin: EdgeInsets.only(top: 15),
               child: Row(
@@ -52,7 +62,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          '${orderDetails!.proposedPrice}',
+                          price,
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -80,7 +90,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          '${orderDetails!.deliveryDate}',
+                          dueDate,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -109,7 +119,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context , ORDER_TRACKING_SCREEN),
+                    onTap: () => Navigator.pushNamed(context, ORDER_TRACKING_SCREEN),
                     child: Container(
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),
@@ -134,7 +144,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context , ORDER_DETAILS_SCREEN),
+                    onTap: () => Navigator.pushNamed(context, ORDER_DETAILS_SCREEN),
                     child: Container(
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),
@@ -162,73 +172,4 @@ class ActiveOrdersWidget extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _gameCard(Game gameDetails) {
-  //   return Container(
-  //     margin: EdgeInsets.only(
-  //       right: orderDetails!.games!.length < 3
-  //           ? ScreenUtils.getDesignWidth(15)
-  //           : 0,
-  //     ),
-  //     height: ScreenUtils.getDesignHeight(120),
-  //     width: ScreenUtils.getDesignWidth(90),
-  //     decoration: BoxDecoration(
-  //       image: DecorationImage(
-  //         image: NetworkImage('${gameDetails.coverImage}'),
-  //         fit: BoxFit.cover,
-  //       ),
-  //       borderRadius: BorderRadius.circular(5),
-  //     ),
-  //     child: Stack(
-  //       children: [
-  //         Container(
-  //           height: ScreenUtils.getDesignHeight(120),
-  //           width: ScreenUtils.getDesignWidth(90),
-  //           decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(5),
-  //             gradient: LinearGradient(
-  //               colors: [Colors.black, Colors.transparent],
-  //               begin: Alignment.bottomCenter,
-  //               end: Alignment.topCenter,
-  //             ),
-  //           ),
-  //         ),
-  //         Container(
-  //           height: ScreenUtils.getDesignHeight(120),
-  //           width: ScreenUtils.getDesignWidth(90),
-  //           margin: EdgeInsets.symmetric(
-  //             horizontal: ScreenUtils.getDesignHeight(10),
-  //             vertical: ScreenUtils.getDesignHeight(10),
-  //           ),
-  //           child: Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             mainAxisAlignment: MainAxisAlignment.end,
-  //             children: [
-  //               Container(
-  //                 child: Text(
-  //                   '${gameDetails.name}',
-  //                   style: TextStyle(
-  //                     color: Colors.white,
-  //                     fontSize: 10,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //               ),
-  //               Container(
-  //                 child: Text(
-  //                   '${gameDetails.releaseDate}',
-  //                   style: TextStyle(
-  //                     color: PRIMARY_COLOR,
-  //                     fontSize: 10,
-  //                     fontWeight: FontWeight.bold,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
 }

@@ -62,10 +62,10 @@ class SalesPayload {
 }
 
 class GameElement {
-  GameElement({this.game, this.status, this.statusName});
+  GameElement({required this.game, required this.status, this.statusName});
 
-  GameModel? game;
-  String? status;
+  GameModel game;
+  String status;
   String? statusName;
 
   factory GameElement.fromJson(Map<String, dynamic> json) => GameElement(
@@ -74,7 +74,7 @@ class GameElement {
       );
 
   Map<String, dynamic> toJson() => {
-        "game": game!.toJson(),
+        "game": game.toJson(),
         "status": status,
       };
 }
