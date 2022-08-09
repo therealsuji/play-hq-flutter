@@ -1,3 +1,4 @@
+import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
@@ -21,6 +22,7 @@ class AuthenticationScreen extends StatefulWidget {
 class _AuthenticationScreenState extends State<AuthenticationScreen> {
   @override
   Widget build(BuildContext context) {
+    APICacheManager().emptyCache();
     return Scaffold(
       body: Container(
         child: Stack(

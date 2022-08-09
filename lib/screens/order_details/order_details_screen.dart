@@ -3,15 +3,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/order_details/body/billing_body.dart';
-import 'package:play_hq/screens/order_details/body/game_list_body.dart';
 import 'package:play_hq/screens/order_details/body/order_details_body.dart';
+import 'package:play_hq/screens/order_details/body/game_list_body.dart';
 import 'package:play_hq/view_models/orders/order_details_view_model/order_details_view_model.dart';
 import 'package:play_hq/view_models/view_models.dart' show EndedOrderModel;
 import 'package:provider/provider.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
-  const OrderDetailsScreen({Key? key}) : super(key: key);
+
+  final SalesPayload? salesPayload;
+
+  OrderDetailsScreen({this.salesPayload});
 
   @override
   _OrderDetailsScreenState createState() => _OrderDetailsScreenState();
@@ -93,11 +97,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                 builder: (_, type, __) {
                   switch (type) {
                     case EndedOrderType.ORDER_DETAILS:
-                      return OrderListBody();
+                      return OrderListBody(salesPayload: widget.salesPayload,);
                     case EndedOrderType.BILLING:
-                      return BillingBody();
+                      return BillingBody(salesPayload: widget.salesPayload,);
                     case EndedOrderType.GAME_LIST:
-                      return GameDetailsBody();
+                      return GameDetailsBody(salesPayload: widget.salesPayload,);
                     default:
                       return Container();
                   }

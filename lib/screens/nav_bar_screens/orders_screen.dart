@@ -229,9 +229,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       return ActiveOrdersWidget(
-                        dueDate: "TODO",
-                        gameList: model.activePurchaseOrderList[index].gameList ?? [],
-                        price: model.activePurchaseOrderList[index].price.toString(),
+                        salesPayload: model.activePurchaseOrderList[index],
                        );
                     },
                     separatorBuilder: (BuildContext context, int index) {
@@ -305,9 +303,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       return ActiveOrdersWidget(
-                        dueDate: "TODO",
-                        gameList: model.activeSaleOrderList[index].gameList ?? [],
-                        price: model.activeSaleOrderList[index].price.toString(),
+                        salesPayload: model.activeSaleOrderList[index],
                       );
                     },
                     separatorBuilder: (BuildContext context, int index) {

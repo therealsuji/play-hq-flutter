@@ -19,6 +19,8 @@ import 'package:play_hq/view_models/game_lists/game_list_view_model.dart';
 import 'package:play_hq/view_models/game_lists/i_game_list_view_model.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
+import 'package:play_hq/view_models/order_tracking/i_order_tracking_view_model.dart';
+import 'package:play_hq/view_models/order_tracking/order_tracking_view_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
 import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
 import 'package:play_hq/view_models/orders/order_details_view_model/order_details_view_model.dart';
@@ -151,7 +153,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       );
     case ORDER_TRACKING_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => OrderTrackingScreen(),
+        builder: (context) => ChangeNotifierProvider<OrderTrackingViewModel>(
+            create: (context) => IOrderTrackingViewModel(),
+            child: OrderTrackingScreen(salesPayload: settings.arguments as SalesPayload,)),
       );
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
@@ -224,7 +228,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<OrderDetailsViewModel>(
           create: (context) => IOrderDetailsViewModel(),
-          child: OrderDetailsScreen(),
+          child: OrderDetailsScreen(salesPayload: settings.arguments as SalesPayload,),
         ),
       );
     case MY_SALES_DETAILS_SCREEN:

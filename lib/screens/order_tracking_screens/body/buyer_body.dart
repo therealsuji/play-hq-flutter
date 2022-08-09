@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/view_models/order_tracking/order_tracking_view_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
+import 'package:provider/provider.dart';
 
 class BuyerBody extends StatefulWidget {
-  const BuyerBody({Key? key}) : super(key: key);
+  final SalesPayload? salesPayload;
+
+  BuyerBody({this.salesPayload});
 
   @override
   _BuyerBodyState createState() => _BuyerBodyState();
@@ -63,6 +68,12 @@ class _BuyerBodyState extends State<BuyerBody> {
             top: ScreenUtils.getDesignHeight(120.0),
           ),
           child: CustomButton(
+            onPressed: (){
+              context
+                  .read<OrderTrackingViewModel>()
+                  .changeOrderStatus(widget.salesPayload!.saleId ?? '',
+                  UserType.BUYER, OrderStatus.COMPLETED);
+            },
             buttonText: "Complete Order",
             gradient: PRIMARY_GRADIENT,
             textFontSize: 14.0,

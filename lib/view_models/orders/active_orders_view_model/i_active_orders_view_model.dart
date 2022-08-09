@@ -35,16 +35,13 @@ class IActiveOrdersViewModel extends ActiveOrdersViewModel {
   void fetchPurchaseOrders() async {
     _eventBus.fire(LoadingEvent.show());
     await _salesAPI
-        .fetchSalesFromUserOrders(1, SaleOrderType.SALE, OrderStatus.PLACED)
+        .fetchSalesFromUserOrders(1, SaleOrderType.SALE, OrderStatus.ACCEPTED)
         .then((value) {
       if (value.data.length > 0) {
         _activeSaleOrders = value.data;
       }
     });
-
-    await _salesAPI
-        .fetchSalesFromUserOrders(1, SaleOrderType.PURCHASE, OrderStatus.PLACED)
-        .then((value) {
+    await _salesAPI.fetchSalesFromUserOrders(1, SaleOrderType.PURCHASE, OrderStatus.ACCEPTED).then((value) {
       if (value.data.length > 0) {
         _activePurchaseOrders = value.data;
       }

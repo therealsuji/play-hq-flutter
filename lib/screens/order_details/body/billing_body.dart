@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 
 class BillingBody extends StatefulWidget {
-  const BillingBody({Key? key}) : super(key: key);
+
+  final SalesPayload? salesPayload;
+
+  BillingBody({this.salesPayload});
 
   @override
   _BillingBodyState createState() => _BillingBodyState();

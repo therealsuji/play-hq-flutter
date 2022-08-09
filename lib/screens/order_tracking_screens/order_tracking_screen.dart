@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/view_models/order_tracking/order_tracking_view_model.dart';
 import 'package:play_hq/widgets/custom_body.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
@@ -7,9 +9,13 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/screens/order_tracking_screens/body/buyer_body.dart';
 import 'package:play_hq/screens/order_tracking_screens/body/seller_body.dart';
 import 'package:play_hq/screens/order_tracking_screens/widgets/progress_animation.dart';
+import 'package:provider/provider.dart';
 
 class OrderTrackingScreen extends StatefulWidget {
-  const OrderTrackingScreen({Key? key}) : super(key: key);
+
+  final SalesPayload? salesPayload;
+
+  OrderTrackingScreen({this.salesPayload});
 
   @override
   _OrderTrackingScreenState createState() => _OrderTrackingScreenState();
@@ -20,7 +26,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Fix the logic to find the buyer or seller
     _isBuyer = true;
 
     return Scaffold(
@@ -62,7 +67,11 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> with SingleTi
               ],
             ),
           ),
-          _isBuyer ? BuyerBody() : SellerBody(),
+          _isBuyer ? ChangeNotifierProvider.value(
+              value: Provider.of<OrderTrackingViewModel>(context),
+              builder:(context , _){
+                return BuyerBody(salesPayload: widget.salesPayload,);
+          }) : SellerBody(),
         ],
       ),
     );

@@ -122,6 +122,8 @@ class APIConfig {
 
   static String fetchAllActivePurchaseOrders() => '$_baseUrl' + '/orders?type=purchase&status=ACCEPTED';
 
+  static String changeOrderStatus({int page = 1, OrderStatus? status , UserType? user , String? id}) => '$_baseUrl' + '/orders/update-status/${describeEnum(user!).toLowerCase()}/$id/${describeEnum(status!)}';
+
   static String fetchSoloGames(){
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';
   }

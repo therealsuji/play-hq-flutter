@@ -7,15 +7,11 @@ import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 
 class ActiveOrdersWidget extends StatelessWidget {
-  final List<GameElement> gameList;
-  final String price;
-  final String dueDate;
+  final SalesPayload salesPayload;
 
   const ActiveOrdersWidget({
     Key? key,
-    required this.gameList,
-    required this.price,
-    required this.dueDate,
+    required this.salesPayload
   }) : super(key: key);
 
   @override
@@ -32,10 +28,12 @@ class ActiveOrdersWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Wrap(
-                spacing: 10,
-                children: gameList.map((game) {
+                spacing: 17,
+                children: salesPayload.gameList!.map((game) {
                   return GamesWidget(
                     gameName: game.game.title,
+                    width: ScreenUtils.getDesignWidth(80),
+                    height: ScreenUtils.getDesignHeight(130),
                     releaseDate: game.game.releaseDate,
                     backgroundUrl:game.game.boxCover,
                     gradient: PRIMARY_GRADIENT,
@@ -62,7 +60,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          price,
+                          salesPayload.price.toString(),
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -90,7 +88,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(bottom: 5),
                         child: Text(
-                          dueDate,
+                          "TODO",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -119,7 +117,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, ORDER_TRACKING_SCREEN),
+                    onTap: () => Navigator.pushNamed(context, ORDER_TRACKING_SCREEN , arguments: salesPayload),
                     child: Container(
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),
@@ -144,7 +142,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, ORDER_DETAILS_SCREEN),
+                    onTap: () => Navigator.pushNamed(context, ORDER_DETAILS_SCREEN , arguments: salesPayload),
                     child: Container(
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),

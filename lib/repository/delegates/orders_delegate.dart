@@ -124,4 +124,26 @@ class OrdersDelegate extends OrdersRepository{
     }
   }
 
+  @override
+  Future<void> changeOrderStatus(String id, OrderStatus status, UserType userType) async {
+    try {
+      await _networkCalls.performRequest(
+          APIConfig.changeOrderStatus(user: userType, status: status, id: id),
+          HttpAction.GET);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
+
 }
