@@ -5,9 +5,6 @@ class ITabNavigationModel extends TabNavigationModel {
 
   @override
   void changeTab(int tabNumber) {
-    if (tabNumber == 2) {
-      return;
-    }
     _currentPage = tabNumber;
     notifyListeners();
   }

@@ -44,8 +44,7 @@ import 'package:play_hq/view_models/view_models.dart';
 
 import '../view_models/orders/order_details_view_model/i_order_details_view_model.dart';
 
-ISetupPurchaseAccountModel _implSetupPurchaseAccount =
-    ISetupPurchaseAccountModel();
+ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
 
 Route<dynamic> generateRoute(RouteSettings settings) {
@@ -67,9 +66,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ChangeNotifierProvider<MainProfileModel>(
               create: (context) => IMainProfileModel(),
             ),
-            ChangeNotifierProvider<ActiveOrdersViewModel>(
-              create: (context) => IActiveOrdersViewModel(),
-            ),
             ChangeNotifierProvider<DiscoverViewModel>(
               create: (context) => IDiscoverViewModel(),
             ),
@@ -81,69 +77,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameDetailsModel>(
           create: (context) => IGameDetailsModel(),
-          child: GameDetailsScreen(
-              gameDetailsArguments: settings.arguments as GameDetailsArguments),
+          child:
+              GameDetailsScreen(gameDetailsArguments: settings.arguments as GameDetailsArguments),
         ),
       );
-    case CREATE_TRADE_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => CreateTradeScreen(),
-      );
-    case PURCHASE_ACCOUNT_SCREEN:
-      return MaterialPageRoute(
-          builder: (context) => MultiProvider(
-                providers: [
-                  ChangeNotifierProvider<SetupPurchaseAccountModel>(
-                    create: (context) => ISetupPurchaseAccountModel(),
-                  ),
-                  ChangeNotifierProvider<CreateSaleModel>(
-                    create: (context) => ICreateSaleModel(),
-                  ),
-                ],
-                child: SetupPurchaseAccountScreen(),
-              ));
-    case CREATE_SALE_ROUTE:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<CreateSaleModel>(
-          create: (context) => ICreateSaleModel(),
-          child: CreateSaleScreen(),
-        ),
-      );
-    case MY_SALES_ROUTE:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<MySalesViewModel>(
-          create: (context) => IMySalesViewModel(),
-          child: MySalesScreen(),
-        ),
-      );
-    case BUY_GAMES_ROUTE:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<BuyGamesModel>(
-          create: (context) => IBuyGamesModel(),
-          child: BuyGamesScreen(),
-        ),
-      );
-    case SALE_DETAILS_ROUTE:
-      return MaterialPageRoute(
-        builder: (context) => GameSaleDetailsScreen(),
-      );
-    case SALES_ACCOUNT_SCREEN:
-      return MaterialPageRoute(
-          builder: (context) => MultiProvider(
-                providers: [
-                  ChangeNotifierProvider<SetupSalesViewModel>(
-                    create: (context) => _implSetupSales,
-                  ),
-                  ChangeNotifierProvider<CreateSaleModel>(
-                    create: (context) => ICreateSaleModel(),
-                  ),
-                ],
-                child: SetupSalesAccountScreen(),
-              ));
-    case CREATE_TRADE_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => CreateTradeScreen(),
-      );
+
     case SPLASH_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
@@ -151,24 +89,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           child: SplashScreen(),
         ),
       );
-    case ORDER_TRACKING_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<OrderTrackingViewModel>(
-            create: (context) => IOrderTrackingViewModel(),
-            child: OrderTrackingScreen(salesPayload: settings.arguments as SalesPayload,)),
-      );
     case MAIN_SEARCH_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<CustomSearchModel>(
           create: (context) => ICustomSearchModel(),
           child: MainSearchScreen(values: settings.arguments as SearchType),
-        ),
-      );
-    case PAYMENT_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<PaymentModel>(
-          create: (context) => ImplPaymentModel(settings.arguments as String),
-          child: PaymentScreen(),
         ),
       );
     case CUSTOM_ADDRESS_SEARCH_SCREEN:
@@ -178,23 +103,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ChangeNotifierProvider<CustomAddressSearchModel>(
               create: (context) => ICustomAddressSearchModel(),
             ),
-            ChangeNotifierProvider<SetupSalesViewModel>(
-                create: (context) => _implSetupSales),
+            ChangeNotifierProvider<SetupSalesViewModel>(create: (context) => _implSetupSales),
           ],
           child: CustomAddressSearchScreen(),
-        ),
-      );
-    case CUSTOM_MAP_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<CustomMapModel>(
-              create: (context) => ICustomMapModel(),
-            ),
-            ChangeNotifierProvider<SetupSalesViewModel>(
-                create: (context) => _implSetupSales)
-          ],
-          child: CustomMapScreen(),
         ),
       );
     case AUTH_SCREEN:
@@ -220,32 +131,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => NotificationScreen(),
       );
-    case ORDERS_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => OrdersScreen(),
-      );
-    case ORDER_DETAILS_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<OrderDetailsViewModel>(
-          create: (context) => IOrderDetailsViewModel(),
-          child: OrderDetailsScreen(salesPayload: settings.arguments as SalesPayload,),
-        ),
-      );
-    case MY_SALES_DETAILS_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => MultiProvider(
-          providers: [
-            ChangeNotifierProvider<SalesDetailsViewModel>(
-                create: (context) => ISalesDetailsViewModel()),
-            ChangeNotifierProvider<OrderRequestViewModel>(
-                create: (context) => IOrderRequestsViewModel()
-            )
-          ],
-          child: MySalesDetailsScreen(
-            salesPayload: settings.arguments as SalesPayload,
-          ),
-        ),
-      );
     case GAME_LIST_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameListViewModel>(
@@ -254,15 +139,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               gameListArguments: settings.arguments as GameListArguments,
             )),
       );
-    case GAME_SALE_DETAILS_SCREEN:
-      return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<SalesDetailsViewModel>(
-            create: (context) => ISalesDetailsViewModel(),
-            child: GameSaleDetailsScreen(
-              gameSalePayload: settings.arguments as SalesPayload,
-            )),
-      );
-
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

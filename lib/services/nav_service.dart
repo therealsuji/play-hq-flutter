@@ -17,6 +17,11 @@ class NavigationService {
     return _navigatorKey.currentState!.pushReplacementNamed(routeName, arguments: args);
   }
 
+  Future<dynamic> pushAndRemoveUntil(String routeName, {Object? args}) {
+    return _navigatorKey.currentState!
+        .pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false, arguments: args);
+  }
+
   void showError(PlayHQException exception) {
     final context = _navigatorKey.currentState!.overlay!.context;
     final DisplayError handler = DisplayImpl();
