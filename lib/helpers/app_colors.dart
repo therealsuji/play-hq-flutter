@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 const BACKGROUND_COLOR = Color(0xff1B1A26);
 
-
 // Colors of the Containers
 const MAIN_CONTAINER_COLOR = Color(0xff07070B);
 const POP_UP_CONTAINER_COLOR = Color(0xff1B1A26);
@@ -22,9 +21,6 @@ final Shader PRIMARY_GRADIENT_TEXT_COLOR = LinearGradient(
 final Shader PRICE_GRADIENT_TEXT_COLOR = LinearGradient(
   colors: <Color>[Color(0xFF31C649), Color(0xFF37F93F)],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
-
-
-
 
 const TURQUOISE_BLUE_COLOR = Color(0xff32BEA6);
 const TEXT_COLOR = Color(0xff9290B1);
@@ -108,8 +104,35 @@ const GRADIENT_COMPONENT_3 = LinearGradient(
   ],
 );
 
-
-
 final Shader textPrimaryGradient = LinearGradient(
   colors: <Color>[Color(0xFFF84592), Color(0xFFD23163)],
 ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+
+// GENRE BOX GRADIENTS
+const GENRE_BLUE_GRADIENT = LinearGradient(
+  begin: Alignment.topRight,
+  end: Alignment.bottomLeft,
+  colors: [
+    Color.fromRGBO(23, 210, 252, 1),
+    Color.fromRGBO(68, 156, 251, 1),
+    Color.fromRGBO(118, 107, 246, 1),
+  ],
+);
+const GENRE_GREEN_GRADIENT = LinearGradient(
+  begin: Alignment.topRight,
+  end: Alignment.bottomLeft,
+  colors: [
+    Color.fromRGBO(70, 190, 142, 1),
+    Color.fromRGBO(46164, 156, 141, 1),
+    Color.fromRGBO(33, 146, 137, 1),
+  ],
+);
+const GENRE_YELLOW_GRADIENT = LinearGradient(
+  begin: Alignment.topRight,
+  end: Alignment.bottomLeft,
+  colors: [
+    Color.fromRGBO(255, 193, 70, 1),
+    Color.fromRGBO(254, 182, 74, 1),
+    Color.fromRGBO(254, 162, 79, 1),
+  ],
+);

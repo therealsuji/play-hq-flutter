@@ -3,6 +3,7 @@ import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
 import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
@@ -180,69 +181,26 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
-                                child: Container(
-                                  height: ScreenUtils.getDesignWidth(99.0),
-                                  width: ScreenUtils.getDesignWidth(99.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                          height: ScreenUtils.getDesignWidth(99.0),
-                                          width: ScreenUtils.getDesignWidth(99.0),
-                                          child: Image.asset(
-                                            'assets/images/category_1.png',
-                                            fit: BoxFit.fill,
-                                          )),
-                                    ],
-                                  ),
+                                child: GenreWidget(
+                                  gradient: GENRE_YELLOW_GRADIENT,
+                                  name: "ACTION",
+                                  imageUrl: ACTION_GENRE_IMAGE,
                                 ),
                                 onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
-                                child: Container(
-                                  height: ScreenUtils.getDesignWidth(99.0),
-                                  width: ScreenUtils.getDesignWidth(99.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                          height: ScreenUtils.getDesignWidth(99.0),
-                                          width: ScreenUtils.getDesignWidth(99.0),
-                                          child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(5.0),
-                                              child: Image.asset(
-                                                'assets/images/category_2.png',
-                                                fit: BoxFit.fill,
-                                              ))),
-                                    ],
-                                  ),
+                                child: GenreWidget(
+                                  gradient: GENRE_BLUE_GRADIENT,
+                                  name: "ADVENTURE",
+                                  imageUrl: ADVENTURE_GENRE_IMAGE,
                                 ),
                                 onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
-                                child: Container(
-                                  height: ScreenUtils.getDesignWidth(99.0),
-                                  width: ScreenUtils.getDesignWidth(99.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                          height: ScreenUtils.getDesignWidth(99.0),
-                                          width: ScreenUtils.getDesignWidth(99.0),
-                                          child: ClipRRect(
-                                              borderRadius: BorderRadius.circular(5.0),
-                                              child: Image.asset(
-                                                'assets/images/category_3.png',
-                                                fit: BoxFit.fill,
-                                              ))),
-                                    ],
-                                  ),
+                                child: GenreWidget(
+                                  gradient: GENRE_GREEN_GRADIENT,
+                                  name: "RACING",
+                                  imageUrl: RACING_GENRE_IMAGE,
                                 ),
                                 onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
