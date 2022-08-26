@@ -7,7 +7,6 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/authentication/authentication_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
@@ -87,7 +86,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                                     ),
                                   ),
                                   GestureDetector(
-                                    onTap: () => locator<AuthService>().login(SocialLogin.FACEBOOK),
+                                    onTap: () => val.socialLogin(SocialLogin.FACEBOOK),
                                     child: Container(
                                       height: ScreenUtils.getDesignHeight(99),
                                       width: ScreenUtils.getDesignWidth(99),
