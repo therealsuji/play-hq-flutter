@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 
 class CachedImage extends StatelessWidget {
   final String imageUrl;
-  CachedImage({Key? key, required this.imageUrl}) : super(key: key);
+  final BoxFit? fit;
+  CachedImage({Key? key, required this.imageUrl, this.fit = BoxFit.contain}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, url) => CircularProgressIndicator(),
-      errorWidget: (context, url, error) => Icon(Icons.error),
+      errorWidget: (context, url, error) => CachedNetworkImage(
+        imageUrl:
+            'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
+      ),
+      fit: fit,
     );
   }
 }

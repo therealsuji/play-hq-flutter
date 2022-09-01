@@ -4,8 +4,11 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/recommended_game_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
 import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
+import 'package:play_hq/widgets/cached_image_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -30,6 +33,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, String>> temp = [
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    },
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    },
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    },
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    }
+  ];
   @override
   void initState() {
     super.initState();
@@ -44,8 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> temp = ["assets/images/stack_temp.png", "assets/images/cyber-ct.png", "assets/images/cyber-ct.png"];
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -213,66 +236,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(20.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Text(
-                "Recommended for you",
-                style: Theme.of(context).primaryTextTheme.headline3,
-              ),
+            SectionLabel(
+              title: "Recommended for you",
             ),
             Padding(
               padding: EdgeInsets.only(
                 top: ScreenUtils.getDesignHeight(10.0),
               ),
-              child: CarouselSlider(
-                options: CarouselOptions(
-                  initialPage: 0,
-                  height: ScreenUtils.getDesignHeight(220.0),
-                  disableCenter: true,
-                  viewportFraction: 0.85,
-                  autoPlay: true,
-                  onPageChanged: (index, _) =>
-                      Provider.of<HomeScreenModel>(context, listen: false).onCarouselPageChanged(index),
+              child: Container(
+                height: ScreenUtils.getDesignHeight(290),
+                child: ListView.separated(
+                  separatorBuilder: (_, __) => SizedBox(
+                    width: ScreenUtils.getDesignHeight(15.0),
+                  ),
+                  itemCount: temp.length,
+                  padding: EdgeInsets.symmetric(horizontal: 24),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return GamesWidget(
+                      backgroundUrl: temp[index]['imageUrl']!,
+                      gameName: temp[index]['name']!,
+                      width: ScreenUtils.getDesignWidth(220),
+                      height: ScreenUtils.getDesignHeight(290),
+                    );
+                  },
                 ),
-                items: temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(10.0),
-              ),
-              child: Consumer<HomeScreenModel>(
-                builder: (_, model, __) {
-                  return DottedIndicatorWidget(
-                    currentPage: model.carouselPageIndex,
-                  );
-                },
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(30.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Best Solo Deals",
-                    style: Theme.of(context).primaryTextTheme.headline3,
-                  ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
-                ],
-              ),
+            SectionLabel(
+              title: "Upcoming Games",
+              rightText: "View All",
             ),
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
@@ -310,26 +303,43 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             _learnMoreContainer(),
+            SectionLabel(
+              title: "Popular this week",
+              rightText: "View All",
+            ),
             Container(
-              margin: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(30.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              height: ScreenUtils.getDesignHeight(190),
+              margin: EdgeInsets.symmetric(vertical: 20),
+              width: double.infinity,
+              child: Stack(
                 children: [
-                  Text(
-                    "Sales in Wishlist",
-                    style: Theme.of(context).primaryTextTheme.headline3,
+                  Positioned.fill(
+                    child: CachedImage(
+                        imageUrl:
+                            "https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg",
+                        fit: BoxFit.cover),
                   ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
+                  Positioned.fill(
+                    bottom: 0,
+                    child: Container(
+                      width: ScreenUtils.getDesignWidth(220),
+                      height: ScreenUtils.getDesignHeight(290),
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xff091015), Colors.transparent],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
+            ),
+            SectionLabel(
+              title: "Highly Anticipated",
+              rightText: "View All",
             ),
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
@@ -356,54 +366,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                     },
                     itemCount: val.wishListGames.length,
-                  ),
-                );
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(30.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Game Bundles",
-                    style: Theme.of(context).primaryTextTheme.headline3,
-                  ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
-                ],
-              ),
-            ),
-            Consumer<HomeScreenModel>(
-              builder: (_, game, __) {
-                return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15, right: game.bundleGames.length > 1 ? 0 : 24),
-                  height: ScreenUtils.getDesignHeight(380),
-                  width: ScreenUtils.bodyWidth,
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(
-                      width: ScreenUtils.getDesignHeight(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return game.bundleGames.length != 0
-                          ? _gameBundlesContainer(game.bundleGames[index])
-                          : Center(
-                              child: Text(
-                                'No games available yet',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
-                    },
-                    itemCount: game.bundleGames.length,
                   ),
                 );
               },

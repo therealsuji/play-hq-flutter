@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
@@ -42,8 +43,9 @@ class GamesWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(
-                      backgroundUrl ?? 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
+                    image: CachedNetworkImageProvider(
+                      backgroundUrl ??
+                          'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
                     ),
                   ),
                 ),
@@ -84,33 +86,34 @@ class GamesWidget extends StatelessWidget {
                       maxWidth: ScreenUtils.getDesignWidth(70.0),
                       minWidth: ScreenUtils.getDesignWidth(30.0),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(top: 5.0),
-                      child: color != null
-                          ? Text(
-                              releaseDate == null
-                                  ? price == null ? 'Not mentioned' : price!
-                                  : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
-                              style: TextStyle(
-                                fontFamily: Neusa,
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                                color: color,
-                              ),
-                            )
-                          : GradientText(
-                        releaseDate == null
-                            ? price == null ? 'Not mentioned' : price!
-                            : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
-                              gradient: gradient!,
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6!
-                                  .copyWith(
-                                    color: Colors.white,
-                                  ),
-                            ),
-                    ),
+                    // Container(
+                    //   margin: EdgeInsets.only(top: 5.0),
+                    //   child: color != null
+                    //       ? Text(
+                    //           releaseDate == null
+                    //               ? price == null
+                    //                   ? 'Not mentioned'
+                    //                   : price!
+                    //               : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
+                    //           style: TextStyle(
+                    //             fontFamily: Neusa,
+                    //             fontSize: 12.0,
+                    //             fontWeight: FontWeight.bold,
+                    //             color: color,
+                    //           ),
+                    //         )
+                    //       : GradientText(
+                    //           releaseDate == null
+                    //               ? price == null
+                    //                   ? 'Not mentioned'
+                    //                   : price!
+                    //               : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
+                    //           gradient: gradient!,
+                    //           style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
+                    //                 color: Colors.white,
+                    //               ),
+                    //         ),
+                    // ),
                   ],
                 ),
               ),
