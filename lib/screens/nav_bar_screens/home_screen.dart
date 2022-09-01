@@ -105,10 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "Welcome Damsara,",
-                                  style: Theme.of(context).primaryTextTheme.headline2,
-                                ),
+                                Consumer<HomeScreenModel>(builder: (_, model, __) {
+                                  return Text(
+                                    "Welcome ${model.displayName ?? 'to PlayHQ'}",
+                                    style: Theme.of(context).primaryTextTheme.headline2,
+                                  );
+                                }),
                                 SizedBox(
                                   height: ScreenUtils.getDesignHeight(2.0),
                                 ),
@@ -319,10 +321,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             _learnMoreContainer(),
-            SectionLabel(
-              title: "Popular this week",
-              rightText: "View All",
-            ),
             Container(
               margin: EdgeInsets.only(
                 top: ScreenUtils.getDesignHeight(30.0),
@@ -343,10 +341,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-            ),
-            SectionLabel(
-              title: "Highly Anticipated",
-              rightText: "View All",
             ),
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
