@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_secure_storage.dart';
+import 'package:play_hq/services/auth_service.dart';
 
 class Network {
 
@@ -33,7 +34,7 @@ class Network {
       late var response;
 
       //Get the jwtToken from secure storage and if existing, add to the header
-      String? bearerToken = await SecureStorage.readValue("jwtToken");
+      String? bearerToken = await SecureStorage.readValue(AuthService.JWT_KEY);
       if (bearerToken != null && !noToken) {
         _headers.addAll({'Authorization': 'Bearer $bearerToken'});
       }

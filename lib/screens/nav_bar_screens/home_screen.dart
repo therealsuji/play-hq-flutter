@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
-import 'package:play_hq/screens/nav_bar_screens/widgets/recommended_game_widget.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
-import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
-import 'package:play_hq/widgets/cached_image_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
