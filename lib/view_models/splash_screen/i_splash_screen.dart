@@ -1,18 +1,12 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_secure_storage.dart';
-import 'package:play_hq/models/common_models/auth_token_model.dart';
-import 'package:play_hq/repository/clients/splash_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/splash_screen/splash_screen_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ISplashModel extends SplashScreenModel {
-  final _splashAPI = locator<SplashRepository>();
-
   @override
   void navigateMainScreen() {
     locator<NavigationService>().pushReplacement(MAIN_SCREEN);
@@ -21,6 +15,12 @@ class ISplashModel extends SplashScreenModel {
   @override
   void navigateSignUpScreen() {
     locator<NavigationService>().pushReplacement(AUTH_SCREEN);
+  }
+
+  @override
+  void navigateOnBoarding() {
+    locator<NavigationService>()
+        .pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE, args: SearchType.SETUP_PURCHASES);
   }
 
   @override
@@ -35,41 +35,13 @@ class ISplashModel extends SplashScreenModel {
       }
     });
 
-    final prefs = await SharedPreferences.getInstance();
-
-    if (prefs.getBool('first_run') ?? true) {
-      await SecureStorage.deleteAll();
-      prefs.setBool('first_run', false);
-    }
-
-    String accessToken = await SecureStorage.readValue("jwtToken") ?? '';
-    String refreshToken = await SecureStorage.readValue("refreshToken") ?? '';
-
-    AuthTokenModel authTokens = AuthTokenModel(
-        refreshToken: refreshToken,
-        accessToken: accessToken
-    );
-
-    await _splashAPI.renewJwtToken(authTokens).then((value) {
-      var localToken = value.token!.accessToken;
-      if (FirebaseAuth.instance.currentUser != null && localToken != null) {
-        SecureStorage.writeValue('jwtToken', value.token!.accessToken);
-        SecureStorage.writeValue('refreshToken', value.token!.refreshToken);
-        if (value.user!.isSetupDone!) {
-          navigateMainScreen();
-        } else {
-          navigateOnboarding();
-        }
-      }
-    }).onError((error, stackTrace) {
-      SecureStorage.deleteAll();
+    var isSetupDone = await locator<AuthService>().renewTokens();
+    if (isSetupDone == true) {
+      navigateMainScreen();
+    } else if (isSetupDone == false) {
+      navigateOnBoarding();
+    } else {
       navigateSignUpScreen();
-    });
-  }
-
-  @override
-  void navigateOnboarding() {
-    locator<NavigationService>().pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE,
-        args: SearchType.SETUP_PURCHASES);
+    }
   }
 }
