@@ -18,7 +18,6 @@ import '../../view_models/sales/sales_details/sales_details_view_model.dart';
 import '../../widgets/custom_text_widget.dart';
 
 class GameSaleDetailsScreen extends StatefulWidget {
-
   final SalesPayload? gameSalePayload;
 
   GameSaleDetailsScreen({this.gameSalePayload});
@@ -29,7 +28,6 @@ class GameSaleDetailsScreen extends StatefulWidget {
 
 class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
   int gamesCount = 1;
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +53,13 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: widget.gameSalePayload!.gameList!.map((game) {
                             return GamesWidget(
-                              gameName: game.game!.title,
+                              title: game.game.title,
                               backgroundUrl: game.game!.boxCover,
-                              price: game.status == "MINT" ? "Mint Condition" : game.status == "VERY_NEW" ? "Very New" : "Playable",
+                              subTitle: game.status == "MINT"
+                                  ? "Mint Condition"
+                                  : game.status == "VERY_NEW"
+                                      ? "Very New"
+                                      : "Playable",
                               gradient: GREEN_GRADIENT,
                             );
                           }).toList(),
@@ -76,9 +78,17 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Sale Price", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text("(x${widget.gameSalePayload!.gameList!.length} Games)", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR))),
+                                      child: Text("(x${widget.gameSalePayload!.gameList!.length} Games)",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline4!
+                                              .copyWith(color: PRIMARY_COLOR))),
                                   Spacer(),
-                                  GradientText("${widget.gameSalePayload!.price!.round()} LKR", gradient: GREEN_GRADIENT , style: Theme.of(context).primaryTextTheme.headline4,)
+                                  GradientText(
+                                    "${widget.gameSalePayload!.price!.round()} LKR",
+                                    gradient: GREEN_GRADIENT,
+                                    style: Theme.of(context).primaryTextTheme.headline4,
+                                  )
                                 ],
                               ),
                             ),
@@ -88,7 +98,7 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                 borderRadius: BorderRadius.circular(10),
                                 color: PRIMARY_COLOR,
                               ),
-                              margin: EdgeInsets.only(top: 15.0 , bottom: 15.0),
+                              margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -96,11 +106,16 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                 Text("Platform", style: Theme.of(context).primaryTextTheme.headline3),
                                 Container(
                                     margin: EdgeInsets.only(left: 10),
-                                    child: Text("${_getPlatformName(widget.gameSalePayload!.platform!)}", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                    child: Text("${_getPlatformName(widget.gameSalePayload!.platform!)}",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline4!
+                                            .copyWith(color: SUB_TEXT_COLOR))),
                               ],
                             ),
                             Container(
-                              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(15) , bottom: ScreenUtils.getDesignHeight(15)),
+                              margin: EdgeInsets.only(
+                                  top: ScreenUtils.getDesignHeight(15), bottom: ScreenUtils.getDesignHeight(15)),
                               color: SUB_TEXT_COLOR,
                               height: 2,
                             ),
@@ -110,7 +125,11 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                 Text("Sale Creation Date", style: Theme.of(context).primaryTextTheme.headline3),
                                 Container(
                                     margin: EdgeInsets.only(left: 10),
-                                    child: Text("12/06/2022", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                    child: Text("12/06/2022",
+                                        style: Theme.of(context)
+                                            .primaryTextTheme
+                                            .headline4!
+                                            .copyWith(color: SUB_TEXT_COLOR))),
                               ],
                             ),
                             Container(
@@ -121,7 +140,11 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                             _negotiableContainer(),
                             Container(
                                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(15)),
-                                child: CustomTextWidget('Seller Details', isDynamic: false , style: Theme.of(context).primaryTextTheme.headline3,)),
+                                child: CustomTextWidget(
+                                  'Seller Details',
+                                  isDynamic: false,
+                                  style: Theme.of(context).primaryTextTheme.headline3,
+                                )),
                             Container(
                               margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(15)),
                               color: PRIMARY_COLOR,
@@ -135,7 +158,11 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Seller Name", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text(widget.gameSalePayload!.seller!.displayName ?? 'Not Mentioned', style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                      child: Text(widget.gameSalePayload!.seller!.displayName ?? 'Not Mentioned',
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline4!
+                                              .copyWith(color: SUB_TEXT_COLOR))),
                                 ],
                               ),
                             ),
@@ -147,7 +174,11 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Address", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text("${widget.gameSalePayload!.seller!.address ?? "Not mentioned"}", style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                      child: Text("${widget.gameSalePayload!.seller!.address ?? "Not mentioned"}",
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline4!
+                                              .copyWith(color: SUB_TEXT_COLOR))),
                                 ],
                               ),
                             ),
@@ -159,13 +190,21 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                                   Text("Ratings", style: Theme.of(context).primaryTextTheme.headline3),
                                   Container(
                                       margin: EdgeInsets.only(left: 10),
-                                      child: Text((widget.gameSalePayload!.seller!.rating ?? "No ratings yet").toString(), style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: SUB_TEXT_COLOR))),
+                                      child: Text(
+                                          (widget.gameSalePayload!.seller!.rating ?? "No ratings yet").toString(),
+                                          style: Theme.of(context)
+                                              .primaryTextTheme
+                                              .headline4!
+                                              .copyWith(color: SUB_TEXT_COLOR))),
                                 ],
                               ),
                             ),
                             Container(
                                 margin: EdgeInsets.only(top: 20),
-                                child: CustomButton(buttonText: 'View Profile' , gradient: PRIMARY_GRADIENT,))
+                                child: CustomButton(
+                                  buttonText: 'View Profile',
+                                  gradient: PRIMARY_GRADIENT,
+                                ))
                           ],
                         ),
                       ),
@@ -214,10 +253,10 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
     );
   }
 
-  String _getPlatformName(int platformId){
+  String _getPlatformName(int platformId) {
     String platformName = "";
     popularConsoles.forEach((platform) {
-      if(platform['id'] == platformId){
+      if (platform['id'] == platformId) {
         platformName = platform['name'];
       }
     });
@@ -232,53 +271,54 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
         borderRadius: BorderRadius.circular(6.0),
       ),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 16.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Negotiable?",
-                  style: Theme.of(context).primaryTextTheme.headline4
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    color: PRIMARY_COLOR,
-                    shape: BoxShape.circle,
-                  ),
-                  padding: const EdgeInsets.all(7),
-                  child: SvgPicture.asset(
-                    widget.gameSalePayload!.negotiable! ? TICK_MARK_ICON : CROSS_MARK_ICON,
-                    color: Colors.white,
-                    height: ScreenUtils.getDesignHeight(10.0),
-                  ),
-                )
-              ],
-            ),
-            Container(
-              height: 2,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: SUB_TEXT_COLOR,
-              ),
-              margin: EdgeInsets.only(top: 15.0 , bottom: 15.0),
-            ),
-            Container(
-              child: Row(
+          margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 16.0),
+          child: Column(
+            children: [
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Sale Price", style: Theme.of(context).primaryTextTheme.headline4),
-                  GradientText("${widget.gameSalePayload!.price!.round()} LKR", gradient: GREEN_GRADIENT , style: Theme.of(context).primaryTextTheme.headline4,)
+                  Text("Negotiable?", style: Theme.of(context).primaryTextTheme.headline4),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: PRIMARY_COLOR,
+                      shape: BoxShape.circle,
+                    ),
+                    padding: const EdgeInsets.all(7),
+                    child: SvgPicture.asset(
+                      widget.gameSalePayload!.negotiable! ? TICK_MARK_ICON : CROSS_MARK_ICON,
+                      color: Colors.white,
+                      height: ScreenUtils.getDesignHeight(10.0),
+                    ),
+                  )
                 ],
               ),
-            ),
-            // Text widget for seller details
-          ],
-        )
-      ),
+              Container(
+                height: 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: SUB_TEXT_COLOR,
+                ),
+                margin: EdgeInsets.only(top: 15.0, bottom: 15.0),
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Sale Price", style: Theme.of(context).primaryTextTheme.headline4),
+                    GradientText(
+                      "${widget.gameSalePayload!.price!.round()} LKR",
+                      gradient: GREEN_GRADIENT,
+                      style: Theme.of(context).primaryTextTheme.headline4,
+                    )
+                  ],
+                ),
+              ),
+              // Text widget for seller details
+            ],
+          )),
     );
   }
+
   Future<void> _openBottomSheet(SalesPayload salesPayload) async {
     SalesDetailsViewModel model = Provider.of<SalesDetailsViewModel>(context, listen: false);
     await showModalBottomSheet<void>(
@@ -288,7 +328,9 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
       builder: (context) {
         return ChangeNotifierProvider.value(
           value: model,
-          child: SaleDetailsBottomSheet(salesPayload: salesPayload,),
+          child: SaleDetailsBottomSheet(
+            salesPayload: salesPayload,
+          ),
         );
       },
     );

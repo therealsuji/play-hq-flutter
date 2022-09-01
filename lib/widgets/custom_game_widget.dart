@@ -1,29 +1,28 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/helpers/app_utils.dart';
 import 'gradient_text_widget.dart';
 
 class GamesWidget extends StatelessWidget {
   final String? backgroundUrl;
-  final String? gameName;
-  final String? releaseDate;
-  final String? price;
   final Color? color;
   final Gradient? gradient;
   final double? height;
   final double? width;
 
+  final String? title;
+  final String? subTitle;
+
   GamesWidget({
-    this.gameName,
-    this.releaseDate,
     this.backgroundUrl,
     this.color,
     this.height = 160,
     this.width = 100,
-    this.price,
     this.gradient,
+    this.title,
+    this.subTitle,
   });
 
   @override
@@ -39,14 +38,10 @@ class GamesWidget extends StatelessWidget {
               child: Container(
                 width: ScreenUtils.getDesignWidth(width!),
                 height: ScreenUtils.getDesignHeight(height!),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
+                child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    image: NetworkImage(
-                      backgroundUrl ?? 'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
-                    ),
-                  ),
-                ),
+                    imageUrl: backgroundUrl ??
+                        'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'),
               ),
             ),
             Positioned(
@@ -73,7 +68,7 @@ class GamesWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextWidget(
-                      gameName!,
+                      title ?? "",
                       isDynamic: true,
                       style: TextStyle(
                         fontFamily: CircularBook,
@@ -86,11 +81,9 @@ class GamesWidget extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
-                      child: color != null
+                      child: gradient == null
                           ? Text(
-                              releaseDate == null
-                                  ? price == null ? 'Not mentioned' : price!
-                                  : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
+                              subTitle ?? "",
                               style: TextStyle(
                                 fontFamily: Neusa,
                                 fontSize: 12.0,
@@ -99,14 +92,9 @@ class GamesWidget extends StatelessWidget {
                               ),
                             )
                           : GradientText(
-                        releaseDate == null
-                            ? price == null ? 'Not mentioned' : price!
-                            : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
+                              subTitle ?? "",
                               gradient: gradient!,
-                              style: Theme.of(context)
-                                  .primaryTextTheme
-                                  .headline6!
-                                  .copyWith(
+                              style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
                                     color: Colors.white,
                                   ),
                             ),

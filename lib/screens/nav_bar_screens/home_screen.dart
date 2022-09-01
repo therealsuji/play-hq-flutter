@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/recommended_game_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
+import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
+import 'package:play_hq/widgets/cached_image_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -27,6 +33,28 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  List<Map<String, String>> temp = [
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    },
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    },
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    },
+    {
+      "imageUrl":
+          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
+      "name": "Call of Duty Warzone",
+    }
+  ];
   @override
   void initState() {
     super.initState();
@@ -41,12 +69,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> temp = [
-      "assets/images/stack_temp.png",
-      "assets/images/cyber-ct.png",
-      "assets/images/cyber-ct.png"
-    ];
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -89,19 +111,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text(
                                   "Welcome Damsara,",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline2,
+                                  style: Theme.of(context).primaryTextTheme.headline2,
                                 ),
                                 SizedBox(
                                   height: ScreenUtils.getDesignHeight(2.0),
                                 ),
                                 Text(
                                   "Any particular games you’d like to\nbuy today?",
-                                  style: Theme.of(context)
-                                      .primaryTextTheme
-                                      .headline4!
-                                      .copyWith(
+                                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                                         color: Colors.white.withOpacity(0.60),
                                       ),
                                 ),
@@ -139,9 +156,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(
-                              MAIN_SEARCH_SCREEN,
-                              args: SearchType.MAIN_SEARCH),
+                          onTap: () =>
+                              locator<NavigationService>().pushNamed(MAIN_SEARCH_SCREEN, args: SearchType.MAIN_SEARCH),
                           child: Container(
                             margin: EdgeInsets.only(
                               top: ScreenUtils.getDesignHeight(25.0),
@@ -169,10 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   child: Text(
                                     "Search Here...",
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline5!
-                                        .copyWith(
+                                    style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
                                           color: Colors.white.withOpacity(0.70),
                                         ),
                                   ),
@@ -189,23 +202,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               InkWell(
-                                child: Container(
-                                  height: ScreenUtils.getDesignWidth(99.0),
-                                  width: ScreenUtils.getDesignWidth(99.0),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      Container(
-                                          height: ScreenUtils.getDesignWidth(99.0),
-                                          width: ScreenUtils.getDesignWidth(99.0),
-                                          child: Image.asset('assets/images/category_1.png' , fit: BoxFit.fill,)),
-                                    ],
-                                  ),
+                                child: GenreWidget(
+                                  gradient: GENRE_YELLOW_GRADIENT,
+                                  name: "ACTION",
+                                  imageUrl: ACTION_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>()
-                                    .pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
                                 child: Container(
@@ -221,12 +223,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: ScreenUtils.getDesignWidth(99.0),
                                           child: ClipRRect(
                                               borderRadius: BorderRadius.circular(5.0),
-                                              child: Image.asset('assets/images/category_2.png' , fit: BoxFit.fill,))),
+                                              child: Image.asset(
+                                                'assets/images/category_2.png',
+                                                fit: BoxFit.fill,
+                                              ))),
                                     ],
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>()
-                                    .pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                               InkWell(
                                 child: Container(
@@ -242,12 +246,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           width: ScreenUtils.getDesignWidth(99.0),
                                           child: ClipRRect(
                                               borderRadius: BorderRadius.circular(5.0),
-                                              child: Image.asset('assets/images/category_3.png' , fit: BoxFit.fill,))),
+                                              child: Image.asset(
+                                                'assets/images/category_3.png',
+                                                fit: BoxFit.fill,
+                                              ))),
                                     ],
                                   ),
                                 ),
-                                onTap: () => locator<NavigationService>()
-                                    .pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
                               ),
                             ],
                           ),
@@ -281,11 +287,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   viewportFraction: 0.85,
                   autoPlay: true,
                   onPageChanged: (index, _) =>
-                      Provider.of<HomeScreenModel>(context, listen: false)
-                          .onCarouselPageChanged(index),
+                      Provider.of<HomeScreenModel>(context, listen: false).onCarouselPageChanged(index),
                 ),
-                items:
-                    temp.map((e) => _topGamesContainer(hoverImage: e)).toList(),
+                items: temp.map((e) => _topGamesContainer(hoverImage: e['imageUrl'] ?? "")).toList(),
               ),
             ),
             Padding(
@@ -325,26 +329,34 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (_, val, __) {
                 return Container(
                   margin: EdgeInsets.only(left: 24, top: 15),
-                  height:ScreenUtils.getDesignHeight(140),
+                  height: ScreenUtils.getDesignHeight(140),
                   child: ListView.separated(
                     separatorBuilder: (_, __) => SizedBox(
                       width: ScreenUtils.getDesignHeight(15.0),
                     ),
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context , int index){
-                      return val.soloGames.length != 0 ? GestureDetector(
-                        onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.soloGames[index]),
-                        child: GamesWidget(
-                          gameName: val.soloGames[index].gameList?[0].game!.title,
-                          price: val.soloGames[index].price.toString(),
-                          backgroundUrl: val.soloGames[index].gameList?[0].game!.boxCover,
-                          gradient: GREEN_GRADIENT,
-                        ),
-                      ) : Center(
-                        child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
-                      );
-                    }, itemCount: val.soloGames.length,),
+                    itemBuilder: (BuildContext context, int index) {
+                      return val.soloGames.length != 0
+                          ? GestureDetector(
+                              onTap: () => locator<NavigationService>()
+                                  .pushNamed(GAME_SALE_DETAILS_SCREEN, args: val.soloGames[index]),
+                              child: GamesWidget(
+                                title: val.soloGames[index].gameList?[0].game.title,
+                                subTitle: val.soloGames[index].price?.toString() ?? "",
+                                backgroundUrl: val.soloGames[index].gameList?[0].game.boxCover,
+                                gradient: GREEN_GRADIENT,
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'No games available yet',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                    },
+                    itemCount: val.soloGames.length,
+                  ),
                 );
               },
             ),
@@ -358,14 +370,26 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "Sales in Wishlist",
-                    style: Theme.of(context).primaryTextTheme.headline3,
+                  Positioned.fill(
+                    child: CachedImage(
+                        imageUrl:
+                            "https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg",
+                        fit: BoxFit.cover),
                   ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
+                  Positioned.fill(
+                    bottom: 0,
+                    child: Container(
+                      width: ScreenUtils.getDesignWidth(220),
+                      height: ScreenUtils.getDesignHeight(290),
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xff091015), Colors.transparent],
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -374,20 +398,28 @@ class _HomeScreenState extends State<HomeScreen> {
               builder: (_, val, __) {
                 return Container(
                   margin: EdgeInsets.only(left: 24, top: 15),
-                  height:ScreenUtils.getDesignHeight(205),
+                  height: ScreenUtils.getDesignHeight(205),
                   child: ListView.separated(
                     separatorBuilder: (_, __) => SizedBox(
                       width: ScreenUtils.getDesignHeight(15.0),
                     ),
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context , int index){
-                    return val.wishListGames.length != 0 ? GestureDetector(
-                        onTap: () => locator<NavigationService>().pushNamed(GAME_SALE_DETAILS_SCREEN , args: val.wishListGames[index]),
-                        child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index])) : Center(
-                      child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
-                      );
-                  }, itemCount: val.wishListGames.length,),
+                    itemBuilder: (BuildContext context, int index) {
+                      return val.wishListGames.length != 0
+                          ? GestureDetector(
+                              onTap: () => locator<NavigationService>()
+                                  .pushNamed(GAME_SALE_DETAILS_SCREEN, args: val.wishListGames[index]),
+                              child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index]))
+                          : Center(
+                              child: Text(
+                                'No games available yet',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                    },
+                    itemCount: val.wishListGames.length,
+                  ),
                 );
               },
             ),
@@ -415,8 +447,8 @@ class _HomeScreenState extends State<HomeScreen> {
             Consumer<HomeScreenModel>(
               builder: (_, game, __) {
                 return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15 , right: game.bundleGames.length > 1 ? 0 : 24),
-                  height:ScreenUtils.getDesignHeight(380),
+                  margin: EdgeInsets.only(left: 24, top: 15, right: game.bundleGames.length > 1 ? 0 : 24),
+                  height: ScreenUtils.getDesignHeight(380),
                   width: ScreenUtils.bodyWidth,
                   child: ListView.separated(
                     separatorBuilder: (_, __) => SizedBox(
@@ -424,11 +456,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     padding: EdgeInsets.zero,
                     scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context , int index){
-                      return game.bundleGames.length != 0 ? _gameBundlesContainer(game.bundleGames[index]) : Center(
-                        child: Text('No games available yet' , style: TextStyle(color: Colors.white),),
-                      );
-                    }, itemCount: game.bundleGames.length,),
+                    itemBuilder: (BuildContext context, int index) {
+                      return game.bundleGames.length != 0
+                          ? _gameBundlesContainer(game.bundleGames[index])
+                          : Center(
+                              child: Text(
+                                'No games available yet',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            );
+                    },
+                    itemCount: game.bundleGames.length,
+                  ),
                 );
               },
             ),
@@ -491,20 +530,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: ScreenUtils.getDesignWidth(150.0),
                     child: Text(
                       "Call of Duty: Modern Warfare",
-                      style: Theme.of(context)
-                          .primaryTextTheme
-                          .headline4!
-                          .copyWith(
+                      style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                             fontSize: 16.0,
                           ),
                     ),
                   ),
                   Text(
                     "12/09/2019",
-                    style:
-                        Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                              color: SUB_TEXT_COLOR.withOpacity(0.6),
-                            ),
+                    style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
+                          color: SUB_TEXT_COLOR.withOpacity(0.6),
+                        ),
                   ),
                 ],
               ),
@@ -555,10 +590,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       Text(
                         "Colombo 06",
-                        style: Theme.of(context)
-                            .primaryTextTheme
-                            .headline4!
-                            .copyWith(
+                        style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
                               color: SUB_TEXT_COLOR.withOpacity(0.6),
                             ),
                       ),
@@ -681,9 +713,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GamesWidget(
                       height: 130,
                       width: 90,
-                      gameName: e.game!.title,
-                      price: e.status,
-                      backgroundUrl: e.game!.boxCover,
+                      title: e.game.title ?? "",
+                      subTitle: e.status,
+                      backgroundUrl: e.game.boxCover,
                       gradient: PRIMARY_GRADIENT,
                     );
                   }).toList(),
@@ -692,54 +724,65 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 15 , left: 15, right: 15 , bottom: 30),
+            margin: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 30),
             height: 1.5,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              gradient: PRIMARY_GRADIENT
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                CustomTextWidget("Platform" , isDynamic: false, style: Theme.of(context).primaryTextTheme.headline3, ),
+                CustomTextWidget(
+                  "Platform",
+                  isDynamic: false,
+                  style: Theme.of(context).primaryTextTheme.headline3,
+                ),
                 Spacer(),
-                CustomTextWidget(platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name'] ?? 'Not Found', isDynamic: false, style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),)
+                CustomTextWidget(
+                  platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name'] ?? 'Not Found',
+                  isDynamic: false,
+                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
+                )
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 20 , left: 15, right: 15 , bottom: 20),
+            margin: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
             height: 1.5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                color: SUB_TEXT_COLOR
-            ),
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
             child: Row(
               children: [
-                CustomTextWidget("Price" , isDynamic: false, style: Theme.of(context).primaryTextTheme.headline3, ),
+                CustomTextWidget(
+                  "Price",
+                  isDynamic: false,
+                  style: Theme.of(context).primaryTextTheme.headline3,
+                ),
                 Spacer(),
-                GradientText(salesPayload.price.toString() , gradient: GREEN_GRADIENT , style: Theme.of(context).primaryTextTheme.headline4,)
+                GradientText(
+                  salesPayload.price.toString(),
+                  gradient: GREEN_GRADIENT,
+                  style: Theme.of(context).primaryTextTheme.headline4,
+                )
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.symmetric(horizontal: 15 , vertical: 25),
+            margin: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
             child: Row(
               children: [
                 Spacer(),
                 Container(
                   height: ScreenUtils.getDesignHeight(40),
                   width: ScreenUtils.getDesignWidth(100),
-                  decoration: BoxDecoration(
-                    gradient: PRIMARY_GRADIENT,
-                    borderRadius: BorderRadius.circular(5)
-                  ),
-                  child: Center(child: Text('More Details' , style: TextStyle(fontWeight: FontWeight.w500 , color: Colors.white),)),
+                  decoration: BoxDecoration(gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(5)),
+                  child: Center(
+                      child: Text(
+                    'More Details',
+                    style: TextStyle(fontWeight: FontWeight.w500, color: Colors.white),
+                  )),
                 )
               ],
             ),

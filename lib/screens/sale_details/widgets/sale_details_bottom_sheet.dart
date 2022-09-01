@@ -13,7 +13,6 @@ import '../../../models/sales/sales_payload_model.dart';
 import '../../../widgets/custom_game_widget.dart';
 
 class SaleDetailsBottomSheet extends StatelessWidget {
-
   final SalesPayload? salesPayload;
 
   SaleDetailsBottomSheet({
@@ -56,10 +55,10 @@ class SaleDetailsBottomSheet extends StatelessWidget {
                     style: Theme.of(context).primaryTextTheme.headline3,
                   ),
                   Text(
-                    salesPayload!.gameList!.length > 1  ? "No" : "Yes",
+                    salesPayload!.gameList!.length > 1 ? "No" : "Yes",
                     style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                      color: PRIMARY_COLOR,
-                    ),
+                          color: PRIMARY_COLOR,
+                        ),
                   )
                 ],
               ),
@@ -78,9 +77,9 @@ class SaleDetailsBottomSheet extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, idx) {
                     return GamesWidget(
-                      gameName: salesPayload!.gameList?[idx].game!.title,
-                      price: salesPayload!.gameList?[idx].status,
-                      backgroundUrl: salesPayload!.gameList?[idx].game!.boxCover,
+                      title: salesPayload!.gameList?[idx].game!.title,
+                      subTitle: salesPayload!.gameList?[idx].status,
+                      backgroundUrl: salesPayload!.gameList?[idx].game.boxCover,
                       gradient: PRIMARY_GRADIENT,
                     );
                   },
@@ -119,19 +118,20 @@ class SaleDetailsBottomSheet extends StatelessWidget {
               Text(
                 "Since the seller has made this game negotiable, you can add a price you feel is right for this game",
                 style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
-                  color: Colors.white.withOpacity(0.6),
-                ),
+                      color: Colors.white.withOpacity(0.6),
+                    ),
               ),
               CustomTextfieldWidget(
                 iconData: DOLLAR_ICON,
                 type: TextInputType.number,
                 hideText: false,
-                onChanged: (val) =>  Provider.of<SalesDetailsViewModel>(context , listen: false).getPrice(val.toString()),
+                onChanged: (val) => Provider.of<SalesDetailsViewModel>(context, listen: false).getPrice(val.toString()),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 25.0),
                 child: CustomButton(
-                  onPressed: () => Provider.of<SalesDetailsViewModel>(context , listen: false).makePurchaseRequest(salesPayload!.saleId.toString()),
+                  onPressed: () => Provider.of<SalesDetailsViewModel>(context, listen: false)
+                      .makePurchaseRequest(salesPayload!.saleId.toString()),
                   buttonText: "Request Purchase",
                   gradient: SECONDARY_GRADIENT,
                 ),
