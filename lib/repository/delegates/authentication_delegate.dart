@@ -40,5 +40,26 @@ class AuthenticationDelegate extends AuthenticationRepository {
     }
   }
 
+  @override
+  Future<AuthUserModel> renewTokens(dynamic body) async {
+    try {
+      var response = await _networkCalls.performRequest(APIConfig.renewJwt, HttpAction.POST , body: body);
+      return compute(authUserModelFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
+
 
 }
