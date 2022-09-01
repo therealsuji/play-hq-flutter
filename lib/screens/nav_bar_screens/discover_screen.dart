@@ -12,6 +12,7 @@ import 'package:play_hq/view_models/discover/discover_view_model.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
+import 'package:play_hq/widgets/horizontal_scroll_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/app_enums.dart';
@@ -68,29 +69,22 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             Consumer<DiscoverViewModel>(builder: (_, val, __) {
               return Container(
                 height: ScreenUtils.getDesignHeight(155),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: val.newlyReleasedGames.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            top: ScreenUtils.getDesignHeight(15.0),
-                            left: index == 0 ? ScreenUtils.getDesignWidth(24.0) : ScreenUtils.getDesignWidth(15.0),
-                            right: index == val.newlyReleasedGames.length
-                                ? ScreenUtils.getDesignWidth(24.0)
-                                : ScreenUtils.getDesignWidth(0)),
-                        child: GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(gameId: val.newlyReleasedGames[index].id)),
-                          child: GamesWidget(
-                            title: val.newlyReleasedGames[index].name,
-                            subTitle: val.newlyReleasedGames[index].released,
-                            backgroundUrl: val.newlyReleasedGames[index].backgroundImage,
-                            gradient: PRIMARY_GRADIENT,
-                          ),
-                        ),
-                      );
-                    }),
+                margin: EdgeInsets.only(top: 10),
+                child: HorizontalScrollList(
+                  itemCount: val.newlyReleasedGames.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                          args: GameDetailsArguments(gameId: val.newlyReleasedGames[index].id)),
+                      child: GamesWidget(
+                        title: val.newlyReleasedGames[index].name,
+                        subTitle: val.newlyReleasedGames[index].released,
+                        backgroundUrl: val.newlyReleasedGames[index].backgroundImage,
+                        gradient: PRIMARY_GRADIENT,
+                      ),
+                    );
+                  },
+                ),
               );
             }),
             Container(
@@ -131,31 +125,23 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ),
             Consumer<DiscoverViewModel>(builder: (_, val, __) {
               return Container(
-                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30.0)),
+                margin: EdgeInsets.only(top: 10, bottom: ScreenUtils.getDesignHeight(30.0)),
                 height: ScreenUtils.getDesignHeight(155),
-                child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: val.fpsGames.length,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                            top: ScreenUtils.getDesignHeight(15.0),
-                            left: index == 0 ? ScreenUtils.getDesignWidth(24.0) : ScreenUtils.getDesignWidth(15.0),
-                            right: index == val.fpsGames.length
-                                ? ScreenUtils.getDesignWidth(24.0)
-                                : ScreenUtils.getDesignWidth(0)),
-                        child: GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(gameId: val.fpsGames[index].id)),
-                          child: GamesWidget(
-                            title: val.fpsGames[index].name,
-                            subTitle: val.fpsGames[index].released,
-                            backgroundUrl: val.fpsGames[index].backgroundImage,
-                            gradient: PRIMARY_GRADIENT,
-                          ),
-                        ),
-                      );
-                    }),
+                child: HorizontalScrollList(
+                  itemCount: val.fpsGames.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () => locator<NavigationService>()
+                          .pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fpsGames[index].id)),
+                      child: GamesWidget(
+                        title: val.fpsGames[index].name,
+                        subTitle: val.fpsGames[index].released,
+                        backgroundUrl: val.fpsGames[index].backgroundImage,
+                        gradient: PRIMARY_GRADIENT,
+                      ),
+                    );
+                  },
+                ),
               );
             }),
           ]),
@@ -189,27 +175,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
       alignment: Alignment.bottomCenter,
       child: Container(
         height: ScreenUtils.getDesignHeight(205),
-        margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24)),
-        child: ListView.separated(
-          scrollDirection: Axis.horizontal,
-          itemCount: 3,
-          itemBuilder: (context, index) {
-            return _categoryItem(
-              discoverComponents[index]['name'],
-              discoverComponents[index]['gradient'],
-              discoverComponents[index]['imagePath'],
-              discoverComponents[index]['category'],
-              discoverComponents[index]['apiType'],
-            );
-          },
-          separatorBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.only(
-                left: ScreenUtils.getDesignWidth(15.0),
-                right: index == 3 ? ScreenUtils.getDesignWidth(15.0) : 0,
-              ),
-            );
-          },
+        child: HorizontalScrollList(
+          itemCount: discoverComponents.length,
+          itemBuilder: (context, index) => _categoryItem(
+            discoverComponents[index]['name'],
+            discoverComponents[index]['gradient'],
+            discoverComponents[index]['imagePath'],
+            discoverComponents[index]['category'],
+            discoverComponents[index]['apiType'],
+          ),
         ),
       ),
     );
