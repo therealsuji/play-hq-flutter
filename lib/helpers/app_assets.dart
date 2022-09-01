@@ -32,3 +32,7 @@ const String MY_SALES_CHARACTER_IMAGE = "assets/images/luigi_asset.png";
 const String CREATE_SALES_CHARACTER_IMAGE = "assets/images/mario_asset.png";
 const String BUY_GAME_CHARACTER_IMAGE = "assets/images/toad_asset.png";
 const String LEARN_MORE = "assets/images/learn_more.png";
+
+const String ADVENTURE_GENRE_IMAGE = "assets/images/adventure.png";
+const String ACTION_GENRE_IMAGE = "assets/images/action.png";
+const String RACING_GENRE_IMAGE = "assets/images/racing.png";
