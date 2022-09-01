@@ -234,16 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(20.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Text(
-                "Recommended for you",
-                style: Theme.of(context).primaryTextTheme.headline3,
-              ),
+            SectionLabel(
+              title: "Recommended for you",
             ),
             Padding(
               padding: EdgeInsets.only(
@@ -331,6 +323,10 @@ class _HomeScreenState extends State<HomeScreen> {
               },
             ),
             _learnMoreContainer(),
+            SectionLabel(
+              title: "Popular this week",
+              rightText: "View All",
+            ),
             Container(
               margin: EdgeInsets.only(
                 top: ScreenUtils.getDesignHeight(30.0),
@@ -340,29 +336,21 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Positioned.fill(
-                    child: CachedImage(
-                        imageUrl:
-                            "https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg",
-                        fit: BoxFit.cover),
+                  Text(
+                    "Sales in Wishlist",
+                    style: Theme.of(context).primaryTextTheme.headline3,
                   ),
-                  Positioned.fill(
-                    bottom: 0,
-                    child: Container(
-                      width: ScreenUtils.getDesignWidth(220),
-                      height: ScreenUtils.getDesignHeight(290),
-                      padding: EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xff091015), Colors.transparent],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                    ),
+                  GradientText(
+                    "View All",
+                    gradient: PRIMARY_GRADIENT,
+                    style: Theme.of(context).primaryTextTheme.headline4,
                   ),
                 ],
               ),
+            ),
+            SectionLabel(
+              title: "Highly Anticipated",
+              rightText: "View All",
             ),
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
@@ -389,54 +377,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             );
                     },
                     itemCount: val.wishListGames.length,
-                  ),
-                );
-              },
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(30.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Game Bundles",
-                    style: Theme.of(context).primaryTextTheme.headline3,
-                  ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
-                ],
-              ),
-            ),
-            Consumer<HomeScreenModel>(
-              builder: (_, game, __) {
-                return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15, right: game.bundleGames.length > 1 ? 0 : 24),
-                  height: ScreenUtils.getDesignHeight(380),
-                  width: ScreenUtils.bodyWidth,
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(
-                      width: ScreenUtils.getDesignHeight(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return game.bundleGames.length != 0
-                          ? _gameBundlesContainer(game.bundleGames[index])
-                          : Center(
-                              child: Text(
-                                'No games available yet',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
-                    },
-                    itemCount: game.bundleGames.length,
                   ),
                 );
               },
