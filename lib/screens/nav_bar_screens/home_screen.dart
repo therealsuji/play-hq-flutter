@@ -255,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return GamesWidget(
                       backgroundUrl: temp[index]['imageUrl']!,
-                      gameName: temp[index]['name']!,
+                      title: temp[index]['name']!,
                       width: ScreenUtils.getDesignWidth(220),
                       height: ScreenUtils.getDesignHeight(290),
                     );
@@ -284,9 +284,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               onTap: () => locator<NavigationService>()
                                   .pushNamed(GAME_SALE_DETAILS_SCREEN, args: val.soloGames[index]),
                               child: GamesWidget(
-                                gameName: val.soloGames[index].gameList?[0].game!.title,
-                                price: val.soloGames[index].price.toString(),
-                                backgroundUrl: val.soloGames[index].gameList?[0].game!.boxCover,
+                                title: val.soloGames[index].gameList?[0].game.title,
+                                subTitle: val.soloGames[index].price?.toString() ?? "",
+                                backgroundUrl: val.soloGames[index].gameList?[0].game.boxCover,
                                 gradient: GREEN_GRADIENT,
                               ),
                             )
@@ -612,9 +612,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     return GamesWidget(
                       height: 130,
                       width: 90,
-                      gameName: e.game!.title,
-                      price: e.status,
-                      backgroundUrl: e.game!.boxCover,
+                      title: e.game.title ?? "",
+                      subTitle: e.status,
+                      backgroundUrl: e.game.boxCover,
                       gradient: PRIMARY_GRADIENT,
                     );
                   }).toList(),

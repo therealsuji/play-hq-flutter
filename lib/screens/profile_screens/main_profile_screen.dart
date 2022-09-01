@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/helpers/app_utils.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
@@ -30,7 +30,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50) ),
+      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50)),
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,21 +42,15 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                      onTap: () => locator<NavigationService>()
-                          .pushNamed(SETTINGS_SCREEN),
-                      child: Container(
-                          child:
-                              SvgPicture.asset('assets/icons/settings.svg'))),
+                      onTap: () => locator<NavigationService>().pushNamed(SETTINGS_SCREEN),
+                      child: Container(child: SvgPicture.asset('assets/icons/settings.svg'))),
                   Stack(
                     children: [
                       GestureDetector(
-                        onTap: () => locator<NavigationService>()
-                            .pushNamed(NOTIFICATION_SCREEN),
+                        onTap: () => locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
                         child: Container(
-                            margin: EdgeInsets.only(
-                                left: ScreenUtils.getDesignWidth(30)),
-                            child: SvgPicture.asset(
-                                'assets/icons/notification.svg')),
+                            margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(30)),
+                            child: SvgPicture.asset('assets/icons/notification.svg')),
                       ),
                       Positioned(
                         top: 0,
@@ -64,8 +58,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                         child: Container(
                           height: 11,
                           width: 11,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.green),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
                         ),
                       )
                     ],
@@ -74,16 +67,17 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
               ),
             ),
             Consumer<MainProfileModel>(
-              builder: (_ , profileDetails , __){
+              builder: (_, profileDetails, __) {
                 return _userDetails(
-                    profileDetails.userDetails.avatar == "" ? "https://i.stack.imgur.com/y9DpT.jpg" : profileDetails.userDetails.avatar!,
+                    profileDetails.userDetails.avatar == ""
+                        ? "https://i.stack.imgur.com/y9DpT.jpg"
+                        : profileDetails.userDetails.avatar!,
                     profileDetails.userDetails.firstName! + ' ' + profileDetails.userDetails.lastName!,
                     profileDetails.userDetails.displayName!);
               },
             ),
             Container(
-              margin: EdgeInsets.only(
-                  top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
               child: CustomTextWidget(
                 'Subscription Plan',
                 isDynamic: false,
@@ -93,26 +87,18 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
             ),
             Container(
               margin: EdgeInsets.only(top: 15, left: 24, right: 24),
-              child: _subscriptionPlan(
-                  'Pro Gamer Pack',
-                  'assets/images/xbox_background.png',
-                  '16 Days Remaining',
-                  2,
-                  3),
+              child:
+                  _subscriptionPlan('Pro Gamer Pack', 'assets/images/xbox_background.png', '16 Days Remaining', 2, 3),
             ),
             Container(
               margin: EdgeInsets.only(top: 15, left: 24, right: 24),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  _subButtons('View History', false),
-                  _subButtons('Get Add Ons', true)
-                ],
+                children: [_subButtons('View History', false), _subButtons('Get Add Ons', true)],
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                  top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -130,8 +116,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                     style: TextStyle(
                         fontSize: 10,
                         fontFamily: CircularBook,
-                        foreground: Paint()
-                          ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                        foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                         fontWeight: FontWeight.w700),
                   )
                 ],
@@ -143,39 +128,44 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 margin: EdgeInsets.only(top: 15, left: 24, right: 24),
                 child: Consumer<MainProfileModel>(
                   builder: (_, val, __) {
-                    return val.fetchAllWishlistGames.length > 0 ? ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllWishlistGames[index].game.apiId)),
-                            child: GamesWidget(
-                              gameName: val.fetchAllWishlistGames[index].game.title ?? "",
-                              backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
-                              releaseDate: val.fetchAllWishlistGames[index].game.releaseDate ?? "",
-                              gradient: PRIMARY_GRADIENT,
+                    return val.fetchAllWishlistGames.length > 0
+                        ? ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                                    args: GameDetailsArguments(gameId: val.fetchAllWishlistGames[index].game.apiId)),
+                                child: GamesWidget(
+                                  title: val.fetchAllWishlistGames[index].game.title ?? "",
+                                  backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
+                                  subTitle: val.fetchAllWishlistGames[index].game.releaseDate != null
+                                      ? DateTime.parse(val.fetchAllWishlistGames[index].game.releaseDate!)
+                                          .format('dd-MM-yyyy')
+                                      : "Not mentioned",
+                                  gradient: PRIMARY_GRADIENT,
+                                ),
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return SizedBox(width: ScreenUtils.getDesignHeight(15));
+                            },
+                            itemCount: val.fetchAllWishlistGames.length)
+                        : Container(
+                            child: Center(
+                              child: CustomTextWidget(
+                                'No Games Added',
+                                isDynamic: false,
+                                style: Theme.of(context).primaryTextTheme.headline3,
+                                width: ScreenUtils.getDesignWidth(111),
+                              ),
                             ),
                           );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(width: ScreenUtils.getDesignHeight(15));
-                        },
-                        itemCount: val.fetchAllWishlistGames.length) : Container(
-                      child: Center(
-                        child: CustomTextWidget(
-                          'No Games Added',
-                          isDynamic: false,
-                          style: Theme.of(context).primaryTextTheme.headline3,
-                          width: ScreenUtils.getDesignWidth(111),
-                        ),
-                      ),
-                    );
                   },
                 ),
               ),
             ),
             Container(
-              margin: EdgeInsets.only(
-                  top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
+              margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -193,8 +183,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                     style: TextStyle(
                         fontSize: 10,
                         fontFamily: CircularBook,
-                        foreground: Paint()
-                          ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                        foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                         fontWeight: FontWeight.w700),
                   )
                 ],
@@ -203,35 +192,42 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
             Flexible(
               child: Container(
                 height: ScreenUtils.getDesignHeight(150),
-                margin: EdgeInsets.only(top: 15, left: 24, right: 24 , bottom: ScreenUtils.getDesignHeight(30)),
+                margin: EdgeInsets.only(top: 15, left: 24, right: 24, bottom: ScreenUtils.getDesignHeight(30)),
                 child: Consumer<MainProfileModel>(
                   builder: (_, val, __) {
-                    return val.fetchAllLibraryGames.length > 0 ? ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
-                            onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fetchAllLibraryGames[index].game.apiId ?? 0)),
-                            child: GamesWidget(
-                              gameName: val.fetchAllLibraryGames[index].game.title ?? "",
-                              backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
-                              releaseDate: val.fetchAllLibraryGames[index].game.releaseDate ?? "",
-                              gradient: PRIMARY_GRADIENT,
+                    return val.fetchAllLibraryGames.length > 0
+                        ? ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                                    args:
+                                        GameDetailsArguments(gameId: val.fetchAllLibraryGames[index].game.apiId ?? 0)),
+                                child: GamesWidget(
+                                  title: val.fetchAllLibraryGames[index].game.title ?? "",
+                                  backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
+                                  subTitle: val.fetchAllWishlistGames[index].game.releaseDate != null
+                                      ? DateTime.parse(val.fetchAllLibraryGames[index].game.releaseDate!)
+                                          .format('dd-MM-yyyy')
+                                      : "Not mentioned",
+                                  gradient: PRIMARY_GRADIENT,
+                                ),
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return SizedBox(width: ScreenUtils.getDesignHeight(15));
+                            },
+                            itemCount: val.fetchAllLibraryGames.length)
+                        : Container(
+                            child: Center(
+                              child: CustomTextWidget(
+                                'No Games Added',
+                                isDynamic: false,
+                                style: Theme.of(context).primaryTextTheme.headline3,
+                                width: ScreenUtils.getDesignWidth(111),
+                              ),
                             ),
                           );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(width: ScreenUtils.getDesignHeight(15));
-                        },
-                        itemCount: val.fetchAllLibraryGames.length) : Container(
-                      child: Center(
-                        child: CustomTextWidget(
-                          'No Games Added',
-                          isDynamic: false,
-                          style: Theme.of(context).primaryTextTheme.headline3,
-                          width: ScreenUtils.getDesignWidth(111),
-                        ),
-                      ),
-                    );
                   },
                 ),
               ),
@@ -253,11 +249,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
       child: Center(
         child: Text(
           text,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 11,
-              fontFamily: CircularBook),
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 11, fontFamily: CircularBook),
         ),
       ),
     );
@@ -283,10 +275,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
             margin: EdgeInsets.only(top: 15),
             child: Text(
               name,
-              style: TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white,
-                  fontSize: 20),
+              style: TextStyle(fontWeight: FontWeight.w700, color: Colors.white, fontSize: 20),
             ),
           ),
           Container(
@@ -305,8 +294,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
     );
   }
 
-  Widget _subscriptionPlan(String name, String imagePath, String remaining,
-      int purchases, int sales) {
+  Widget _subscriptionPlan(String name, String imagePath, String remaining, int purchases, int sales) {
     return Container(
         height: ScreenUtils.getDesignHeight(140),
         width: ScreenUtils.bodyWidth,
@@ -358,26 +346,20 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                   children: [
                     _statistics('Sales', sales),
                     Container(
-                        margin: EdgeInsets.only(
-                            left: ScreenUtils.getDesignWidth(40)),
+                        margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(40)),
                         child: _statistics('Purchases', purchases)),
                     Spacer(),
                     Container(
                       width: ScreenUtils.getDesignWidth(85),
                       height: ScreenUtils.getDesignHeight(35),
-                      decoration: BoxDecoration(
-                          gradient: PRIMARY_GRADIENT,
-                          borderRadius: BorderRadius.circular(3.0)),
+                      decoration: BoxDecoration(gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(3.0)),
                       child: Center(
                         child: CustomTextWidget(
                           'Change Pack',
                           isDynamic: false,
                           width: ScreenUtils.getDesignWidth(55),
                           style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 9,
-                              fontFamily: CircularBook),
+                              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 9, fontFamily: CircularBook),
                         ),
                       ),
                     )
@@ -412,11 +394,8 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 isDynamic: true,
                 minWidth: ScreenUtils.getDesignWidth(20),
                 maxWidth: ScreenUtils.getDesignWidth(100),
-                style: TextStyle(
-                    fontSize: 12,
-                    fontFamily: CircularBook,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                style:
+                    TextStyle(fontSize: 12, fontFamily: CircularBook, color: Colors.white, fontWeight: FontWeight.bold),
               ))
         ],
       ),

@@ -5,14 +5,12 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/widgets/custom_game_widget.dart';
+import 'package:play_hq/helpers/app_utils.dart';
 
 class ActiveOrdersWidget extends StatelessWidget {
   final SalesPayload salesPayload;
 
-  const ActiveOrdersWidget({
-    Key? key,
-    required this.salesPayload
-  }) : super(key: key);
+  const ActiveOrdersWidget({Key? key, required this.salesPayload}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +29,11 @@ class ActiveOrdersWidget extends StatelessWidget {
                 spacing: 17,
                 children: salesPayload.gameList!.map((game) {
                   return GamesWidget(
-                    gameName: game.game.title,
+                    title: game.game.title,
                     width: ScreenUtils.getDesignWidth(80),
                     height: ScreenUtils.getDesignHeight(130),
-                    releaseDate: game.game.releaseDate,
-                    backgroundUrl:game.game.boxCover,
+                    subTitle: DateTime.parse(game.game.releaseDate!).format('dd-MM-yyyy'),
+                    backgroundUrl: game.game.boxCover,
                     gradient: PRIMARY_GRADIENT,
                   );
                 }).toList()),
@@ -62,10 +60,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                         child: Text(
                           salesPayload.price.toString(),
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: Neusa),
+                              fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: Neusa),
                         ),
                       ),
                     ],
@@ -117,7 +112,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, ORDER_TRACKING_SCREEN , arguments: salesPayload),
+                    onTap: () => Navigator.pushNamed(context, ORDER_TRACKING_SCREEN, arguments: salesPayload),
                     child: Container(
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),
@@ -142,7 +137,7 @@ class ActiveOrdersWidget extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(context, ORDER_DETAILS_SCREEN , arguments: salesPayload),
+                    onTap: () => Navigator.pushNamed(context, ORDER_DETAILS_SCREEN, arguments: salesPayload),
                     child: Container(
                       height: ScreenUtils.getDesignHeight(40),
                       width: ScreenUtils.getDesignWidth(140),

@@ -75,22 +75,17 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       return Padding(
                         padding: EdgeInsets.only(
                             top: ScreenUtils.getDesignHeight(15.0),
-                            left: index == 0
-                                ? ScreenUtils.getDesignWidth(24.0)
-                                : ScreenUtils.getDesignWidth(15.0),
+                            left: index == 0 ? ScreenUtils.getDesignWidth(24.0) : ScreenUtils.getDesignWidth(15.0),
                             right: index == val.newlyReleasedGames.length
                                 ? ScreenUtils.getDesignWidth(24.0)
                                 : ScreenUtils.getDesignWidth(0)),
                         child: GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(
-                              GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(
-                                  gameId: val.newlyReleasedGames[index].id)),
+                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                              args: GameDetailsArguments(gameId: val.newlyReleasedGames[index].id)),
                           child: GamesWidget(
-                            gameName: val.newlyReleasedGames[index].name,
-                            releaseDate: val.newlyReleasedGames[index].released,
-                            backgroundUrl:
-                                val.newlyReleasedGames[index].backgroundImage,
+                            title: val.newlyReleasedGames[index].name,
+                            subTitle: val.newlyReleasedGames[index].released,
+                            backgroundUrl: val.newlyReleasedGames[index].backgroundImage,
                             gradient: PRIMARY_GRADIENT,
                           ),
                         ),
@@ -136,8 +131,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ),
             Consumer<DiscoverViewModel>(builder: (_, val, __) {
               return Container(
-                margin:
-                    EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30.0)),
+                margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(30.0)),
                 height: ScreenUtils.getDesignHeight(155),
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
@@ -146,20 +140,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                       return Padding(
                         padding: EdgeInsets.only(
                             top: ScreenUtils.getDesignHeight(15.0),
-                            left: index == 0
-                                ? ScreenUtils.getDesignWidth(24.0)
-                                : ScreenUtils.getDesignWidth(15.0),
+                            left: index == 0 ? ScreenUtils.getDesignWidth(24.0) : ScreenUtils.getDesignWidth(15.0),
                             right: index == val.fpsGames.length
                                 ? ScreenUtils.getDesignWidth(24.0)
                                 : ScreenUtils.getDesignWidth(0)),
                         child: GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(
-                              GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(
-                                  gameId: val.fpsGames[index].id)),
+                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                              args: GameDetailsArguments(gameId: val.fpsGames[index].id)),
                           child: GamesWidget(
-                            gameName: val.fpsGames[index].name,
-                            releaseDate: val.fpsGames[index].released,
+                            title: val.fpsGames[index].name,
+                            subTitle: val.fpsGames[index].released,
                             backgroundUrl: val.fpsGames[index].backgroundImage,
                             gradient: PRIMARY_GRADIENT,
                           ),
@@ -205,11 +195,11 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           itemCount: 3,
           itemBuilder: (context, index) {
             return _categoryItem(
-                discoverComponents[index]['name'],
-                discoverComponents[index]['gradient'],
-                discoverComponents[index]['imagePath'],
-                discoverComponents[index]['category'],
-                discoverComponents[index]['apiType'],
+              discoverComponents[index]['name'],
+              discoverComponents[index]['gradient'],
+              discoverComponents[index]['imagePath'],
+              discoverComponents[index]['category'],
+              discoverComponents[index]['apiType'],
             );
           },
           separatorBuilder: (context, index) {
@@ -226,15 +216,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
   }
 
   Widget _categoryItem(
-      String categoryName, LinearGradient gradient, String imagePath , DiscoverCategory category , GameLists apiType) {
+      String categoryName, LinearGradient gradient, String imagePath, DiscoverCategory category, GameLists apiType) {
     return GestureDetector(
-      onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN , args: GameListArguments(screenTitle: categoryName , apiType: apiType)),
+      onTap: () => locator<NavigationService>()
+          .pushNamed(GAME_LIST_SCREEN, args: GameListArguments(screenTitle: categoryName, apiType: apiType)),
       child: Container(
         height: ScreenUtils.getDesignHeight(180),
         width: ScreenUtils.getDesignWidth(156),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(ScreenUtils.getDesignWidth(5)),
-            gradient: gradient),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(ScreenUtils.getDesignWidth(5)), gradient: gradient),
         child: Container(
           margin: EdgeInsets.only(
             top: ScreenUtils.getDesignHeight(30),
@@ -297,16 +287,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
           Container(
               alignment: Alignment.bottomLeft,
-              margin: EdgeInsets.only(
-                  left: ScreenUtils.getDesignWidth(24),
-                  bottom: ScreenUtils.getDesignHeight(60)),
+              margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24), bottom: ScreenUtils.getDesignHeight(60)),
               child: Text(
                 'Assasin\'s Creed \nValhalla',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: Neusa,
-                    fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: Neusa, fontWeight: FontWeight.bold),
               )),
         ],
       ),

@@ -8,23 +8,22 @@ import 'gradient_text_widget.dart';
 
 class GamesWidget extends StatelessWidget {
   final String? backgroundUrl;
-  final String? gameName;
-  final String? releaseDate;
-  final String? price;
   final Color? color;
   final Gradient? gradient;
   final double? height;
   final double? width;
 
+  final String? title;
+  final String? subTitle;
+
   GamesWidget({
-    this.gameName,
-    this.releaseDate,
     this.backgroundUrl,
     this.color,
     this.height = 160,
     this.width = 100,
-    this.price,
     this.gradient,
+    this.title,
+    this.subTitle,
   });
 
   @override
@@ -40,15 +39,10 @@ class GamesWidget extends StatelessWidget {
               child: Container(
                 width: ScreenUtils.getDesignWidth(width!),
                 height: ScreenUtils.getDesignHeight(height!),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
+                child: CachedNetworkImage(
                     fit: BoxFit.cover,
-                    image: CachedNetworkImageProvider(
-                      backgroundUrl ??
-                          'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg',
-                    ),
-                  ),
-                ),
+                    imageUrl: backgroundUrl ??
+                        'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'),
               ),
             ),
             Positioned(
@@ -75,7 +69,7 @@ class GamesWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextWidget(
-                      gameName!,
+                      title ?? "",
                       isDynamic: true,
                       style: TextStyle(
                         fontFamily: CircularBook,
@@ -86,34 +80,26 @@ class GamesWidget extends StatelessWidget {
                       maxWidth: ScreenUtils.getDesignWidth(70.0),
                       minWidth: ScreenUtils.getDesignWidth(30.0),
                     ),
-                    // Container(
-                    //   margin: EdgeInsets.only(top: 5.0),
-                    //   child: color != null
-                    //       ? Text(
-                    //           releaseDate == null
-                    //               ? price == null
-                    //                   ? 'Not mentioned'
-                    //                   : price!
-                    //               : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
-                    //           style: TextStyle(
-                    //             fontFamily: Neusa,
-                    //             fontSize: 12.0,
-                    //             fontWeight: FontWeight.bold,
-                    //             color: color,
-                    //           ),
-                    //         )
-                    //       : GradientText(
-                    //           releaseDate == null
-                    //               ? price == null
-                    //                   ? 'Not mentioned'
-                    //                   : price!
-                    //               : DateTime.parse(releaseDate!).format('dd-MM-yyyy'),
-                    //           gradient: gradient!,
-                    //           style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
-                    //                 color: Colors.white,
-                    //               ),
-                    //         ),
-                    // ),
+                    Container(
+                      margin: EdgeInsets.only(top: 5.0),
+                      child: gradient == null
+                          ? Text(
+                              subTitle ?? "",
+                              style: TextStyle(
+                                fontFamily: Neusa,
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                            )
+                          : GradientText(
+                              subTitle ?? "",
+                              gradient: gradient!,
+                              style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                    ),
                   ],
                 ),
               ),
