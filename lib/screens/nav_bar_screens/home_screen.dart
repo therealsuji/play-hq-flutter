@@ -10,6 +10,7 @@ import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
 import 'package:play_hq/widgets/cached_image_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:play_hq/widgets/horizontal_scroll_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_assets.dart';
@@ -245,13 +246,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               child: Container(
                 height: ScreenUtils.getDesignHeight(290),
-                child: ListView.separated(
-                  separatorBuilder: (_, __) => SizedBox(
-                    width: ScreenUtils.getDesignHeight(15.0),
-                  ),
-                  itemCount: temp.length,
-                  padding: EdgeInsets.symmetric(horizontal: 24),
-                  scrollDirection: Axis.horizontal,
+                child: HorizontalScrollList(
+                  list: temp,
                   itemBuilder: (BuildContext context, int index) {
                     return GamesWidget(
                       backgroundUrl: temp[index]['imageUrl']!,
