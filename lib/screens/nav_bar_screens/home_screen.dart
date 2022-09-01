@@ -6,6 +6,7 @@ import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
+import 'package:play_hq/widgets/horizontal_scroll_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_assets.dart';
@@ -288,14 +289,10 @@ class _HomeScreenState extends State<HomeScreen> {
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
                 return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15),
+                  margin: EdgeInsets.only(top: 15),
                   height: ScreenUtils.getDesignHeight(140),
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(
-                      width: ScreenUtils.getDesignHeight(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
+                  child: HorizontalScrollList(
+                    itemCount: val.soloGames.length,
                     itemBuilder: (BuildContext context, int index) {
                       return val.soloGames.length != 0
                           ? GestureDetector(
@@ -315,7 +312,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             );
                     },
-                    itemCount: val.soloGames.length,
                   ),
                 );
               },
@@ -345,14 +341,9 @@ class _HomeScreenState extends State<HomeScreen> {
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
                 return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15),
+                  margin: EdgeInsets.symmetric(vertical: 15),
                   height: ScreenUtils.getDesignHeight(205),
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(
-                      width: ScreenUtils.getDesignHeight(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
+                  child: HorizontalScrollList(
                     itemBuilder: (BuildContext context, int index) {
                       return val.wishListGames.length != 0
                           ? GestureDetector(

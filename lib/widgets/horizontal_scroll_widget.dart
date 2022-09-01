@@ -3,9 +3,9 @@ import 'package:play_hq/helpers/app_screen_utils.dart';
 
 class HorizontalScrollList extends StatelessWidget {
   final IndexedWidgetBuilder itemBuilder;
-  final List list;
+  final int itemCount;
 
-  const HorizontalScrollList({Key? key, required this.list, required this.itemBuilder}) : super(key: key);
+  const HorizontalScrollList({Key? key, required this.itemCount, required this.itemBuilder}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +17,7 @@ class HorizontalScrollList extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 24),
         scrollDirection: Axis.horizontal,
         itemBuilder: itemBuilder,
-        itemCount: list.length,
+        itemCount: itemCount,
       ),
     );
   }
