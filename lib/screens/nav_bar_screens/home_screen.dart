@@ -247,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: ScreenUtils.getDesignHeight(290),
                 child: HorizontalScrollList(
-                  list: temp,
+                  itemCount: temp.length,
                   itemBuilder: (BuildContext context, int index) {
                     return GamesWidget(
                       backgroundUrl: temp[index]['imageUrl']!,
