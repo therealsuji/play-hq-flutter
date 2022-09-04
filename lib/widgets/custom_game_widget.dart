@@ -45,7 +45,7 @@ class GamesWidget extends StatelessWidget {
                         'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'),
               ),
             ),
-            Positioned(
+            Positioned.fill(
               bottom: 0,
               child: Container(
                 width: ScreenUtils.getDesignWidth(width!),

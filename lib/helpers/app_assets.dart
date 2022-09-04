@@ -13,6 +13,7 @@ const String PHONE_ICON = "assets/icons/phone.svg";
 const String TRUCK_ICON = "assets/icons/truck.svg";
 const String CARD_ICON = "assets/icons/card.svg";
 const String DOLLAR_ICON = "assets/icons/dollar.svg";
+const String SETTINGS_ICON = "assets/icons/settings.svg";
 
 const String HOME_ICON = "assets/icons/home.svg";
 const String DISCOVER_ICON = "assets/icons/discover.svg";

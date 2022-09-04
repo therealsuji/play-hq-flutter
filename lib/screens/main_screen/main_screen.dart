@@ -70,7 +70,7 @@ class _MainScreenState extends State<MainScreen> {
             case 1:
               return DiscoverScreen();
             case 2:
-              return MainProfileScreen();
+              return ProfileScreen();
             default:
               return Container();
           }
