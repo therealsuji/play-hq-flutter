@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
+import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
@@ -210,7 +211,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: "ACTION",
                                   imageUrl: ACTION_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                                    args: GameListArguments(
+                                        screenTitle: "Action Games",
+                                        apiType: GameLists.GENRE,
+                                        args: {"genre": "action"})),
                               ),
                               InkWell(
                                 child: GenreWidget(
@@ -218,7 +223,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: "ADVENTURE",
                                   imageUrl: ADVENTURE_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                                    args: GameListArguments(
+                                        screenTitle: "Action Games",
+                                        apiType: GameLists.GENRE,
+                                        args: {"genre": "adventure"})),
                               ),
                               InkWell(
                                 child: GenreWidget(
@@ -226,7 +235,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: "RACING",
                                   imageUrl: RACING_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN),
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                                    args: GameListArguments(
+                                        screenTitle: "Action Games",
+                                        apiType: GameLists.GENRE,
+                                        args: {"genre": "racing"})),
                               ),
                             ],
                           ),

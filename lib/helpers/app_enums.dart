@@ -6,13 +6,13 @@ enum HttpAction { GET, POST, PUT, PATCH, POST_ENCODED_URL, DELETE }
 
 enum SearchScreenStates { EMPTY, SUCCESS, NOTHING, LOADING, FAILED }
 
-enum SearchType { MAIN_SEARCH, SETUP_PURCHASES, SETUP_SALES , CREATE_SALE}
+enum SearchType { MAIN_SEARCH, SETUP_PURCHASES, SETUP_SALES, CREATE_SALE }
 
-enum GameType {WISHLIST , LIBRARY}
+enum GameType { WISHLIST, LIBRARY }
 
-enum UserType {BUYER, SELLER}
+enum UserType { BUYER, SELLER }
 
-enum NotificationType {Information, Success, Failure, Warning}
+enum NotificationType { Information, Success, Failure, Warning }
 
 enum PlatformSelection { PlayStation, Xbox, Nintendo }
 
@@ -20,17 +20,17 @@ enum GameCondition { MINT_SEALED, VERY_NEW, KINDA_USED, PLAYABLE }
 
 enum DiscoverCategory { TOP_RATED_GAMES, MOST_ANTICIPATED_GAMES, GAMES_OF_2022 }
 
-enum GameLists {TOP_RATED_GAMES, MOST_ANTICIPATED_GAMES, GAMES_OF_2022}
+enum GameLists { TOP_RATED_GAMES, MOST_ANTICIPATED_GAMES, GAMES_OF_2022, GENRE }
 
 enum OrderTrack { AWAITING, DELIVERING, RECEIVED }
 
-enum AlertType {CONFIRMATION, SUCCESS, ERROR , GENERAL}
+enum AlertType { CONFIRMATION, SUCCESS, ERROR, GENERAL }
 
-enum SaleOrderType { PURCHASE,SALE }
+enum SaleOrderType { PURCHASE, SALE }
 
-enum SaleStatus {COMPLETED, ACTIVE, INACTIVE, DISPATCHED, CANCELLED}
+enum SaleStatus { COMPLETED, ACTIVE, INACTIVE, DISPATCHED, CANCELLED }
 
-enum OrderStatus {COMPLETED, REJECTED, DISPATCHED, ACCEPTED, PLACED, CANCELLED}
+enum OrderStatus { COMPLETED, REJECTED, DISPATCHED, ACCEPTED, PLACED, CANCELLED }
 
 enum ExceptionTypes {
   TIMEOUT_EXCEPTION,

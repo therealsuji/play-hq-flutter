@@ -13,12 +13,11 @@ import '../../service_locator.dart';
 import '../../services/base_managers/error.dart';
 
 class GameListDelegate extends GameListRepository {
-
   final _networkCalls = Network.shared;
 
   @override
-  Future<RawgGameDetails> fetchTopRatedGames() async{
-    try{
+  Future<RawgGameDetails> fetchTopRatedGames() async {
+    try {
       var response = await _networkCalls.performRequest(APIConfig.getTopRatedGames(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
@@ -38,8 +37,8 @@ class GameListDelegate extends GameListRepository {
   }
 
   @override
-  Future<RawgGameDetails> fetchGamesOf2022() async{
-    try{
+  Future<RawgGameDetails> fetchGamesOf2022() async {
+    try {
       var response = await _networkCalls.performRequest(APIConfig.getUpcomingGames(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
@@ -59,8 +58,8 @@ class GameListDelegate extends GameListRepository {
   }
 
   @override
-  Future<RawgGameDetails> fetchUpcomingGames() async{
-    try{
+  Future<RawgGameDetails> fetchUpcomingGames() async {
+    try {
       var response = await _networkCalls.performRequest(APIConfig.getGamesOf2022(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
@@ -79,4 +78,24 @@ class GameListDelegate extends GameListRepository {
     }
   }
 
+  @override
+  Future<RawgGameDetails> fetchGamesFromGenre(int page, String genre) async {
+    try {
+      var response = await _networkCalls.performRequest(APIConfig.getGamesByGenre(page, genre), HttpAction.GET);
+      return compute(rawgGameDetailsFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
 }

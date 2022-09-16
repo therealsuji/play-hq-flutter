@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/date_filter_model.dart';
@@ -16,7 +18,7 @@ class APIConfig {
     switch (environment) {
       case Environment.DEV:
         _rawgAPI = "https://api.rawg.io/api";
-        _baseUrl = "http://localhost:3001";
+        _baseUrl = Platform.isAndroid ? "http://10.0.2.2:3001" : "http://localhost:3001";
         break;
       case Environment.QA:
         _rawgAPI = "https://api.rawg.io/api";
@@ -30,9 +32,7 @@ class APIConfig {
   }
 
   /// Urls that are needed from the RAWG API
-  static String getGenres = '$_rawgAPI' +
-      '/genres?ordering=&page=1&page_size=30&' +
-      'key=$_RAWG_API_KEY';
+  static String getGenres = '$_rawgAPI' + '/genres?ordering=&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
 
   static String getSearchResults(String params) {
     return '$_rawgAPI' + '/games?page=1&search=$params' + '&key=$_RAWG_API_KEY';
@@ -47,23 +47,30 @@ class APIConfig {
   }
 
   static String getNewReleases(DateFilter dateFilter) {
-    return '$_rawgAPI' + '/games?dates=${dateFilter.year}-02-01,${dateFilter.year}-${dateFilter.endMonth}-25' +
+    return '$_rawgAPI' +
+        '/games?dates=${dateFilter.year}-02-01,${dateFilter.year}-${dateFilter.endMonth}-25' +
         '&page_size=9&key=$_RAWG_API_KEY';
   }
 
-  static String getFPSGames(){
-    return '$_rawgAPI' + '/games?dates=2019-09-01,2021-09-30&page_size=9&genres=2&ordering=-added' + '&key=$_RAWG_API_KEY';
+  static String getFPSGames() {
+    return '$_rawgAPI' +
+        '/games?dates=2019-09-01,2021-09-30&page_size=9&genres=2&ordering=-added' +
+        '&key=$_RAWG_API_KEY';
   }
 
-  static String getTopRatedGames(){
+  static String getGamesByGenre(int page, String genre) {
+    return '$_rawgAPI/games?page_size=$page&genres=$genre&key=$_RAWG_API_KEY';
+  }
+
+  static String getTopRatedGames() {
     return '$_rawgAPI' + '/games?dates=2018-01-01,2022-12-31&ordering=-rating&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
-  static String getUpcomingGames(){
+  static String getUpcomingGames() {
     return '$_rawgAPI' + '/games?dates=2022-06-01,2026-12-31&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
-  static String getGamesOf2022(){
+  static String getGamesOf2022() {
     return '$_rawgAPI' + '/games?dates=2022-01-01,2022-12-31&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
@@ -82,7 +89,7 @@ class APIConfig {
   static String fetchMyActiveSales = '$_baseUrl' + "/sales/get-my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sales/from-wish-list";
 
-  static String fetchSalesForUsersOrders({int page = 1, required SaleOrderType type, OrderStatus? status}){
+  static String fetchSalesForUsersOrders({int page = 1, required SaleOrderType type, OrderStatus? status}) {
     return "$_baseUrl/sales/get-sales-for-user-orders?page=$page&type=${describeEnum(type).toLowerCase()}" +
         (status != null ? "&status=${describeEnum(status)}" : "");
   }
@@ -122,13 +129,14 @@ class APIConfig {
 
   static String fetchAllActivePurchaseOrders() => '$_baseUrl' + '/orders?type=purchase&status=ACCEPTED';
 
-  static String changeOrderStatus({int page = 1, OrderStatus? status , UserType? user , String? id}) => '$_baseUrl' + '/orders/update-status/${describeEnum(user!).toLowerCase()}/$id/${describeEnum(status!)}';
+  static String changeOrderStatus({int page = 1, OrderStatus? status, UserType? user, String? id}) =>
+      '$_baseUrl' + '/orders/update-status/${describeEnum(user!).toLowerCase()}/$id/${describeEnum(status!)}';
 
-  static String fetchSoloGames(){
+  static String fetchSoloGames() {
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';
   }
 
-  static String fetchBundleGames(){
+  static String fetchBundleGames() {
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=bundle';
   }
 
@@ -137,5 +145,4 @@ class APIConfig {
   }
 
   static String getGameStatus(int id) => '$_baseUrl' + '/list/check/$id';
-
 }

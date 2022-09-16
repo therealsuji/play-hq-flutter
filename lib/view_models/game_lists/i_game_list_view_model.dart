@@ -1,6 +1,3 @@
-
-
-
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import '../../models/loading_event_model.dart';
@@ -9,16 +6,14 @@ import '../../service_locator.dart';
 import 'game_list_view_model.dart';
 
 class IGameListViewModel extends GameListViewModel {
-
   final _gameListAPI = locator<GameListRepository>();
   final _eventBus = locator<EventBus>();
-
+  int _pageSize = 9;
   List<GameResults> _gameResponse = [];
 
   @override
-  void fetchTopRatedGames() async{
-
-    try{
+  void fetchTopRatedGames() async {
+    try {
       _eventBus.fire(LoadingEvent.show());
 
       await _gameListAPI.fetchTopRatedGames().then((value) {
@@ -29,8 +24,7 @@ class IGameListViewModel extends GameListViewModel {
       print('Top Rated Games: ${_gameResponse.length}');
 
       _eventBus.fire(LoadingEvent.hide());
-
-    }catch (e){
+    } catch (e) {
       print(e);
       _eventBus.fire(LoadingEvent.hide());
     }
@@ -41,7 +35,7 @@ class IGameListViewModel extends GameListViewModel {
 
   @override
   void fetchGamesOf2022() async {
-    try{
+    try {
       _eventBus.fire(LoadingEvent.show());
 
       await _gameListAPI.fetchUpcomingGames().then((value) {
@@ -52,8 +46,7 @@ class IGameListViewModel extends GameListViewModel {
       print('Top Rated Games: ${_gameResponse.length}');
 
       _eventBus.fire(LoadingEvent.hide());
-
-    }catch (e){
+    } catch (e) {
       print(e);
       _eventBus.fire(LoadingEvent.hide());
     }
@@ -61,7 +54,7 @@ class IGameListViewModel extends GameListViewModel {
 
   @override
   void fetchUpcomingGames() async {
-    try{
+    try {
       _eventBus.fire(LoadingEvent.show());
 
       await _gameListAPI.fetchGamesOf2022().then((value) {
@@ -72,11 +65,33 @@ class IGameListViewModel extends GameListViewModel {
       print('Top Rated Games: ${_gameResponse.length}');
 
       _eventBus.fire(LoadingEvent.hide());
-
-    }catch (e){
+    } catch (e) {
       print(e);
       _eventBus.fire(LoadingEvent.hide());
     }
   }
 
+  @override
+  void fetchGamesFromGenre(String genre) async {
+    try {
+      _eventBus.fire(LoadingEvent.show());
+
+      await _gameListAPI.fetchGamesFromGenre(_pageSize, genre).then((value) {
+        _gameResponse = value.results ?? [];
+        notifyListeners();
+      });
+
+      print('Top Rated Games: ${_gameResponse.length}');
+
+      _eventBus.fire(LoadingEvent.hide());
+    } catch (e) {
+      print(e);
+      _eventBus.fire(LoadingEvent.hide());
+    }
+  }
+
+  @override
+  void increasePageSize() {
+    // TODO: implement increasePageSize
+  }
 }

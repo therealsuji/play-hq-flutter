@@ -41,10 +41,10 @@ class IMainProfileModel extends MainProfileModel {
   }
 
   @override
-  List<Data> get fetchAllWishlistGames => _wishlistGames;
+  List<Data> get wishlistGames => _wishlistGames;
 
   @override
-  List<Data> get fetchAllLibraryGames => _libraryGames;
+  List<Data> get libraryGames => _libraryGames;
 
   @override
   // TODO: implement userDetails

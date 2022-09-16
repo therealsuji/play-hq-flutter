@@ -128,19 +128,18 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 margin: EdgeInsets.only(top: 15, left: 24, right: 24),
                 child: Consumer<MainProfileModel>(
                   builder: (_, val, __) {
-                    return val.fetchAllWishlistGames.length > 0
+                    return val.wishlistGames.length > 0
                         ? ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                                    args: GameDetailsArguments(gameId: val.fetchAllWishlistGames[index].game.apiId)),
+                                    args: GameDetailsArguments(gameId: val.wishlistGames[index].game.apiId)),
                                 child: GamesWidget(
-                                  title: val.fetchAllWishlistGames[index].game.title ?? "",
-                                  backgroundUrl: val.fetchAllWishlistGames[index].game.boxCover ?? "",
-                                  subTitle: val.fetchAllWishlistGames[index].game.releaseDate != null
-                                      ? DateTime.parse(val.fetchAllWishlistGames[index].game.releaseDate!)
-                                          .format('dd-MM-yyyy')
+                                  title: val.wishlistGames[index].game.title ?? "",
+                                  backgroundUrl: val.wishlistGames[index].game.boxCover ?? "",
+                                  subTitle: val.wishlistGames[index].game.releaseDate != null
+                                      ? DateTime.parse(val.wishlistGames[index].game.releaseDate!).format('dd-MM-yyyy')
                                       : "Not mentioned",
                                   gradient: PRIMARY_GRADIENT,
                                 ),
@@ -149,7 +148,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                             separatorBuilder: (BuildContext context, int index) {
                               return SizedBox(width: ScreenUtils.getDesignHeight(15));
                             },
-                            itemCount: val.fetchAllWishlistGames.length)
+                            itemCount: val.wishlistGames.length)
                         : Container(
                             child: Center(
                               child: CustomTextWidget(
@@ -195,20 +194,18 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 margin: EdgeInsets.only(top: 15, left: 24, right: 24, bottom: ScreenUtils.getDesignHeight(30)),
                 child: Consumer<MainProfileModel>(
                   builder: (_, val, __) {
-                    return val.fetchAllLibraryGames.length > 0
+                    return val.libraryGames.length > 0
                         ? ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                 onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                                    args:
-                                        GameDetailsArguments(gameId: val.fetchAllLibraryGames[index].game.apiId ?? 0)),
+                                    args: GameDetailsArguments(gameId: val.libraryGames[index].game.apiId ?? 0)),
                                 child: GamesWidget(
-                                  title: val.fetchAllLibraryGames[index].game.title ?? "",
-                                  backgroundUrl: val.fetchAllLibraryGames[index].game.boxCover ?? "",
-                                  subTitle: val.fetchAllWishlistGames[index].game.releaseDate != null
-                                      ? DateTime.parse(val.fetchAllLibraryGames[index].game.releaseDate!)
-                                          .format('dd-MM-yyyy')
+                                  title: val.libraryGames[index].game.title ?? "",
+                                  backgroundUrl: val.libraryGames[index].game.boxCover ?? "",
+                                  subTitle: val.wishlistGames[index].game.releaseDate != null
+                                      ? DateTime.parse(val.libraryGames[index].game.releaseDate!).format('dd-MM-yyyy')
                                       : "Not mentioned",
                                   gradient: PRIMARY_GRADIENT,
                                 ),
@@ -217,7 +214,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                             separatorBuilder: (BuildContext context, int index) {
                               return SizedBox(width: ScreenUtils.getDesignHeight(15));
                             },
-                            itemCount: val.fetchAllLibraryGames.length)
+                            itemCount: val.libraryGames.length)
                         : Container(
                             child: Center(
                               child: CustomTextWidget(

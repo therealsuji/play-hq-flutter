@@ -10,15 +10,8 @@ class CustomTextWidget extends StatelessWidget {
   final bool isDynamic;
   final TextAlign? align;
 
-  CustomTextWidget(
-  this.text,
-      {this.height,
-      this.width,
-      this.style,
-      this.maxWidth,
-      this.minWidth,
-      required this.isDynamic,
-      this.align});
+  CustomTextWidget(this.text,
+      {this.height, this.width, this.style, this.maxWidth, this.minWidth, this.isDynamic = false, this.align});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +20,7 @@ class CustomTextWidget extends StatelessWidget {
             fit: BoxFit.fill,
             child: Container(
               child: Text(text, style: style),
-              constraints:
-                  BoxConstraints(maxWidth: maxWidth!, minWidth: minWidth!),
+              constraints: BoxConstraints(maxWidth: maxWidth!, minWidth: minWidth!),
             ),
           )
         : Container(
@@ -37,7 +29,7 @@ class CustomTextWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.fitWidth,
               child: Container(
-                constraints: BoxConstraints(minHeight: 5 , minWidth: 5),
+                constraints: BoxConstraints(minHeight: 5, minWidth: 5),
                 child: Text(
                   text,
                   style: style,

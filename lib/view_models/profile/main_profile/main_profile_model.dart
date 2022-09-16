@@ -4,11 +4,10 @@ import 'package:play_hq/models/common_models/game_preferences/response_body.dart
 import '../../../models/common_models/user/user_details.dart';
 
 abstract class MainProfileModel with ChangeNotifier {
-  List<Data> get fetchAllWishlistGames;
-
   void getProfileDetails();
 
-  List<Data> get fetchAllLibraryGames;
+  List<Data> get wishlistGames;
+  List<Data> get libraryGames;
 
   UserDetails get userDetails;
 
