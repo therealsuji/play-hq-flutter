@@ -25,7 +25,6 @@ class PlayHqHead extends StatefulWidget {
 }
 
 class _PlayHqHeadState extends State<PlayHqHead> {
-
   final errorHandler = locator<ErrorManager>();
   final _placesService = locator<PlacesService>();
 
@@ -36,7 +35,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
   void initState() {
     super.initState();
 
-    if(_prevErrorStream != errorHandler.getErrorText){
+    if (_prevErrorStream != errorHandler.getErrorText) {
       _prevErrorStream = errorHandler.getErrorText;
       _errorSubscription?.cancel();
       listenToErrors();
@@ -46,12 +45,11 @@ class _PlayHqHeadState extends State<PlayHqHead> {
     _placesService.initialize(apiKey: 'AIzaSyDGxXpv56r9r3jDvfWT6kYW_nFpU1T1xrQ');
   }
 
-  void listenToErrors(){
-    _errorSubscription = _prevErrorStream!.listen((error){
+  void listenToErrors() {
+    _errorSubscription = _prevErrorStream!.listen((error) {
       locator<NavigationService>().showError(error);
     });
   }
-
 
   void initHive() async {
     final appDocumentaryDirectory = await path_provider.getApplicationDocumentsDirectory();
@@ -81,12 +79,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
           backgroundColor: BACKGROUND_COLOR,
           accentColorBrightness: Brightness.light,
           primaryTextTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: 25,
-              color: Colors.white,
-              fontFamily: Neusa,
-              fontWeight: FontWeight.bold
-            ),
+            headline1: TextStyle(fontSize: 25, color: Colors.white, fontFamily: Neusa, fontWeight: FontWeight.bold),
             headline2: TextStyle(
               fontSize: 20,
               color: Colors.white,
@@ -136,6 +129,12 @@ class _PlayHqHeadState extends State<PlayHqHead> {
             ),
             button: TextStyle(
               fontSize: 14,
+              color: Colors.white,
+              fontFamily: CircularBook,
+              fontWeight: FontWeight.bold,
+            ),
+            subtitle2: TextStyle(
+              fontSize: 10,
               color: Colors.white,
               fontFamily: CircularBook,
               fontWeight: FontWeight.bold,

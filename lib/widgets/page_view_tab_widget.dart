@@ -3,12 +3,23 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 
 class PageViewTab extends StatelessWidget {
-  final List<String> tabs;
+  final List<dynamic> tabs;
   final PageController? controller;
   final int activeTab;
+  final MainAxisAlignment mainAxisAlignment;
+  final double tabPadding;
+  final bool tabsExpanded;
   final Function(int index) onTap;
-  const PageViewTab({Key? key, required this.tabs, required this.activeTab, required this.onTap, this.controller})
-      : super(key: key);
+  const PageViewTab({
+    Key? key,
+    required this.tabs,
+    required this.activeTab,
+    required this.onTap,
+    this.controller,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.tabPadding = 0,
+    this.tabsExpanded = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +30,13 @@ class PageViewTab extends StatelessWidget {
       height: ScreenUtils.getDesignHeight(40),
       width: double.infinity,
       child: Row(
+          mainAxisAlignment: mainAxisAlignment,
           children: tabs
               .asMap()
               .entries
               .map(
                 (e) => Expanded(
+                  flex: tabsExpanded ? 1 : 0,
                   child: GestureDetector(
                     onTap: () => {
                       controller?.animateToPage(e.key,
@@ -36,16 +49,15 @@ class PageViewTab extends StatelessWidget {
                           color: e.key == activeTab ? null : MAIN_CONTAINER_COLOR.withOpacity(0.6),
                           borderRadius: BorderRadius.circular(3.0),
                         ),
-                        child: Center(
-                          child: Text(
-                            e.value,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 10,
-                            ),
-                          ),
-                        )),
+                        padding: EdgeInsets.symmetric(horizontal: tabPadding),
+                        child: e.value.runtimeType != String
+                            ? e.value
+                            : Center(
+                                child: Text(
+                                  e.value,
+                                  style: Theme.of(context).primaryTextTheme.bodyText1,
+                                ),
+                              )),
                   ),
                 ),
               )

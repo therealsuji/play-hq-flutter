@@ -19,7 +19,10 @@ class CustomTextWidget extends StatelessWidget {
         ? FittedBox(
             fit: BoxFit.fill,
             child: Container(
-              child: Text(text, style: style),
+              child: Text(
+                text,
+                style: style,
+              ),
               constraints: BoxConstraints(maxWidth: maxWidth!, minWidth: minWidth!),
             ),
           )
