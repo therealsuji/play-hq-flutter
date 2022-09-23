@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
@@ -6,7 +7,6 @@ import '../helpers/app_colors.dart';
 import '../helpers/app_fonts.dart';
 
 class GameListItem extends StatefulWidget {
-
   final String? boxCover;
   final String? gameName;
   final String? secondaryDetails;
@@ -41,8 +41,8 @@ class _GameListItemState extends State<GameListItem> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
                 image: DecorationImage(
-                  image: NetworkImage(widget.boxCover!),
-                  fit: BoxFit.fill,
+                  image: CachedNetworkImageProvider(widget.boxCover!),
+                  fit: BoxFit.fitHeight,
                 ),
               ),
             ),
@@ -52,20 +52,32 @@ class _GameListItemState extends State<GameListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextWidget( widget.gameName! , isDynamic: true, maxWidth: ScreenUtils.getDesignWidth(180) , minWidth: ScreenUtils.getDesignWidth(50) , style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: Neusa,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                  CustomTextWidget(
+                    widget.gameName!,
+                    isDynamic: true,
+                    maxWidth: ScreenUtils.getDesignWidth(180),
+                    minWidth: ScreenUtils.getDesignWidth(50),
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: Neusa,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   Container(
                     margin: EdgeInsets.only(top: 5),
-                    child: CustomTextWidget( widget.secondaryDetails! , isDynamic: true, maxWidth: ScreenUtils.getDesignWidth(180) , minWidth: ScreenUtils.getDesignWidth(50) , style: TextStyle(
-                      fontSize: 14,
-                      fontFamily: Neusa,
-                      color: PRIMARY_COLOR,
-                      fontWeight: FontWeight.bold,
-                    ),),
+                    child: CustomTextWidget(
+                      widget.secondaryDetails!,
+                      isDynamic: true,
+                      maxWidth: ScreenUtils.getDesignWidth(180),
+                      minWidth: ScreenUtils.getDesignWidth(50),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: Neusa,
+                        color: PRIMARY_COLOR,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ],
               ),
