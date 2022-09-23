@@ -73,15 +73,39 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           child: MainScreen(),
         ),
       );
+    case SALES_ACCOUNT_SCREEN:
+      return MaterialPageRoute(
+          builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<SetupSalesViewModel>(
+                    create: (context) => _implSetupSales,
+                  ),
+                  ChangeNotifierProvider<CreateSaleModel>(
+                    create: (context) => ICreateSaleModel(),
+                  ),
+                ],
+                child: SetupSalesAccountScreen(),
+              ));
     case GAME_DETAILS_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<GameDetailsModel>(
           create: (context) => IGameDetailsModel(),
-          child:
-              GameDetailsScreen(gameDetailsArguments: settings.arguments as GameDetailsArguments),
+          child: GameDetailsScreen(gameDetailsArguments: settings.arguments as GameDetailsArguments),
         ),
       );
-
+    case PURCHASE_ACCOUNT_SCREEN:
+      return MaterialPageRoute(
+          builder: (context) => MultiProvider(
+                providers: [
+                  ChangeNotifierProvider<SetupPurchaseAccountModel>(
+                    create: (context) => ISetupPurchaseAccountModel(),
+                  ),
+                  ChangeNotifierProvider<CreateSaleModel>(
+                    create: (context) => ICreateSaleModel(),
+                  ),
+                ],
+                child: SetupPurchaseAccountScreen(),
+              ));
     case SPLASH_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SplashScreenModel>(
@@ -126,6 +150,26 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider<SettingsViewModel>(
             create: (context) => ISettingsViewModel(), child: SettingsScreen()),
+      );
+    case GAME_SALE_DETAILS_SCREEN:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<SalesDetailsViewModel>(
+            create: (context) => ISalesDetailsViewModel(),
+            child: GameSaleDetailsScreen(
+              gameSalePayload: settings.arguments as SalesPayload,
+            )),
+      );
+    case MY_SALES_DETAILS_SCREEN:
+      return MaterialPageRoute(
+        builder: (context) => MultiProvider(
+          providers: [
+            ChangeNotifierProvider<SalesDetailsViewModel>(create: (context) => ISalesDetailsViewModel()),
+            ChangeNotifierProvider<OrderRequestViewModel>(create: (context) => IOrderRequestsViewModel())
+          ],
+          child: MySalesDetailsScreen(
+            salesPayload: settings.arguments as SalesPayload,
+          ),
+        ),
       );
     case NOTIFICATION_SCREEN:
       return MaterialPageRoute(

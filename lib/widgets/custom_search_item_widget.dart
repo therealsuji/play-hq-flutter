@@ -34,7 +34,7 @@ class SearchGameItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
                 child: CachedNetworkImage(
                   imageUrl: imageUrl ?? 'https://storiavoce.com/wp-content/plugins/lightbox/images/No-image-found.jpg',
-                  fit: BoxFit.fill,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -50,14 +50,10 @@ class SearchGameItem extends StatelessWidget {
                       child: Text(
                         title!,
                         style: TextStyle(
-                            fontSize: 18,
-                            fontFamily: Neusa,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
+                            fontSize: 18, fontFamily: Neusa, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       constraints: BoxConstraints(
-                          maxWidth: ScreenUtils.getDesignWidth(180),
-                          minWidth: ScreenUtils.getDesignHeight(50)),
+                          maxWidth: ScreenUtils.getDesignWidth(180), minWidth: ScreenUtils.getDesignHeight(50)),
                     ),
                   ),
                   FittedBox(
@@ -69,12 +65,10 @@ class SearchGameItem extends StatelessWidget {
                             fontSize: 18,
                             fontFamily: Neusa,
                             fontWeight: FontWeight.bold,
-                            foreground: Paint()
-                              ..shader = PRIMARY_GRADIENT_TEXT_COLOR),
+                            foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR),
                       ),
                       constraints: BoxConstraints(
-                          maxWidth: ScreenUtils.getDesignWidth(180),
-                          minWidth: ScreenUtils.getDesignHeight(50)),
+                          maxWidth: ScreenUtils.getDesignWidth(180), minWidth: ScreenUtils.getDesignHeight(50)),
                     ),
                   ),
                 ],
@@ -84,8 +78,7 @@ class SearchGameItem extends StatelessWidget {
             Container(
               height: ScreenUtils.getDesignHeight(20),
               width: ScreenUtils.getDesignWidth(20),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
+              decoration: BoxDecoration(shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
               child: Icon(
                 Icons.arrow_forward_ios_rounded,
                 color: Colors.white,

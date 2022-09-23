@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 
 abstract class HomeScreenModel extends ChangeNotifier {
@@ -11,6 +12,8 @@ abstract class HomeScreenModel extends ChangeNotifier {
   List<SalesPayload> get wishListGames;
 
   List<SalesPayload> get soloGames;
+
+  List<GameResults> get popularGamesThisYear;
 
   List<SalesPayload> get bundleGames;
 

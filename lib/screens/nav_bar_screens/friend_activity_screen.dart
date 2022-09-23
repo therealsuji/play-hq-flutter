@@ -67,84 +67,85 @@ class _FriendActivityState extends State<FriendActivity> {
             child: PageView(
               children: [
                 ListView.separated(
-                    itemBuilder: (context, index) => ActivitySection(
-                          sectionTitle: "Today",
-                          cardDetails: [
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              rightSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                            ),
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              buttonOneText: "Accept",
-                              buttonTwoText: "Decline",
-                              buttonOneOnTap: () {},
-                            ),
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              buttonOneText: "Accept",
-                              buttonTwoText: "Decline",
-                              buttonOneOnTap: () {},
-                            ),
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              buttonOneText: "Accept",
-                              buttonTwoText: "Decline",
-                              buttonOneOnTap: () {},
-                            ),
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              buttonOneText: "Accept",
-                              buttonTwoText: "Decline",
-                              buttonOneOnTap: () {},
-                            )
-                          ],
-                        ),
-                    separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.only(top: 10, bottom: 20),
-                          height: 1.5,
-                          width: double.infinity,
-                        ),
-                    itemCount: 2),
+                  itemBuilder: (context, index) => ActivitySection(
+                    sectionTitle: "Today",
+                    cardDetails: [
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        rightSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                      ),
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        buttonOneText: "Accept",
+                        buttonTwoText: "Decline",
+                        buttonOneOnTap: () {},
+                      ),
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        buttonOneText: "Accept",
+                        buttonTwoText: "Decline",
+                        buttonOneOnTap: () {},
+                      ),
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        buttonOneText: "Accept",
+                        buttonTwoText: "Decline",
+                        buttonOneOnTap: () {},
+                      ),
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        buttonOneText: "Accept",
+                        buttonTwoText: "Decline",
+                        buttonOneOnTap: () {},
+                      )
+                    ],
+                  ),
+                  separatorBuilder: (context, index) => Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 20),
+                    height: 1.5,
+                    width: double.infinity,
+                  ),
+                  itemCount: 2,
+                ),
                 ListView.separated(
-                    itemBuilder: (context, index) => ActivitySection(
-                          sectionTitle: "Today",
-                          cardDetails: [
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              rightSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                            ),
-                            ActivitySectionCard(
-                              text: "James Gordon wants to be friends with you",
-                              leftSideImageUrl:
-                                  "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
-                              buttonOneText: "Accept",
-                              buttonTwoText: "Decline",
-                              buttonOneOnTap: () {},
-                            )
-                          ],
-                        ),
-                    separatorBuilder: (context, index) => Container(
-                          margin: EdgeInsets.only(top: 10, bottom: 20),
-                          height: 1.5,
-                          color: SUB_TEXT_COLOR,
-                          width: double.infinity,
-                        ),
-                    itemCount: 2),
+                  itemBuilder: (context, index) => ActivitySection(
+                    sectionTitle: "Today",
+                    cardDetails: [
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        rightSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                      ),
+                      ActivitySectionCard(
+                        text: "James Gordon wants to be friends with you",
+                        leftSideImageUrl:
+                            "https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8Zm9jdXN8ZW58MHx8MHx8&w=1000&q=80",
+                        buttonOneText: "Accept",
+                        buttonTwoText: "Decline",
+                        buttonOneOnTap: () {},
+                      )
+                    ],
+                  ),
+                  separatorBuilder: (context, index) => Container(
+                    margin: EdgeInsets.only(top: 10, bottom: 20),
+                    height: 1.5,
+                    width: double.infinity,
+                  ),
+                  itemCount: 2,
+                ),
               ],
             ),
           ),

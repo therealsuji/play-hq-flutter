@@ -2,6 +2,7 @@ import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:play_hq/models/loading_event_model.dart';
+import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/models/sales/my_sales_payload.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/service_locator.dart';
@@ -17,6 +18,7 @@ class IHomeScreenModel extends HomeScreenModel {
   List<SalesPayload> _wishListGames = [];
   List<SalesPayload> _soloGames = [];
   List<SalesPayload> _bundleGames = [];
+  List<GameResults> _popularGameThisYear = [];
   String? _displayName;
 
   @override
@@ -82,4 +84,7 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   String? get displayName => _displayName;
+
+  @override
+  List<GameResults> get popularGamesThisYear => _popularGameThisYear;
 }

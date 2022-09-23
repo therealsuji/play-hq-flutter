@@ -159,6 +159,7 @@ Widget pageViewChild(List<Data> list) {
       mainAxisSpacing: 20,
       crossAxisSpacing: 20,
       childAspectRatio: 0.7,
+      physics: NeverScrollableScrollPhysics(),
       children: list
           .map(
             (e) => GamesWidget(

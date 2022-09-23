@@ -273,7 +273,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SectionLabel(
-              title: "Upcoming Games",
+              title: "Popular this Year",
               rightText: "View All",
             ),
             Consumer<HomeScreenModel>(
@@ -313,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             _learnMoreContainer(),
             SectionLabel(
-              title: "Popular this week",
+              title: "Popular this Week",
               rightText: "View All",
             ),
             Container(

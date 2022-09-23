@@ -26,7 +26,7 @@ class APIConfig {
         break;
       case Environment.STAGE:
         _rawgAPI = "https://api.rawg.io/api";
-        _baseUrl = "https://play-hq-285011.el.r.appspot.com";
+        _baseUrl = "https://playhq-v2-production.up.railway.app";
         break;
     }
   }
@@ -62,12 +62,20 @@ class APIConfig {
     return '$_rawgAPI/games?page_size=$page&genres=$genre&key=$_RAWG_API_KEY';
   }
 
+  static String popularThisYear() {
+    DateTime currentDate = DateTime.now();
+    return '$_rawgAPI/api/games?dates=${currentDate.year}-01-01,${currentDate.year}-12-31&ordering=popularity&key=$_RAWG_API_KEY';
+  }
+
   static String getTopRatedGames() {
     return '$_rawgAPI' + '/games?dates=2018-01-01,2022-12-31&ordering=-rating&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
   static String getUpcomingGames() {
-    return '$_rawgAPI' + '/games?dates=2022-06-01,2026-12-31&ordering=-added' + '&key=$_RAWG_API_KEY';
+    DateTime currentDate = DateTime.now();
+    var startDateTime = '${currentDate.year}-${currentDate.month}-01';
+    var endDateTime = '${currentDate.year + 3}-12-31';
+    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&ordering=-added&key=$_RAWG_API_KEY';
   }
 
   static String getGamesOf2022() {
