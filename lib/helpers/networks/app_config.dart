@@ -64,7 +64,7 @@ class APIConfig {
 
   static String popularThisYear() {
     DateTime currentDate = DateTime.now();
-    return '$_rawgAPI/api/games?dates=${currentDate.year}-01-01,${currentDate.year}-12-31&ordering=popularity&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?dates=${currentDate.year}-01-01,${currentDate.year}-12-31&ordering=popularity&key=$_RAWG_API_KEY';
   }
 
   static String getTopRatedGames() {
@@ -73,7 +73,8 @@ class APIConfig {
 
   static String getUpcomingGames() {
     DateTime currentDate = DateTime.now();
-    var startDateTime = '${currentDate.year}-${currentDate.month}-01';
+    var startDateTime =
+        '${currentDate.year}-${currentDate.month > 10 ? currentDate.month : "0${currentDate.month}"}-01';
     var endDateTime = '${currentDate.year + 3}-12-31';
     return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&ordering=-added&key=$_RAWG_API_KEY';
   }

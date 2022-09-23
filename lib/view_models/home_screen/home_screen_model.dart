@@ -15,6 +15,8 @@ abstract class HomeScreenModel extends ChangeNotifier {
 
   List<GameResults> get popularGamesThisYear;
 
+  List<GameResults> get upComingGamesThisYear;
+
   List<SalesPayload> get bundleGames;
 
   String? get displayName;

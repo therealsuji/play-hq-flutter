@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
+import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/recommended_game_widget.dart';
@@ -17,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/helpers/app_utils.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/service_locator.dart';
@@ -279,34 +283,24 @@ class _HomeScreenState extends State<HomeScreen> {
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
                 return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15),
+                  margin: EdgeInsets.only(top: 15),
                   height: ScreenUtils.getDesignHeight(140),
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(
-                      width: ScreenUtils.getDesignHeight(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
+                  child: HorizontalScrollList(
+                    itemCount: val.popularGamesThisYear.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return val.soloGames.length != 0
-                          ? GestureDetector(
-                              onTap: () => locator<NavigationService>()
-                                  .pushNamed(GAME_SALE_DETAILS_SCREEN, args: val.soloGames[index]),
-                              child: GamesWidget(
-                                title: val.soloGames[index].gameList?[0].game.title,
-                                subTitle: val.soloGames[index].price?.toString() ?? "",
-                                backgroundUrl: val.soloGames[index].gameList?[0].game.boxCover,
-                                gradient: GREEN_GRADIENT,
-                              ),
-                            )
-                          : Center(
-                              child: Text(
-                                'No games available yet',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
+                      return GestureDetector(
+                        onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                            args: GameDetailsArguments(gameId: val.popularGamesThisYear[index].id)),
+                        child: GamesWidget(
+                          title: val.popularGamesThisYear[index].name,
+                          subTitle: val.popularGamesThisYear[index].released != null
+                              ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
+                              : "",
+                          backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
+                          gradient: PRIMARY_GRADIENT,
+                        ),
+                      );
                     },
-                    itemCount: val.soloGames.length,
                   ),
                 );
               },
@@ -353,28 +347,24 @@ class _HomeScreenState extends State<HomeScreen> {
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
                 return Container(
-                  margin: EdgeInsets.only(left: 24, top: 15),
-                  height: ScreenUtils.getDesignHeight(205),
-                  child: ListView.separated(
-                    separatorBuilder: (_, __) => SizedBox(
-                      width: ScreenUtils.getDesignHeight(15.0),
-                    ),
-                    padding: EdgeInsets.zero,
-                    scrollDirection: Axis.horizontal,
+                  margin: EdgeInsets.only(top: 15),
+                  height: ScreenUtils.getDesignHeight(140),
+                  child: HorizontalScrollList(
+                    itemCount: val.upComingGamesThisYear.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return val.wishListGames.length != 0
-                          ? GestureDetector(
-                              onTap: () => locator<NavigationService>()
-                                  .pushNamed(GAME_SALE_DETAILS_SCREEN, args: val.wishListGames[index]),
-                              child: ActiveGameSalesWidget(salesPayload: val.wishListGames[index]))
-                          : Center(
-                              child: Text(
-                                'No games available yet',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
+                      return GestureDetector(
+                        onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                            args: GameDetailsArguments(gameId: val.upComingGamesThisYear[index].id)),
+                        child: GamesWidget(
+                          title: val.upComingGamesThisYear[index].name,
+                          subTitle: val.upComingGamesThisYear[index].released != null
+                              ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
+                              : "",
+                          backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
+                          gradient: PRIMARY_GRADIENT,
+                        ),
+                      );
                     },
-                    itemCount: val.wishListGames.length,
                   ),
                 );
               },
