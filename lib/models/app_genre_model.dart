@@ -1,24 +1,29 @@
-class ListGenreModel{
-  List<GenreModel> _genreList = [];
+import 'dart:convert';
 
-  ListGenreModel.fromJson(Map<String, dynamic> json){
-    json['results'].forEach((genre) {
-      _genreList.add(GenreModel(genre));
-    });
-  }
+Genre genreFromJson(String str) => Genre.fromJson(json.decode(str));
 
-  List<GenreModel> get list => _genreList;
-}
+String genreToJson(Genre data) => json.encode(data.toJson());
 
-class GenreModel {
-
+class Genre {
   int? id;
   String? name;
   String? imageBackground;
 
-  GenreModel(key) {
-    id = key["id"];
-    name = key["name"];
-    imageBackground = key["image_background"];
-  }
+  Genre({
+    this.id,
+    this.name,
+    this.imageBackground,
+  });
+
+  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
+        id: json["id"],
+        name: json["name"],
+        imageBackground: json["platform_name"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "imageBackground": imageBackground,
+      };
 }

@@ -12,7 +12,7 @@ import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
-import 'package:play_hq/models/onboarding_models/setup_sales_model.dart';
+import 'package:play_hq/models/common_models/user/user_preferences.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/repository/clients/setup_sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
@@ -22,8 +22,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ISetupSalesModel extends SetupSalesViewModel{
-
+class ISetupSalesModel extends SetupSalesViewModel {
   late var box;
   final _setupSalesAPI = locator<SetupSalesRepository>();
   final _eventBus = locator<EventBus>();
@@ -45,7 +44,7 @@ class ISetupSalesModel extends SetupSalesViewModel{
   }
 
   @override
-  void addLocation(String placeId , String address) async{
+  void addLocation(String placeId, String address) async {
     _selectedAddress = address;
 
     PlacesDetails place = await _placesService.getPlaceDetails(placeId);
@@ -53,7 +52,8 @@ class ISetupSalesModel extends SetupSalesViewModel{
     _selectedLongitude = place.lng!;
     _selectedLatitude = place.lat!;
 
-    LocationModel location = new LocationModel(address: _selectedAddress , lat: _selectedLatitude , long: _selectedLongitude);
+    LocationModel location =
+        new LocationModel(address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
 
     AppSharedPreferences().createLocalData('location', location);
 
@@ -66,12 +66,14 @@ class ISetupSalesModel extends SetupSalesViewModel{
 
   @override
   Future<void> selectedMapLocation(LatLng tappedPoint) async {
-    var addresses = await GeocodingPlatform.instance.placemarkFromCoordinates(tappedPoint.latitude, tappedPoint.longitude);
+    var addresses =
+        await GeocodingPlatform.instance.placemarkFromCoordinates(tappedPoint.latitude, tappedPoint.longitude);
     _selectedAddress = addresses[0].street.toString();
     _selectedLatitude = tappedPoint.latitude;
     _selectedLongitude = tappedPoint.longitude;
 
-    LocationModel location = new LocationModel(address: _selectedAddress , lat: _selectedLatitude , long: _selectedLongitude);
+    LocationModel location =
+        new LocationModel(address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
 
     print('This is the location address ${location.address}');
 
@@ -81,10 +83,10 @@ class ISetupSalesModel extends SetupSalesViewModel{
   }
 
   @override
-  void performAPIRequest() async{
+  void performAPIRequest() async {
     _eventBus.fire(LoadingEvent.show());
 
-    try{
+    try {
       await _setupSalesAPI.setLibraryGames(_selectedGames);
 
       _fullName = await SecureStorage.readValue("displayName") ?? '';
@@ -99,7 +101,7 @@ class ISetupSalesModel extends SetupSalesViewModel{
       String firstName = names[0];
       String lastName = names[1];
 
-      SetupSalesModel _setupSalesModel = SetupSalesModel(
+      UserPreferencesModel _setupSalesModel = UserPreferencesModel(
         phoneNumber: _mobileNumber,
         displayName: _displayName,
         firstName: firstName,
@@ -112,11 +114,10 @@ class ISetupSalesModel extends SetupSalesViewModel{
       locator<NavigationService>().pushNamed(MAIN_SCREEN);
 
       _eventBus.fire(LoadingEvent.hide());
-    }catch (e) {
+    } catch (e) {
       print(e.toString());
       _eventBus.fire(LoadingEvent.hide());
     }
-
   }
 
   @override
@@ -140,7 +141,4 @@ class ISetupSalesModel extends SetupSalesViewModel{
     _mobileNumber = phoneNumber;
     notifyListeners();
   }
-
-
-
 }

@@ -13,6 +13,7 @@ import 'package:play_hq/repository/clients/search_repository.dart';
 import 'package:play_hq/repository/clients/setup_purchase_repository.dart';
 import 'package:play_hq/repository/clients/setup_sales_repository.dart';
 import 'package:play_hq/repository/clients/splash_repository.dart';
+import 'package:play_hq/repository/clients/user_repository.dart';
 import 'package:play_hq/repository/delegates/authentication_delegate.dart';
 import 'package:play_hq/repository/delegates/discover_delegate.dart';
 import 'package:play_hq/repository/delegates/game_api_delegate.dart';
@@ -25,6 +26,7 @@ import 'package:play_hq/repository/delegates/search_delegate.dart';
 import 'package:play_hq/repository/delegates/setup_purchase_delegate.dart';
 import 'package:play_hq/repository/delegates/setup_sales_delegate.dart';
 import 'package:play_hq/repository/delegates/splash_delegate.dart';
+import 'package:play_hq/repository/delegates/user_delegate.dart';
 import 'package:play_hq/repository/repositories.dart';
 import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/services/base_managers/error.dart';
@@ -56,4 +58,5 @@ void setupLocator() {
   locator.registerFactory<GameListRepository>(() => GameListDelegate());
   locator.registerFactory<PurchasesRepository>(() => PurchaseDelegate());
   locator.registerFactory<GameApiRepository>(() => GameApiDelegate());
+  locator.registerFactory<UserRepository>(() => UserDelegate());
 }

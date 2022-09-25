@@ -11,6 +11,7 @@ import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/recommended_game_widget.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
 import 'package:play_hq/services/auth_service.dart';
+import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/active_game_sales_widget.dart';
 import 'package:play_hq/widgets/cached_image_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
@@ -261,20 +262,26 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.only(
                 top: ScreenUtils.getDesignHeight(10.0),
               ),
-              child: Container(
-                height: ScreenUtils.getDesignHeight(290),
-                child: HorizontalScrollList(
-                  itemCount: temp.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GamesWidget(
-                      backgroundUrl: temp[index]['imageUrl']!,
-                      title: temp[index]['name']!,
-                      width: ScreenUtils.getDesignWidth(220),
-                      height: ScreenUtils.getDesignHeight(290),
-                    );
-                  },
-                ),
-              ),
+              child: Consumer<HomeScreenModel>(builder: (_, model, __) {
+                return Container(
+                  height: ScreenUtils.getDesignHeight(290),
+                  child: HorizontalScrollList(
+                    itemCount: model.recommendedGames.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                            args: GameDetailsArguments(gameId: model.recommendedGames[index].id)),
+                        child: GamesWidget(
+                          backgroundUrl: model.recommendedGames[index].backgroundImage,
+                          title: model.recommendedGames[index].name,
+                          width: ScreenUtils.getDesignWidth(220),
+                          height: ScreenUtils.getDesignHeight(290),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }),
             ),
             SectionLabel(
               title: "Popular this Year",

@@ -60,7 +60,8 @@ class APIConfig {
 
   static String getRecommendGamesFromGenres(List<int> genres) {
     String genreString = genres.join(",");
-    return '$_rawgAPI/games?page_size=1&genres=$genreString&key=$_RAWG_API_KEY';
+    // Game count is hardcoded
+    return '$_rawgAPI/games?page_size=5&genres=$genreString&key=$_RAWG_API_KEY';
   }
 
   static String getGamesByGenre(int page, String genre) {
