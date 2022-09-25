@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:io';
 
@@ -14,21 +12,17 @@ import 'package:play_hq/services/base_managers/error.dart';
 import '../../service_locator.dart';
 
 class SetupPurchaseDelegate extends SetupPurchaseRepository {
-
   final _networkCalls = Network.shared;
 
   @override
   Future<void> setGameWishList(dynamic body) async {
-    try{
+    try {
       await _networkCalls.performRequest(APIConfig.addWishListGames, HttpAction.POST, body: body);
-    }
-    on TimeoutException {
+    } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
-    }
-    on SocketException {
+    } on SocketException {
       locator<ErrorManager>().setError(PlayHQSocketException());
-    }
-    catch(e){
+    } catch (e) {
       print('error ' + e.toString());
       locator<ErrorManager>().setError(PlayHQGeneralException(
         errorText: e.toString(),
@@ -38,21 +32,17 @@ class SetupPurchaseDelegate extends SetupPurchaseRepository {
 
   @override
   Future<void> setGamePreferences(Map<String, dynamic> body) async {
-    try{
-      await _networkCalls.performRequest(APIConfig.setupPurchase, HttpAction.PUT, body: body);
-    }
-    on TimeoutException {
+    try {
+      await _networkCalls.performRequest(APIConfig.userPreferences, HttpAction.PUT, body: body);
+    } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
-    }
-    on SocketException {
+    } on SocketException {
       locator<ErrorManager>().setError(PlayHQSocketException());
-    }
-    catch(e){
+    } catch (e) {
       print('error ' + e.toString());
       locator<ErrorManager>().setError(PlayHQGeneralException(
         errorText: e.toString(),
       ));
     }
   }
-
 }

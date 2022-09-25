@@ -15,9 +15,9 @@ import '../../services/base_managers/error.dart';
 class GameApiDelegate extends GameApiRepository {
   final httpClient = Network.shared;
 
-  Future<RawgGameDetails> httpHelper(Function networkFunction) async {
+  Future<RawgGameDetails> httpHelper(String url) async {
     try {
-      var response = await httpClient.performRequest(networkFunction(), HttpAction.GET);
+      var response = await httpClient.performRequest(url, HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -37,11 +37,16 @@ class GameApiDelegate extends GameApiRepository {
 
   @override
   Future<RawgGameDetails> getPopularGames() {
-    return httpHelper(APIConfig.popularThisYear);
+    return httpHelper(APIConfig.popularThisYear());
   }
 
   @override
   Future<RawgGameDetails> getUpComingGames() {
-    return httpHelper(APIConfig.getUpcomingGames);
+    return httpHelper(APIConfig.getUpcomingGames());
+  }
+
+  @override
+  Future<RawgGameDetails> getRecommendedGamesFromGenres(List<int> genres) {
+    return httpHelper(APIConfig.getRecommendGamesFromGenres(genres));
   }
 }

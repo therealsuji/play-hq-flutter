@@ -347,7 +347,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Consumer<HomeScreenModel>(
               builder: (_, val, __) {
                 return Container(
-                  margin: EdgeInsets.only(top: 15),
+                  margin: EdgeInsets.symmetric(vertical: 15),
                   height: ScreenUtils.getDesignHeight(140),
                   child: HorizontalScrollList(
                     itemCount: val.upComingGamesThisYear.length,

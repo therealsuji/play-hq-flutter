@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:event_bus/event_bus.dart';
+import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/models/sales/my_sales_payload.dart';
@@ -24,6 +25,7 @@ class IHomeScreenModel extends HomeScreenModel {
   List<SalesPayload> _bundleGames = [];
   List<GameResults> _popularGameThisYear = [];
   List<GameResults> _upcomingGamesThisYear = [];
+  List<GameResults> _recommendedGames = [];
   String? _displayName;
 
   @override
@@ -34,7 +36,8 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   void loadAPICalls() async {
-    locator<AuthService>().getUserDetails().then((val) => _displayName = val?.displayName);
+    UserDetails? userDetails = await locator<AuthService>().getUserDetails();
+    _displayName = userDetails?.displayName ?? "";
     bool cachedData = await APICacheManager().isAPICacheKeyExist('wishlistGames');
     bool cachedData2 = await APICacheManager().isAPICacheKeyExist('soloGames');
     bool cachedData3 = await APICacheManager().isAPICacheKeyExist('bundleGames');
@@ -71,11 +74,15 @@ class IHomeScreenModel extends HomeScreenModel {
         }
       });
       await _gameApi.getUpComingGames().then((games) {
-        log(games.toString());
         if (games.results!.length > 0) {
           _upcomingGamesThisYear = games.results ?? [];
         }
       });
+      // await _gameApi.getRecommendedGamesFromGenres().then((games) {
+      //   if (games.results!.length > 0) {
+      //     _recommendedGames = games.results ?? [];
+      //   }
+      // });
       notifyListeners();
       _eventBus.fire(LoadingEvent.hide());
     } catch (e) {
@@ -105,4 +112,7 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   List<GameResults> get upComingGamesThisYear => _upcomingGamesThisYear;
+
+  @override
+  List<GameResults> get recommendedGames => _recommendedGames;
 }

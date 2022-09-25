@@ -58,6 +58,11 @@ class APIConfig {
         '&key=$_RAWG_API_KEY';
   }
 
+  static String getRecommendGamesFromGenres(List<int> genres) {
+    String genreString = genres.join(",");
+    return '$_rawgAPI/games?page_size=1&genres=$genreString&key=$_RAWG_API_KEY';
+  }
+
   static String getGamesByGenre(int page, String genre) {
     return '$_rawgAPI/games?page_size=$page&genres=$genre&key=$_RAWG_API_KEY';
   }
@@ -103,7 +108,7 @@ class APIConfig {
         (status != null ? "&status=${describeEnum(status)}" : "");
   }
 
-  static String setupPurchase = '$_baseUrl' + "/users/preferences";
+  static String userPreferences = '$_baseUrl' + "/users/preferences";
 
   static String setupSales = '$_baseUrl' + "/users/update";
 
