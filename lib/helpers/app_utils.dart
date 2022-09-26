@@ -22,4 +22,3 @@ extension DateTimeExtension on DateTime {
     return DateFormat(format).format(this);
   }
 }
-

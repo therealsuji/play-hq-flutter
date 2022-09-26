@@ -4,6 +4,7 @@ import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/helpers/app_utils.dart';
+import 'package:skeletons/skeletons.dart';
 import 'gradient_text_widget.dart';
 
 class GamesWidget extends StatelessWidget {
@@ -107,6 +108,39 @@ class GamesWidget extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class SkeletonGamesListWidget extends StatelessWidget {
+  final double height;
+  final double width;
+  final count;
+  const SkeletonGamesListWidget({Key? key, this.height = 160, this.width = 100, required this.count}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      itemBuilder: (_, __) => SkeletonGamesWidget(height: height, width: width),
+      separatorBuilder: (_, __) => SizedBox(
+        width: ScreenUtils.getDesignHeight(15.0),
+      ),
+      padding: EdgeInsets.symmetric(horizontal: 24),
+      scrollDirection: Axis.horizontal,
+      itemCount: count,
+    );
+  }
+}
+
+class SkeletonGamesWidget extends StatelessWidget {
+  final double height;
+  final double width;
+  const SkeletonGamesWidget({Key? key, this.height = 160, this.width = 100}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SkeletonLine(
+      style: SkeletonLineStyle(height: height, width: width, borderRadius: BorderRadius.circular(8)),
     );
   }
 }

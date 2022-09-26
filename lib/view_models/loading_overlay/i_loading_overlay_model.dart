@@ -12,7 +12,7 @@ class ILoadingOverlay extends LoadingOverlayModel {
 
   ILoadingOverlay() {
     _loadingEvent = locator<EventBus>().on<LoadingEvent>().listen((event) {
-      _loading = event.isLoading;
+      _loading = event.isLoading && event.showOverLay;
       notifyListeners();
     });
   }

@@ -604,6 +604,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.13.3"
+  http_extensions:
+    dependency: "direct main"
+    description:
+      name: http_extensions
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  http_extensions_cache:
+    dependency: "direct main"
+    description:
+      name: http_extensions_cache
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  http_extensions_log:
+    dependency: "direct main"
+    description:
+      name: http_extensions_log
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -947,6 +968,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
+  skeletons:
+    dependency: "direct main"
+    description:
+      name: skeletons
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -31,6 +31,7 @@ import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:play_hq/widgets/raised_gradient_button_widget.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../../widgets/custom_game_widget.dart';
 
@@ -40,28 +41,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<Map<String, String>> temp = [
-    {
-      "imageUrl":
-          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
-      "name": "Call of Duty Warzone",
-    },
-    {
-      "imageUrl":
-          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
-      "name": "Call of Duty Warzone",
-    },
-    {
-      "imageUrl":
-          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
-      "name": "Call of Duty Warzone",
-    },
-    {
-      "imageUrl":
-          "https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg",
-      "name": "Call of Duty Warzone",
-    }
-  ];
   @override
   void initState() {
     super.initState();
@@ -265,20 +244,28 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Consumer<HomeScreenModel>(builder: (_, model, __) {
                 return Container(
                   height: ScreenUtils.getDesignHeight(290),
-                  child: HorizontalScrollList(
-                    itemCount: model.recommendedGames.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                            args: GameDetailsArguments(gameId: model.recommendedGames[index].id)),
-                        child: GamesWidget(
-                          backgroundUrl: model.recommendedGames[index].backgroundImage,
-                          title: model.recommendedGames[index].name,
-                          width: ScreenUtils.getDesignWidth(220),
-                          height: ScreenUtils.getDesignHeight(290),
-                        ),
-                      );
-                    },
+                  child: Skeleton(
+                    isLoading: !model.hasInitialDataLoaded,
+                    skeleton: SkeletonGamesListWidget(
+                      height: ScreenUtils.getDesignHeight(290),
+                      width: ScreenUtils.getDesignWidth(220),
+                      count: 10,
+                    ),
+                    child: HorizontalScrollList(
+                      itemCount: model.recommendedGames.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                              args: GameDetailsArguments(gameId: model.recommendedGames[index].id)),
+                          child: GamesWidget(
+                            backgroundUrl: model.recommendedGames[index].backgroundImage,
+                            title: model.recommendedGames[index].name,
+                            width: ScreenUtils.getDesignWidth(220),
+                            height: ScreenUtils.getDesignHeight(290),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
               }),
@@ -292,22 +279,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Container(
                   margin: EdgeInsets.only(top: 15),
                   height: ScreenUtils.getDesignHeight(140),
-                  child: HorizontalScrollList(
-                    itemCount: val.popularGamesThisYear.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                            args: GameDetailsArguments(gameId: val.popularGamesThisYear[index].id)),
-                        child: GamesWidget(
-                          title: val.popularGamesThisYear[index].name,
-                          subTitle: val.popularGamesThisYear[index].released != null
-                              ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
-                              : "",
-                          backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
-                          gradient: PRIMARY_GRADIENT,
-                        ),
-                      );
-                    },
+                  child: Skeleton(
+                    isLoading: !val.hasInitialDataLoaded,
+                    skeleton: SkeletonGamesListWidget(
+                      count: 10,
+                    ),
+                    child: HorizontalScrollList(
+                      itemCount: val.popularGamesThisYear.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                              args: GameDetailsArguments(gameId: val.popularGamesThisYear[index].id)),
+                          child: GamesWidget(
+                            title: val.popularGamesThisYear[index].name,
+                            subTitle: val.popularGamesThisYear[index].released != null
+                                ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
+                                : "",
+                            backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
+                            gradient: PRIMARY_GRADIENT,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
               },
@@ -356,22 +349,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Container(
                   margin: EdgeInsets.symmetric(vertical: 15),
                   height: ScreenUtils.getDesignHeight(140),
-                  child: HorizontalScrollList(
-                    itemCount: val.upComingGamesThisYear.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                            args: GameDetailsArguments(gameId: val.upComingGamesThisYear[index].id)),
-                        child: GamesWidget(
-                          title: val.upComingGamesThisYear[index].name,
-                          subTitle: val.upComingGamesThisYear[index].released != null
-                              ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
-                              : "",
-                          backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
-                          gradient: PRIMARY_GRADIENT,
-                        ),
-                      );
-                    },
+                  child: Skeleton(
+                    isLoading: !val.hasInitialDataLoaded,
+                    skeleton: SkeletonGamesListWidget(
+                      count: 10,
+                    ),
+                    child: HorizontalScrollList(
+                      itemCount: val.upComingGamesThisYear.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return GestureDetector(
+                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                              args: GameDetailsArguments(gameId: val.upComingGamesThisYear[index].id)),
+                          child: GamesWidget(
+                            title: val.upComingGamesThisYear[index].name,
+                            subTitle: val.upComingGamesThisYear[index].released != null
+                                ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
+                                : "",
+                            backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
+                            gradient: PRIMARY_GRADIENT,
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 );
               },
