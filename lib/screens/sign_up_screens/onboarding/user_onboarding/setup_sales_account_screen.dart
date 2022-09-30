@@ -26,10 +26,18 @@ class SetupSalesAccountScreen extends StatefulWidget {
 class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: GestureDetector(
+          onTap: (){},
+          child:  Container(
+            margin: EdgeInsets.only(left: 24  , right: 24),
+              child: CustomButton(
+                  gradient: PRIMARY_GRADIENT,
+                  buttonText: 'GAME ON!',
+                  onPressed: () => Provider.of<SetupSalesViewModel>(context , listen: false).performAPIRequest()))
+      ),
       body: CustomBody(
-        paddingTop: ScreenUtils.getDesignHeight(45),
-        paddingBottom: ScreenUtils.getDesignHeight(30),
+        paddingBottom: ScreenUtils.getDesignHeight(100),
         paddingRight: 0,
         paddingLeft: 0,
         body: [
@@ -161,7 +169,7 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                   ),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 15),
+                  margin: EdgeInsets.only(top: 15 , bottom: ScreenUtils.getDesignHeight(40)),
                   child: Row(
                     children: [
                       Icon(
@@ -230,12 +238,6 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                     ],
                   ),
                 ),
-                Container(
-                    margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(170)),
-                    child: CustomButton(
-                        gradient: PRIMARY_GRADIENT,
-                        buttonText: 'GAME ON!',
-                        onPressed: () => Provider.of<SetupSalesViewModel>(context , listen: false).performAPIRequest()))
               ],
             ),
           ),

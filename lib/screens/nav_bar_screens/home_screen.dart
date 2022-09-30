@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     Provider.of<HomeScreenModel>(context, listen: false).loadAPICalls();
   }
