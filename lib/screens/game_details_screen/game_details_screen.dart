@@ -20,6 +20,12 @@ import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
 
 import 'package:play_hq/helpers/app_utils.dart';
+import 'package:skeletons/skeletons.dart';
+
+import '../../helpers/app_strings.dart';
+import '../../service_locator.dart';
+import '../../services/nav_service.dart';
+import '../../widgets/horizontal_scroll_widget.dart';
 
 class GameDetailsScreen extends StatefulWidget {
   final GameDetailsArguments? gameDetailsArguments;
@@ -136,50 +142,50 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                                 gradient: PRIMARY_GRADIENT
                               ),
                             ),
-                            Container(
-                              margin: EdgeInsets.only(top: 30),
-                              child: Row(
-                                children: [
-                                  CustomTextWidget(
-                                    'Best Deals Today',
-                                    isDynamic: false,
-                                    width: ScreenUtils.getDesignWidth(120),
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline4,
-                                  ),
-                                  Spacer(),
-                                  GradientText(
-                                    'View All',
-                                    gradient: PRIMARY_GRADIENT,
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline4,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Consumer<GameDetailsModel>(
-                              builder: (_, value, __) {
-                                return Container(
-                                  margin: EdgeInsets.only(top: 15),
-                                  height: ScreenUtils.getDesignHeight(205),
-                                  child: ListView.separated(
-                                      itemBuilder:
-                                          (BuildContext context, int index) {
-                                        return ActiveGameSalesWidget(salesPayload: value.getSalesFromGame[index]);
-                                      },
-                                      scrollDirection: Axis.horizontal,
-                                      separatorBuilder:
-                                          (BuildContext context, int index) {
-                                        return SizedBox(
-                                          width: 15,
-                                        );
-                                      },
-                                      itemCount: value.getSalesFromGame.length),
-                                );
-                              },
-                            ),
+                            // Container(
+                            //   margin: EdgeInsets.only(top: 30),
+                            //   child: Row(
+                            //     children: [
+                            //       CustomTextWidget(
+                            //         'Best Deals Today',
+                            //         isDynamic: false,
+                            //         width: ScreenUtils.getDesignWidth(120),
+                            //         style: Theme.of(context)
+                            //             .primaryTextTheme
+                            //             .headline4,
+                            //       ),
+                            //       Spacer(),
+                            //       GradientText(
+                            //         'View All',
+                            //         gradient: PRIMARY_GRADIENT,
+                            //         style: Theme.of(context)
+                            //             .primaryTextTheme
+                            //             .headline4,
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
+                            // Consumer<GameDetailsModel>(
+                            //   builder: (_, value, __) {
+                            //     return Container(
+                            //       margin: EdgeInsets.only(top: 15),
+                            //       height: ScreenUtils.getDesignHeight(205),
+                            //       child: ListView.separated(
+                            //           itemBuilder:
+                            //               (BuildContext context, int index) {
+                            //             return ActiveGameSalesWidget(salesPayload: value.getSalesFromGame[index]);
+                            //           },
+                            //           scrollDirection: Axis.horizontal,
+                            //           separatorBuilder:
+                            //               (BuildContext context, int index) {
+                            //             return SizedBox(
+                            //               width: 15,
+                            //             );
+                            //           },
+                            //           itemCount: value.getSalesFromGame.length),
+                            //     );
+                            //   },
+                            // ),
                             Container(
                               margin: EdgeInsets.only(top: 25),
                               child: Row(
@@ -294,28 +300,38 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     ),
                   ),
                   _subHeadingContainer(title: "Similar Games"),
-                  // SingleChildScrollView(
-                  //   scrollDirection: Axis.horizontal,
-                  //   child: Row(
-                  //     children: temp.map((e) {
-                  //       return Padding(
-                  //         padding: EdgeInsets.only(
-                  //           top: ScreenUtils.getDesignHeight(15.0),
-                  //           left: ScreenUtils.getDesignWidth(
-                  //             temp.indexOf(e) == 0 ? 24.0 : 15.0,
-                  //           ),
-                  //         ),
-                  //         child: GamesWidget(
-                  //           backgroundUrl:
-                  //               "https://i.stack.imgur.com/y9DpT.jpg",
-                  //           gameName: "Test",
-                  //           price: "4200 LKR",
-                  //           gradient: GREEN_GRADIENT,
-                  //         ),
-                  //       );
-                  //     }).toList(),
-                  //   ),
-                  // ),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: ScreenUtils.getDesignHeight(10.0),
+                    ),
+                    child: Consumer<GameDetailsModel>(builder: (_, model, __) {
+                      return Container(
+                        height: ScreenUtils.getDesignHeight(160),
+                        child: Skeleton(
+                          isLoading: !model.hasInitialDataLoaded,
+                          skeleton: SkeletonGamesListWidget(
+                            height: ScreenUtils.getDesignHeight(160),
+                            width: ScreenUtils.getDesignWidth(100),
+                            count: 10,
+                          ),
+                          child: HorizontalScrollList(
+                            itemCount: model.similarGames.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
+                                    args: GameDetailsArguments(gameId: model.similarGames[index].id)),
+                                child: GamesWidget(
+                                  backgroundUrl: model.similarGames[index].backgroundImage,
+                                  title: model.similarGames[index].name,
+                                  subTitle: model.similarGames[index].released,gradient: PRIMARY_GRADIENT,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
                 ],
               ),
             ],
