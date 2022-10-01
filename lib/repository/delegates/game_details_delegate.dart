@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/models/game_status.dart';
+import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/service_locator.dart';
 
@@ -157,6 +158,27 @@ class GameDetailsDelegate extends GameDetailsRepository {
       var response = await _networkCalls.performRequest(
           APIConfig.getSalesFromGame(id), HttpAction.GET);
       return compute(mySalesPayloadFromJson, response.body);
+    } on TimeoutException {
+      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      throw PlayHQTimeoutException();
+    } on SocketException {
+      locator<ErrorManager>().setError(PlayHQSocketException());
+      throw PlayHQSocketException();
+    } catch (e) {
+      locator<ErrorManager>().setError(PlayHQGeneralException(
+        errorText: e.toString(),
+      ));
+      throw PlayHQGeneralException(
+        errorText: e.toString(),
+      );
+    }
+  }
+
+  @override
+  Future<RawgGameDetails> getSimilarGames(String genre, List<int> platforms) async{
+    try{
+      var response = await _networkCalls.performRequest(APIConfig.getSimilarGames(1 , genre , platforms), HttpAction.GET);
+      return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
       throw PlayHQTimeoutException();

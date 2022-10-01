@@ -10,6 +10,7 @@ import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
+import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/loading_event_model.dart';
 import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/user/user_preferences.dart';
@@ -17,6 +18,7 @@ import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/repository/clients/setup_sales_repository.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
+import 'package:play_hq/services/auth_service.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
@@ -86,10 +88,14 @@ class ISetupSalesModel extends SetupSalesViewModel {
   void performAPIRequest() async {
     _eventBus.fire(LoadingEvent.show());
 
+    _fullName = await SecureStorage.readValue("displayName") ?? '';
+
     try {
       await _setupSalesAPI.setLibraryGames(_selectedGames);
 
-      _fullName = await SecureStorage.readValue("displayName") ?? '';
+      UserDetails userDetails = await locator<AuthService>().getUserDetails();
+
+      print('User Details $userDetails');
 
       LocationModel locationModel = LocationModel(
         address: _selectedAddress,
@@ -97,15 +103,11 @@ class ISetupSalesModel extends SetupSalesViewModel {
         long: _selectedLongitude,
       );
 
-      var names = _fullName.split(' ');
-      String firstName = names[0];
-      String lastName = names[1];
-
       UserPreferencesModel _setupSalesModel = UserPreferencesModel(
         phoneNumber: _mobileNumber,
         displayName: _displayName,
-        firstName: firstName,
-        lastName: lastName,
+        firstName: userDetails.firstName,
+        lastName: userDetails.lastName,
         location: locationModel,
       );
 

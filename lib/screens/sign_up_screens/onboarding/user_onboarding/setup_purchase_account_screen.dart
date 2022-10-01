@@ -32,10 +32,22 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: GestureDetector(
+        onTap: (){},
+        child:  Container(
+            margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100), left: 24, right: 24),
+            child: CustomButton(
+                gradient: PRIMARY_GRADIENT,
+                buttonText: 'Setup Sales',
+                onPressed: () =>
+                    Provider.of<SetupPurchaseAccountModel>(context, listen: false).performAPIRequest()))
+      ),
         body: CustomBody(
       paddingLeft: 0.0,
       paddingRight: 0.0,
       paddingTop: 40.0,
+      paddingBottom: 100.0,
       body: [
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -176,7 +188,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             ),
             Container(
               width: ScreenUtils.bodyWidth,
-              margin: EdgeInsets.only(top: 30),
+              margin: EdgeInsets.only(top: 30 , bottom: 50),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 20),
                 child: Column(
@@ -222,13 +234,6 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                 ),
               ),
             ),
-            Container(
-                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100), left: 24, right: 24),
-                child: CustomButton(
-                    gradient: PRIMARY_GRADIENT,
-                    buttonText: 'Setup Sales',
-                    onPressed: () =>
-                        Provider.of<SetupPurchaseAccountModel>(context, listen: false).performAPIRequest()))
           ],
         ),
       ],
