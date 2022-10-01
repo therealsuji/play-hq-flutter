@@ -10,7 +10,7 @@ import 'package:play_hq/services/auth_service.dart';
 import 'package:logging/logging.dart';
 
 class Network {
-  //Singleton
+  // //Singleton
   Network._privateConstructor();
   static final Network _instance = Network._privateConstructor();
   static Network get shared => _instance;

@@ -1,6 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
+import 'package:play_hq/helpers/networks/app_network.dart';
 import 'package:play_hq/repository/clients/authentication_repository.dart';
 import 'package:play_hq/repository/clients/discover_repository.dart';
 import 'package:play_hq/repository/clients/game_api_repositiry.dart';
@@ -36,7 +37,8 @@ import 'package:play_hq/services/nav_service.dart';
 
 GetIt locator = GetIt.instance;
 
-void setupLocator() {
+void init() {
+  locator.registerLazySingleton<Network>(() => Network.shared);
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<ErrorManager>(() => ErrorService());
   locator.registerLazySingleton(() => EventBus());
@@ -44,7 +46,7 @@ void setupLocator() {
   locator.registerLazySingleton<PlacesService>(() => PlacesService());
   locator.registerLazySingleton<AuthService>(() => AuthService());
 
-  locator.registerFactory<HomeRepository>(() => HomeDelegate());
+  locator.registerFactory<HomeRepository>(() => HomeDelegate(locator()));
   locator.registerFactory<GameDetailsRepository>(() => GameDetailsDelegate());
   locator.registerFactory<SetupPurchaseRepository>(() => SetupPurchaseDelegate());
   locator.registerFactory<SetupSalesRepository>(() => SetupSalesDelegate());

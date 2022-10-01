@@ -15,13 +15,14 @@ import 'package:play_hq/services/base_managers/error.dart';
 import '../../models/sales/my_sales_payload.dart';
 
 class HomeDelegate implements HomeRepository {
-  final _networkCalls = Network.shared;
+  final Network networkCalls;
+
+  HomeDelegate(this.networkCalls);
 
   @override
   Future<MySalesPayload> getSalesFromWishList() async {
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.fetchSalesFromWishlist, HttpAction.GET);
+      var response = await networkCalls.performRequest(APIConfig.fetchSalesFromWishlist, HttpAction.GET);
       return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -40,9 +41,9 @@ class HomeDelegate implements HomeRepository {
   }
 
   @override
-  Future<MySalesPayload> getSoloGames() async{
+  Future<MySalesPayload> getSoloGames() async {
     try {
-      var response = await _networkCalls.performRequest(APIConfig.fetchSoloGames(), HttpAction.GET);
+      var response = await networkCalls.performRequest(APIConfig.fetchSoloGames(), HttpAction.GET);
       return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -63,8 +64,7 @@ class HomeDelegate implements HomeRepository {
   @override
   Future<MySalesPayload> getBundleGames() async {
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.fetchBundleGames(), HttpAction.GET);
+      var response = await networkCalls.performRequest(APIConfig.fetchBundleGames(), HttpAction.GET);
       return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
@@ -81,6 +81,4 @@ class HomeDelegate implements HomeRepository {
       );
     }
   }
-
-
 }

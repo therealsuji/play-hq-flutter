@@ -19,6 +19,7 @@ const String HOME_ICON = "assets/icons/home.svg";
 const String DISCOVER_ICON = "assets/icons/discover.svg";
 const String ORDERS_ICON = "assets/icons/orders.svg";
 const String PROFILE_ICON = "assets/icons/profile.svg";
+const String FRIENDS_ICON = "assets/icons/friends.svg";
 
 const String FACEBOOK_LOGO = "assets/icons/facebook.svg";
 const String GOOGLE_LOGO = "assets/icons/google.svg";

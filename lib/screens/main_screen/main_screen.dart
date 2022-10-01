@@ -51,11 +51,11 @@ class _MainScreenState extends State<MainScreen> {
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
-                PROFILE_ICON,
+                FRIENDS_ICON,
               ),
               label: '',
               activeIcon: SvgPicture.asset(
-                PROFILE_ICON,
+                FRIENDS_ICON,
                 color: PRIMARY_COLOR,
               ),
             ),

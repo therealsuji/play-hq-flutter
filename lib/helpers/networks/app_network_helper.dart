@@ -15,7 +15,7 @@ class NetworkResult<T> {
 }
 
 class NetworkHelper {
-  final _httpClient = Network.shared;
+  final _httpClient = locator<Network>();
 
   Future<NetworkResult<T>> get<T>(String url, computeCallback) async {
     try {
@@ -37,7 +37,7 @@ class NetworkHelper {
     }
   }
 
-  Future<NetworkResult<T>> post<T>(String url, dynamic body, computeCallback) async {
+  Future<NetworkResult<T>> post<T>(String url, Map<String, dynamic> body, computeCallback) async {
     try {
       var response = await _httpClient.performRequest(url, HttpAction.POST, body: body);
       return NetworkResult(response.body, compute(computeCallback, response.body));
