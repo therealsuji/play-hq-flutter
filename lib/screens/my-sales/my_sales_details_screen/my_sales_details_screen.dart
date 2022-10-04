@@ -91,9 +91,9 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                         return Container(
                           width: ScreenUtils.getDesignWidth(100),
                           child: GamePickerGames(
-                              gameName: widget.salesPayload?.gameList![index].game!.title,
+                              gameName: widget.salesPayload?.gameList![index].game.title,
                               backgroundUrl:
-                              widget.salesPayload?.gameList![index].game!.boxCover,
+                              widget.salesPayload?.gameList![index].game.boxCover,
                               releaseDate:
                               game_conditions.firstWhere((element) => element['API_Slug'] == widget.salesPayload!.gameList![0].status)['name']
                           ),

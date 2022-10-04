@@ -54,7 +54,7 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
                           children: widget.gameSalePayload!.gameList!.map((game) {
                             return GamesWidget(
                               title: game.game.title,
-                              backgroundUrl: game.game!.boxCover,
+                              backgroundUrl: game.game.boxCover,
                               subTitle: game.status == "MINT"
                                   ? "Mint Condition"
                                   : game.status == "VERY_NEW"

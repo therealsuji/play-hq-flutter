@@ -77,7 +77,7 @@ class SaleDetailsBottomSheet extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, idx) {
                     return GamesWidget(
-                      title: salesPayload!.gameList?[idx].game!.title,
+                      title: salesPayload!.gameList?[idx].game.title,
                       subTitle: salesPayload!.gameList?[idx].status,
                       backgroundUrl: salesPayload!.gameList?[idx].game.boxCover,
                       gradient: PRIMARY_GRADIENT,

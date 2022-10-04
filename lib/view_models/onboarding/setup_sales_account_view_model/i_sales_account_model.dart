@@ -46,21 +46,11 @@ class ISetupSalesModel extends SetupSalesViewModel {
   }
 
   @override
-  void addLocation(String placeId, String address) async {
-    _selectedAddress = address;
-
-    PlacesDetails place = await _placesService.getPlaceDetails(placeId);
-
-    _selectedLongitude = place.lng!;
-    _selectedLatitude = place.lat!;
-
-    LocationModel location =
-        new LocationModel(address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
-
-    AppSharedPreferences().createLocalData('location', location);
-
+  void addLocation(LocationModel model) async {
+    _selectedAddress = model.address ?? '';
+    _selectedLongitude = model.long ?? 0;
+    _selectedLatitude = model.lat ?? 0;
     notifyListeners();
-    locator<NavigationService>().pushNamed(SALES_ACCOUNT_SCREEN);
   }
 
   @override

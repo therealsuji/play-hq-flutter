@@ -39,7 +39,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
                 borderRadius: BorderRadius.circular(5),
                 child: CachedNetworkImage(
                   fit: BoxFit.cover,
-                  imageUrl: widget.salesPayload!.gameList![0].game!.boxCover ?? '',)),
+                  imageUrl: widget.salesPayload!.gameList![0].game.boxCover ?? '',)),
           )),
           Positioned(
               left: 0,
@@ -85,7 +85,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
                             border: Border.all(color: PRIMARY_COLOR),
                             borderRadius: BorderRadius.circular(3)
                         ),
-                        child: Center(child: Text(e.game!.title ?? '' , textAlign: TextAlign.center , style: TextStyle(fontSize: 9 , color: Colors.white, fontWeight: FontWeight.w600),)),
+                        child: Center(child: Text(e.game.title ?? '' , textAlign: TextAlign.center , style: TextStyle(fontSize: 9 , color: Colors.white, fontWeight: FontWeight.w600),)),
                       );
                     }).toList()
                   ),
@@ -152,7 +152,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomTextWidget(widget.salesPayload!.gameList!.length > 1 ? '${widget.salesPayload!.gameList![0].game!.title} Bundle' : widget.salesPayload!.gameList![0].game!.title ?? '', isDynamic: true , style: TextStyle(fontSize: 22, shadows: <Shadow>[
+          CustomTextWidget(widget.salesPayload!.gameList!.length > 1 ? '${widget.salesPayload!.gameList![0].game.title} Bundle' : widget.salesPayload!.gameList![0].game.title ?? '', isDynamic: true , style: TextStyle(fontSize: 22, shadows: <Shadow>[
             Shadow(
               offset: Offset(0.0, 3.0),
               blurRadius: 10.0,
@@ -161,7 +161,7 @@ class _ActiveGameSalesWidgetState extends State<ActiveGameSalesWidget> {
           ], height: 1.1, fontFamily: Neusa ,fontWeight: FontWeight.bold , color: Colors.white), maxWidth: ScreenUtils.getDesignWidth(160), minWidth: ScreenUtils.getDesignWidth(30),),
           Container(
             margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(3)),
-            child: widget.salesPayload!.gameList!.length == 1 ? CustomTextWidget('${DateTime.parse(widget.salesPayload!.gameList![0].game!.releaseDate!).format('dd-MM-yyyy')}', isDynamic: true , style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500 , color: PRIMARY_COLOR, shadows: <Shadow>[
+            child: widget.salesPayload!.gameList!.length == 1 ? CustomTextWidget('${DateTime.parse(widget.salesPayload!.gameList![0].game.releaseDate!).format('dd-MM-yyyy')}', isDynamic: true , style: TextStyle(fontSize: 10, fontWeight: FontWeight.w500 , color: PRIMARY_COLOR, shadows: <Shadow>[
             Shadow(
             offset: Offset(0.0, 3.0),
               blurRadius: 10.0,

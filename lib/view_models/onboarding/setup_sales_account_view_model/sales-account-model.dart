@@ -5,9 +5,11 @@ import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 
+import '../../../models/common_models/location_model.dart';
+
 abstract class SetupSalesViewModel with ChangeNotifier{
 
-  void addLocation(String placeId , String address);
+  void addLocation(LocationModel location);
 
   void addPhoneNumber(String phoneNumber);
 

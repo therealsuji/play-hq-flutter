@@ -32,7 +32,7 @@ class ICreateSaleModel extends CreateSaleModel {
   final _createSale = locator<SaleRepository>();
 
   ICreateSaleModel({GameElement? gamePreferances}) {
-    if (gamePreferances?.game!.apiId != null) {
+    if (gamePreferances?.game.apiId != null) {
       _selectedGames.add(gamePreferances!);
     }
   }
@@ -153,7 +153,7 @@ class ICreateSaleModel extends CreateSaleModel {
             .first['name'] ??
         '';
     gameElement = GameElement(
-        game: gameElement.game!,
+        game: gameElement.game,
         status: gameElement.status,
         statusName: conditionName);
     getCurrentCondition(conditionName);
@@ -170,7 +170,7 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void removeGame(int id) {
-    _selectedGames.removeWhere((game) => game.game!.apiId == id);
+    _selectedGames.removeWhere((game) => game.game.apiId == id);
     validateForm();
     locator<NavigationService>().pop();
     notifyListeners();
@@ -178,7 +178,7 @@ class ICreateSaleModel extends CreateSaleModel {
 
   @override
   void updateGame(int id) {
-    _selectedGames.firstWhere((element) => id == element.game!.apiId).statusName =
+    _selectedGames.firstWhere((element) => id == element.game.apiId).statusName =
         _currentCondition;
     notifyListeners();
     locator<NavigationService>().pop();
@@ -201,7 +201,7 @@ class ICreateSaleModel extends CreateSaleModel {
   @override
   void checkGame(GameElement gameElement) {
     int length = _selectedGames
-        .where((element) => element.game!.apiId == gameElement.game!.apiId)
+        .where((element) => element.game.apiId == gameElement.game.apiId)
         .length;
     if (length > 0) {
       _isAdded = true;

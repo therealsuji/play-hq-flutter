@@ -99,7 +99,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: salesPayload.gameList!.map((saleDetails) {
               return _gameCard(
-                  saleDetails.game!,
+                  saleDetails.game,
                   game_conditions
                       .where((element) =>
                           element['API_Slug'] == saleDetails.status)

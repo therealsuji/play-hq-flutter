@@ -41,7 +41,7 @@ class _CustomMapScreenState extends State<CustomMapScreen> {
                   markers: Set.from(val.markerPoint),
                   onTap: (onTapped){
                     Provider.of<CustomMapModel>(context , listen: false).handleTap(onTapped);
-                    Provider.of<SetupSalesViewModel>(context , listen: false).selectedMapLocation(onTapped);
+                    Provider.of<CustomAddressSearchModel>(context , listen: false).selectedMapLocation(onTapped);
                   },
                 );
               },

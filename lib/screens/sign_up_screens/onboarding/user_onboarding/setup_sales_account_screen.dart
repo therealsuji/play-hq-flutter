@@ -4,6 +4,7 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/service_locator.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
@@ -191,7 +192,8 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                                   color: SUB_TEXT_COLOR,
                                   fontSize: 12),
                               height: ScreenUtils.getDesignHeight(15),
-                            ) : CustomTextWidget(value.selectedAddress, isDynamic: true,
+                            ) : CustomTextWidget(
+                              value.selectedAddress, isDynamic: true,
                               maxWidth: ScreenUtils.getDesignWidth(150),
                               minWidth: ScreenUtils.getDesignWidth(50),
                               style: TextStyle(
@@ -205,8 +207,11 @@ class _SetupSalesAccountScreenState extends State<SetupSalesAccountScreen> {
                       ),
                       Spacer(),
                       GestureDetector(
-                        onTap: () => locator<NavigationService>()
-                            .pushNamed(CUSTOM_ADDRESS_SEARCH_SCREEN),
+                        onTap: () async {
+                          dynamic location = await locator<NavigationService>()
+                              .pushNamed(CUSTOM_ADDRESS_SEARCH_SCREEN);
+                          Provider.of<SetupSalesViewModel>(context , listen: false).addLocation(location as LocationModel);
+                        },
                         child: Container(
                           height: ScreenUtils.getDesignHeight(40),
                           width: ScreenUtils.getDesignWidth(110),

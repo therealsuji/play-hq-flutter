@@ -51,7 +51,7 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
                                   onTap: () {
-                                      Provider.of<SetupSalesViewModel>(context ,listen: false).addLocation(value.autoCompleteResults[index].placeId.toString() , value.autoCompleteResults[index].mainText.toString());
+                                      Provider.of<CustomAddressSearchModel>(context ,listen: false).addLocation(value.autoCompleteResults[index].placeId.toString() , value.autoCompleteResults[index].mainText.toString());
                                   },
                                   child: _customAddress(value.autoCompleteResults[index].mainText.toString(), value.autoCompleteResults[index].secondaryText.toString()));
                             },
@@ -65,25 +65,25 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
           )
         ],
       ),
-      floatingActionButton: Container(
-        margin: EdgeInsets.only(),
-        height: 60,
-        width: 60,
-        child: FloatingActionButton(
-            child: Container(
-              height: 100,
-              child: Icon(Icons.add_location_alt_outlined, color: Colors.white,
-                size: 27,),
-              width: 100,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  gradient: PRIMARY_GRADIENT
-              ),
-            ),
-            onPressed: () {
-                locator<NavigationService>().pushNamed(CUSTOM_MAP_SCREEN);
-            }),
-      ),
+      // floatingActionButton: Container(
+      //   margin: EdgeInsets.only(),
+      //   height: 60,
+      //   width: 60,
+      //   child: FloatingActionButton(
+      //       child: Container(
+      //         height: 100,
+      //         child: Icon(Icons.add_location_alt_outlined, color: Colors.white,
+      //           size: 27,),
+      //         width: 100,
+      //         decoration: BoxDecoration(
+      //             shape: BoxShape.circle,
+      //             gradient: PRIMARY_GRADIENT
+      //         ),
+      //       ),
+      //       onPressed: () {
+      //           locator<NavigationService>().pushNamed(CUSTOM_MAP_SCREEN);
+      //       }),
+      // ),
     );
   }
 

@@ -206,10 +206,10 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context2, int index) {
                   return GestureDetector(
-                    onTap: () => showBottomSheet(gameId: val.selectedGameList[index].game!.apiId!),
+                    onTap: () => showBottomSheet(gameId: val.selectedGameList[index].game.apiId!),
                     child: GamePickerGames(
-                      backgroundUrl: val.selectedGameList[index].game!.boxCover,
-                      gameName: val.selectedGameList[index].game!.title,
+                      backgroundUrl: val.selectedGameList[index].game.boxCover,
+                      gameName: val.selectedGameList[index].game.title,
                       releaseDate: val.selectedGameList[index].statusName,
                     ),
                   );

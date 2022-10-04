@@ -5,8 +5,6 @@ import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/game_lists/game_list_screen.dart';
 import 'package:play_hq/screens/my-sales/my_sales_details_screen/my_sales_details_screen.dart';
-import 'package:play_hq/screens/my-sales/my_sales_screen/my_sales_screen.dart';
-import 'package:play_hq/screens/order_details/order_details_screen.dart';
 import 'package:play_hq/screens/profile_screens/notifications/notification_screen.dart';
 import 'package:play_hq/screens/profile_screens/settings_screen.dart';
 import 'package:play_hq/screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
@@ -19,11 +17,6 @@ import 'package:play_hq/view_models/game_lists/game_list_view_model.dart';
 import 'package:play_hq/view_models/game_lists/i_game_list_view_model.dart';
 import 'package:play_hq/view_models/main_onboarding/i_main_onboarding_model.dart';
 import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
-import 'package:play_hq/view_models/order_tracking/i_order_tracking_view_model.dart';
-import 'package:play_hq/view_models/order_tracking/order_tracking_view_model.dart';
-import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
-import 'package:play_hq/view_models/orders/active_orders_view_model/i_active_orders_view_model.dart';
-import 'package:play_hq/view_models/orders/order_details_view_model/order_details_view_model.dart';
 import 'package:play_hq/view_models/orders/order_requests/i_order_request_view_model.dart';
 import 'package:play_hq/view_models/orders/order_requests/order_request_view_model.dart';
 import 'package:play_hq/view_models/profile/main_profile/i_main_profile_model.dart';
@@ -31,8 +24,6 @@ import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart
 import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
 import 'package:play_hq/view_models/profile/settings/settings_view_model.dart';
 import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
-import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
-import 'package:play_hq/view_models/sales/get_sales/i_fetch_sales_view_model.dart';
 import 'package:play_hq/view_models/sales/sales_details/i_sales_details_view_model.dart';
 import 'package:play_hq/view_models/sales/sales_details/sales_details_view_model.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +33,6 @@ import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/view_models.dart';
 
-import '../view_models/orders/order_details_view_model/i_order_details_view_model.dart';
 
 ISetupPurchaseAccountModel _implSetupPurchaseAccount = ISetupPurchaseAccountModel();
 ISetupSalesModel _implSetupSales = ISetupSalesModel();
@@ -127,7 +117,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
             ChangeNotifierProvider<CustomAddressSearchModel>(
               create: (context) => ICustomAddressSearchModel(),
             ),
-            ChangeNotifierProvider<SetupSalesViewModel>(create: (context) => _implSetupSales),
           ],
           child: CustomAddressSearchScreen(),
         ),
@@ -183,6 +172,12 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               gameListArguments: settings.arguments as GameListArguments,
             )),
       );
+    case CUSTOM_MAP_SCREEN :
+      return MaterialPageRoute(builder: (context) =>
+          ChangeNotifierProvider<CustomMapModel>(
+              create: (context) => ICustomMapModel(),
+            child: CustomMapScreen(),
+          ));
     default:
       return MaterialPageRoute(
         builder: (context) => Scaffold(

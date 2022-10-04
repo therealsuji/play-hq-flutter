@@ -32,7 +32,6 @@ class ICustomMapModel extends CustomMapModel {
   }
 
   @override
-  // TODO: implement markerPoint
   List<Marker> get markerPoint => _markerPoint;
 
 
