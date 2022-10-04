@@ -110,16 +110,18 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
                   size: 25,
                 ),
               ),
-              Container(
-                margin: EdgeInsets.only(left: 15),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title , style: Theme.of(context).primaryTextTheme.headline4,),
-                    Container(
-                        margin: EdgeInsets.only(top: 5),
-                        child: Text(subtitle , style: Theme.of(context).primaryTextTheme.headline4,))
-                  ],
+              Flexible(
+                child: Container(
+                  margin: EdgeInsets.only(left: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(title , style: Theme.of(context).primaryTextTheme.headline4,),
+                      Container(
+                          margin: EdgeInsets.only(top: 5),
+                          child: Text(subtitle , overflow: TextOverflow.fade, style: Theme.of(context).primaryTextTheme.headline5!.copyWith(color: SUB_TEXT_COLOR),))
+                    ],
+                  ),
                 ),
               )
             ],
