@@ -28,7 +28,8 @@ class ActivitySectionCard {
 class ActivitySection extends StatelessWidget {
   final String sectionTitle;
   final List<ActivitySectionCard> cardDetails;
-  const ActivitySection({Key? key, required this.sectionTitle, required this.cardDetails}) : super(key: key);
+  const ActivitySection({Key? key, required this.sectionTitle, required this.cardDetails})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

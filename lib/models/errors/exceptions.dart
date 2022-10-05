@@ -2,7 +2,6 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/services/base_managers/exceptions.dart';
 
 class GeneralException implements PlayHQException {
-
   GeneralException(this.message, this.type);
 
   @override
@@ -25,9 +24,9 @@ class GeneralException implements PlayHQException {
 }
 
 class PlayHQGeneralException implements PlayHQException {
-
   PlayHQGeneralException({
     this.duration = const Duration(seconds: 3),
+    this.message,
     this.errorText,
     this.onTap,
   });
@@ -36,7 +35,7 @@ class PlayHQGeneralException implements PlayHQException {
   Duration? duration;
 
   @override
-  String? message = "";
+  String? message;
 
   @override
   void Function()? onTap;
@@ -49,11 +48,9 @@ class PlayHQGeneralException implements PlayHQException {
 
   @override
   String toString() => this.errorText ?? this.message!;
-
 }
 
 class PlayHQTimeoutException implements PlayHQException {
-
   PlayHQTimeoutException({
     this.duration = const Duration(seconds: 3),
     this.errorText,
@@ -77,11 +74,9 @@ class PlayHQTimeoutException implements PlayHQException {
 
   @override
   String toString() => this.errorText ?? this.message!;
-
 }
 
 class PlayHQSocketException implements PlayHQException {
-
   PlayHQSocketException({
     this.duration = const Duration(seconds: 3),
     this.errorText,
@@ -105,6 +100,4 @@ class PlayHQSocketException implements PlayHQException {
 
   @override
   String toString() => this.errorText ?? this.message!;
-
 }
-

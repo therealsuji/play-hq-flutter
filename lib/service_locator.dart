@@ -38,7 +38,10 @@ import 'package:play_hq/services/nav_service.dart';
 GetIt locator = GetIt.instance;
 
 void init() {
-  locator.registerLazySingleton<Network>(() => Network.shared);
+  locator.registerLazySingleton<Network>(
+    () => Network.shared,
+    dispose: (v) => v.dispose(),
+  );
   locator.registerLazySingleton<NavigationService>(() => NavigationService());
   locator.registerLazySingleton<ErrorManager>(() => ErrorService());
   locator.registerLazySingleton(() => EventBus());

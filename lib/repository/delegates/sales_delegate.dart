@@ -107,10 +107,11 @@ class SaleDelegate extends SaleRepository {
       int page, SaleOrderType saleOrderType, OrderStatus? saleStatus) async {
     try {
       var response = await _networkCalls.performRequest(
-          APIConfig.fetchSalesForUsersOrders(page: page,type: saleOrderType, status: saleStatus),
+          APIConfig.fetchSalesForUsersOrders(page: page, type: saleOrderType, status: saleStatus),
           HttpAction.GET);
       List<SalesPayload> sales = await compute(listSalesPayloadFromJson, response.body);
-      PagedResult<SalesPayload> result = await PagedResult<SalesPayload>(sales, response.body).getResult();
+      PagedResult<SalesPayload> result =
+          await PagedResult<SalesPayload>(sales, response.body).getResult();
       return result;
     } on TimeoutException {
       locator<ErrorManager>().setError(PlayHQTimeoutException());
