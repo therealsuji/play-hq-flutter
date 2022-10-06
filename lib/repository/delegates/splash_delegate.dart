@@ -18,20 +18,19 @@ class SplashDelegate extends SplashRepository {
   @override
   Future<AuthUserModel> renewJwtToken(dynamic body) async {
     try {
-      var response = await _networkCalls.performRequest(APIConfig.renewJwt, HttpAction.POST , body: body);
+      var response =
+          await _networkCalls.performRequest(APIConfig.renewJwt, HttpAction.POST, body: body);
       return compute(authUserModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }

@@ -23,17 +23,15 @@ class NetworkHelper {
       var response = await _httpClient.performRequest(url, HttpAction.GET);
       return NetworkResult(response.body, compute(computeCallback, response.body));
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
@@ -43,17 +41,15 @@ class NetworkHelper {
       var response = await _httpClient.performRequest(url, HttpAction.POST, body: body);
       return NetworkResult(response.body, compute(computeCallback, response.body));
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }

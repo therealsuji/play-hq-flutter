@@ -1,25 +1,21 @@
-import 'dart:async';
+import 'dart:developer';
 
-import 'package:play_hq/services/base_managers/error.dart';
-import 'package:play_hq/services/base_managers/exceptions.dart';
+import 'package:flutter/widgets.dart';
+
+import '../models/errors/exceptions.dart';
+import '../widgets/custom_snackbar.dart';
+import 'base_managers/error.dart';
+import 'nav_service.dart';
 
 class ErrorService extends ErrorManager {
+  final NavigationService navigationService;
 
-  final StreamController<PlayHQException> _streamController = StreamController<PlayHQException>();
+  ErrorService(this.navigationService);
 
-  @override
-  void dispose() => _streamController.close();
-
-  @override
-  Stream<PlayHQException> get getErrorText => _streamController.stream;
-
-  @override
-  void setError(PlayHQException error) async {
-    _streamController.add(error);
-    print(error.message);
+  void showError(Failure failure, [Icon? icon, VoidCallback? onRetry]) {
+    final context = navigationService.navigatorKey.currentState!.overlay!.context;
+    final DisplayError handler = DisplayImpl();
+    log(failure.message ?? "LOL");
+    handler.showError(context, failure, icon, onRetry);
   }
-
-  @override
-  void noSentryError(PlayHQException error) => _streamController.add(error);
-
 }

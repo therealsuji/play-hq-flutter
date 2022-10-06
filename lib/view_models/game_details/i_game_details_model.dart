@@ -1,21 +1,18 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:intl/intl.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/game_details_models/game_details_model.dart';
-import 'package:play_hq/models/game_details_models/game_screenshot_modal.dart';
-import 'package:play_hq/models/game_status.dart';
-import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
-import 'package:play_hq/models/sales/sales_payload_model.dart';
-import 'package:play_hq/repository/clients/game_details_repository.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/game_details/game_details_model.dart';
 
-import '../../models/game_details_models/game_details_arguments.dart';
+import '../../models/game_details_models/game_details_model.dart';
+import '../../models/game_details_models/game_screenshot_modal.dart';
+import '../../models/game_status.dart';
+import '../../models/loading_event_model.dart';
+import '../../models/rawg_models/rawg_game_details.dart';
+import '../../models/sales/sales_payload_model.dart';
+import '../../repository/clients/game_details_repository.dart';
+import '../../service_locator.dart';
+import '../../services/nav_service.dart';
+import 'game_details_model.dart';
 
 class IGameDetailsModel extends GameDetailsModel {
-
   final _eventBus = locator<EventBus>();
   final _gameDetailsApi = locator<GameDetailsRepository>();
 
@@ -39,7 +36,7 @@ class IGameDetailsModel extends GameDetailsModel {
 
       loadingData();
       await _gameDetailsApi.getGameDetails(id).then((model) {
-        if(model != null){
+        if (model != null) {
           model.gameDetails!.platforms!.removeWhere((element) => element.id == 4);
           _gameDetailsModel = model.gameDetails!;
           _gameScreenshotModal = model.gameScreenshots!;
@@ -54,10 +51,10 @@ class IGameDetailsModel extends GameDetailsModel {
       await _gameDetailsApi.getSimilarGames(mainGenre.toString(), platforms).then((value) {
         _similarGames = value.results ?? [];
       });
-      
+
       await _gameDetailsApi.getGameStatus(id).then((model) {
-        _gameStatus = model;}
-      );
+        _gameStatus = model;
+      });
 
       await _gameDetailsApi.getSalesFromGame(id).then((value) {
         _salesPayload = value.saleItems ?? [];
@@ -65,7 +62,7 @@ class IGameDetailsModel extends GameDetailsModel {
       dataLoaded();
       _eventBus.fire(LoadingEvent.hide());
       notifyListeners();
-    }catch (e) {
+    } catch (e) {
       print(e.toString());
     }
   }
@@ -77,8 +74,6 @@ class IGameDetailsModel extends GameDetailsModel {
 
   @override
   void addToLibrary() async {
-
-
     var body = {
       "game": {
         "title": _gameDetailsModel.nameOriginal,
@@ -88,7 +83,8 @@ class IGameDetailsModel extends GameDetailsModel {
         "images": [],
         "platforms": _gameDetailsModel.platforms!.map((e) => e.id).toList(),
         "genres": _gameDetailsModel.genres!.map((e) => e.id).toList(),
-        "releaseDate": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
+        "releaseDate":
+            "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
       },
       "platform": _platformId
     };
@@ -97,14 +93,18 @@ class IGameDetailsModel extends GameDetailsModel {
 
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.setGameLibrary(body);
+
+    getGameStatus(_gameDetailsModel.id ?? 0);
+
     _eventBus.fire(LoadingEvent.hide());
 
-    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: _gameDetailsModel.id));
+    locator<NavigationService>().pop();
+
+    notifyListeners();
   }
 
   @override
   void addToWishList() async {
-
     print('releaseDate ' + _gameDetailsModel.released!);
 
     var body = {
@@ -116,7 +116,8 @@ class IGameDetailsModel extends GameDetailsModel {
         "images": [],
         "platforms": _gameDetailsModel.platforms!.map((e) => e.id).toList(),
         "genres": _gameDetailsModel.genres!.map((e) => e.id).toList(),
-        "releaseDate": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
+        "releaseDate":
+            "${DateFormat('yyyy-MM-dd').format(DateTime.parse(_gameDetailsModel.released!))}",
       },
       "platform": _platformId
     };
@@ -124,12 +125,16 @@ class IGameDetailsModel extends GameDetailsModel {
     print('Body ' + body.toString());
     print('Platform ${_platformId.toString()}');
 
-
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.setGameWishList(body);
+
+    getGameStatus(_gameDetailsModel.id ?? 0);
+
     _eventBus.fire(LoadingEvent.hide());
 
-    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: _gameDetailsModel.id));
+    locator<NavigationService>().pop();
+
+    notifyListeners();
   }
 
   @override
@@ -139,21 +144,12 @@ class IGameDetailsModel extends GameDetailsModel {
   }
 
   @override
-  int get selectedPlatformId => _platformId;
-
-  @override
-  GameDetailModel get gameDetails => _gameDetailsModel;
-
-  @override
-  GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
-
-  @override
   void deleteLibraryGame(int id) async {
     _eventBus.fire(LoadingEvent.show());
     await _gameDetailsApi.deleteLibraryGame(id);
     getGameStatus(id);
     _eventBus.fire(LoadingEvent.hide());
-    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: id));
+    notifyListeners();
   }
 
   @override
@@ -162,14 +158,14 @@ class IGameDetailsModel extends GameDetailsModel {
     await _gameDetailsApi.deleteWishListGame(id);
     getGameStatus(id);
     _eventBus.fire(LoadingEvent.hide());
-    locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN  , args: GameDetailsArguments(gameId: id));
+    notifyListeners();
   }
 
   @override
-  void getGameStatus(int id) {
-    _gameDetailsApi.getGameStatus(id).then((model) {
-      _gameStatus = model;}
-    );
+  void getGameStatus(int id) async {
+    await _gameDetailsApi.getGameStatus(id).then((model) {
+      _gameStatus = model;
+    });
     notifyListeners();
   }
 
@@ -182,4 +178,12 @@ class IGameDetailsModel extends GameDetailsModel {
   @override
   List<GameResults> get similarGames => _similarGames;
 
+  @override
+  int get selectedPlatformId => _platformId;
+
+  @override
+  GameDetailModel get gameDetails => _gameDetailsModel;
+
+  @override
+  GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
 }

@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:io';
 
@@ -16,26 +14,24 @@ import '../../models/search_model/app_search_game_model.dart';
 import '../../service_locator.dart';
 
 class SearchDelegate extends SearchRepository {
-
   final _networkCalls = Network.shared;
 
   @override
   Future<SearchGame> searchGame(String name) async {
-    try{
-      var response = await _networkCalls.performRequest(APIConfig.getSearchResults(name), HttpAction.GET);
+    try {
+      var response =
+          await _networkCalls.performRequest(APIConfig.getSearchResults(name), HttpAction.GET);
       return compute(searchGamefromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }

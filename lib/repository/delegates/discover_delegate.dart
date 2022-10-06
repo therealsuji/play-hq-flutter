@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:io';
 
@@ -15,49 +13,44 @@ import 'package:play_hq/services/base_managers/error.dart';
 
 import '../../service_locator.dart';
 
-
 class DiscoverDelegate implements DiscoverRepository {
-
   final _networkCalls = Network.shared;
 
   @override
   Future<RawgGameDetails> fetchNewlyReleasedGames(DateFilter date) async {
-    try{
-      var response = await _networkCalls.performRequest(APIConfig.getNewReleases(date), HttpAction.GET);
+    try {
+      var response =
+          await _networkCalls.performRequest(APIConfig.getNewReleases(date), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
 
   @override
   Future<RawgGameDetails> fetchFPSGames() async {
-    try{
+    try {
       var response = await _networkCalls.performRequest(APIConfig.getFPSGames(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }

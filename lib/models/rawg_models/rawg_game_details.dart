@@ -20,12 +20,11 @@ class RawgGameDetails {
   List<GameResults>? results;
 
   factory RawgGameDetails.fromJson(Map<String, dynamic> json) => RawgGameDetails(
-    count: json["count"],
-    next: json["next"],
-    previous: json["previous"],
-    results: List<GameResults>.from(json["results"].map((x) => GameResults.fromJson(x))),
-  );
-
+        count: json["count"],
+        next: json["next"],
+        previous: json["previous"],
+        results: List<GameResults>.from(json["results"].map((x) => GameResults.fromJson(x))),
+      );
 }
 
 class GameResults {
@@ -46,11 +45,11 @@ class GameResults {
   double? rating;
 
   factory GameResults.fromJson(Map<String, dynamic> json) => GameResults(
-    id: json["id"],
-    name: json["name"],
-    released: json["released"],
-    tba: json["tba"],
-    backgroundImage: json["background_image"],
-    rating: json["rating"],
-  );
+        id: json["id"],
+        name: json["name"],
+        released: json["released"],
+        tba: json["tba"],
+        backgroundImage: json["background_image"],
+        rating: json["rating"],
+      );
 }

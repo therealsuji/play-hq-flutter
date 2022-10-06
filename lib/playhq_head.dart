@@ -1,23 +1,19 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:play_hq/managers/dialog_manager.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:places_service/places_service.dart';
 import 'package:provider/provider.dart';
 
-import 'package:places_service/places_service.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_fonts.dart';
-import 'package:play_hq/helpers/app_routes.dart';
-import 'package:play_hq/models/search_model/app_search_game_model.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/base_managers/error.dart';
-import 'package:play_hq/services/base_managers/exceptions.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/view_models.dart';
-import 'package:play_hq/widgets/loading_overlay_widget.dart';
-import 'package:path_provider/path_provider.dart' as path_provider;
+import 'helpers/app_colors.dart';
+import 'helpers/app_fonts.dart';
+import 'helpers/app_routes.dart';
+import 'managers/dialog_manager.dart';
+import 'models/search_model/app_search_game_model.dart';
+import 'service_locator.dart';
+import 'services/nav_service.dart';
+import 'view_models/view_models.dart';
+import 'widgets/loading_overlay_widget.dart';
 
 class PlayHqHead extends StatefulWidget {
   @override
@@ -25,30 +21,14 @@ class PlayHqHead extends StatefulWidget {
 }
 
 class _PlayHqHeadState extends State<PlayHqHead> {
-  final errorHandler = locator<ErrorManager>();
   final _placesService = locator<PlacesService>();
-
-  StreamSubscription? _errorSubscription;
-  Stream<PlayHQException>? _prevErrorStream;
 
   @override
   void initState() {
     super.initState();
 
-    if (_prevErrorStream != errorHandler.getErrorText) {
-      _prevErrorStream = errorHandler.getErrorText;
-      _errorSubscription?.cancel();
-      listenToErrors();
-    }
-
     initHive();
     _placesService.initialize(apiKey: 'AIzaSyDGxXpv56r9r3jDvfWT6kYW_nFpU1T1xrQ');
-  }
-
-  void listenToErrors() {
-    _errorSubscription = _prevErrorStream!.listen((error) {
-      locator<NavigationService>().showError(error);
-    });
   }
 
   void initHive() async {
@@ -61,8 +41,6 @@ class _PlayHqHeadState extends State<PlayHqHead> {
   @override
   void dispose() {
     Hive.close();
-    _errorSubscription?.cancel();
-    errorHandler.dispose();
     super.dispose();
   }
 
@@ -79,7 +57,8 @@ class _PlayHqHeadState extends State<PlayHqHead> {
           backgroundColor: BACKGROUND_COLOR,
           accentColorBrightness: Brightness.light,
           primaryTextTheme: TextTheme(
-            headline1: TextStyle(fontSize: 25, color: Colors.white, fontFamily: Neusa, fontWeight: FontWeight.bold),
+            headline1: TextStyle(
+                fontSize: 25, color: Colors.white, fontFamily: Neusa, fontWeight: FontWeight.bold),
             headline2: TextStyle(
               fontSize: 20,
               color: Colors.white,

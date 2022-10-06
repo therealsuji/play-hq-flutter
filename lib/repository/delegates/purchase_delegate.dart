@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:io';
 
@@ -14,27 +12,24 @@ import '../../models/orders_model/purchase_request.dart';
 import '../../service_locator.dart';
 import '../../services/base_managers/error.dart';
 
-class PurchaseDelegate extends PurchasesRepository{
-
+class PurchaseDelegate extends PurchasesRepository {
   final _networkCalls = Network.shared;
 
   @override
   Future<void> createPurchaseRequest(Map<String, dynamic> body) async {
-    try{
+    try {
       await _networkCalls.performRequest(APIConfig.orders, HttpAction.POST, body: body);
-    }
-    on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-    }
-    on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-    }
-    catch(e){
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+    } on TimeoutException {
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
+    } on SocketException {
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
+    } catch (e) {
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
-
 }

@@ -34,6 +34,13 @@ const String GAME_SALE_DETAILS_SCREEN = 'gameSaleDetails';
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';
 
+// Error Messages
+const String NO_INTERNET_CONNECTION =
+    "We're having trouble connecting. Please check your internet connection.";
+const String TIMEOUT_ERROR = 'Server timed out';
+const String FORMAT_ERROR = 'Formatting error';
+const String HTTP_ERROR = 'Oops! An error has occurred';
+
 //Custom Map Theme
 String mapStyle = '''
 [

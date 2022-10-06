@@ -1,15 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:http/http.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
-import 'package:play_hq/helpers/networks/app_config.dart';
-import 'package:play_hq/models/errors/exceptions.dart';
-import 'package:play_hq/repository/clients/setup_purchase_repository.dart';
-import 'package:play_hq/services/base_managers/error.dart';
-
+import '../../helpers/app_enums.dart';
+import '../../helpers/networks/app_config.dart';
+import '../../helpers/networks/app_network.dart';
+import '../../models/errors/exceptions.dart';
 import '../../service_locator.dart';
+import '../../services/base_managers/error.dart';
+import '../clients/setup_purchase_repository.dart';
 
 class SetupPurchaseDelegate extends SetupPurchaseRepository {
   final _networkCalls = Network.shared;
@@ -19,14 +17,16 @@ class SetupPurchaseDelegate extends SetupPurchaseRepository {
     try {
       await _networkCalls.performRequest(APIConfig.addWishListGames, HttpAction.POST, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
 
@@ -35,14 +35,16 @@ class SetupPurchaseDelegate extends SetupPurchaseRepository {
     try {
       await _networkCalls.performRequest(APIConfig.userPreferences, HttpAction.PUT, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
 }

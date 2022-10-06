@@ -70,6 +70,7 @@ class GameDetailsDelegate extends GameDetailsRepository with NetworkHelper {
   Future<RawgGameDetails> getSimilarGames(String genre, List<int> platforms) async {
     var response = await _httpClient.performRequest(
         APIConfig.getSimilarGames(1, genre, platforms), HttpAction.GET);
+
     return compute(rawgGameDetailsFromJson, response.body);
   }
 }

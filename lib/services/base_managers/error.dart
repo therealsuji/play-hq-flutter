@@ -1,13 +1,7 @@
-import 'package:play_hq/services/base_managers/exceptions.dart';
+import 'package:flutter/widgets.dart';
+
+import '../../models/errors/exceptions.dart';
 
 abstract class ErrorManager {
-
-  Stream<PlayHQException> get getErrorText;
-
-  void setError(PlayHQException error);
-
-  void noSentryError(PlayHQException error);
-
-  void dispose();
-
+  void showError(Failure failure, [Icon? icon, VoidCallback? onRetry]);
 }

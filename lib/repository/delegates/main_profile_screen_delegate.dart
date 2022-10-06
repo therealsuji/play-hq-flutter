@@ -20,21 +20,19 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   @override
   Future<GamePreferancesResponse> getLibraryGames() async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.getLibraryGames(), HttpAction.GET);
+      var response =
+          await _networkCalls.performRequest(APIConfig.getLibraryGames(), HttpAction.GET);
       return compute(gamePreferancesResponseFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
@@ -42,21 +40,19 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   @override
   Future<GamePreferancesResponse> getWishListGames() async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.getWishListGames(), HttpAction.GET);
+      var response =
+          await _networkCalls.performRequest(APIConfig.getWishListGames(), HttpAction.GET);
       return compute(gamePreferancesResponseFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
@@ -64,21 +60,18 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   @override
   Future<UserDetails> getUserDetails() async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.getUserDetails, HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getUserDetails, HttpAction.GET);
       return compute(userDetailsfromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }

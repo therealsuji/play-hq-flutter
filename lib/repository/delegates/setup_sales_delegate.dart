@@ -21,14 +21,16 @@ class SetupSalesDelegate extends SetupSalesRepository {
     try {
       await _networkCalls.performRequest(APIConfig.addLibraryGames, HttpAction.POST, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
 
@@ -37,14 +39,16 @@ class SetupSalesDelegate extends SetupSalesRepository {
     try {
       await _networkCalls.performRequest(APIConfig.setupSales, HttpAction.PUT, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
 }

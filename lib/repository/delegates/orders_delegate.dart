@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 import 'dart:io';
 
@@ -15,111 +13,101 @@ import '../../models/errors/exceptions.dart';
 import '../../service_locator.dart';
 import '../../services/base_managers/error.dart';
 
-class OrdersDelegate extends OrdersRepository{
-
+class OrdersDelegate extends OrdersRepository {
   final _networkCalls = Network.shared;
-
 
   @override
   Future<OrdersModel> fetchAllActiveSalesOrders() async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.fetchAllActiveSaleOrders(), HttpAction.GET);
+      var response =
+          await _networkCalls.performRequest(APIConfig.fetchAllActiveSaleOrders(), HttpAction.GET);
       return compute(ordersModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
 
   @override
-  Future<OrdersModel> fetchOrder(String saleId) async{
+  Future<OrdersModel> fetchOrder(String saleId) async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.getOrdersForSale(saleId), HttpAction.GET);
+      var response =
+          await _networkCalls.performRequest(APIConfig.getOrdersForSale(saleId), HttpAction.GET);
       return compute(ordersModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
 
   @override
-  Future<void> acceptPurchaseRequest(String id) async{
-    try{
+  Future<void> acceptPurchaseRequest(String id) async {
+    try {
       await _networkCalls.performRequest(APIConfig.acceptPurchaseRequest(id), HttpAction.GET);
-    }
-    on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-    }
-    on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-    }
-    catch(e){
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+    } on TimeoutException {
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
+    } on SocketException {
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
+    } catch (e) {
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
 
   @override
-  Future<void> rejectPurchaseRequest(String id) async{
-    try{
+  Future<void> rejectPurchaseRequest(String id) async {
+    try {
       await _networkCalls.performRequest(APIConfig.rejectPurchaseRequest(id), HttpAction.GET);
-    }
-    on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-    }
-    on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-    }
-    catch(e){
-      print('error ' + e.toString());
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
+    } on TimeoutException {
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
+    } on SocketException {
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
+    } catch (e) {
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
     }
   }
 
   @override
-  Future<OrdersModel> fetchAllActivePurchaseOrders() async{
+  Future<OrdersModel> fetchAllActivePurchaseOrders() async {
     try {
       var response = await _networkCalls.performRequest(
           APIConfig.fetchAllActivePurchaseOrders(), HttpAction.GET);
       return compute(ordersModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
@@ -128,22 +116,18 @@ class OrdersDelegate extends OrdersRepository{
   Future<void> changeOrderStatus(String id, OrderStatus status, UserType userType) async {
     try {
       await _networkCalls.performRequest(
-          APIConfig.changeOrderStatus(user: userType, status: status, id: id),
-          HttpAction.GET);
+          APIConfig.changeOrderStatus(user: userType, status: status, id: id), HttpAction.GET);
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
-        errorText: e.toString(),
-      ));
-      throw PlayHQGeneralException(
-        errorText: e.toString(),
+      locator<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
       );
     }
   }
-
 }

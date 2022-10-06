@@ -1,35 +1,16 @@
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/services/base_managers/exceptions.dart';
+import '../../helpers/app_strings.dart';
 
-class GeneralException implements PlayHQException {
-  GeneralException(this.message, this.type);
-
-  @override
+abstract class Failure {
   String? message;
-
-  @override
-  ExceptionTypes? type;
-
-  @override
   Duration? duration;
+  void Function()? onTap;
+}
+
+class NetworkFailure implements Failure {
+  NetworkFailure({this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
   void Function()? onTap;
-
-  @override
-  String? errorText;
-
-  @override
-  String toString() => this.message!;
-}
-
-class PlayHQGeneralException implements PlayHQException {
-  PlayHQGeneralException({
-    this.duration = const Duration(seconds: 3),
-    this.message,
-    this.errorText,
-    this.onTap,
-  });
 
   @override
   Duration? duration;
@@ -38,66 +19,69 @@ class PlayHQGeneralException implements PlayHQException {
   String? message;
 
   @override
-  void Function()? onTap;
-
-  @override
-  ExceptionTypes? type = ExceptionTypes.REQUEST_ERROR;
-
-  @override
-  String? errorText;
-
-  @override
-  String toString() => this.errorText ?? this.message!;
+  String toString() => message ?? NO_INTERNET_CONNECTION;
 }
 
-class PlayHQTimeoutException implements PlayHQException {
-  PlayHQTimeoutException({
-    this.duration = const Duration(seconds: 3),
-    this.errorText,
-    this.onTap,
-  });
+class TimeoutFailure implements Failure {
+  TimeoutFailure({this.duration = const Duration(seconds: 2), this.onTap});
+
+  @override
+  void Function()? onTap;
 
   @override
   Duration? duration;
 
   @override
-  String? message = "Your request has timed out! Please retry";
+  String? message;
+
+  @override
+  String toString() => TIMEOUT_ERROR;
+}
+
+class FormatFailure implements Failure {
+  FormatFailure({this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
   void Function()? onTap;
-
-  @override
-  ExceptionTypes? type = ExceptionTypes.TIMEOUT_EXCEPTION;
-
-  @override
-  String? errorText;
-
-  @override
-  String toString() => this.errorText ?? this.message!;
-}
-
-class PlayHQSocketException implements PlayHQException {
-  PlayHQSocketException({
-    this.duration = const Duration(seconds: 3),
-    this.errorText,
-    this.onTap,
-  });
 
   @override
   Duration? duration;
 
   @override
-  String? message = "No network connection! Please retry";
+  String? message;
+
+  @override
+  String toString() => FORMAT_ERROR;
+}
+
+class HttpFailure implements Failure {
+  HttpFailure({this.message, this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
   void Function()? onTap;
 
   @override
-  ExceptionTypes? type = ExceptionTypes.SOCKET_EXCEPTION;
+  Duration? duration;
 
   @override
-  String? errorText;
+  String? message;
 
   @override
-  String toString() => this.errorText ?? this.message!;
+  String toString() => HTTP_ERROR;
+}
+
+class UnknownFailure implements Failure {
+  UnknownFailure({this.message, this.duration = const Duration(seconds: 2), this.onTap});
+
+  @override
+  void Function()? onTap;
+
+  @override
+  Duration? duration;
+
+  @override
+  String? message;
+
+  @override
+  String toString() => this.message ?? HTTP_ERROR;
 }

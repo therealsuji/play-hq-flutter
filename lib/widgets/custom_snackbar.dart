@@ -1,19 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:another_flushbar/flushbar.dart';
-import 'package:play_hq/helpers/app_colors.dart';
+import 'package:flutter/material.dart';
 
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/services/base_managers/exceptions.dart';
+import '../helpers/app_colors.dart';
+import '../helpers/app_screen_utils.dart';
+import '../models/errors/exceptions.dart';
 
 abstract class DisplayError {
-  void showError(BuildContext context, PlayHQException exception);
+  void showError(BuildContext context, Failure exception, [Icon? icon, VoidCallback? onRetry]);
   // void showNotification(BuildContext context, {String? title="", String body=""});
 }
 
 class DisplayImpl extends DisplayError {
-
   @override
-  void showError(BuildContext context, PlayHQException exception) {
+  void showError(BuildContext context, Failure exception, [Icon? icon, VoidCallback? onRetry]) {
     final Flushbar _flushBar = Flushbar(
       flushbarPosition: FlushbarPosition.BOTTOM,
       flushbarStyle: FlushbarStyle.FLOATING,
@@ -38,20 +37,22 @@ class DisplayImpl extends DisplayError {
       isDismissible: true,
       backgroundColor: POP_UP_CONTAINER_COLOR,
       duration: exception.duration,
-      mainButton: exception.onTap != null ? TextButton(
-        onPressed: () {
-          Navigator.pop(context);
-          exception.onTap!();
-        },
-        child: Text(
-          "Try Again",
-          style: const TextStyle(
-            color: Color(0xFFFFA73B),
-            fontSize: 13.0,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ) : null,
+      mainButton: exception.onTap != null
+          ? TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                exception.onTap!();
+              },
+              child: Text(
+                "Try Again",
+                style: const TextStyle(
+                  color: Color(0xFFFFA73B),
+                  fontSize: 13.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          : null,
       messageText: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -64,7 +65,7 @@ class DisplayImpl extends DisplayError {
           ),
           Expanded(
             child: Text(
-              exception.message ?? '',
+              exception.toString(),
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13.0,

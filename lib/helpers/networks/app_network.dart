@@ -134,22 +134,22 @@ class Network {
 
       return response;
     } on SocketException {
-      locator<ErrorManager>().setError(PlayHQSocketException());
-      throw PlayHQSocketException();
+      locator<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
     } on TimeoutException {
-      locator<ErrorManager>().setError(PlayHQTimeoutException());
-      throw PlayHQTimeoutException();
-      // } on FormatException {
-      //   locator<ErrorService>().setError(PLa());
-      //   return Future.error(FormatFailure());
-      // } on HttpException {
-      //   locator<ErrorService>().showError(HttpFailure());
-      //   return Future.error(HttpFailure());
+      locator<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
+    } on FormatException {
+      locator<ErrorManager>().showError(FormatFailure());
+      throw FormatFailure();
+    } on HttpException {
+      locator<ErrorManager>().showError(HttpFailure());
+      throw HttpFailure();
     } catch (e) {
-      locator<ErrorManager>().setError(PlayHQGeneralException(
+      locator<ErrorManager>().showError(UnknownFailure(
         message: e.toString(),
       ));
-      throw PlayHQGeneralException(
+      throw UnknownFailure(
         message: e.toString(),
       );
     }
