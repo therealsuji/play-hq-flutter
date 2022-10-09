@@ -42,7 +42,10 @@ class ISetupSalesModel extends SetupSalesViewModel {
 
   @override
   void dispose() {
-    super.dispose();
+    // Not sure what to do about this
+    // disposing this causes the provider to be not available when you go forward sales purchase come back to account and go forward again
+    // TODO : LOOK INTO THIS
+    // super.dispose();
   }
 
   @override
@@ -116,7 +119,6 @@ class ISetupSalesModel extends SetupSalesViewModel {
   void addSelectedGame(GamePreferencesRequest game) {
     _selectedGames.add(game);
     notifyListeners();
-    locator<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
   }
 
   @override

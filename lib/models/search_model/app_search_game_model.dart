@@ -20,8 +20,8 @@ class SearchGame {
 }
 
 GameDetails gameDetailsFromJson(String str) => GameDetails.fromJson(json.decode(str));
-class GameDetails {
 
+class GameDetails {
   String? name;
 
   String? released;
@@ -31,7 +31,7 @@ class GameDetails {
   int? id;
 
   List<PlatformElement>? platforms;
-  
+
   List<Genres>? genres;
 
   GameDetails.fromJson(Map<String, dynamic> json) {
@@ -39,13 +39,14 @@ class GameDetails {
     released = json['released'] == null ? null : json['released'];
     image = json['background_image'] == null ? null : json['background_image'];
     id = json['id'] == null ? null : json['id'];
-    platforms = List<PlatformElement>.from(json["platforms"].map((x) => PlatformElement.fromJson(x)));
-    genres = List<Genres>.from(json["genres"].map((x) => Genres.fromJson(x)));
+    platforms = json['platforms'] == null
+        ? []
+        : List<PlatformElement>.from(json["platforms"].map((x) => PlatformElement.fromJson(x)));
+    genres = json['genres'] == null ? [] : List<Genres>.from(json["genres"].map((x) => Genres.fromJson(x)));
   }
 
-  GameDetails({this.name, this.released, this.image, this.id , this.platforms , this.genres});
+  GameDetails({this.name, this.released, this.image, this.id, this.platforms, this.genres});
 }
-
 
 class PlatformElement {
   PlatformElement({
@@ -55,12 +56,12 @@ class PlatformElement {
   PlatformPlatform? platform;
 
   factory PlatformElement.fromJson(Map<String, dynamic> json) => PlatformElement(
-    platform: PlatformPlatform.fromJson(json["platform"]),
-  );
+        platform: PlatformPlatform.fromJson(json["platform"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "platform": platform!.toJson(),
-  };
+        "platform": platform!.toJson(),
+      };
 }
 
 class PlatformPlatform {
@@ -75,15 +76,14 @@ class PlatformPlatform {
   String? slug;
 
   factory PlatformPlatform.fromJson(Map<String, dynamic> json) => PlatformPlatform(
-    id: json["id"],
-    name: json["name"],
-    slug: json["slug"],
-  );
+        id: json["id"],
+        name: json["name"],
+        slug: json["slug"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "slug": slug,
-  };
+        "id": id,
+        "name": name,
+        "slug": slug,
+      };
 }
-

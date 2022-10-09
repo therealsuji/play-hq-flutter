@@ -15,6 +15,10 @@ class NavigationService {
     return _navigatorKey.currentState!.pushReplacementNamed(routeName, arguments: args);
   }
 
+  void popUntil(String routeName) {
+    return _navigatorKey.currentState!.popUntil(ModalRoute.withName(routeName));
+  }
+
   Future<dynamic> pushAndRemoveUntil(String routeName, {Object? args}) {
     return _navigatorKey.currentState!
         .pushNamedAndRemoveUntil(routeName, (Route<dynamic> route) => false, arguments: args);
