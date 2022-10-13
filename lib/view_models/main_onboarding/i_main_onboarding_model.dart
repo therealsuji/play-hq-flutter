@@ -28,6 +28,7 @@ class IMainOnbooardingModel extends MainOnboardingModel {
       _controller.animateToPage(_currentPage--, duration: Duration(milliseconds: 500), curve: Curves.ease);
       notifyListeners();
     }
+
   }
 
   @override
