@@ -28,73 +28,129 @@ class _MainOnboardingState extends State<MainOnboarding> {
       body: Container(
         child: Stack(
           children: [
-            Column(
-              children: [
-                Expanded(
-                  flex: 7,
-                  child: Container(
-                    child: PageView.builder(
-                        itemCount: onboardingData.length,
-                        onPageChanged: (val) => Provider.of<MainOnboardingModel>(context , listen: false).changePage(val),
-                        itemBuilder: (BuildContext context , index){
-                          return _onboarding(onboardingData[index]['image'], onboardingData[index]['title'], onboardingData[index]['description']);
-                        }),
+            Consumer<MainOnboardingModel>(builder: (_, value, __) {
+              return Column(
+                children: [
+                  Expanded(
+                    flex: 7,
+                    child: Container(
+                      child: PageView.builder(
+                        controller: value.pageController,
+                          itemCount: onboardingData.length,
+                          onPageChanged: (val) =>
+                              Provider.of<MainOnboardingModel>(context,
+                                      listen: false)
+                                  .changePage(val),
+                          itemBuilder: (BuildContext context, index) {
+                            return _onboarding(
+                                onboardingData[index]['image'],
+                                onboardingData[index]['title'],
+                                onboardingData[index]['description']);
+                          }),
+                    ),
                   ),
-                ),
-                Spacer(),
-                Consumer<MainOnboardingModel>(
-                  builder: (context , value , child){
-                    return Container(
-                      margin: EdgeInsets.only(bottom: 20 , left: 24 , right: 24),
-                      child: value.currentPage == 3 ? CustomButton(buttonText: 'Setup Preferances' , width: ScreenUtils.bodyWidth, gradient: PRIMARY_GRADIENT,onPressed: () =>  locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE ,args: SearchType.SETUP_PURCHASES),) : Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          value.currentPage == 0 ? Container(
-                            width: ScreenUtils.getDesignWidth(30),
-                            height: ScreenUtils.getDesignHeight(18),
-                          ) : GestureDetector(
-                            child: Container(
-                              alignment: Alignment.topRight,
-                              child: CustomTextWidget(
-                                'Back',
-                                isDynamic: false,
-                                width: ScreenUtils.getDesignWidth(30),
-                                height: ScreenUtils.getDesignHeight(18),
-                                style: TextStyle(fontFamily: CircularBook , fontWeight: FontWeight.w700, foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR , fontSize: 14),
+                  Spacer(),
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: ScreenUtils.getDesignHeight(40),
+                        left: 24,
+                        right: 24),
+                    child: value.currentPage == 3
+                        ? CustomButton(
+                            buttonText: 'Setup Preferances',
+                            width: ScreenUtils.bodyWidth,
+                            gradient: PRIMARY_GRADIENT,
+                            onPressed: () => locator<NavigationService>()
+                                .pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE,
+                                    args: SearchType.SETUP_PURCHASES),
+                          )
+                        : Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              value.currentPage == 0
+                                  ? Container(
+                                      width: ScreenUtils.getDesignWidth(30),
+                                      height: ScreenUtils.getDesignHeight(18),
+                                    )
+                                  : Visibility(
+                                      visible:
+                                          value.currentPage > 0 ? true : false,
+                                      child: GestureDetector(
+                                        onTap: () => value.currentPage > 0
+                                            ? Provider.of<MainOnboardingModel>(
+                                                    context,
+                                                    listen: false)
+                                                .previousPage()
+                                            : null,
+                                        child: Container(
+                                          alignment: Alignment.topRight,
+                                          child: CustomTextWidget(
+                                            'Back',
+                                            isDynamic: false,
+                                            width:
+                                                ScreenUtils.getDesignWidth(30),
+                                            height:
+                                                ScreenUtils.getDesignHeight(18),
+                                            style: TextStyle(
+                                                fontFamily: CircularBook,
+                                                fontWeight: FontWeight.w700,
+                                                foreground: Paint()
+                                                  ..shader =
+                                                      PRIMARY_GRADIENT_TEXT_COLOR,
+                                                fontSize: 14),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                              DottedIndicatorWidget(
+                                currentPage: value.currentPage,
                               ),
-                            ),
-                          ),
-                          DottedIndicatorWidget(currentPage: value.currentPage,),
-                          GestureDetector(
-                            child: Container(
-                              alignment: Alignment.topRight,
-                              child: CustomTextWidget(
-                                'Next',
-                                isDynamic: false,
-                                width: ScreenUtils.getDesignWidth(30),
-                                height: ScreenUtils.getDesignHeight(18),
-                                style: TextStyle(fontFamily: CircularBook , fontWeight: FontWeight.w700 , fontSize: 14 , foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,),
+                              GestureDetector(
+                                onTap: () => Provider.of<MainOnboardingModel>(
+                                        context,
+                                        listen: false)
+                                    .nextPage(),
+                                child: Container(
+                                  alignment: Alignment.topRight,
+                                  child: CustomTextWidget(
+                                    'Next',
+                                    isDynamic: false,
+                                    width: ScreenUtils.getDesignWidth(30),
+                                    height: ScreenUtils.getDesignHeight(18),
+                                    style: TextStyle(
+                                      fontFamily: CircularBook,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                      foreground: Paint()
+                                        ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                )
-              ],
-            ),
+                  )
+                ],
+              );
+            }),
             GestureDetector(
-              onTap: () => locator<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE , args: SearchType.SETUP_PURCHASES),
+              onTap: () => locator<NavigationService>().pushNamed(
+                  SETUP_PURCHASE_ACCOUNT_ROUTE,
+                  args: SearchType.SETUP_PURCHASES),
               child: Container(
                 alignment: Alignment.topRight,
-                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40) , right: 24),
+                margin: EdgeInsets.only(
+                    top: ScreenUtils.getDesignHeight(40), right: 24),
                 child: CustomTextWidget(
                   'Skip',
                   isDynamic: false,
                   width: ScreenUtils.getDesignWidth(30),
                   height: ScreenUtils.getDesignHeight(18),
-                  style: TextStyle(fontFamily: CircularBook , fontWeight: FontWeight.w700, color: Colors.white , fontSize: 14),
+                  style: TextStyle(
+                      fontFamily: CircularBook,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white,
+                      fontSize: 14),
                 ),
               ),
             ),
@@ -104,7 +160,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
     );
   }
 
-  Widget _onboarding(String image , String title , String description){
+  Widget _onboarding(String image, String title, String description) {
     return Container(
       child: Stack(
         children: [
@@ -119,16 +175,25 @@ class _MainOnboardingState extends State<MainOnboarding> {
                   isDynamic: false,
                   width: ScreenUtils.getDesignWidth(178),
                   height: ScreenUtils.getDesignHeight(27),
-                  style: TextStyle(fontFamily: Neusa , fontWeight: FontWeight.bold , color: Colors.white , fontSize: 16),
+                  style: TextStyle(
+                      fontFamily: Neusa,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 16),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20) , left: 24 , right: 24),
+                margin: EdgeInsets.only(
+                    top: ScreenUtils.getDesignHeight(20), left: 24, right: 24),
                 child: CustomTextWidget(
                   description,
                   isDynamic: false,
                   width: ScreenUtils.bodyWidth,
-                  style: TextStyle(fontSize: 14 , color: SUB_TEXT_COLOR , fontFamily: CircularBook , fontWeight: FontWeight.w500),
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: SUB_TEXT_COLOR,
+                      fontFamily: CircularBook,
+                      fontWeight: FontWeight.w500),
                   align: TextAlign.center,
                 ),
               ),

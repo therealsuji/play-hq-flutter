@@ -106,7 +106,7 @@ class ISetupSalesModel extends SetupSalesViewModel {
 
       await _setupSalesAPI.setProfileDetails(_setupSalesModel);
 
-      locator<NavigationService>().pushNamed(MAIN_SCREEN);
+      locator<NavigationService>().pushReplacement(MAIN_SCREEN);
 
       _eventBus.fire(LoadingEvent.hide());
     } catch (e) {
