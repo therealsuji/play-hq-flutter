@@ -16,9 +16,9 @@ class IAuthenticationModel extends AuthenticationModel {
     locator<EventBus>().fire(LoadingEvent.hide());
 
     if (isSetupDone == true) {
-      locator<NavigationService>().pushNamed(MAIN_SCREEN);
+      locator<NavigationService>().pushReplacement(MAIN_SCREEN);
     } else if (isSetupDone == false) {
-      locator<NavigationService>().pushNamed(MAIN_ONBOARDING);
+      locator<NavigationService>().pushReplacement(MAIN_ONBOARDING);
     } else {
       // TODO: show error
     }

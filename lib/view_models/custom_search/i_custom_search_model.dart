@@ -113,6 +113,7 @@ class ICustomSearchModel extends CustomSearchModel{
         genreID.add(element.id);
       });
     }
+
     GameModel gameItem = GameModel(
         title: gameDetails.name,
         releaseDate: gameDetails.released,

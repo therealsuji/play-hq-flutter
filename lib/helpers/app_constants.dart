@@ -143,9 +143,9 @@ const List<Map<String, dynamic>> popularConsoles = [
 ];
 
 const List<Map<String, dynamic>> releaseDates = [
-  {'start': '2015-01-01','end':'2016-12-31', 'name': '2015-2017'},
-  {'start': '2017-01-01', 'end':'2018-12-31','name': '2017-2019'},
-  {'start': '2019-01-01', 'end':'2021-10-31', 'name': '2019-Present'},
+  {'start': '2016-01-01','end':'2018-12-31', 'name': '2015-2017'},
+  {'start': '2018-01-01', 'end':'2020-12-31','name': '2018-2020'},
+  {'start': '2021-01-01', 'end':'2024-10-31', 'name': '2021-Present'},
   {'start': '2000-01-01', 'end':'2014-12-31' , 'name': 'Old Classics'}
 ];
 

@@ -25,6 +25,7 @@ import 'package:skeletons/skeletons.dart';
 import '../../helpers/app_strings.dart';
 import '../../service_locator.dart';
 import '../../services/nav_service.dart';
+import '../../widgets/bottomSheets/platform_sheet.dart';
 import '../../widgets/horizontal_scroll_widget.dart';
 
 class GameDetailsScreen extends StatefulWidget {
@@ -293,7 +294,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                               .headline3!
                               .copyWith(
                                 color: SUB_TEXT_COLOR,
-                                fontSize: 12.0,
+                                fontSize: 13.0,
                               ),
                         );
                       },
@@ -345,9 +346,9 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
     if (status.gameLibrary) {
       return CustomButton(
         buttonText: "Remove from Library",
-        buttonColor: Colors.red,
+        buttonColor: Color(0xffe63946),
         height: ScreenUtils.getDesignHeight(40.0),
-        textFontSize: 10.0,
+        textFontSize: 12.0,
         width: double.infinity,
         onPressed: () {
           showAlertDialog(context, "Are you sure?",
@@ -360,9 +361,9 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
     } else if (status.wishList) {
       return CustomButton(
         buttonText: "Remove from Wishlist",
-        buttonColor: Colors.red,
+        buttonColor: Color(0xffe63946),
         height: ScreenUtils.getDesignHeight(40.0),
-        textFontSize: 10.0,
+        textFontSize: 12.0,
         width: double.infinity,
         onPressed: () {
           showAlertDialog(context, "Are you sure?",
@@ -632,7 +633,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               top: ScreenUtils.getDesignHeight(8.0),
             ),
             child: Text(name ?? "",
-                style: Theme.of(context).primaryTextTheme.subtitle1),
+                style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(fontSize: 12)),
           ),
         ],
       ),
@@ -667,7 +668,6 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
 
   _showPlatformBottomSheet({VoidCallback? onPressed}) async {
     final model = Provider.of<GameDetailsModel>(context, listen: false);
-
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -680,73 +680,12 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           child: ChangeNotifierProvider.value(
             value: model,
             builder: (BuildContext context, _) {
-              return _platformBottomSheet(
-                model.gameDetails.platforms ?? [],
-                onPressed,
+              return PlatformBottomSheet(bottomSheetType: PlatformBottomSheetType.GAME_DETAIL_ADD,onPressed: onPressed , platformList: model.gameDetails.platforms ?? [],
               );
             },
           ),
         );
       },
-    );
-  }
-
-  Widget _platformBottomSheet(
-      List<RawgPlatformModel> platformList, VoidCallback? onPressed) {
-    return Container(
-      margin: EdgeInsets.only(
-          top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: Text("Select your Console",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline5
-                    ?.copyWith(fontSize: 16)),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
-            child: GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                mainAxisSpacing: 15.0,
-                crossAxisSpacing: 15.0,
-                mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
-              ),
-              itemCount: platformList.length,
-              itemBuilder: (BuildContext context, index) {
-                return GestureDetector(
-                  child: Consumer<GameDetailsModel>(
-                    builder: (_, model, __) {
-                      return CustomSelectingWidget(
-                        titleText: platformList[index].name,
-                        active:
-                            model.selectedPlatformId == platformList[index].id,
-                      );
-                    },
-                  ),
-                  onTap: () =>
-                      Provider.of<GameDetailsModel>(context, listen: false)
-                          .selectedPlatform(platformList[index].id!),
-                );
-              },
-            ),
-          ),
-          Spacer(),
-          Container(
-            margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(40)),
-            child: CustomButton(
-              buttonText: 'Confirm',
-              gradient: GREEN_GRADIENT,
-              onPressed: onPressed,
-            ),
-          ),
-        ],
-      ),
     );
   }
 

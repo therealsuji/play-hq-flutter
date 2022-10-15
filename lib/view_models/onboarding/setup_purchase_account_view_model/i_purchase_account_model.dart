@@ -41,7 +41,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
       _selectedGenres.remove(index);
       _genreList.remove(genre['id'].toString());
     }else{
-      if(_selectedGenres.length >= 5){
+      if(_selectedGenres.length >= 3){
         return;
       }else{
         _selectedGenres.add(index);

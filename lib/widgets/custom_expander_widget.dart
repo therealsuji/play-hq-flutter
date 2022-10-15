@@ -19,20 +19,20 @@ class CustomExpanderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: ScreenUtils.bodyWidth,
-      height: height,
-      decoration: BoxDecoration(
-        color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
-      ),
-      margin: EdgeInsets.only(top: 35.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(top: 20.0 , left: 24.0 , right: 24.0 , bottom: state! ? 0.0 : 24.0),
-            child: GestureDetector(
-              onTap: onTap,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: ScreenUtils.bodyWidth,
+        height: height,
+        decoration: BoxDecoration(
+          color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
+        ),
+        margin: EdgeInsets.only(top: 35.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(top: 20.0 , left: 24.0 , right: 24.0 , bottom: state! ? 0.0 : 24.0),
               child: Row(
                 children: [
                   CustomTextWidget(titleText!, style: Theme.of(context).primaryTextTheme.headline3, width: textWidth,isDynamic: false,),
@@ -58,18 +58,18 @@ class CustomExpanderWidget extends StatelessWidget {
                 ],
               ),
             ),
-          ),
-          Visibility(
-            maintainSize: state!,
-            maintainState: state!,
-            visible: state!,
-            maintainAnimation: state!,
-            child: Padding(
-              padding: EdgeInsets.only(top: 15.0, left: 24.0 , right: 24.0 , bottom: 20.0),
-              child: widget,
-            ),
-          )
-        ],
+            Visibility(
+              maintainSize: state!,
+              maintainState: state!,
+              visible: state!,
+              maintainAnimation: state!,
+              child: Padding(
+                padding: EdgeInsets.only(top: 15.0, left: 24.0 , right: 24.0 , bottom: 20.0),
+                child: widget,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

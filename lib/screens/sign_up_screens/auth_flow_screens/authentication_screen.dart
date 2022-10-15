@@ -115,7 +115,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                         Container(
                           margin: EdgeInsets.only(bottom: ScreenUtils.getDesignHeight(35)),
                           child: CustomButton(
-                            onPressed: () => locator<NavigationService>().pushNamed(MAIN_SCREEN),
+                            onPressed: () => locator<NavigationService>().pushReplacement(MAIN_SCREEN),
                             buttonText: 'I want to Explore',gradient: PRIMARY_GRADIENT,),
                         )
                       ],

@@ -39,7 +39,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
             margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(100), left: 24, right: 24),
             child: CustomButton(
                 gradient: PRIMARY_GRADIENT,
-                buttonText: 'Setup Sales',
+                buttonText: 'Add Details',
                 onPressed: () =>
                     Provider.of<SetupPurchaseAccountModel>(context, listen: false).performAPIRequest()))
       ),
@@ -95,7 +95,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
                     titleText: 'Genre',
                     selectedText: value.genreCount == null || value.genreCount == 0
                         ? 'None Selected'
-                        : value.genreCount == 5
+                        : value.genreCount == 3
                             ? 'Max Selected'
                             : value.genreCount.toString() + ' Selected',
                     widget: _genreListWidget(),
@@ -258,6 +258,7 @@ class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen>
               onTap: () => Provider.of<SetupPurchaseAccountModel>(context, listen: false)
                   .addSelectedGenres(index, genreList[index]),
               child: Consumer<SetupPurchaseAccountModel>(builder: (_, val, __) {
+                print("Image Url ${genreList[index]['image_background']}");
                 return SelectItem(
                   isSelected: val.selectedGenres.contains(index),
                   titleText: genreList[index]['name'],

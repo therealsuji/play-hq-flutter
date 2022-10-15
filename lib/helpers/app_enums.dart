@@ -10,6 +10,8 @@ enum SearchType { MAIN_SEARCH, SETUP_PURCHASES, SETUP_SALES, CREATE_SALE }
 
 enum GameType { WISHLIST, LIBRARY }
 
+enum PlatformBottomSheetType {ADD_TO_LIBRARY , ADD_TO_WISHLIST , GAME_DETAIL_ADD}
+
 enum UserType { BUYER, SELLER }
 
 enum NotificationType { Information, Success, Failure, Warning }
