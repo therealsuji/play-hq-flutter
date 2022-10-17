@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:hive/hive.dart';
 import 'package:play_hq/models/common_models/genres_model.dart';
+import 'package:play_hq/models/common_models/rawg_platform_model.dart';
 
 part 'app_search_game_model.g.dart';
 
@@ -30,7 +31,7 @@ class GameDetails {
 
   int? id;
 
-  List<PlatformElement>? platforms;
+  List<RawgPlatformModel>? platforms;
 
   List<Genres>? genres;
 
@@ -41,7 +42,7 @@ class GameDetails {
     id = json['id'] == null ? null : json['id'];
     platforms = json['platforms'] == null
         ? []
-        : List<PlatformElement>.from(json["platforms"].map((x) => PlatformElement.fromJson(x)));
+        : List<RawgPlatformModel>.from(json["platforms"].map((x) => RawgPlatformModel.fromJson(x)));
     genres = json['genres'] == null ? [] : List<Genres>.from(json["genres"].map((x) => Genres.fromJson(x)));
   }
 

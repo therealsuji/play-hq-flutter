@@ -5,13 +5,10 @@ import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
-import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
-import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/view_models/view_models.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_loading_barrier_widget.dart';
@@ -21,6 +18,7 @@ import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../service_locator.dart';
+import '../../../widgets/bottomSheets/platform_sheet.dart';
 
 class ClickedSearch extends StatefulWidget {
   final SearchType? values;
@@ -32,8 +30,12 @@ class ClickedSearch extends StatefulWidget {
 }
 
 class _ClickedSearchState extends State<ClickedSearch> {
+
   @override
   Widget build(BuildContext context) {
+
+    final model = Provider.of<CustomSearchModel>(context, listen: false);
+
     return Container(
       margin: EdgeInsets.only(
           top: ScreenUtils.getDesignHeight(40), left: 24, right: 24),
@@ -65,12 +67,12 @@ class _ClickedSearchState extends State<ClickedSearch> {
                             onTap: () {
                               switch (widget.values) {
                                 case SearchType.CREATE_SALE:
-                                  showModalBottomSheet(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return _platformBottomSheet(
-                                            index, false);
-                                      });
+                                  // showModalBottomSheet(
+                                  //     context: context,
+                                  //     builder: (BuildContext context) {
+                                  //       return _platformBottomSheet(
+                                  //           index, false);
+                                  //     });
                                   break;
                                 case SearchType.MAIN_SEARCH:
                                   locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN , args: GameDetailsArguments(gameId: val.gameList[index].id));
@@ -79,16 +81,34 @@ class _ClickedSearchState extends State<ClickedSearch> {
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return _platformBottomSheet(
-                                            index, true);
+                                        return Container(
+                                            height: ScreenUtils.getDesignHeight(340),
+                                            decoration: BoxDecoration(
+                                                color: POP_UP_CONTAINER_COLOR,
+                                                borderRadius: BorderRadius.circular(15.0)),
+                                            child: ChangeNotifierProvider.value(
+                                                value: model,
+                                                child: PlatformBottomSheet(bottomSheetType: PlatformBottomSheetType.SETUP_WISHLIST_GAMES, onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  model.addGameToList(index);
+                                                }, platformList: val.gameList[index].platforms)));
                                       });
                                   break;
                                 case SearchType.SETUP_SALES:
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return _platformBottomSheet(
-                                            index, true);
+                                        return Container(
+                                            height: ScreenUtils.getDesignHeight(340),
+                                            decoration: BoxDecoration(
+                                                color: POP_UP_CONTAINER_COLOR,
+                                                borderRadius: BorderRadius.circular(15.0)),
+                                            child: ChangeNotifierProvider.value(
+                                                value: model,
+                                                child: PlatformBottomSheet(bottomSheetType: PlatformBottomSheetType.SETUP_LIBRARY_GAMES, onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  model.addGameToList(index);
+                                                }, platformList: val.gameList[index].platforms)));
                                       });
                                   break;
                                 default:
@@ -119,136 +139,6 @@ class _ClickedSearchState extends State<ClickedSearch> {
         ],
       ),
     );
-  }
-
-  Widget _platformBottomSheet(int index, bool isPLatform) {
-    return ChangeNotifierProvider.value(
-      value: Provider.of<CustomSearchModel>(context),
-      child: Consumer<CustomSearchModel>(
-        builder: (_, val, __) {
-          return Container(
-            width: ScreenUtils.bodyWidth,
-            height: ScreenUtils.getDesignHeight(300),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
-              color: POPUP_COLOR,
-            ),
-            child: Container(
-              margin: EdgeInsets.only(
-                  top: ScreenUtils.getDesignHeight(30),
-                  left: ScreenUtils.getDesignWidth(24),
-                  right: ScreenUtils.getDesignWidth(24)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomTextWidget(
-                    'Select Platform',
-                    isDynamic: false,
-                    width: ScreenUtils.getDesignWidth(100),
-                    style: Theme.of(context).primaryTextTheme.headline3,
-                  ),
-                  Container(
-                      margin:
-                          EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
-                      child: GridView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        padding: EdgeInsets.all(0.0),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,
-                          mainAxisSpacing: 15.0,
-                          crossAxisSpacing: 15.0,
-                          mainAxisExtent: ScreenUtils.getDesignHeight(45.0),
-                        ),
-                        itemCount: isPLatform
-                            ? platforms.length
-                            : game_conditions.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                              onTap: () {
-                                isPLatform
-                                    ? Provider.of<CustomSearchModel>(context,
-                                            listen: false).addPlatform(
-                                            platforms.indexOf(platforms[index]),
-                                            platforms[index]['id'])
-                                    : Provider.of<CustomSearchModel>(context,
-                                            listen: false)
-                                        .addGameCondition(
-                                            game_conditions.indexOf(
-                                                game_conditions[index]),
-                                            game_conditions[index]
-                                                ['API_Slug']!);
-                              },
-                              child: CustomSelectingWidget(
-                                titleText: isPLatform
-                                    ? platforms[index]['name']
-                                    : game_conditions[index]['name'],
-                                active: isPLatform
-                                    ? platforms.indexOf(platforms[index]) ==
-                                            val.selectedPlatform
-                                        ? true
-                                        : false
-                                    : game_conditions.indexOf(
-                                                game_conditions[index]) ==
-                                            val.selectedGameCondition
-                                        ? true
-                                        : false,
-                              ));
-                        },
-                      )),
-                  Container(
-                      margin:
-                          EdgeInsets.only(top: ScreenUtils.getDesignHeight(30)),
-                      child: Consumer<CustomSearchModel>(
-                        builder: (_, val, __) {
-                          return CustomButton(
-                            buttonText: 'Confirm Game',
-                            gradient: GREEN_GRADIENT,
-                            onPressed: () {
-                              Navigator.pop(context);
-                              if(widget.values == SearchType.CREATE_SALE){
-                                Provider.of<CustomSearchModel>(context, listen: false).addGameToSale(index);
-                              }else{
-                                Provider.of<CustomSearchModel>(context, listen: false).addGameToList(index);
-                              }
-                              // GamePreferances game = val.gameDetails;
-                              // isPLatform ? widget.values == SearchType.SETUP_PURCHASES ? Navigator.pushNamed(context, SETUP_PURCHASE_ACCOUNT_ROUTE) : Navigator.pushNamed(context, SETUP_SALES_ACCOUNT_ROUTE) : Navigator.pushNamed(context, CREATE_SALE_ROUTE , arguments: game);
-                            },
-                          );
-                        },
-                      ))
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  GameModel addGamesToModel(GameDetails gameDetails) {
-    List<int>? platformID = [];
-    List<int>? genreID = [];
-    gameDetails.platforms!.length > 0
-        ? gameDetails.platforms!.forEach((element) {
-            platformID!.add(element.platform!.id!);
-          })
-        : platformID = [];
-    gameDetails.genres!.length > 0
-        ? gameDetails.genres!.forEach((element) {
-            platformID!.add(element.id);
-          })
-        : genreID = [];
-    GameModel gameItem = GameModel(
-        title: gameDetails.name,
-        releaseDate: gameDetails.released,
-        apiId: gameDetails.id,
-        boxCover: gameDetails.image,
-        genres: genreID,
-        backgroundImage: gameDetails.image,
-        platforms: platformID);
-    return gameItem;
   }
 
   Widget _customSearchTextfield(bool active) {

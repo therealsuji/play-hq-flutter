@@ -7,7 +7,6 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/screens/create_sale/widgets/update_game_widget.dart';

@@ -12,7 +12,6 @@ import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/user/user_preferences.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 import 'package:play_hq/repository/clients/setup_sales_repository.dart';

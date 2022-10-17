@@ -384,8 +384,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed:
-                      Provider.of<GameDetailsModel>(context, listen: false)
+                  onPressed: Provider.of<GameDetailsModel>(context, listen: false)
                           .addToWishList,
                 );
               },

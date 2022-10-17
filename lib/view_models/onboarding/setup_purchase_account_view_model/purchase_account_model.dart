@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 
 
@@ -13,6 +12,10 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
   bool get currentPlatFormState;
 
   void changePlatformState(bool state);
+
+  void selectPlatform(int platformId);
+
+  int get platformId;
 
   bool get currentReleaseDateState;
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
 

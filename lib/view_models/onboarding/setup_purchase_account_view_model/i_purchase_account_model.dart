@@ -6,7 +6,6 @@ import 'package:play_hq/models/common_models/game_preferences/request_body.dart'
 import 'package:play_hq/models/common_models/release_date_model.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/repository/clients/setup_purchase_repository.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/onboarding/setup_purchase_account_view_model/purchase_account_model.dart';
@@ -31,6 +30,8 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
   List<int> _selectedPlatforms = [];
   List<int> _selectedReleaseDates = [];
   List<GamePreferencesRequest> _selectedGames = [];
+
+  int _platformId = 0;
 
   final _setupPurchasesAPI = locator<SetupPurchaseRepository>();
   final _eventBus = locator<EventBus>();
@@ -165,4 +166,13 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel{
     }
     notifyListeners();
   }
+
+  @override
+  void selectPlatform(int platformId) {
+    _platformId = platformId;
+    notifyListeners();
+  }
+
+  @override
+  int get platformId => _platformId;
 }

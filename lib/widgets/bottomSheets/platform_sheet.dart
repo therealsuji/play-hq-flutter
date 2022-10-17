@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/view_models/view_models.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/app_enums.dart';
@@ -19,6 +20,9 @@ class PlatformBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final model = Provider.of<CustomSearchModel>(context , listen: false);
+
     return Container(
       margin: EdgeInsets.only(
           top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
@@ -46,24 +50,46 @@ class PlatformBottomSheet extends StatelessWidget {
               itemCount: platformList!.length,
               itemBuilder: (BuildContext context, index) {
                 switch (bottomSheetType){
-                  case PlatformBottomSheetType.ADD_TO_WISHLIST:
-                    return Container();
-                  case PlatformBottomSheetType.ADD_TO_LIBRARY:
-                    return Container();
+                  case PlatformBottomSheetType.SETUP_WISHLIST_GAMES:
+                    return GestureDetector(
+                      child: Consumer<CustomSearchModel>(
+                        builder: (_, model, __) {
+                          return CustomSelectingWidget(
+                            titleText: platformList![index].name,
+                            active: model.selectedPlatformId == platformList![index].id,
+                          );
+                        },
+                      ),
+                      onTap: () =>
+                          Provider.of<CustomSearchModel>(context, listen: false)
+                              .addPlatform(index , platformList![index].id ?? 0),
+                    );
+                  case PlatformBottomSheetType.SETUP_LIBRARY_GAMES:
+                    return GestureDetector(
+                      child: Consumer<CustomSearchModel>(
+                        builder: (_, model, __) {
+                          return CustomSelectingWidget(
+                            titleText: platformList![index].name,
+                            active: model.selectedPlatformId == platformList![index].id,
+                          );
+                        },
+                      ),
+                      onTap: () =>
+                          Provider.of<CustomSearchModel>(context, listen: false)
+                              .addPlatform(index , platformList![index].id ?? 0),
+                    );
                   case PlatformBottomSheetType.GAME_DETAIL_ADD:
                     return GestureDetector(
                       child: Consumer<GameDetailsModel>(
                         builder: (_, model, __) {
                           return CustomSelectingWidget(
                             titleText: platformList![index].name,
-                            active:
-                            model.selectedPlatformId == platformList![index].id,
+                            active: model.selectedPlatformId == platformList![index].id,
                           );
                         },
                       ),
                       onTap: () =>
-                          Provider.of<GameDetailsModel>(context, listen: false)
-                              .selectedPlatform(platformList![index].id!),
+                          model.addPlatform(index, platformList![index].id ?? 0),
                     );
                   default:
                     return Container(child: Text('Error'),);

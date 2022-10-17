@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferance_models.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 import 'package:play_hq/models/search_model/app_search_game_model.dart';
@@ -102,8 +101,8 @@ class ICustomSearchModel extends CustomSearchModel{
     if(gameDetails.platforms != null){
       gameDetails.platforms!.forEach((element) {
         platforms.forEach((platform) {
-          if(element.platform!.id == platform['id']){
-            platformID.add(element.platform!.id ?? 0);          }
+          if(element.id == platform['id']){
+            platformID.add(element.id ?? 0);          }
         });
       });
     }
