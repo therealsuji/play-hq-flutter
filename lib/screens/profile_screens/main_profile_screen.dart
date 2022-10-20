@@ -39,9 +39,7 @@ class _MainProfileScreenState extends State<MainProfileScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    // TODO: Pass the user details to the settings screen
-                    onTap: () => Navigator.pushNamed(context, SETTINGS_SCREEN,
-                        arguments: context.read<MainProfileModel>().userDetails),
+                    onTap: () => Navigator.pushNamed(context, SETTINGS_SCREEN),
                     child: Container(
                       child: SvgPicture.asset('assets/icons/settings.svg'),
                     ),
