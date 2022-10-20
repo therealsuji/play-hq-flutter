@@ -1,27 +1,21 @@
-import 'dart:convert';
-
 import 'package:event_bus/event_bus.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:hive/hive.dart';
-import 'package:places_service/places_service.dart';
-import 'package:play_hq/helpers/app_save_locally.dart';
-import 'package:play_hq/helpers/app_secure_storage.dart';
-import 'package:play_hq/models/app_user_model.dart';
-import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
-import 'package:play_hq/models/common_models/location_model.dart';
-import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/user/user_details.dart';
-import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/models/common_models/user/user_preferences.dart';
-import 'package:play_hq/models/search_model/app_search_game_model.dart';
-import 'package:play_hq/repository/clients/setup_sales_repository.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/services/auth_service.dart';
-import 'package:play_hq/services/nav_service.dart';
 import 'package:geocoding/geocoding.dart';
-import 'package:play_hq/view_models/onboarding/setup_sales_account_view_model/sales-account-model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:places_service/places_service.dart';
+
+import '../../../helpers/app_save_locally.dart';
+import '../../../helpers/app_secure_storage.dart';
+import '../../../helpers/app_strings.dart';
+import '../../../models/common_models/game_preferences/request_body.dart';
+import '../../../models/common_models/location_model.dart';
+import '../../../models/common_models/user/user_details.dart';
+import '../../../models/common_models/user/user_preferences.dart';
+import '../../../models/loading_event_model.dart';
+import '../../../repository/clients/setup_sales_repository.dart';
+import '../../../service_locator.dart';
+import '../../../services/auth_service.dart';
+import '../../../services/nav_service.dart';
+import 'sales-account-model.dart';
 
 class ISetupSalesModel extends SetupSalesViewModel {
   late var box;
@@ -60,14 +54,14 @@ class ISetupSalesModel extends SetupSalesViewModel {
 
   @override
   Future<void> selectedMapLocation(LatLng tappedPoint) async {
-    var addresses =
-        await GeocodingPlatform.instance.placemarkFromCoordinates(tappedPoint.latitude, tappedPoint.longitude);
+    var addresses = await GeocodingPlatform.instance
+        .placemarkFromCoordinates(tappedPoint.latitude, tappedPoint.longitude);
     _selectedAddress = addresses[0].street.toString();
     _selectedLatitude = tappedPoint.latitude;
     _selectedLongitude = tappedPoint.longitude;
 
-    LocationModel location =
-        new LocationModel(address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
+    LocationModel location = new LocationModel(
+        address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
 
     print('This is the location address ${location.address}');
 
@@ -98,8 +92,7 @@ class ISetupSalesModel extends SetupSalesViewModel {
       UserPreferencesModel _setupSalesModel = UserPreferencesModel(
         phoneNumber: _mobileNumber,
         displayName: _displayName,
-        firstName: userDetails.firstName,
-        lastName: userDetails.lastName,
+        name: userDetails.name,
         location: locationModel,
       );
 

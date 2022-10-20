@@ -9,7 +9,7 @@ class IMainProfileModel extends MainProfileModel {
 
   List<Data> _wishlistGames = [];
   List<Data> _libraryGames = [];
-  late UserDetails _userDetails = UserDetails(displayName: "", firstName: "", lastName: "", avatar: "");
+  late UserDetails _userDetails = UserDetails(displayName: "", name: "", avatar: "");
   ProfilePageViewTab _pageViewTab = ProfilePageViewTab.WISHLIST_TAB;
 
   @override
@@ -43,7 +43,6 @@ class IMainProfileModel extends MainProfileModel {
   List<Data> get libraryGames => _libraryGames;
 
   @override
-  // TODO: implement userDetails
   UserDetails get userDetails => _userDetails;
 
   @override

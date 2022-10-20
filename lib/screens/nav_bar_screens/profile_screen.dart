@@ -60,7 +60,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Stack(
                               children: [
                                 GestureDetector(
-                                  onTap: () => locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
+                                  onTap: () =>
+                                      locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
                                   child: Container(child: SvgPicture.asset(NOTIFICATION_ICON)),
                                 ),
                                 Positioned(
@@ -69,7 +70,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   child: Container(
                                     height: 11,
                                     width: 11,
-                                    decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
+                                    decoration:
+                                        BoxDecoration(shape: BoxShape.circle, color: Colors.green),
                                   ),
                                 )
                               ],
@@ -84,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             profileDetails.userDetails.avatar == ""
                                 ? "https://i.stack.imgur.com/y9DpT.jpg"
                                 : profileDetails.userDetails.avatar!,
-                            profileDetails.userDetails.firstName! + ' ' + profileDetails.userDetails.lastName!,
+                            profileDetails.userDetails.name!,
                             profileDetails.userDetails.displayName!);
                       },
                     ),
@@ -123,7 +125,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     tabs: ['Wishlist Games', 'Library Games'],
                     activeTab: val.currentPageViewTab.index,
                     controller: pageViewController,
-                    onTap: (index) => {val.currentPageViewTab = ProfilePageViewTab.values.elementAt(index)},
+                    onTap: (index) =>
+                        {val.currentPageViewTab = ProfilePageViewTab.values.elementAt(index)},
                   ),
                 );
               },
@@ -136,9 +139,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: PageView(
                     physics: ScrollPhysics(),
                     controller: pageViewController,
-                    onPageChanged: (index) => Provider.of<MainProfileModel>(context, listen: false).currentPageViewTab =
-                        ProfilePageViewTab.values.elementAt(index),
-                    children: [pageViewChild(value.wishlistGames), pageViewChild(value.libraryGames)],
+                    onPageChanged: (index) => Provider.of<MainProfileModel>(context, listen: false)
+                        .currentPageViewTab = ProfilePageViewTab.values.elementAt(index),
+                    children: [
+                      pageViewChild(value.wishlistGames),
+                      pageViewChild(value.libraryGames)
+                    ],
                   ),
                 );
               },

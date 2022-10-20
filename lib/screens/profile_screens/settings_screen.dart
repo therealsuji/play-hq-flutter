@@ -9,9 +9,10 @@ import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/custom_textfield_widget.dart';
 import 'package:provider/provider.dart';
 
-
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _SettingsScreenState createState() => _SettingsScreenState();
@@ -24,18 +25,27 @@ class _SettingsScreenState extends State<SettingsScreen> {
       backgroundColor: BACKGROUND_COLOR,
       body: SafeArea(
         child: Consumer<SettingsViewModel>(
-          builder: (_ , val , __){
+          builder: (_, val, __) {
             return Container(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: 24, right: 24),
+                      margin: EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                      ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(Icons.arrow_back_ios_rounded, color: Colors.white),
+                          GestureDetector(
+                            child: Icon(
+                              Icons.arrow_back_ios_rounded,
+                              color: Colors.white,
+                            ),
+                            onTap: (() => Navigator.pop(context)),
+                          ),
                           Container(
                             margin: EdgeInsets.only(left: 15, top: 5),
                             child: CustomTextWidget(
@@ -49,52 +59,94 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40)),
+                      margin: EdgeInsets.only(
+                        top: ScreenUtils.getDesignHeight(40),
+                      ),
                       height: ScreenUtils.getDesignHeight(90),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         border: Border.all(color: Colors.white, width: 2),
                         image: DecorationImage(
                           image: NetworkImage(
-                              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEZrATmgHOi5ls0YCCQBTkocia_atSw0X-Q&usqp=CAU'),
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQEZrATmgHOi5ls0YCCQBTkocia_atSw0X-Q&usqp=CAU',
+                          ),
                         ),
                       ),
                     ),
-                    _profileDetails('Your Name', 'Damsara Perera',
-                        Icons.account_circle_outlined, 67),
                     _profileDetails(
-                        'Display Name', 'Damasu', Icons.account_circle_sharp, 85),
+                      title: 'Your Name',
+                      labelText: 'Damsara Perera',
+                      iconData: Icons.account_circle_outlined,
+                      width: 67,
+                    ),
                     _profileDetails(
-                        'Mobile Number', '0774147787', Icons.call_outlined, 95),
+                      title: 'Display Name',
+                      labelText: 'Damasu',
+                      iconData: Icons.account_circle_sharp,
+                      width: 85,
+                    ),
+                    _profileDetails(
+                      title: 'Mobile Number',
+                      labelText: '0774147787',
+                      iconData: Icons.call_outlined,
+                      width: 95,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                        top: 30,
+                      ),
+                      child: Row(
+                        children: [
+                          CustomButton(
+                            buttonText: 'Change Preferences',
+                            gradient: PRIMARY_GRADIENT,
+                            width: ScreenUtils.getDesignWidth(156.0),
+                          ),
+                          Spacer(),
+                          CustomButton(
+                            buttonText: 'Save Changes',
+                            gradient: PRIMARY_GRADIENT,
+                            width: ScreenUtils.getDesignWidth(156.0),
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(
-                        margin: EdgeInsets.only(left: 24, right: 24, top: 30),
-                        child: CustomButton(
-                          buttonText: 'Save Changes',
-                          gradient: PRIMARY_GRADIENT,
-                        )),
-                    Container(
-                        margin: EdgeInsets.only(left: 24, right: 24, top: 30),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: CustomTextWidget(
-                                'No Address',
-                                isDynamic: false,
-                                width: ScreenUtils.getDesignWidth(72),
-                                style: Theme.of(context).primaryTextTheme.headline3,
-                              ),
+                      margin: EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                        top: 30,
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(right: 10),
+                            child: CustomTextWidget(
+                              'No Address',
+                              isDynamic: false,
+                              width: ScreenUtils.getDesignWidth(72),
+                              style: Theme.of(context).primaryTextTheme.headline3,
                             ),
-                            Spacer(),
-                            Container(
-                                child: CustomSmallerButton(
-                                  buttonText: 'Add Address',
-                                  gradient: PRIMARY_GRADIENT,
-                                )),
-                          ],
-                        )),
+                          ),
+                          Spacer(),
+                          Container(
+                            child: CustomSmallerButton(
+                              buttonText: 'Add Address',
+                              gradient: PRIMARY_GRADIENT,
+                              textFontSize: 14.0,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                     Container(
-                      margin: EdgeInsets.only(left: 24, right: 24, top: 30),
+                      margin: EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                        top: 30,
+                      ),
                       width: double.infinity,
                       height: ScreenUtils.getDesignHeight(1.5),
                       decoration: BoxDecoration(
@@ -103,60 +155,83 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                     ),
                     _otherSettings(
-                        'Privacy',
-                        _settingsDetailsWidget('Hide my Profile', true, true, ''),
-                        48),
+                      'Privacy',
+                      _settingsDetailsWidget('Hide my Profile', true, true, ''),
+                      48,
+                    ),
                     _otherSettings(
-                        'Support',
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _settingsDetailsWidget('Rate Us', false, true, ''),
-                            _settingsDetailsWidget('Contact Us', false, true, ''),
-                          ],
-                        ),
-                        48),
+                      'Support',
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _settingsDetailsWidget('Rate Us', false, true, ''),
+                          _settingsDetailsWidget('Contact Us', false, true, ''),
+                        ],
+                      ),
+                      48,
+                    ),
                     _otherSettings(
-                        'Social Network',
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _settingsDetailsWidget('Facebook', false, false,
-                                'assets/icons/facebook.svg'),
-                            _settingsDetailsWidget('Instagram', false, false,
-                                'assets/icons/instagram.svg'),
-                          ],
-                        ),
-                        95),
-                    _otherSettings('Legal', Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _settingsDetailsWidget('Terms of Use', false, true,
-                            ''),
-                        _settingsDetailsWidget('Privacy Policy', false, true,
-                            ''),
-                        _settingsDetailsWidget('Subscription Terms', false, true,
-                            ''),
-                      ],
-                    ), 35),
+                      'Social Network',
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _settingsDetailsWidget(
+                              'Facebook', false, false, 'assets/icons/facebook.svg'),
+                          _settingsDetailsWidget(
+                              'Instagram', false, false, 'assets/icons/instagram.svg'),
+                        ],
+                      ),
+                      95,
+                    ),
+                    _otherSettings(
+                      'Legal',
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _settingsDetailsWidget('Terms of Use', false, true, ''),
+                          _settingsDetailsWidget('Privacy Policy', false, true, ''),
+                          _settingsDetailsWidget('Subscription Terms', false, true, ''),
+                        ],
+                      ),
+                      35,
+                    ),
                     Container(
-                        margin: EdgeInsets.only(left: 24, right: 24, top: 30),
-                        child: GestureDetector(
-                            child: CustomButton(buttonText: 'SIGN OUT' , isSignOut: true, buttonColor: MAIN_CONTAINER_COLOR.withOpacity(0.6), onPressed: () => val.logoutUser(),)))
+                      margin: EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                        top: 30,
+                      ),
+                      child: GestureDetector(
+                        child: CustomButton(
+                          buttonText: 'SIGN OUT',
+                          isSignOut: true,
+                          buttonColor: MAIN_CONTAINER_COLOR.withOpacity(0.6),
+                          onPressed: () => val.logoutUser(),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
             );
-        }
-        )
+          },
+        ),
       ),
     );
   }
 
-  Widget _profileDetails(
-      String title, String labelText, IconData iconData, double width) {
+  Widget _profileDetails({
+    required String title,
+    required String labelText,
+    required IconData iconData,
+    required double width,
+  }) {
     return Container(
-      margin: EdgeInsets.only(top: 30, left: 24, right: 24),
+      margin: EdgeInsets.only(
+        top: 30,
+        left: 24,
+        right: 24,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -182,17 +257,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-              margin: EdgeInsets.only(
-                  left: 24, top: ScreenUtils.getDesignHeight(30)),
-              child: CustomTextWidget(
-                title,
-                isDynamic: false,
-                width: ScreenUtils.getDesignWidth(width),
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline3
-                    ?.copyWith(color: SUB_TEXT_COLOR),
-              )),
+            margin: EdgeInsets.only(
+              left: 24,
+              top: ScreenUtils.getDesignHeight(30),
+            ),
+            child: CustomTextWidget(
+              title,
+              isDynamic: false,
+              width: ScreenUtils.getDesignWidth(width),
+              style: Theme.of(context).primaryTextTheme.headline3?.copyWith(
+                    color: SUB_TEXT_COLOR,
+                  ),
+            ),
+          ),
           child,
         ],
       ),

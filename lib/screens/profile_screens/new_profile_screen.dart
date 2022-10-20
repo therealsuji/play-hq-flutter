@@ -18,8 +18,7 @@ class TestingPage extends StatefulWidget {
   _TestingPageState createState() => _TestingPageState();
 }
 
-class _TestingPageState extends State<TestingPage>
-    with SingleTickerProviderStateMixin {
+class _TestingPageState extends State<TestingPage> with SingleTickerProviderStateMixin {
   var _scrollController, _tabController;
 
   @override
@@ -51,8 +50,7 @@ class _TestingPageState extends State<TestingPage>
                             Expanded(
                                 flex: 6,
                                 child: Container(
-                                  decoration:
-                                      BoxDecoration(gradient: PRIMARY_GRADIENT),
+                                  decoration: BoxDecoration(gradient: PRIMARY_GRADIENT),
                                 )),
                             Expanded(
                                 flex: 2,
@@ -62,38 +60,173 @@ class _TestingPageState extends State<TestingPage>
                           ],
                         ),
                       ),
-                      Consumer<MainProfileModel>(
-                        builder: (_, value , __) {
-                          return Container(
-                            margin: EdgeInsets.only(
-                                top: ScreenUtils.getDesignHeight(50)),
-                            child: Column(
-                              children: [
-                                Container(
+                      Consumer<MainProfileModel>(builder: (_, value, __) {
+                        return Container(
+                          margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(50)),
+                          child: Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.symmetric(horizontal: 24),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'User Profile',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                          fontFamily: Neusa,
+                                          color: Colors.white),
+                                    ),
+                                    Spacer(),
+                                    GestureDetector(
+                                        onTap: () =>
+                                            locator<NavigationService>().pushNamed(SETTINGS_SCREEN),
+                                        child: Container(child: SvgPicture.asset(SETTINGS_ICON))),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: Stack(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () => locator<NavigationService>()
+                                                .pushNamed(NOTIFICATION_SCREEN),
+                                            child: Container(
+                                                child: SvgPicture.asset(NOTIFICATION_ICON)),
+                                          ),
+                                          Positioned(
+                                            top: 2,
+                                            left: 0,
+                                            child: Container(
+                                              height: 11,
+                                              width: 11,
+                                              decoration: BoxDecoration(
+                                                  shape: BoxShape.circle, color: Colors.green),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: 30),
+                                height: ScreenUtils.getDesignHeight(100),
+                                decoration:
+                                    BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(15)),
+                                child: Text(
+                                  value.userDetails.name == null
+                                      ? 'Damsara Perera'
+                                      : '${value.userDetails.name}',
+                                  style: TextStyle(
+                                      fontSize: 22,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                              Container(
+                                child: Text(
+                                  '@${value.userDetails.displayName}',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.white.withOpacity(0.6),
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              Container(
+                                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
+                                child: Container(
+                                  width: ScreenUtils.bodyWidth,
+                                  height: ScreenUtils.getDesignHeight(80),
                                   margin: EdgeInsets.symmetric(horizontal: 24),
                                   child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text('User Profile' , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 24 , fontFamily: Neusa , color: Colors.white),),
-                                      Spacer(),
-                                      GestureDetector(
-                                          onTap: () => locator<NavigationService>().pushNamed(SETTINGS_SCREEN),
-                                          child: Container(child: SvgPicture.asset(SETTINGS_ICON))),
-                                      Padding(
-                                        padding: const EdgeInsets.only(left: 30),
-                                        child: Stack(
+                                      Container(
+                                        height: ScreenUtils.getDesignHeight(80),
+                                        width: ScreenUtils.getDesignWidth(100),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            color: MAIN_CONTAINER_COLOR),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            GestureDetector(
-                                              onTap: () => locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
-                                              child: Container(child: SvgPicture.asset(NOTIFICATION_ICON)),
+                                            Text(
+                                              '22',
+                                              style: TextStyle(
+                                                  fontSize: 26,
+                                                  fontFamily: Neusa,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
                                             ),
-                                            Positioned(
-                                              top: 2,
-                                              left: 0,
-                                              child: Container(
-                                                height: 11,
-                                                width: 11,
-                                                decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
-                                              ),
+                                            Text(
+                                              'Wishlist Games',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: CircularBook,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white.withOpacity(0.6)),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        height: ScreenUtils.getDesignHeight(80),
+                                        width: ScreenUtils.getDesignWidth(100),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            color: MAIN_CONTAINER_COLOR),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '08',
+                                              style: TextStyle(
+                                                  fontSize: 26,
+                                                  fontFamily: Neusa,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              'Gamer Friends',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: CircularBook,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white.withOpacity(0.6)),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        height: ScreenUtils.getDesignHeight(80),
+                                        width: ScreenUtils.getDesignWidth(100),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            color: MAIN_CONTAINER_COLOR),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '11',
+                                              style: TextStyle(
+                                                  fontSize: 26,
+                                                  fontFamily: Neusa,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white),
+                                            ),
+                                            Text(
+                                              'Library Games',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontFamily: CircularBook,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white.withOpacity(0.6)),
                                             )
                                           ],
                                         ),
@@ -101,100 +234,11 @@ class _TestingPageState extends State<TestingPage>
                                     ],
                                   ),
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 30),
-                                  height: ScreenUtils.getDesignHeight(100),
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle, color: Colors.white),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: ScreenUtils.getDesignHeight(15)),
-                                  child: Text(
-                                    value.userDetails.firstName == null ? 'Damsara Perera' : '${value.userDetails.firstName} ${value.userDetails.lastName}',
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700),
-                                  ),
-                                ),
-                                Container(
-                                  child: Text(
-                                    '@${value.userDetails.displayName}',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white.withOpacity(0.6),
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                                Container(
-                                  margin: EdgeInsets.only(
-                                      top: ScreenUtils.getDesignHeight(20)),
-                                  child: Container(
-                                    width: ScreenUtils.bodyWidth,
-                                    height: ScreenUtils.getDesignHeight(80),
-                                    margin: EdgeInsets.symmetric(horizontal: 24),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Container(
-                                          height: ScreenUtils.getDesignHeight(80),
-                                          width: ScreenUtils.getDesignWidth(100),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: MAIN_CONTAINER_COLOR),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text('22' , style: TextStyle(fontSize: 26 , fontFamily: Neusa , fontWeight: FontWeight.bold , color: Colors.white),),
-                                              Text('Wishlist Games' , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , fontWeight: FontWeight.bold , color: Colors.white.withOpacity(0.6)),)
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          height: ScreenUtils.getDesignHeight(80),
-                                          width: ScreenUtils.getDesignWidth(100),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: MAIN_CONTAINER_COLOR),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text('08' , style: TextStyle(fontSize: 26 , fontFamily: Neusa , fontWeight: FontWeight.bold , color: Colors.white),),
-                                              Text('Gamer Friends' , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , fontWeight: FontWeight.bold , color: Colors.white.withOpacity(0.6)),)
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          height: ScreenUtils.getDesignHeight(80),
-                                          width: ScreenUtils.getDesignWidth(100),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(5),
-                                              color: MAIN_CONTAINER_COLOR),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              Text('11' , style: TextStyle(fontSize: 26 , fontFamily: Neusa , fontWeight: FontWeight.bold , color: Colors.white),),
-                                              Text('Library Games' , style: TextStyle(fontSize: 12 , fontFamily: CircularBook , fontWeight: FontWeight.bold , color: Colors.white.withOpacity(0.6)),)
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }
-                      )
+                              )
+                            ],
+                          ),
+                        );
+                      })
                     ],
                   ),
                 ),
@@ -241,10 +285,7 @@ class _TestingPageState extends State<TestingPage>
               child: TabBarView(
                 physics: ScrollPhysics(),
                 controller: _tabController,
-                children: [
-                  pageViewChild(value.wishlistGames),
-                  pageViewChild(value.libraryGames)
-                ],
+                children: [pageViewChild(value.wishlistGames), pageViewChild(value.libraryGames)],
               ),
             );
           },

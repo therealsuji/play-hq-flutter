@@ -1,15 +1,15 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/sales/sales_payload_model.dart';
-import 'package:play_hq/view_models/sales/get_sales/fetch_sales_view_model.dart';
-import 'package:play_hq/widgets/custom_app_bar_widget.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../../helpers/app_colors.dart';
+import '../../../helpers/app_constants.dart';
+import '../../../helpers/app_screen_utils.dart';
+import '../../../helpers/app_strings.dart';
+import '../../../models/common_models/game_model.dart';
+import '../../../models/sales/sales_payload_model.dart';
+import '../../../view_models/sales/get_sales/fetch_sales_view_model.dart';
+import '../../../widgets/custom_app_bar_widget.dart';
+import '../../../widgets/custom_button_widget.dart';
 
 class MySalesScreen extends StatefulWidget {
   const MySalesScreen({Key? key}) : super(key: key);
@@ -44,8 +44,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 children: [
                   Container(
                     color: MAIN_CONTAINER_COLOR,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
+                    padding: EdgeInsets.symmetric(horizontal: 24.0, vertical: 20.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -61,14 +60,19 @@ class _MySalesScreenState extends State<MySalesScreen> {
                     width: ScreenUtils.bodyWidth,
                     margin: EdgeInsets.only(left: 24),
                     child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context , int index){
-                      return _gameForSaleWidget(salesPayload: val.fetchActiveSales[index]);
-                    }, separatorBuilder: (BuildContext context , int index){
-                      return SizedBox(
-                        width: ScreenUtils.getDesignWidth(15),
-                      );
-                    }, itemCount: val.fetchActiveSales.length),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _gameForSaleWidget(
+                          salesPayload: val.fetchActiveSales[index],
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          width: ScreenUtils.getDesignWidth(15),
+                        );
+                      },
+                      itemCount: val.fetchActiveSales.length,
+                    ),
                   ),
                 ],
               ),
@@ -88,23 +92,22 @@ class _MySalesScreenState extends State<MySalesScreen> {
         color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
         borderRadius: BorderRadius.circular(5),
       ),
-      margin: EdgeInsets.only( top: 20),
+      margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Container(
         width: ScreenUtils.bodyWidth,
         child: Column(
           children: [
             Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: salesPayload.gameList!.map((saleDetails) {
-              return _gameCard(
-                  saleDetails.game,
-                  game_conditions
-                      .where((element) =>
-                          element['API_Slug'] == saleDetails.status)
-                      .first['name']!);
-            }).toList()),
+                  return _gameCard(
+                      saleDetails.game,
+                      game_conditions
+                          .where((element) => element['API_Slug'] == saleDetails.status)
+                          .first['name']!);
+                }).toList()),
             Container(
               margin: EdgeInsets.symmetric(vertical: 20),
               height: 1.5,
@@ -118,10 +121,8 @@ class _MySalesScreenState extends State<MySalesScreen> {
               children: [
                 Text(
                   "Purchase Offers",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .headline4!
-                      .copyWith(color: PRIMARY_COLOR),
+                  style:
+                      Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
                 ),
                 Spacer(),
                 Text(
@@ -143,10 +144,8 @@ class _MySalesScreenState extends State<MySalesScreen> {
               children: [
                 Text(
                   "Platform",
-                  style: Theme.of(context)
-                      .primaryTextTheme
-                      .headline4!
-                      .copyWith(color: Colors.white),
+                  style:
+                      Theme.of(context).primaryTextTheme.headline4!.copyWith(color: Colors.white),
                 ),
                 Spacer(),
                 Text(
@@ -162,10 +161,8 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 children: [
                   Text(
                     "Total Price",
-                    style: Theme.of(context)
-                        .primaryTextTheme
-                        .headline4!
-                        .copyWith(color: Colors.white),
+                    style:
+                        Theme.of(context).primaryTextTheme.headline4!.copyWith(color: Colors.white),
                   ),
                   Spacer(),
                   Text(
@@ -188,7 +185,8 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    onTap: () => Provider.of<MySalesViewModel>(context , listen: false).deleteSale(salesPayload.saleId ?? ''),
+                    onTap: () => Provider.of<MySalesViewModel>(context, listen: false)
+                        .deleteSale(salesPayload.saleId ?? ''),
                     child: Container(
                       margin: EdgeInsets.only(right: 15),
                       child: Text(
@@ -203,8 +201,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                   CustomButton(
                     buttonText: 'View Details',
                     textFontSize: 12,
-                    onPressed: () => Navigator.pushNamed(
-                        context, MY_SALES_DETAILS_SCREEN,
+                    onPressed: () => Navigator.pushNamed(context, MY_SALES_DETAILS_SCREEN,
                         arguments: salesPayload),
                     height: 45,
                     width: ScreenUtils.getDesignWidth(120),

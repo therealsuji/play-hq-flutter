@@ -2,36 +2,35 @@ import 'dart:convert';
 
 import 'package:play_hq/models/common_models/location_model.dart';
 
-UserPreferencesModel userPreferencesModelFromJson(String str) => UserPreferencesModel.fromJson(json.decode(str));
+UserPreferencesModel userPreferencesModelFromJson(String str) =>
+    UserPreferencesModel.fromJson(json.decode(str));
 
 class UserPreferencesModel {
   UserPreferencesModel({
     this.location,
     this.phoneNumber,
     this.displayName,
-    this.firstName,
+    this.name,
     this.lastName,
   });
 
   LocationModel? location;
   String? phoneNumber;
   String? displayName;
-  String? firstName;
+  String? name;
   String? lastName;
 
   factory UserPreferencesModel.fromJson(Map<String, dynamic> json) => UserPreferencesModel(
         location: LocationModel.fromJson(json["location"]),
         phoneNumber: json["phoneNumber"],
         displayName: json["displayName"],
-        firstName: json["firstName"],
-        lastName: json["lastName"],
+        name: json["name"],
       );
 
   Map<String, dynamic> toJson() => {
         "location": location!.toJson(),
         "phoneNumber": phoneNumber,
         "displayName": displayName,
-        "firstName": firstName,
-        "lastName": lastName,
+        "name": name,
       };
 }

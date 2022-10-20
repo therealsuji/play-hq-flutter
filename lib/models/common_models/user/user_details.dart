@@ -1,12 +1,10 @@
-
 import 'dart:convert';
 
 UserDetails userDetailsfromJson(String str) => UserDetails.fromJson(json.decode(str));
 
-class UserDetails{
+class UserDetails {
   UserDetails({
-    this.firstName,
-    this.lastName,
+    this.name,
     this.role,
     this.email,
     this.avatar,
@@ -16,8 +14,7 @@ class UserDetails{
     this.displayName,
   });
 
-  String? firstName;
-  String? lastName;
+  String? name;
   String? role;
   String? email;
   String? avatar;
@@ -27,26 +24,24 @@ class UserDetails{
   String? displayName;
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
-    firstName: json["firstName"] == null ? "null" : json["firstName"],
-    lastName: json["lastName"] == null ? "" : json["lastName"],
-    role: json["role"] == null ? "" : json["role"],
-    email: json["email"] == null ? "" : json["email"],
-    avatar: json["avatar"] == null ? "" : json["avatar"],
-    phone: json["phone"] == null ? "" : json["phone"],
-    isSetupDone: json["isSetupDone"] == null ? false : json["isSetupDone"],
-    location: json["location"] == null ? "" : json["location"],
-    displayName: json["displayName"] == null ? "" : json["displayName"],
-  );
+        name: json["name"] == null ? "" : json["name"],
+        role: json["role"] == null ? "" : json["role"],
+        email: json["email"] == null ? "" : json["email"],
+        avatar: json["avatar"] == null ? "" : json["avatar"],
+        phone: json["phone"] == null ? "" : json["phone"],
+        isSetupDone: json["isSetupDone"] == null ? false : json["isSetupDone"],
+        location: json["location"] == null ? "" : json["location"],
+        displayName: json["displayName"] == null ? "" : json["displayName"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "firstName": firstName,
-    "lastName": lastName,
-    "role": role,
-    "email": email,
-    "avatar": avatar,
-    "phone": phone,
-    "isSetupDone": isSetupDone,
-    "location": location,
-    "displayName": displayName,
-  };
+        "name": name,
+        "role": role,
+        "email": email,
+        "avatar": avatar,
+        "phone": phone,
+        "isSetupDone": isSetupDone,
+        "location": location,
+        "displayName": displayName,
+      };
 }

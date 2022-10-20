@@ -1,8 +1,7 @@
-import 'dart:ffi';
-
-import 'package:play_hq/models/loading_event_model.dart';
-import 'package:play_hq/service_locator.dart';
 import 'package:event_bus/event_bus.dart';
+
+import '../models/loading_event_model.dart';
+import '../service_locator.dart';
 
 class AppLoader {
   final eventBus = locator<EventBus>();
