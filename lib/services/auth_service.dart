@@ -55,6 +55,7 @@ class AuthService {
         if (response.token != null && response.user != null) {
           SecureStorage.writeValue("setupDone", isSetupDone ? "Done" : "Not Done");
           SecureStorage.writeValue(FCM_KEY, fcmToken);
+          log(response.token?.accessToken ?? "");
           saveTokens(response.token!);
           saveUserData(response.user!);
           var userGamePreferences = await _userRepositry.getUserGamePreferences();

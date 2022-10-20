@@ -32,8 +32,7 @@ class APIConfig {
   }
 
   /// Urls that are needed from the RAWG API
-  static String getGenres =
-      '$_rawgAPI' + '/genres?ordering=&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
+  static String getGenres = '$_rawgAPI' + '/genres?ordering=&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
 
   static String getSearchResults(String params) {
     return '$_rawgAPI' + '/games?page=1&search=$params' + '&key=$_RAWG_API_KEY';
@@ -80,23 +79,19 @@ class APIConfig {
   }
 
   static String getTopRatedGames() {
-    return '$_rawgAPI' +
-        '/games?dates=2018-01-01,2022-12-31&ordering=-rating&ordering=-added' +
-        '&key=$_RAWG_API_KEY';
+    return '$_rawgAPI' + '/games?dates=2018-01-01,2022-12-31&ordering=-rating&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
   static String getUpcomingGames() {
     DateTime currentDate = DateTime.now();
     var startDateTime =
-        '${currentDate.year}-${currentDate.month > 10 ? currentDate.month : "0${currentDate.month}"}-01';
+        '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-01';
     var endDateTime = '${currentDate.year + 3}-12-31';
     return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&ordering=-added&key=$_RAWG_API_KEY';
   }
 
   static String getGamesOf2022() {
-    return '$_rawgAPI' +
-        '/games?dates=2022-01-01,2022-12-31&ordering=-added' +
-        '&key=$_RAWG_API_KEY';
+    return '$_rawgAPI' + '/games?dates=2022-01-01,2022-12-31&ordering=-added' + '&key=$_RAWG_API_KEY';
   }
 
   /// Urls needed from the PlayHQ Backend
@@ -117,8 +112,7 @@ class APIConfig {
   static String fetchMyActiveSales = '$_baseUrl' + "/sales/get-my-sales";
   static String fetchSalesFromWishlist = '$_baseUrl' + "/sales/from-wish-list";
 
-  static String fetchSalesForUsersOrders(
-      {int page = 1, required SaleOrderType type, OrderStatus? status}) {
+  static String fetchSalesForUsersOrders({int page = 1, required SaleOrderType type, OrderStatus? status}) {
     return "$_baseUrl/sales/get-sales-for-user-orders?page=$page&type=${describeEnum(type).toLowerCase()}" +
         (status != null ? "&status=${describeEnum(status)}" : "");
   }
@@ -148,23 +142,18 @@ class APIConfig {
     return '$_baseUrl' + '/wish-list-games';
   }
 
-  static String acceptPurchaseRequest(String id) =>
-      '$_baseUrl' + '/orders/update-status/seller/$id/ACCEPTED';
+  static String acceptPurchaseRequest(String id) => '$_baseUrl' + '/orders/update-status/seller/$id/ACCEPTED';
 
-  static String rejectPurchaseRequest(String id) =>
-      '$_baseUrl' + '/orders/update-status/seller/$id/REJECTED';
+  static String rejectPurchaseRequest(String id) => '$_baseUrl' + '/orders/update-status/seller/$id/REJECTED';
 
   static String getOrdersForSale(String saleId) => '$_baseUrl' + '/orders/orders-for-sale/$saleId';
 
   static String fetchAllActiveSaleOrders() => '$_baseUrl' + '/orders?type=sale&status=ACCEPTED';
 
-  static String fetchAllActivePurchaseOrders() =>
-      '$_baseUrl' + '/orders?type=purchase&status=ACCEPTED';
+  static String fetchAllActivePurchaseOrders() => '$_baseUrl' + '/orders?type=purchase&status=ACCEPTED';
 
-  static String changeOrderStatus(
-          {int page = 1, OrderStatus? status, UserType? user, String? id}) =>
-      '$_baseUrl' +
-      '/orders/update-status/${describeEnum(user!).toLowerCase()}/$id/${describeEnum(status!)}';
+  static String changeOrderStatus({int page = 1, OrderStatus? status, UserType? user, String? id}) =>
+      '$_baseUrl' + '/orders/update-status/${describeEnum(user!).toLowerCase()}/$id/${describeEnum(status!)}';
 
   static String fetchSoloGames() {
     return '$_baseUrl' + '/sales?order=ASC&page=1&q=example&type=single';

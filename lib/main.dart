@@ -7,7 +7,7 @@ import 'helpers/networks/app_configurations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  APIConfig.setBaseUrl(Environment.STAGE);
+  APIConfig.setBaseUrl(Environment.DEV);
   await Firebase.initializeApp();
   di.init();
   runApp(PlayHqHead());

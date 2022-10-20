@@ -18,8 +18,7 @@ class GameListDelegate extends GameListRepository {
   @override
   Future<RawgGameDetails> fetchTopRatedGames() async {
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.getTopRatedGames(), HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getTopRatedGames(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
@@ -38,8 +37,7 @@ class GameListDelegate extends GameListRepository {
   @override
   Future<RawgGameDetails> fetchGamesOf2022() async {
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.getUpcomingGames(), HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getUpcomingGames(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
@@ -77,8 +75,7 @@ class GameListDelegate extends GameListRepository {
   @override
   Future<RawgGameDetails> fetchGamesFromGenre(int page, String genre) async {
     try {
-      var response = await _networkCalls.performRequest(
-          APIConfig.getGamesByGenre(page, genre), HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getGamesByGenre(page, genre), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
