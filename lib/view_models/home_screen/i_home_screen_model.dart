@@ -39,36 +39,47 @@ class IHomeScreenModel extends HomeScreenModel {
     _displayName = userDetails.displayName ?? "";
     try {
       loadingData();
+
       await _homeApi.getSalesFromWishList().then((value) {
         if (value.saleItems!.length > 0) {
           _wishListGames = value.saleItems!;
         }
       });
+
       await _homeApi.getSoloGames().then((val) {
         if (val.saleItems!.length > 0) {
           _soloGames = val.saleItems ?? [];
         }
       });
-      await _homeApi.getBundleGames().then((game) {
+
+      var n1 = _homeApi.getBundleGames().then((game) {
         if (game.saleItems!.length > 0) {
           _bundleGames = game.saleItems ?? [];
         }
+        notifyListeners();
       });
-      await _gameApi.getPopularGames().then((games) {
+      var n2 = _gameApi.getPopularGames().then((games) {
         if (games.results!.length > 0) {
           _popularGameThisYear = games.results ?? [];
         }
+        notifyListeners();
       });
-      await _gameApi.getUpComingGames().then((games) {
+      var n3 = _gameApi.getUpComingGames().then((games) {
         if (games.results!.length > 0) {
           _upcomingGamesThisYear = games.results ?? [];
         }
+        notifyListeners();
       });
-      await _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
+      var n4 =
+          _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
         if (games.results!.length > 0) {
           _recommendedGames = games.results ?? [];
         }
+        notifyListeners();
       });
+
+      await Future.wait([n1, n2, n3, n4]);
+
       dataLoaded();
       notifyListeners();
     } catch (e) {
