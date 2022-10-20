@@ -1,6 +1,8 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
+import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
+import 'package:play_hq/view_models/profile/settings/settings_view_model.dart';
 
 import 'helpers/networks/app_network.dart';
 import 'repository/clients/authentication_repository.dart';
@@ -36,78 +38,92 @@ import 'services/dialog_service.dart';
 import 'services/error_service.dart';
 import 'services/nav_service.dart';
 
-GetIt locator = GetIt.instance;
+GetIt sl = GetIt.instance;
 
 void init() {
-  locator.registerLazySingleton<Network>(
+  sl.registerLazySingleton<Network>(
     () => Network.shared,
     dispose: (v) => v.dispose(),
   );
-  locator.registerLazySingleton<NavigationService>(
+  sl.registerLazySingleton<NavigationService>(
     () => NavigationService(),
   );
-  locator.registerLazySingleton<ErrorManager>(
+  sl.registerLazySingleton<ErrorManager>(
     () => ErrorService(
-      locator(),
+      sl(),
     ),
   );
 
-  locator.registerLazySingleton(
+  sl.registerLazySingleton(
     () => EventBus(),
   );
-  locator.registerLazySingleton<DialogService>(
+  sl.registerLazySingleton<DialogService>(
     () => DialogService(),
   );
-  locator.registerLazySingleton<PlacesService>(
+  sl.registerLazySingleton<PlacesService>(
     () => PlacesService(),
   );
-  locator.registerLazySingleton<AuthService>(
+  sl.registerLazySingleton<AuthService>(
     () => AuthService(),
   );
 
-  locator.registerFactory<HomeRepository>(
-    () => HomeDelegate(locator()),
+  sl.registerFactory<SettingsViewModel>(
+    () => ISettingsViewModel(
+      authService: sl(),
+      navigationService: sl(),
+      settingsRepository: sl(),
+    ),
   );
-  locator.registerFactory<GameDetailsRepository>(
+
+  sl.registerFactory<HomeRepository>(
+    () => HomeDelegate(sl()),
+  );
+  sl.registerFactory<GameDetailsRepository>(
     () => GameDetailsDelegate(),
   );
-  locator.registerFactory<SetupPurchaseRepository>(
+  sl.registerFactory<SetupPurchaseRepository>(
     () => SetupPurchaseDelegate(),
   );
-  locator.registerFactory<SetupSalesRepository>(
+  sl.registerFactory<SetupSalesRepository>(
     () => SetupSalesDelegate(),
   );
-  locator.registerFactory<AuthenticationRepository>(
+  sl.registerFactory<AuthenticationRepository>(
     () => AuthenticationDelegate(),
   );
-  locator.registerFactory<MainProfileScreenRepository>(
+  sl.registerFactory<MainProfileScreenRepository>(
     () => MainProfileScreenDelegate(),
   );
-  locator.registerFactory<OrdersRepository>(
+  sl.registerFactory<OrdersRepository>(
     () => OrdersDelegate(),
   );
-  locator.registerFactory<SplashRepository>(
+  sl.registerFactory<SplashRepository>(
     () => SplashDelegate(),
   );
-  locator.registerFactory<SaleRepository>(
+  sl.registerFactory<SaleRepository>(
     () => SaleDelegate(),
   );
-  locator.registerFactory<DiscoverRepository>(
+  sl.registerFactory<DiscoverRepository>(
     () => DiscoverDelegate(),
   );
-  locator.registerFactory<SearchRepository>(
+  sl.registerFactory<SearchRepository>(
     () => SearchDelegate(),
   );
-  locator.registerFactory<GameListRepository>(
+  sl.registerFactory<GameListRepository>(
     () => GameListDelegate(),
   );
-  locator.registerFactory<PurchasesRepository>(
+  sl.registerFactory<PurchasesRepository>(
     () => PurchaseDelegate(),
   );
-  locator.registerFactory<GameApiRepository>(
+  sl.registerFactory<GameApiRepository>(
     () => GameApiDelegate(),
   );
-  locator.registerFactory<UserRepository>(
+  sl.registerFactory<UserRepository>(
     () => UserDelegate(),
+  );
+
+  sl.registerFactory<SettingsRepository>(
+    () => SettingsDelegate(
+      sl(),
+    ),
   );
 }

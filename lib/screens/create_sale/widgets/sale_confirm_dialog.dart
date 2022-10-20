@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/helpers/app_assets.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
+
+import '../../../helpers/app_assets.dart';
+import '../../../helpers/app_colors.dart';
+import '../../../helpers/app_screen_utils.dart';
+import '../../../helpers/app_strings.dart';
+import '../../../widgets/custom_button_widget.dart';
 
 class SaleConfirmDialog extends StatelessWidget {
   const SaleConfirmDialog({
@@ -27,8 +26,7 @@ class SaleConfirmDialog extends StatelessWidget {
               height: ScreenUtils.getDesignHeight(50.0),
               width: ScreenUtils.getDesignWidth(50.0),
               padding: EdgeInsets.all(ScreenUtils.getDesignWidth(15.0)),
-              decoration: BoxDecoration(
-                  color: TURQUOISE_BLUE_COLOR, shape: BoxShape.circle),
+              decoration: BoxDecoration(color: TURQUOISE_BLUE_COLOR, shape: BoxShape.circle),
               child: SvgPicture.asset(
                 TICK_MARK_ICON,
                 color: Colors.white,
@@ -41,11 +39,10 @@ class SaleConfirmDialog extends StatelessWidget {
                 children: [
                   Text(
                     "And We're Done",
-                    style:
-                        Theme.of(context).primaryTextTheme.headline1?.copyWith(
-                              fontSize: 18.0,
-                              fontWeight: FontWeight.bold,
-                            ),
+                    style: Theme.of(context).primaryTextTheme.headline1?.copyWith(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 10.0),
@@ -61,10 +58,7 @@ class SaleConfirmDialog extends StatelessWidget {
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
                 "Your Games are up for sale! Awesomee Work! You will start getting notifications once you start getting potential buyers, Until then Happy Gaming!",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .subtitle1
-                    ?.copyWith(fontSize: 14.0),
+                style: Theme.of(context).primaryTextTheme.subtitle1?.copyWith(fontSize: 14.0),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -75,7 +69,7 @@ class SaleConfirmDialog extends StatelessWidget {
         CustomButton(
             buttonText: "Back to Home",
             onPressed: () {
-              locator<NavigationService>().pushReplacement(MAIN_SCREEN);
+              Navigator.pushReplacementNamed(context, MAIN_SCREEN);
               Navigator.of(context).pop();
             },
             gradient: PRIMARY_GRADIENT),

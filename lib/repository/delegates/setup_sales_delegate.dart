@@ -1,16 +1,15 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
-import 'package:play_hq/helpers/networks/app_config.dart';
-import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
-import 'package:play_hq/models/errors/exceptions.dart';
-import 'package:play_hq/models/common_models/user/user_preferences.dart';
-import 'package:play_hq/repository/clients/setup_sales_repository.dart';
-import 'package:play_hq/services/base_managers/error.dart';
-
-import '../../service_locator.dart';
+import '../../helpers/app_enums.dart';
+import '../../helpers/networks/app_config.dart';
+import '../../helpers/networks/app_network.dart';
+import '../../models/common_models/game_preferences/request_body.dart';
+import '../../models/common_models/user/user_preferences.dart';
+import '../../models/errors/exceptions.dart';
+import '../../injection_container.dart';
+import '../../services/base_managers/error.dart';
+import '../clients/setup_sales_repository.dart';
 
 class SetupSalesDelegate extends SetupSalesRepository {
   final _networkCalls = Network.shared;
@@ -20,13 +19,13 @@ class SetupSalesDelegate extends SetupSalesRepository {
     try {
       await _networkCalls.performRequest(APIConfig.addLibraryGames, HttpAction.POST, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -38,13 +37,13 @@ class SetupSalesDelegate extends SetupSalesRepository {
     try {
       await _networkCalls.performRequest(APIConfig.setupSales, HttpAction.PUT, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );

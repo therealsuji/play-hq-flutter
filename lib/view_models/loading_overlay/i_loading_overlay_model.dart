@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:event_bus/event_bus.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/models/loading_event_model.dart';
 
+import '../../models/loading_event_model.dart';
+import '../../injection_container.dart';
 import 'loading_overlay_model.dart';
 
 class ILoadingOverlay extends LoadingOverlayModel {
@@ -11,7 +11,7 @@ class ILoadingOverlay extends LoadingOverlayModel {
   bool _loading = false;
 
   ILoadingOverlay() {
-    _loadingEvent = locator<EventBus>().on<LoadingEvent>().listen((event) {
+    _loadingEvent = sl<EventBus>().on<LoadingEvent>().listen((event) {
       _loading = event.isLoading && event.showOverLay;
       notifyListeners();
     });

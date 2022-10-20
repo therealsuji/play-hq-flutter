@@ -102,9 +102,12 @@ class APIConfig {
   /// Urls needed from the PlayHQ Backend
   //authenticate user
   static String login = '$_baseUrl' + "/auth/firebase";
+
   static String renewJwt = '$_baseUrl' + "/auth/refresh";
 
   static String getUserDetails = '$_baseUrl' + "/v1/auth/me";
+
+  static String updateUserDetails = '$_baseUrl' + "/v1/users/update";
 
   // Sales API
   static String createSale = '$_baseUrl' + "/sales";

@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
-import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/game_lists/game_list_view_model.dart';
-import 'package:play_hq/widgets/game_list_item.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_enums.dart';
 import '../../helpers/app_screen_utils.dart';
+import '../../helpers/app_strings.dart';
+import '../../models/common_models/game_list_arguments_model.dart';
+import '../../models/game_details_models/game_details_arguments.dart';
+import '../../view_models/game_lists/game_list_view_model.dart';
+import '../../widgets/game_list_item.dart';
 
 class GameListScreen extends StatefulWidget {
   final GameListArguments? gameListArguments;
@@ -87,7 +85,8 @@ class _GameListScreenState extends State<GameListScreen> {
                       ? Expanded(
                           child: Container(
                             margin: EdgeInsets.only(
-                                top: ScreenUtils.getDesignHeight(20.0), bottom: ScreenUtils.getDesignHeight(20.0)),
+                                top: ScreenUtils.getDesignHeight(20.0),
+                                bottom: ScreenUtils.getDesignHeight(20.0)),
                             child: ListView.separated(
                               itemCount: val.gameResponse.length,
                               scrollDirection: Axis.vertical,
@@ -96,8 +95,13 @@ class _GameListScreenState extends State<GameListScreen> {
                               physics: BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return GestureDetector(
-                                  onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                                      args: GameDetailsArguments(gameId: val.gameResponse[index].id)),
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    GAME_DETAILS_SCREEN,
+                                    arguments: GameDetailsArguments(
+                                      gameId: val.gameResponse[index].id,
+                                    ),
+                                  ),
                                   child: GameListItem(
                                     gameName: val.gameResponse[index].name,
                                     boxCover: val.gameResponse[index].backgroundImage,

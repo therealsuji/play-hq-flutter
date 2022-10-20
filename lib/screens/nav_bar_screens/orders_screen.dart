@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_fonts.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/orders/active_orders_view_model/active_orders_view_model.dart';
-import 'package:play_hq/widgets/active_orders_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../service_locator.dart';
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_fonts.dart';
+import '../../helpers/app_screen_utils.dart';
+import '../../helpers/app_strings.dart';
+import '../../view_models/orders/active_orders_view_model/active_orders_view_model.dart';
+import '../../widgets/active_orders_widget.dart';
+import '../../widgets/custom_text_widget.dart';
 
 class OrdersScreen extends StatefulWidget {
   @override
@@ -18,7 +16,6 @@ class OrdersScreen extends StatefulWidget {
 }
 
 class _OrdersScreenState extends State<OrdersScreen> {
-
   PageController orderPageViewController = PageController();
 
   @override
@@ -27,7 +24,6 @@ class _OrdersScreenState extends State<OrdersScreen> {
     context.read<ActiveOrdersViewModel>().fetchPurchaseOrders();
     context.read<ActiveOrdersViewModel>().fetchSaleOrders();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +67,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
               Stack(
                 children: [
                   GestureDetector(
-                    onTap: () => locator<NavigationService>()
-                        .pushNamed(NOTIFICATION_SCREEN),
+                    onTap: () => Navigator.pushNamed(context, NOTIFICATION_SCREEN),
                     child: Container(
-                        margin: EdgeInsets.only(
-                            left: ScreenUtils.getDesignWidth(30)),
-                        child:
-                            SvgPicture.asset('assets/icons/notification.svg')),
+                      margin: EdgeInsets.only(
+                        left: ScreenUtils.getDesignWidth(30),
+                      ),
+                      child: SvgPicture.asset('assets/icons/notification.svg'),
+                    ),
                   ),
                   Positioned(
                     top: 0,
@@ -85,8 +81,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                     child: Container(
                       height: 11,
                       width: 11,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
+                      decoration: BoxDecoration(shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
                     ),
                   ),
                 ],
@@ -108,8 +103,10 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        orderPageViewController.animateToPage(0, duration: Duration(milliseconds: 700), curve: Curves.fastLinearToSlowEaseIn);
-                       },
+                        orderPageViewController.animateToPage(0,
+                            duration: Duration(milliseconds: 700),
+                            curve: Curves.fastLinearToSlowEaseIn);
+                      },
                       child: Container(
                           width: ScreenUtils.getDesignWidth(75),
                           decoration: BoxDecoration(
@@ -132,7 +129,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
                   Expanded(
                     child: GestureDetector(
                       onTap: () {
-                        orderPageViewController.animateToPage(1, duration: Duration(milliseconds: 700), curve: Curves.fastLinearToSlowEaseIn);
+                        orderPageViewController.animateToPage(1,
+                            duration: Duration(milliseconds: 700),
+                            curve: Curves.fastLinearToSlowEaseIn);
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -161,8 +160,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
         Expanded(
           child: PageView(
             physics: ScrollPhysics(),
-            onPageChanged: (val){
-              Provider.of<ActiveOrdersViewModel>(context , listen: false).pageChanged(val);
+            onPageChanged: (val) {
+              Provider.of<ActiveOrdersViewModel>(context, listen: false).pageChanged(val);
             },
             controller: orderPageViewController,
             children: [_purchases(), _sales()],
@@ -176,8 +175,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Column(
       children: [
         Consumer<ActiveOrdersViewModel>(
-          builder: (_ , val , __){
-            return  Container(
+          builder: (_, val, __) {
+            return Container(
               height: ScreenUtils.getDesignHeight(55),
               width: double.infinity,
               color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
@@ -196,8 +195,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       child: Container(
                           height: 20,
                           width: 20,
-                          margin:
-                          EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
+                          margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: PRIMARY_GRADIENT,
@@ -222,15 +220,15 @@ class _OrdersScreenState extends State<OrdersScreen> {
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.only(left: 24 , right: 24 , top: 15),
+            margin: EdgeInsets.only(left: 24, right: 24, top: 15),
             child: Consumer<ActiveOrdersViewModel>(
-              builder: (_ , model, __){
+              builder: (_, model, __) {
                 return ListView.separated(
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       return ActiveOrdersWidget(
                         salesPayload: model.activePurchaseOrderList[index],
-                       );
+                      );
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(
@@ -250,8 +248,8 @@ class _OrdersScreenState extends State<OrdersScreen> {
     return Column(
       children: [
         Consumer<ActiveOrdersViewModel>(
-          builder: (_ , val , __){
-            return  Container(
+          builder: (_, val, __) {
+            return Container(
               height: ScreenUtils.getDesignHeight(55),
               width: double.infinity,
               color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
@@ -270,8 +268,7 @@ class _OrdersScreenState extends State<OrdersScreen> {
                       child: Container(
                           height: 20,
                           width: 20,
-                          margin:
-                          EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
+                          margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(10)),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             gradient: PRIMARY_GRADIENT,
@@ -296,9 +293,9 @@ class _OrdersScreenState extends State<OrdersScreen> {
         ),
         Expanded(
           child: Container(
-            margin: EdgeInsets.only(left: 24 , right: 24 , top: 15),
+            margin: EdgeInsets.only(left: 24, right: 24, top: 15),
             child: Consumer<ActiveOrdersViewModel>(
-              builder: (_ , model, __){
+              builder: (_, model, __) {
                 return ListView.separated(
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {

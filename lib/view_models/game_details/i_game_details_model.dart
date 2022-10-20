@@ -8,13 +8,13 @@ import '../../models/loading_event_model.dart';
 import '../../models/rawg_models/rawg_game_details.dart';
 import '../../models/sales/sales_payload_model.dart';
 import '../../repository/clients/game_details_repository.dart';
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 import '../../services/nav_service.dart';
 import 'game_details_model.dart';
 
 class IGameDetailsModel extends GameDetailsModel {
-  final _eventBus = locator<EventBus>();
-  final _gameDetailsApi = locator<GameDetailsRepository>();
+  final _eventBus = sl<EventBus>();
+  final _gameDetailsApi = sl<GameDetailsRepository>();
 
   GameDetailModel _gameDetailsModel = GameDetailModel();
   List<SalesPayload> _salesPayload = [];
@@ -69,7 +69,7 @@ class IGameDetailsModel extends GameDetailsModel {
 
   @override
   void navigateMainScreen() {
-    locator<NavigationService>().pop();
+    sl<NavigationService>().pop();
   }
 
   @override
@@ -98,7 +98,7 @@ class IGameDetailsModel extends GameDetailsModel {
 
     _eventBus.fire(LoadingEvent.hide());
 
-    locator<NavigationService>().pop();
+    sl<NavigationService>().pop();
 
     notifyListeners();
   }
@@ -132,7 +132,7 @@ class IGameDetailsModel extends GameDetailsModel {
 
     _eventBus.fire(LoadingEvent.hide());
 
-    locator<NavigationService>().pop();
+    sl<NavigationService>().pop();
 
     notifyListeners();
   }

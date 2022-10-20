@@ -1,31 +1,24 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:play_hq/helpers/app_assets.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/models/common_models/rawg_platform_model.dart';
-import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
-import 'package:play_hq/models/game_status.dart';
-import 'package:play_hq/view_models/game_details/game_details_model.dart';
-import 'package:play_hq/widgets/active_game_sales_widget.dart';
-import 'package:play_hq/widgets/custom_body.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/custom_game_widget.dart';
-import 'package:play_hq/widgets/custom_selecting_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/gradient_text_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'package:play_hq/helpers/app_utils.dart';
 import 'package:skeletons/skeletons.dart';
 
+import '../../helpers/app_assets.dart';
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_enums.dart';
+import '../../helpers/app_screen_utils.dart';
 import '../../helpers/app_strings.dart';
-import '../../service_locator.dart';
-import '../../services/nav_service.dart';
+import '../../helpers/app_utils.dart';
+import '../../models/game_details_models/game_details_arguments.dart';
+import '../../models/game_status.dart';
+import '../../view_models/game_details/game_details_model.dart';
 import '../../widgets/bottomSheets/platform_sheet.dart';
+import '../../widgets/custom_body.dart';
+import '../../widgets/custom_button_widget.dart';
+import '../../widgets/custom_game_widget.dart';
+import '../../widgets/custom_text_widget.dart';
+import '../../widgets/gradient_text_widget.dart';
 import '../../widgets/horizontal_scroll_widget.dart';
 
 class GameDetailsScreen extends StatefulWidget {
@@ -40,7 +33,6 @@ class GameDetailsScreen extends StatefulWidget {
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     super.didChangeDependencies();
     Provider.of<GameDetailsModel>(context, listen: false)
         .getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
@@ -78,8 +70,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         ),
                       ),
                     ),
-                    imageUrl: model.gameDetails.backgroundImage ??
-                        "https://i.stack.imgur.com/y9DpT.jpg",
+                    imageUrl:
+                        model.gameDetails.backgroundImage ?? "https://i.stack.imgur.com/y9DpT.jpg",
                     fit: BoxFit.cover,
                   );
                 },
@@ -94,8 +86,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 children: [
                   Padding(
                     padding: EdgeInsets.only(
-                      top: ScreenUtils.getDesignHeight(
-                          ScreenUtils.isStatusBarBig ? 80.0 : 42.0),
+                      top: ScreenUtils.getDesignHeight(ScreenUtils.isStatusBarBig ? 80.0 : 42.0),
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
@@ -104,12 +95,10 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         BACK_ARROW_ICON,
                         height: ScreenUtils.getDesignHeight(27.0),
                       ),
-                      onTap: () =>
-                          Provider.of<GameDetailsModel>(context, listen: false)
-                              .navigateMainScreen(),
+                      onTap: () => Provider.of<GameDetailsModel>(context, listen: false)
+                          .navigateMainScreen(),
                     ),
                   ),
-
                   Consumer<GameDetailsModel>(
                     builder: (_, model, __) {
                       return Padding(
@@ -139,9 +128,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                               width: ScreenUtils.bodyWidth,
                               height: 1.5,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                gradient: PRIMARY_GRADIENT
-                              ),
+                                  borderRadius: BorderRadius.circular(5),
+                                  gradient: PRIMARY_GRADIENT),
                             ),
                             // Container(
                             //   margin: EdgeInsets.only(top: 30),
@@ -195,9 +183,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                                     'Available Platforms',
                                     isDynamic: false,
                                     width: ScreenUtils.getDesignWidth(130),
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .headline4,
+                                    style: Theme.of(context).primaryTextTheme.headline4,
                                   )
                                 ],
                               ),
@@ -208,20 +194,16 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                               ),
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 mainAxisSpacing: 10.0,
                                 crossAxisSpacing: 10.0,
-                                mainAxisExtent:
-                                    ScreenUtils.getDesignHeight(35.0),
+                                mainAxisExtent: ScreenUtils.getDesignHeight(35.0),
                               ),
-                              itemCount:
-                                  model.gameDetails.platforms?.length ?? 0,
+                              itemCount: model.gameDetails.platforms?.length ?? 0,
                               itemBuilder: (context, index) {
                                 return _platformContainer(
-                                    model.gameDetails.platforms?[index].name ??
-                                        "");
+                                    model.gameDetails.platforms?[index].name ?? "");
                               },
                             ),
                           ],
@@ -244,8 +226,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                                 ? model.gameDetails.genres!.map((g) {
                                     return _genreListContainer(
                                       name: g.name,
-                                      index:
-                                          model.gameDetails.genres!.indexOf(g),
+                                      index: model.gameDetails.genres!.indexOf(g),
                                     );
                                   }).toList()
                                 : [],
@@ -268,8 +249,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                                 ? model.gameScreenshots.results!.map((s) {
                                     return _genreScreenshotContainer(
                                       imagePath: s.image,
-                                      index: model.gameScreenshots.results!
-                                          .indexOf(s),
+                                      index: model.gameScreenshots.results!.indexOf(s),
                                     );
                                   }).toList()
                                 : [],
@@ -289,10 +269,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       builder: (_, model, __) {
                         return Text(
                           model.gameDetails.description ?? "",
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline3!
-                              .copyWith(
+                          style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
                                 color: SUB_TEXT_COLOR,
                                 fontSize: 13.0,
                               ),
@@ -319,12 +296,18 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                             itemCount: model.similarGames.length,
                             itemBuilder: (BuildContext context, int index) {
                               return GestureDetector(
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                                    args: GameDetailsArguments(gameId: model.similarGames[index].id)),
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  GAME_DETAILS_SCREEN,
+                                  arguments: GameDetailsArguments(
+                                    gameId: model.similarGames[index].id,
+                                  ),
+                                ),
                                 child: GamesWidget(
                                   backgroundUrl: model.similarGames[index].backgroundImage,
                                   title: model.similarGames[index].name,
-                                  subTitle: model.similarGames[index].released,gradient: PRIMARY_GRADIENT,
+                                  subTitle: model.similarGames[index].released,
+                                  gradient: PRIMARY_GRADIENT,
                                 ),
                               );
                             },
@@ -351,8 +334,9 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         textFontSize: 12.0,
         width: double.infinity,
         onPressed: () {
-          showAlertDialog(context, "Are you sure?",
-              "Do you really want to remove your game from your library?", () {
+          showAlertDialog(
+              context, "Are you sure?", "Do you really want to remove your game from your library?",
+              () {
             Provider.of<GameDetailsModel>(context, listen: false)
                 .deleteLibraryGame(widget.gameDetailsArguments!.gameId ?? 0);
           });
@@ -384,8 +368,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed: Provider.of<GameDetailsModel>(context, listen: false)
-                          .addToWishList,
+                  onPressed: Provider.of<GameDetailsModel>(context, listen: false).addToWishList,
                 );
               },
             ),
@@ -401,9 +384,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed:
-                      Provider.of<GameDetailsModel>(context, listen: false)
-                          .addToLibrary,
+                  onPressed: Provider.of<GameDetailsModel>(context, listen: false).addToLibrary,
                 );
               },
             ),
@@ -420,8 +401,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   }) {
     return Container(
       margin: EdgeInsets.only(
-        top: ScreenUtils.getDesignHeight(
-            ScreenUtils.isStatusBarBig ? 135.35 : 173.35), // 205.68
+        top: ScreenUtils.getDesignHeight(ScreenUtils.isStatusBarBig ? 135.35 : 173.35), // 205.68
       ),
       height: ScreenUtils.getDesignWidth(77.0),
       decoration: BoxDecoration(
@@ -540,11 +520,10 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   ),
                   Text(
                     "Company",
-                    style:
-                        Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
-                              color: SUB_TEXT_COLOR,
-                              fontSize: 12.0,
-                            ),
+                    style: Theme.of(context).primaryTextTheme.bodyText2!.copyWith(
+                          color: SUB_TEXT_COLOR,
+                          fontSize: 12.0,
+                        ),
                   ),
                 ],
               ),
@@ -679,7 +658,10 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           child: ChangeNotifierProvider.value(
             value: model,
             builder: (BuildContext context, _) {
-              return PlatformBottomSheet(bottomSheetType: PlatformBottomSheetType.GAME_DETAIL_ADD,onPressed: onPressed , platformList: model.gameDetails.platforms ?? [],
+              return PlatformBottomSheet(
+                bottomSheetType: PlatformBottomSheetType.GAME_DETAIL_ADD,
+                onPressed: onPressed,
+                platformList: model.gameDetails.platforms ?? [],
               );
             },
           ),
@@ -688,8 +670,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
     );
   }
 
-  showAlertDialog(BuildContext context, String title, String message,
-      VoidCallback clickedYes) {
+  showAlertDialog(BuildContext context, String title, String message, VoidCallback clickedYes) {
     // set up the button
     Widget cancelButton = TextButton(
       child: Text("No"),

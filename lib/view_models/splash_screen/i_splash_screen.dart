@@ -1,25 +1,26 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/services/auth_service.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/splash_screen/splash_screen_model.dart';
+
+import '../../helpers/app_enums.dart';
+import '../../helpers/app_strings.dart';
+import '../../injection_container.dart';
+import '../../services/auth_service.dart';
+import '../../services/nav_service.dart';
+import 'splash_screen_model.dart';
 
 class ISplashModel extends SplashScreenModel {
   @override
   void navigateMainScreen() {
-    locator<NavigationService>().pushReplacement(MAIN_SCREEN);
+    sl<NavigationService>().pushReplacement(MAIN_SCREEN);
   }
 
   @override
   void navigateSignUpScreen() {
-    locator<NavigationService>().pushReplacement(AUTH_SCREEN);
+    sl<NavigationService>().pushReplacement(AUTH_SCREEN);
   }
 
   @override
   void navigateOnBoarding() {
-    locator<NavigationService>()
+    sl<NavigationService>()
         .pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE, args: SearchType.SETUP_PURCHASES);
   }
 
@@ -35,7 +36,7 @@ class ISplashModel extends SplashScreenModel {
       }
     });
 
-    var isSetupDone = await locator<AuthService>().renewTokens();
+    var isSetupDone = await sl<AuthService>().renewTokens();
     if (isSetupDone == true) {
       navigateMainScreen();
     } else if (isSetupDone == false) {

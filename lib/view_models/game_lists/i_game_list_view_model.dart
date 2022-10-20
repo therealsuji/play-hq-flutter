@@ -1,13 +1,14 @@
 import 'package:event_bus/event_bus.dart';
-import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
+
 import '../../models/loading_event_model.dart';
+import '../../models/rawg_models/rawg_game_details.dart';
 import '../../repository/clients/game_list_repository.dart';
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 import 'game_list_view_model.dart';
 
 class IGameListViewModel extends GameListViewModel {
-  final _gameListAPI = locator<GameListRepository>();
-  final _eventBus = locator<EventBus>();
+  final _gameListAPI = sl<GameListRepository>();
+  final _eventBus = sl<EventBus>();
   int _pageSize = 9;
   List<GameResults> _gameResponse = [];
 

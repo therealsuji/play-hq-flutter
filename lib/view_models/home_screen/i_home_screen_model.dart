@@ -1,21 +1,16 @@
-import 'dart:developer';
-
-import 'package:api_cache_manager/models/cache_db_model.dart';
-import 'package:api_cache_manager/utils/cache_manager.dart';
-import 'package:play_hq/models/common_models/user/user_details.dart';
-import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
-import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
-import 'package:play_hq/models/sales/my_sales_payload.dart';
-import 'package:play_hq/models/sales/sales_payload_model.dart';
-import 'package:play_hq/repository/clients/game_api_repositiry.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/repository/clients/home_screen_repository.dart';
-import 'package:play_hq/services/auth_service.dart';
-import 'package:play_hq/view_models/home_screen/home_screen_model.dart';
+import '../../models/common_models/user/user_details.dart';
+import '../../models/common_models/user/user_game_preferences.dart';
+import '../../models/rawg_models/rawg_game_details.dart';
+import '../../models/sales/sales_payload_model.dart';
+import '../../repository/clients/game_api_repositiry.dart';
+import '../../repository/clients/home_screen_repository.dart';
+import '../../injection_container.dart';
+import '../../services/auth_service.dart';
+import 'home_screen_model.dart';
 
 class IHomeScreenModel extends HomeScreenModel {
-  final _homeApi = locator<HomeRepository>();
-  final _gameApi = locator<GameApiRepository>();
+  final _homeApi = sl<HomeRepository>();
+  final _gameApi = sl<GameApiRepository>();
 
   int _carouselPageIndex = 0;
   List<SalesPayload> _wishListGames = [];
@@ -34,8 +29,8 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   void loadAPICalls() async {
-    UserDetails userDetails = await locator<AuthService>().getUserDetails();
-    UserGamePreferences gamePreferences = await locator<AuthService>().getUserGamePreferences();
+    UserDetails userDetails = await sl<AuthService>().getUserDetails();
+    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
     _displayName = userDetails.displayName ?? "";
     try {
       loadingData();
@@ -64,7 +59,9 @@ class IHomeScreenModel extends HomeScreenModel {
           _upcomingGamesThisYear = games.results ?? [];
         }
       });
-      await _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
+      await _gameApi
+          .getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id))))
+          .then((games) {
         if (games.results!.length > 0) {
           _recommendedGames = games.results ?? [];
         }

@@ -17,7 +17,7 @@ import 'package:play_hq/view_models/sales/create_sale/create_sale_model.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../service_locator.dart';
+import '../injection_container.dart';
 import 'game_picker_details_widget.dart';
 
 class CustomGamePicker extends StatefulWidget {
@@ -50,14 +50,13 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
   _scroller() {
     setState(() {
       var _t = (_sliderController!.position.pixels.clamp(0, 200) / 2) / 100;
-      _selectingWidgetWidth = lerpDouble(
-          ScreenUtils.getDesignWidth(120), ScreenUtils.getDesignWidth(70), _t)!;
-      _selectingWidgetHeight = lerpDouble(ScreenUtils.getDesignHeight(170),
-          ScreenUtils.getDesignHeight(65), _t)!;
+      _selectingWidgetWidth =
+          lerpDouble(ScreenUtils.getDesignWidth(120), ScreenUtils.getDesignWidth(70), _t)!;
+      _selectingWidgetHeight =
+          lerpDouble(ScreenUtils.getDesignHeight(170), ScreenUtils.getDesignHeight(65), _t)!;
       _selectingWidgetleftPos = lerpDouble(24, 0, _t)!;
       _margin = lerpDouble(0, 24, _t)!;
-      _containerColor =
-          Color.lerp(Colors.transparent, MAIN_CONTAINER_COLOR, _t)!;
+      _containerColor = Color.lerp(Colors.transparent, MAIN_CONTAINER_COLOR, _t)!;
       _borderColor = Color.lerp(FILL_COLOR, Colors.transparent, _t * 3)!;
       _radius = lerpDouble(5, 50, _t)!;
     });
@@ -69,8 +68,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
       onTap: () => FocusScope.of(context).unfocus(),
       child: SingleChildScrollView(
           child: Padding(
-        padding: EdgeInsets.only(
-            top: ScreenUtils.getDesignHeight(15), bottom: widget.bottomMargin!),
+        padding:
+            EdgeInsets.only(top: ScreenUtils.getDesignHeight(15), bottom: widget.bottomMargin!),
         child: Stack(
           children: [
             Container(
@@ -91,33 +90,34 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
       child: Align(
           alignment: Alignment.centerLeft,
           child: Consumer<CreateSaleModel>(
-            builder: (_ , val , __){
+            builder: (_, val, __) {
               return GestureDetector(
                   onTap: () async {
                     switch (widget.gameType) {
                       case SearchType.CREATE_SALE:
-                        if(val.gameCount >= 3 ){
+                        if (val.gameCount >= 3) {
                           showGameCapAlert(context);
-                        }else{
+                        } else {
                           dynamic salesResult = await Navigator.pushNamed(
                               context, MAIN_SEARCH_SCREEN,
                               arguments: widget.gameType);
-                          Provider.of<CreateSaleModel>(context , listen: false).checkGame(salesResult as GameElement);
-                          Provider.of<CreateSaleModel>(context , listen: false).isAdded ? showAlertDialog(context) : Provider.of<CreateSaleModel>(context, listen: false)
-                              .addSelectedGame(salesResult);
+                          Provider.of<CreateSaleModel>(context, listen: false)
+                              .checkGame(salesResult as GameElement);
+                          Provider.of<CreateSaleModel>(context, listen: false).isAdded
+                              ? showAlertDialog(context)
+                              : Provider.of<CreateSaleModel>(context, listen: false)
+                                  .addSelectedGame(salesResult);
                         }
                         break;
                       case SearchType.SETUP_PURCHASES:
                         dynamic purchaseResult = await Navigator.pushNamed(
                             context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
-                        Provider.of<SetupPurchaseAccountModel>(context,
-                            listen: false)
+                        Provider.of<SetupPurchaseAccountModel>(context, listen: false)
                             .addSelectedGame(purchaseResult as GamePreferencesRequest);
                         break;
                       case SearchType.SETUP_SALES:
-                        dynamic saleResult = await Navigator.pushNamed(
-                            context, MAIN_SEARCH_SCREEN,
+                        dynamic saleResult = await Navigator.pushNamed(context, MAIN_SEARCH_SCREEN,
                             arguments: widget.gameType);
                         Provider.of<SetupSalesViewModel>(context, listen: false)
                             .addSelectedGame(saleResult as GamePreferencesRequest);
@@ -126,8 +126,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         break;
                     }
                   },
-                  child: _selectingWidget(
-                      _selectingWidgetHeight, _selectingWidgetWidth));
+                  child: _selectingWidget(_selectingWidgetHeight, _selectingWidgetWidth));
             },
           )),
     );
@@ -145,21 +144,17 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                   builder: (_, values, __) {
                     return ListView.separated(
                         separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                              width: ScreenUtils.getDesignWidth(15));
+                          return SizedBox(width: ScreenUtils.getDesignWidth(15));
                         },
-                        padding: EdgeInsets.only(
-                            left: ScreenUtils.getDesignWidth(160)),
+                        padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
                         controller: _sliderController,
                         itemCount: values.selectedGameList.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (BuildContext context, int index) {
                           return GamePickerGames(
-                            backgroundUrl:
-                                values.selectedGameList[index].game.backgroundImage,
+                            backgroundUrl: values.selectedGameList[index].game.backgroundImage,
                             gameName: values.selectedGameList[index].game.title,
-                            releaseDate:
-                                values.selectedGameList[index].game.releaseDate,
+                            releaseDate: values.selectedGameList[index].game.releaseDate,
                           );
                         });
                   },
@@ -177,8 +172,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                   separatorBuilder: (BuildContext context, int index) {
                     return SizedBox(width: ScreenUtils.getDesignWidth(15));
                   },
-                  padding:
-                      EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
+                  padding: EdgeInsets.only(left: ScreenUtils.getDesignWidth(160)),
                   controller: _sliderController,
                   itemCount: val.selectedGameList.length,
                   scrollDirection: Axis.horizontal,
@@ -234,8 +228,7 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
           strokeWidth: 3,
           child: ClipRRect(
             borderRadius: BorderRadius.only(
-                topRight: Radius.circular(_radius),
-                bottomRight: Radius.circular(_radius)),
+                topRight: Radius.circular(_radius), bottomRight: Radius.circular(_radius)),
             child: Container(
               color: _containerColor,
               child: GestureDetector(
@@ -246,8 +239,8 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                       Container(
                         height: 45,
                         width: 45,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
+                        decoration:
+                            BoxDecoration(shape: BoxShape.circle, gradient: PRIMARY_GRADIENT),
                         child: Icon(
                           Icons.add,
                           color: Colors.white,
@@ -255,12 +248,9 @@ class _CustomGamePickerState extends State<CustomGamePicker> {
                         ),
                       ),
                       Visibility(
-                        maintainSize:
-                            _selectingWidgetleftPos > 15 ? true : false,
-                        maintainAnimation:
-                            _selectingWidgetleftPos > 15 ? true : false,
-                        maintainState:
-                            _selectingWidgetleftPos > 15 ? true : false,
+                        maintainSize: _selectingWidgetleftPos > 15 ? true : false,
+                        maintainAnimation: _selectingWidgetleftPos > 15 ? true : false,
+                        maintainState: _selectingWidgetleftPos > 15 ? true : false,
                         visible: _selectingWidgetleftPos > 15 ? true : false,
                         child: Container(
                             margin: EdgeInsets.only(top: 7),

@@ -1,19 +1,17 @@
 import 'dart:async';
 
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/models/common_models/game_model.dart';
-import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
-import 'package:play_hq/models/sales/sales_payload_model.dart';
-import 'package:play_hq/models/search_model/app_search_game_model.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/custom_search/custom_search_model.dart';
-
+import '../../helpers/app_constants.dart';
+import '../../helpers/app_enums.dart';
+import '../../models/common_models/game_model.dart';
+import '../../models/common_models/game_preferences/request_body.dart';
+import '../../models/sales/sales_payload_model.dart';
+import '../../models/search_model/app_search_game_model.dart';
 import '../../repository/clients/search_repository.dart';
-import '../../service_locator.dart';
+import '../../injection_container.dart';
+import '../../services/nav_service.dart';
+import 'custom_search_model.dart';
 
-class ICustomSearchModel extends CustomSearchModel{
-
+class ICustomSearchModel extends CustomSearchModel {
   bool _isClicked = false;
   List<GameDetails> _searchedGames = [];
   List<GameModel> _wishListGames = [];
@@ -23,7 +21,7 @@ class ICustomSearchModel extends CustomSearchModel{
   SearchType? _gameScreens;
   Timer? _debounce;
 
-  SearchRepository _searchGameAPI = locator<SearchRepository>();
+  SearchRepository _searchGameAPI = sl<SearchRepository>();
 
   late GamePreferencesRequest _gameDetails;
   late GameElement _saleElementDetails;
@@ -51,19 +49,19 @@ class ICustomSearchModel extends CustomSearchModel{
   void searchGames(String name) {
     _screenStates = SearchScreenStates.LOADING;
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    _debounce = Timer(const Duration(milliseconds: 500), () async{
-      try{
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      try {
         _searchedGames.clear();
         value = await _searchGameAPI.searchGame(name);
-        if(value.data!.isEmpty){
+        if (value.data!.isEmpty) {
           _screenStates = SearchScreenStates.NOTHING;
-        }else{
+        } else {
           value.data!.forEach((element) {
             _searchedGames.add(element);
           });
           _screenStates = SearchScreenStates.SUCCESS;
         }
-      }catch (error){
+      } catch (error) {
         _screenStates = SearchScreenStates.FAILED;
         print(error);
       }
@@ -92,22 +90,22 @@ class ICustomSearchModel extends CustomSearchModel{
     notifyListeners();
   }
 
-  GameModel addGamesToModel(GameDetails gameDetails){
+  GameModel addGamesToModel(GameDetails gameDetails) {
     List<int>? platformID = [];
     List<int>? genreID = [];
     List<String>? images = [];
 
-
-    if(gameDetails.platforms != null){
+    if (gameDetails.platforms != null) {
       gameDetails.platforms!.forEach((element) {
         platforms.forEach((platform) {
-          if(element.id == platform['id']){
-            platformID.add(element.id ?? 0);          }
+          if (element.id == platform['id']) {
+            platformID.add(element.id ?? 0);
+          }
         });
       });
     }
 
-    if(gameDetails.genres != null){
+    if (gameDetails.genres != null) {
       gameDetails.genres!.forEach((element) {
         genreID.add(element.id);
       });
@@ -147,11 +145,9 @@ class ICustomSearchModel extends CustomSearchModel{
   @override
   void addGameToList(int index) {
     game = addGamesToModel(_searchedGames[index]);
-    _gameDetails = GamePreferencesRequest(game: game , platform: _selectedPlatformId);
-    locator<NavigationService>().pop(args: _gameDetails);
+    _gameDetails = GamePreferencesRequest(game: game, platform: _selectedPlatformId);
+    sl<NavigationService>().pop(args: _gameDetails);
   }
-
-
 
   @override
   GamePreferencesRequest get gameDetails => _gameDetails;
@@ -159,8 +155,7 @@ class ICustomSearchModel extends CustomSearchModel{
   @override
   void addGameToSale(int index) {
     game = addGamesToModel(_searchedGames[index]);
-    _saleElementDetails = GameElement(game: game , status: _gameConditionSlug);
-    locator<NavigationService>().pop(args: _saleElementDetails);
+    _saleElementDetails = GameElement(game: game, status: _gameConditionSlug);
+    sl<NavigationService>().pop(args: _saleElementDetails);
   }
-
 }

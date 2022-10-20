@@ -1,11 +1,11 @@
-import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
-import 'package:play_hq/models/common_models/user/user_details.dart';
-import 'package:play_hq/repository/clients/main_profile_screen_repository.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
+import '../../../models/common_models/game_preferences/response_body.dart';
+import '../../../models/common_models/user/user_details.dart';
+import '../../../repository/clients/main_profile_screen_repository.dart';
+import '../../../injection_container.dart';
+import 'main_profile_model.dart';
 
 class IMainProfileModel extends MainProfileModel {
-  final _mainProfileAPI = locator<MainProfileScreenRepository>();
+  final _mainProfileAPI = sl<MainProfileScreenRepository>();
 
   List<Data> _wishlistGames = [];
   List<Data> _libraryGames = [];

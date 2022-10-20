@@ -10,7 +10,7 @@ import 'helpers/app_fonts.dart';
 import 'helpers/app_routes.dart';
 import 'managers/dialog_manager.dart';
 import 'models/search_model/app_search_game_model.dart';
-import 'service_locator.dart';
+import 'injection_container.dart';
 import 'services/nav_service.dart';
 import 'view_models/view_models.dart';
 import 'widgets/loading_overlay_widget.dart';
@@ -21,7 +21,7 @@ class PlayHqHead extends StatefulWidget {
 }
 
 class _PlayHqHeadState extends State<PlayHqHead> {
-  final _placesService = locator<PlacesService>();
+  final _placesService = sl<PlacesService>();
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
     return ChangeNotifierProvider<LoadingOverlayModel>(
       create: (context) => ILoadingOverlay(),
       child: MaterialApp(
-        navigatorKey: locator<NavigationService>().navigatorKey,
+        navigatorKey: sl<NavigationService>().navigatorKey,
         scrollBehavior: CupertinoScrollBehavior(),
         theme: ThemeData(
           accentColor: PRIMARY_COLOR,

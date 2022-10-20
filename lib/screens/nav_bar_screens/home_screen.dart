@@ -1,39 +1,28 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
-import 'package:play_hq/models/common_models/user/user_details.dart';
-import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
-import 'package:play_hq/models/sales/sales_payload_model.dart';
-import 'package:play_hq/screens/nav_bar_screens/widgets/genre_widget.dart';
-import 'package:play_hq/screens/nav_bar_screens/widgets/recommended_game_widget.dart';
-import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
-import 'package:play_hq/services/auth_service.dart';
-import 'package:play_hq/view_models/view_models.dart';
-import 'package:play_hq/widgets/active_game_sales_widget.dart';
-import 'package:play_hq/widgets/cached_image_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/horizontal_scroll_widget.dart';
 import 'package:provider/provider.dart';
-
-import 'package:play_hq/helpers/app_assets.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_utils.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/home_screen/home_screen_model.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/dotted_indicator_widget.dart';
-import 'package:play_hq/widgets/gradient_text_widget.dart';
-import 'package:play_hq/widgets/raised_gradient_button_widget.dart';
 import 'package:skeletons/skeletons.dart';
 
+import '../../helpers/app_assets.dart';
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_constants.dart';
+import '../../helpers/app_enums.dart';
+import '../../helpers/app_screen_utils.dart';
+import '../../helpers/app_strings.dart';
+import '../../helpers/app_utils.dart';
+import '../../models/common_models/game_list_arguments_model.dart';
+import '../../models/game_details_models/game_details_arguments.dart';
+import '../../models/sales/sales_payload_model.dart';
+import '../../view_models/home_screen/home_screen_model.dart';
+import '../../view_models/view_models.dart';
+import '../../widgets/cached_image_widget.dart';
+import '../../widgets/custom_button_widget.dart';
 import '../../widgets/custom_game_widget.dart';
+import '../../widgets/custom_text_widget.dart';
+import '../../widgets/gradient_text_widget.dart';
+import '../../widgets/horizontal_scroll_widget.dart';
+import '../../widgets/raised_gradient_button_widget.dart';
+import 'widgets/genre_widget.dart';
+import 'widgets/section_label_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -143,8 +132,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         GestureDetector(
-                          onTap: () =>
-                              locator<NavigationService>().pushNamed(MAIN_SEARCH_SCREEN, args: SearchType.MAIN_SEARCH),
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            MAIN_SEARCH_SCREEN,
+                            arguments: SearchType.MAIN_SEARCH,
+                          ),
                           child: Container(
                             margin: EdgeInsets.only(
                               top: ScreenUtils.getDesignHeight(25.0),
@@ -194,11 +186,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: "ACTION",
                                   imageUrl: ACTION_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                                    args: GameListArguments(
-                                        screenTitle: "Action Games",
-                                        apiType: GameLists.GENRE,
-                                        args: {"genre": "action"})),
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  GAME_LIST_SCREEN,
+                                  arguments: GameListArguments(
+                                    screenTitle: "Action Games",
+                                    apiType: GameLists.GENRE,
+                                    args: {"genre": "action"},
+                                  ),
+                                ),
                               ),
                               InkWell(
                                 child: GenreWidget(
@@ -206,11 +202,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: "ADVENTURE",
                                   imageUrl: ADVENTURE_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                                    args: GameListArguments(
-                                        screenTitle: "Action Games",
-                                        apiType: GameLists.GENRE,
-                                        args: {"genre": "adventure"})),
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  GAME_LIST_SCREEN,
+                                  arguments: GameListArguments(
+                                    screenTitle: "Action Games",
+                                    apiType: GameLists.GENRE,
+                                    args: {"genre": "adventure"},
+                                  ),
+                                ),
                               ),
                               InkWell(
                                 child: GenreWidget(
@@ -218,11 +218,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   name: "RACING",
                                   imageUrl: RACING_GENRE_IMAGE,
                                 ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                                    args: GameListArguments(
-                                        screenTitle: "Action Games",
-                                        apiType: GameLists.GENRE,
-                                        args: {"genre": "racing"})),
+                                onTap: () => Navigator.pushNamed(
+                                  context,
+                                  GAME_LIST_SCREEN,
+                                  arguments: GameListArguments(
+                                    screenTitle: "Action Games",
+                                    apiType: GameLists.GENRE,
+                                    args: {"genre": "racing"},
+                                  ),
+                                ),
                               ),
                             ],
                           ),
@@ -254,8 +258,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: model.recommendedGames.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(gameId: model.recommendedGames[index].id)),
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            GAME_DETAILS_SCREEN,
+                            arguments: GameDetailsArguments(
+                              gameId: model.recommendedGames[index].id,
+                            ),
+                          ),
                           child: GamesWidget(
                             backgroundUrl: model.recommendedGames[index].backgroundImage,
                             title: model.recommendedGames[index].name,
@@ -287,12 +296,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: val.popularGamesThisYear.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(gameId: val.popularGamesThisYear[index].id)),
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            GAME_DETAILS_SCREEN,
+                            arguments: GameDetailsArguments(
+                              gameId: val.popularGamesThisYear[index].id,
+                            ),
+                          ),
                           child: GamesWidget(
                             title: val.popularGamesThisYear[index].name,
                             subTitle: val.popularGamesThisYear[index].released != null
-                                ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
+                                ? DateTime.parse(val.popularGamesThisYear[index].released!)
+                                    .format('dd-MM-yyyy')
                                 : "",
                             backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
                             gradient: PRIMARY_GRADIENT,
@@ -357,12 +372,18 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: val.upComingGamesThisYear.length,
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
-                          onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                              args: GameDetailsArguments(gameId: val.upComingGamesThisYear[index].id)),
+                          onTap: () => Navigator.pushNamed(
+                            context,
+                            GAME_DETAILS_SCREEN,
+                            arguments: GameDetailsArguments(
+                              gameId: val.upComingGamesThisYear[index].id,
+                            ),
+                          ),
                           child: GamesWidget(
                             title: val.upComingGamesThisYear[index].name,
                             subTitle: val.upComingGamesThisYear[index].released != null
-                                ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
+                                ? DateTime.parse(val.upComingGamesThisYear[index].released!)
+                                    .format('dd-MM-yyyy')
                                 : "",
                             backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
                             gradient: PRIMARY_GRADIENT,
@@ -629,7 +650,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 30),
             height: 1.5,
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
@@ -642,9 +664,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Spacer(),
                 CustomTextWidget(
-                  platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name'] ?? 'Not Found',
+                  platforms.firstWhere(
+                          (element) => element['id'] == salesPayload.platform)['name'] ??
+                      'Not Found',
                   isDynamic: false,
-                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
+                  style:
+                      Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
                 )
               ],
             ),
@@ -652,7 +677,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
             height: 1.5,
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
@@ -680,7 +706,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   height: ScreenUtils.getDesignHeight(40),
                   width: ScreenUtils.getDesignWidth(100),
-                  decoration: BoxDecoration(gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(
+                      gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(5)),
                   child: Center(
                       child: Text(
                     'More Details',

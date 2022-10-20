@@ -12,11 +12,11 @@ import '../../models/game_details_models/get_game_details.dart';
 import '../../models/game_status.dart';
 import '../../models/rawg_models/rawg_game_details.dart';
 import '../../models/sales/my_sales_payload.dart';
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 import '../repositories.dart' show GameDetailsRepository;
 
 class GameDetailsDelegate extends GameDetailsRepository with NetworkHelper {
-  final _httpClient = locator<Network>();
+  final _httpClient = sl<Network>();
 
   @override
   Future<GetGameDetails?> getGameDetails(int id) async {

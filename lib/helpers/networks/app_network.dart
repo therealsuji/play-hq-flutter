@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
 import '../../models/errors/exceptions.dart';
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 import '../../services/auth_service.dart';
 import '../../services/base_managers/error.dart';
 import '../app_enums.dart';
@@ -134,19 +133,19 @@ class Network {
 
       return response;
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on FormatException {
-      locator<ErrorManager>().showError(FormatFailure());
+      sl<ErrorManager>().showError(FormatFailure());
       throw FormatFailure();
     } on HttpException {
-      locator<ErrorManager>().showError(HttpFailure());
+      sl<ErrorManager>().showError(HttpFailure());
       throw HttpFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure(
+      sl<ErrorManager>().showError(UnknownFailure(
         message: e.toString(),
       ));
       throw UnknownFailure(

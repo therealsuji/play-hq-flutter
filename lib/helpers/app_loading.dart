@@ -1,10 +1,10 @@
 import 'package:event_bus/event_bus.dart';
 
 import '../models/loading_event_model.dart';
-import '../service_locator.dart';
+import '../injection_container.dart';
 
 class AppLoader {
-  final eventBus = locator<EventBus>();
+  final eventBus = sl<EventBus>();
   bool _initialDataLoaded = false;
 
   void loadingData({showOverlay = false}) {

@@ -12,16 +12,16 @@ import '../../../models/common_models/user/user_details.dart';
 import '../../../models/common_models/user/user_preferences.dart';
 import '../../../models/loading_event_model.dart';
 import '../../../repository/clients/setup_sales_repository.dart';
-import '../../../service_locator.dart';
+import '../../../injection_container.dart';
 import '../../../services/auth_service.dart';
 import '../../../services/nav_service.dart';
 import 'sales-account-model.dart';
 
 class ISetupSalesModel extends SetupSalesViewModel {
   late var box;
-  final _setupSalesAPI = locator<SetupSalesRepository>();
-  final _eventBus = locator<EventBus>();
-  final _placesService = locator<PlacesService>();
+  final _setupSalesAPI = sl<SetupSalesRepository>();
+  final _eventBus = sl<EventBus>();
+  final _placesService = sl<PlacesService>();
 
   List<GamePreferencesRequest> _selectedGames = [];
 
@@ -79,7 +79,7 @@ class ISetupSalesModel extends SetupSalesViewModel {
     try {
       await _setupSalesAPI.setLibraryGames(_selectedGames);
 
-      UserDetails userDetails = await locator<AuthService>().getUserDetails();
+      UserDetails userDetails = await sl<AuthService>().getUserDetails();
 
       print('User Details $userDetails');
 
@@ -98,7 +98,7 @@ class ISetupSalesModel extends SetupSalesViewModel {
 
       await _setupSalesAPI.setProfileDetails(_setupSalesModel);
 
-      locator<NavigationService>().pushReplacement(MAIN_SCREEN);
+      sl<NavigationService>().pushReplacement(MAIN_SCREEN);
 
       _eventBus.fire(LoadingEvent.hide());
     } catch (e) {

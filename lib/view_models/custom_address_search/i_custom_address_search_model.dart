@@ -1,15 +1,14 @@
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:places_service/places_service.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/view_models/custom_address_search/custom_address_search_model.dart';
 
 import '../../models/common_models/location_model.dart';
+import '../../injection_container.dart';
 import '../../services/nav_service.dart';
+import 'custom_address_search_model.dart';
 
 class ICustomAddressSearchModel extends CustomAddressSearchModel {
-
-  final _placesService = locator<PlacesService>();
+  final _placesService = sl<PlacesService>();
   List<PlacesAutoCompleteResult> _autoCompleteResults = [];
 
   String _selectedAddress = '';
@@ -25,11 +24,10 @@ class ICustomAddressSearchModel extends CustomAddressSearchModel {
   }
 
   Future<void> _getAutoCompleteResults(String val) async {
-    if(val.isEmpty == false){
-
+    if (val.isEmpty == false) {
       final placesResult = await _placesService.getAutoComplete(val);
 
-      if(placesResult.isEmpty == false){
+      if (placesResult.isEmpty == false) {
         _autoCompleteResults = placesResult;
         notifyListeners();
       }
@@ -38,13 +36,14 @@ class ICustomAddressSearchModel extends CustomAddressSearchModel {
 
   @override
   Future<void> selectedMapLocation(LatLng tappedPoint) async {
-    var addresses = await GeocodingPlatform.instance.placemarkFromCoordinates(tappedPoint.latitude, tappedPoint.longitude);
+    var addresses = await GeocodingPlatform.instance
+        .placemarkFromCoordinates(tappedPoint.latitude, tappedPoint.longitude);
     _selectedAddress = addresses[0].street.toString();
     _selectedLatitude = tappedPoint.latitude;
     _selectedLongitude = tappedPoint.longitude;
 
-    LocationModel location =
-    new LocationModel(address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
+    LocationModel location = new LocationModel(
+        address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
 
     print('This is the location address ${location.address}');
 
@@ -60,13 +59,10 @@ class ICustomAddressSearchModel extends CustomAddressSearchModel {
     _selectedLongitude = place.lng!;
     _selectedLatitude = place.lat!;
 
-    LocationModel location =
-    new LocationModel(address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
+    LocationModel location = new LocationModel(
+        address: _selectedAddress, lat: _selectedLatitude, long: _selectedLongitude);
 
     notifyListeners();
-    locator<NavigationService>().pop(args: location);
+    sl<NavigationService>().pop(args: location);
   }
-
-
-
 }

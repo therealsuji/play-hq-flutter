@@ -8,7 +8,7 @@ import '../../helpers/networks/app_config.dart';
 import '../../helpers/networks/app_network.dart';
 import '../../models/errors/exceptions.dart';
 import '../../models/sales/my_sales_payload.dart';
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 import '../../services/base_managers/error.dart';
 import '../clients/home_screen_repository.dart';
 
@@ -24,13 +24,13 @@ class HomeDelegate implements HomeRepository {
           await networkCalls.performRequest(APIConfig.fetchSalesFromWishlist, HttpAction.GET);
       return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -43,13 +43,13 @@ class HomeDelegate implements HomeRepository {
       var response = await networkCalls.performRequest(APIConfig.fetchSoloGames(), HttpAction.GET);
       return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -63,13 +63,13 @@ class HomeDelegate implements HomeRepository {
           await networkCalls.performRequest(APIConfig.fetchBundleGames(), HttpAction.GET);
       return await compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );

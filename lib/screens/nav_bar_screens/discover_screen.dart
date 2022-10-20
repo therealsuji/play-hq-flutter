@@ -1,22 +1,19 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_fonts.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_list_arguments_model.dart';
-import 'package:play_hq/models/game_details_models/game_details_arguments.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/discover/discover_view_model.dart';
-import 'package:play_hq/widgets/custom_game_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/gradient_text_widget.dart';
-import 'package:play_hq/widgets/horizontal_scroll_widget.dart';
 import 'package:provider/provider.dart';
 
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_constants.dart';
 import '../../helpers/app_enums.dart';
-import '../../service_locator.dart';
+import '../../helpers/app_fonts.dart';
+import '../../helpers/app_screen_utils.dart';
+import '../../helpers/app_strings.dart';
+import '../../models/common_models/game_list_arguments_model.dart';
+import '../../models/game_details_models/game_details_arguments.dart';
+import '../../view_models/discover/discover_view_model.dart';
+import '../../widgets/custom_game_widget.dart';
+import '../../widgets/custom_text_widget.dart';
+import '../../widgets/gradient_text_widget.dart';
+import '../../widgets/horizontal_scroll_widget.dart';
 
 class DiscoverScreen extends StatefulWidget {
   @override
@@ -74,8 +71,13 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   itemCount: val.newlyReleasedGames.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => locator<NavigationService>().pushNamed(GAME_DETAILS_SCREEN,
-                          args: GameDetailsArguments(gameId: val.newlyReleasedGames[index].id)),
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        GAME_DETAILS_SCREEN,
+                        arguments: GameDetailsArguments(
+                          gameId: val.newlyReleasedGames[index].id,
+                        ),
+                      ),
                       child: GamesWidget(
                         title: val.newlyReleasedGames[index].name,
                         subTitle: val.newlyReleasedGames[index].released,
@@ -131,8 +133,13 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   itemCount: val.fpsGames.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
-                      onTap: () => locator<NavigationService>()
-                          .pushNamed(GAME_DETAILS_SCREEN, args: GameDetailsArguments(gameId: val.fpsGames[index].id)),
+                      onTap: () => Navigator.pushNamed(
+                        context,
+                        GAME_DETAILS_SCREEN,
+                        arguments: GameDetailsArguments(
+                          gameId: val.fpsGames[index].id,
+                        ),
+                      ),
                       child: GamesWidget(
                         title: val.fpsGames[index].name,
                         subTitle: val.fpsGames[index].released,
@@ -189,16 +196,22 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
     );
   }
 
-  Widget _categoryItem(
-      String categoryName, LinearGradient gradient, String imagePath, DiscoverCategory category, GameLists apiType) {
+  Widget _categoryItem(String categoryName, LinearGradient gradient, String imagePath,
+      DiscoverCategory category, GameLists apiType) {
     return GestureDetector(
-      onTap: () => locator<NavigationService>()
-          .pushNamed(GAME_LIST_SCREEN, args: GameListArguments(screenTitle: categoryName, apiType: apiType)),
+      onTap: () => Navigator.pushNamed(
+        context,
+        GAME_LIST_SCREEN,
+        arguments: GameListArguments(
+          screenTitle: categoryName,
+          apiType: apiType,
+        ),
+      ),
       child: Container(
         height: ScreenUtils.getDesignHeight(180),
         width: ScreenUtils.getDesignWidth(156),
-        decoration:
-            BoxDecoration(borderRadius: BorderRadius.circular(ScreenUtils.getDesignWidth(5)), gradient: gradient),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(ScreenUtils.getDesignWidth(5)), gradient: gradient),
         child: Container(
           margin: EdgeInsets.only(
             top: ScreenUtils.getDesignHeight(30),
@@ -261,10 +274,15 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
           Container(
               alignment: Alignment.bottomLeft,
-              margin: EdgeInsets.only(left: ScreenUtils.getDesignWidth(24), bottom: ScreenUtils.getDesignHeight(60)),
+              margin: EdgeInsets.only(
+                  left: ScreenUtils.getDesignWidth(24), bottom: ScreenUtils.getDesignHeight(60)),
               child: Text(
                 'Assasin\'s Creed \nValhalla',
-                style: TextStyle(color: Colors.white, fontSize: 24, fontFamily: Neusa, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontFamily: Neusa,
+                    fontWeight: FontWeight.bold),
               )),
         ],
       ),

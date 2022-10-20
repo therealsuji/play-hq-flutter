@@ -1,20 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/helpers/app_assets.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_fonts.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
-import 'package:play_hq/widgets/custom_game_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/page_view_tab_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers.dart';
+
+import '../../helpers/app_assets.dart';
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_fonts.dart';
+import '../../helpers/app_screen_utils.dart';
+import '../../helpers/app_strings.dart';
+import '../../models/common_models/game_preferences/response_body.dart';
+import '../../view_models/profile/main_profile/main_profile_model.dart';
+import '../../widgets/custom_game_widget.dart';
+import '../../widgets/custom_text_widget.dart';
+import '../../widgets/page_view_tab_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -53,16 +52,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           GestureDetector(
-                              onTap: () => locator<NavigationService>().pushNamed(SETTINGS_SCREEN),
-                              child: Container(child: SvgPicture.asset(SETTINGS_ICON))),
+                            onTap: () => Navigator.pushNamed(context, SETTINGS_SCREEN),
+                            child: Container(
+                              child: SvgPicture.asset(SETTINGS_ICON),
+                            ),
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
                             child: Stack(
                               children: [
                                 GestureDetector(
-                                  onTap: () =>
-                                      locator<NavigationService>().pushNamed(NOTIFICATION_SCREEN),
-                                  child: Container(child: SvgPicture.asset(NOTIFICATION_ICON)),
+                                  onTap: () => Navigator.pushNamed(context, NOTIFICATION_SCREEN),
+                                  child: Container(
+                                    child: SvgPicture.asset(
+                                      NOTIFICATION_ICON,
+                                    ),
+                                  ),
                                 ),
                                 Positioned(
                                   top: 2,

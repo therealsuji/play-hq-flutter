@@ -11,7 +11,7 @@ import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/repository/clients/discover_repository.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 
 class DiscoverDelegate implements DiscoverRepository {
   final _networkCalls = Network.shared;
@@ -23,13 +23,13 @@ class DiscoverDelegate implements DiscoverRepository {
           await _networkCalls.performRequest(APIConfig.getNewReleases(date), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -42,13 +42,13 @@ class DiscoverDelegate implements DiscoverRepository {
       var response = await _networkCalls.performRequest(APIConfig.getFPSGames(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );

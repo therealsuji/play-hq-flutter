@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:play_hq/helpers/app_colors.dart';
-import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_fonts.dart';
-import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/helpers/app_strings.dart';
-import 'package:play_hq/service_locator.dart';
-import 'package:play_hq/services/nav_service.dart';
-import 'package:play_hq/view_models/main_onboarding/main_onboarding_model.dart';
-import 'package:play_hq/widgets/custom_button_widget.dart';
-import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/dotted_indicator_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../helpers/app_colors.dart';
+import '../../../../helpers/app_constants.dart';
+import '../../../../helpers/app_enums.dart';
+import '../../../../helpers/app_fonts.dart';
+import '../../../../helpers/app_screen_utils.dart';
+import '../../../../helpers/app_strings.dart';
+import '../../../../view_models/main_onboarding/main_onboarding_model.dart';
+import '../../../../widgets/custom_button_widget.dart';
+import '../../../../widgets/custom_text_widget.dart';
+import '../../../../widgets/dotted_indicator_widget.dart';
 
 class MainOnboarding extends StatefulWidget {
   const MainOnboarding({Key? key}) : super(key: key);
@@ -35,11 +34,10 @@ class _MainOnboardingState extends State<MainOnboarding> {
                     flex: 7,
                     child: Container(
                       child: PageView.builder(
-                        controller: value.pageController,
+                          controller: value.pageController,
                           itemCount: onboardingData.length,
                           onPageChanged: (val) =>
-                              Provider.of<MainOnboardingModel>(context,
-                                      listen: false)
+                              Provider.of<MainOnboardingModel>(context, listen: false)
                                   .changePage(val),
                           itemBuilder: (BuildContext context, index) {
                             return _onboarding(
@@ -52,17 +50,17 @@ class _MainOnboardingState extends State<MainOnboarding> {
                   Spacer(),
                   Container(
                     margin: EdgeInsets.only(
-                        bottom: ScreenUtils.getDesignHeight(40),
-                        left: 24,
-                        right: 24),
+                        bottom: ScreenUtils.getDesignHeight(40), left: 24, right: 24),
                     child: value.currentPage == 3
                         ? CustomButton(
                             buttonText: 'Setup Preferances',
                             width: ScreenUtils.bodyWidth,
                             gradient: PRIMARY_GRADIENT,
-                            onPressed: () => locator<NavigationService>()
-                                .pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE,
-                                    args: SearchType.SETUP_PURCHASES),
+                            onPressed: () => Navigator.pushNamed(
+                              context,
+                              SETUP_PURCHASE_ACCOUNT_ROUTE,
+                              arguments: SearchType.SETUP_PURCHASES,
+                            ),
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -73,12 +71,10 @@ class _MainOnboardingState extends State<MainOnboarding> {
                                       height: ScreenUtils.getDesignHeight(18),
                                     )
                                   : Visibility(
-                                      visible:
-                                          value.currentPage > 0 ? true : false,
+                                      visible: value.currentPage > 0 ? true : false,
                                       child: GestureDetector(
                                         onTap: () => value.currentPage > 0
-                                            ? Provider.of<MainOnboardingModel>(
-                                                    context,
+                                            ? Provider.of<MainOnboardingModel>(context,
                                                     listen: false)
                                                 .previousPage()
                                             : null,
@@ -87,16 +83,13 @@ class _MainOnboardingState extends State<MainOnboarding> {
                                           child: CustomTextWidget(
                                             'Back',
                                             isDynamic: false,
-                                            width:
-                                                ScreenUtils.getDesignWidth(30),
-                                            height:
-                                                ScreenUtils.getDesignHeight(18),
+                                            width: ScreenUtils.getDesignWidth(30),
+                                            height: ScreenUtils.getDesignHeight(18),
                                             style: TextStyle(
                                                 fontFamily: CircularBook,
                                                 fontWeight: FontWeight.w700,
                                                 foreground: Paint()
-                                                  ..shader =
-                                                      PRIMARY_GRADIENT_TEXT_COLOR,
+                                                  ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                                                 fontSize: 14),
                                           ),
                                         ),
@@ -106,10 +99,9 @@ class _MainOnboardingState extends State<MainOnboarding> {
                                 currentPage: value.currentPage,
                               ),
                               GestureDetector(
-                                onTap: () => Provider.of<MainOnboardingModel>(
-                                        context,
-                                        listen: false)
-                                    .nextPage(),
+                                onTap: () =>
+                                    Provider.of<MainOnboardingModel>(context, listen: false)
+                                        .nextPage(),
                                 child: Container(
                                   alignment: Alignment.topRight,
                                   child: CustomTextWidget(
@@ -121,8 +113,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                                       fontFamily: CircularBook,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 14,
-                                      foreground: Paint()
-                                        ..shader = PRIMARY_GRADIENT_TEXT_COLOR,
+                                      foreground: Paint()..shader = PRIMARY_GRADIENT_TEXT_COLOR,
                                     ),
                                   ),
                                 ),
@@ -134,13 +125,14 @@ class _MainOnboardingState extends State<MainOnboarding> {
               );
             }),
             GestureDetector(
-              onTap: () => locator<NavigationService>().pushNamed(
-                  SETUP_PURCHASE_ACCOUNT_ROUTE,
-                  args: SearchType.SETUP_PURCHASES),
+              onTap: () => Navigator.pushNamed(
+                context,
+                SETUP_PURCHASE_ACCOUNT_ROUTE,
+                arguments: SearchType.SETUP_PURCHASES,
+              ),
               child: Container(
                 alignment: Alignment.topRight,
-                margin: EdgeInsets.only(
-                    top: ScreenUtils.getDesignHeight(40), right: 24),
+                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40), right: 24),
                 child: CustomTextWidget(
                   'Skip',
                   isDynamic: false,
@@ -183,8 +175,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(
-                    top: ScreenUtils.getDesignHeight(20), left: 24, right: 24),
+                margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20), left: 24, right: 24),
                 child: CustomTextWidget(
                   description,
                   isDynamic: false,

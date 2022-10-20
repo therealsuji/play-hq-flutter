@@ -2,18 +2,18 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/networks/app_network.dart';
-import 'package:play_hq/helpers/networks/app_config.dart';
-import 'package:play_hq/models/common_models/page_model.dart';
-import 'package:play_hq/models/orders_model/orders.dart';
-import 'package:play_hq/models/sales/sales_payload_model.dart';
-import 'package:play_hq/models/errors/exceptions.dart';
-import 'package:play_hq/repository/clients/sales_repository.dart';
-import 'package:play_hq/services/base_managers/error.dart';
 
+import '../../helpers/app_enums.dart';
+import '../../helpers/networks/app_config.dart';
+import '../../helpers/networks/app_network.dart';
+import '../../models/common_models/page_model.dart';
+import '../../models/errors/exceptions.dart';
+import '../../models/orders_model/orders.dart';
 import '../../models/sales/my_sales_payload.dart';
-import '../../service_locator.dart';
+import '../../models/sales/sales_payload_model.dart';
+import '../../injection_container.dart';
+import '../../services/base_managers/error.dart';
+import '../clients/sales_repository.dart';
 
 class SaleDelegate extends SaleRepository {
   final _networkCalls = Network.shared;
@@ -23,13 +23,13 @@ class SaleDelegate extends SaleRepository {
     try {
       await _networkCalls.performRequest(APIConfig.createSale, HttpAction.POST, body: body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -43,13 +43,13 @@ class SaleDelegate extends SaleRepository {
           await _networkCalls.performRequest(APIConfig.fetchMyActiveSales, HttpAction.GET);
       return compute(mySalesPayloadFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -63,13 +63,13 @@ class SaleDelegate extends SaleRepository {
           await _networkCalls.performRequest(APIConfig.getOrdersForSale(saleId), HttpAction.GET);
       return compute(ordersModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -81,13 +81,13 @@ class SaleDelegate extends SaleRepository {
     try {
       await _networkCalls.performRequest(APIConfig.deleteMySale(id), HttpAction.DELETE);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -106,13 +106,13 @@ class SaleDelegate extends SaleRepository {
           await PagedResult<SalesPayload>(sales, response.body).getResult();
       return result;
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );

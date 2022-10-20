@@ -1,16 +1,13 @@
-
-
 import 'package:event_bus/event_bus.dart';
-import 'package:play_hq/repository/clients/purchase_repository.dart';
-import 'package:play_hq/view_models/sales/sales_details/sales_details_view_model.dart';
 
 import '../../../models/loading_event_model.dart';
-import '../../../service_locator.dart';
+import '../../../repository/clients/purchase_repository.dart';
+import '../../../injection_container.dart';
+import 'sales_details_view_model.dart';
 
 class ISalesDetailsViewModel extends SalesDetailsViewModel {
-
-  final _purchasesAPI = locator<PurchasesRepository>();
-  final _eventBus = locator<EventBus>();
+  final _purchasesAPI = sl<PurchasesRepository>();
+  final _eventBus = sl<EventBus>();
 
   String? _price;
 
@@ -20,24 +17,20 @@ class ISalesDetailsViewModel extends SalesDetailsViewModel {
     notifyListeners();
   }
 
-
   @override
   void makePurchaseRequest(String saleId) async {
-
     _eventBus.fire(LoadingEvent.show());
     var purchaseRequest = {
-      "saleId" : saleId,
-      "newPrice" : _price,
+      "saleId": saleId,
+      "newPrice": _price,
     };
-    try{
+    try {
       await _purchasesAPI.createPurchaseRequest(purchaseRequest);
       _eventBus.fire(LoadingEvent.hide());
-    }catch (e) {
+    } catch (e) {
       print(e.toString());
       _eventBus.fire(LoadingEvent.hide());
     }
     notifyListeners();
   }
-
-
 }

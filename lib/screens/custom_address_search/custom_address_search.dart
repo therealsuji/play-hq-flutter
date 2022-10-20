@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
-import 'package:play_hq/service_locator.dart';
+import 'package:play_hq/injection_container.dart';
 import 'package:play_hq/helpers/app_strings.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/view_models.dart';
@@ -12,8 +12,7 @@ import 'package:provider/provider.dart';
 
 class CustomAddressSearchScreen extends StatefulWidget {
   @override
-  _CustomAddressSearchScreenState createState() =>
-      _CustomAddressSearchScreenState();
+  _CustomAddressSearchScreenState createState() => _CustomAddressSearchScreenState();
 }
 
 class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
@@ -43,21 +42,32 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
                       margin: EdgeInsets.only(top: 25),
                       width: ScreenUtils.bodyWidth,
                       height: 1.5,
-                      decoration: BoxDecoration(gradient: PRIMARY_GRADIENT,
-                          borderRadius: BorderRadius.circular(5.0)),
+                      decoration: BoxDecoration(
+                          gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(5.0)),
                     ),
-                    if (value.autoCompleteResults.isEmpty) Container() else Expanded(
-                        child: ListView.separated(
-                            itemBuilder: (BuildContext context, int index) {
-                              return GestureDetector(
-                                  onTap: () {
-                                      Provider.of<CustomAddressSearchModel>(context ,listen: false).addLocation(value.autoCompleteResults[index].placeId.toString() , value.autoCompleteResults[index].mainText.toString());
-                                  },
-                                  child: _customAddress(value.autoCompleteResults[index].mainText.toString(), value.autoCompleteResults[index].secondaryText.toString()));
-                            },
-                            separatorBuilder: (BuildContext context, int index) {
-                              return SizedBox(height: 15,);
-                            }, itemCount: value.autoCompleteResults.length))
+                    if (value.autoCompleteResults.isEmpty)
+                      Container()
+                    else
+                      Expanded(
+                          child: ListView.separated(
+                              itemBuilder: (BuildContext context, int index) {
+                                return GestureDetector(
+                                    onTap: () {
+                                      Provider.of<CustomAddressSearchModel>(context, listen: false)
+                                          .addLocation(
+                                              value.autoCompleteResults[index].placeId.toString(),
+                                              value.autoCompleteResults[index].mainText.toString());
+                                    },
+                                    child: _customAddress(
+                                        value.autoCompleteResults[index].mainText.toString(),
+                                        value.autoCompleteResults[index].secondaryText.toString()));
+                              },
+                              separatorBuilder: (BuildContext context, int index) {
+                                return SizedBox(
+                                  height: 15,
+                                );
+                              },
+                              itemCount: value.autoCompleteResults.length))
                   ],
                 ),
               );
@@ -87,7 +97,7 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
     );
   }
 
-  Widget _customAddress(String title, String subtitle){
+  Widget _customAddress(String title, String subtitle) {
     return Container(
       child: Column(
         children: [
@@ -116,10 +126,20 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(title , style: Theme.of(context).primaryTextTheme.headline4,),
+                      Text(
+                        title,
+                        style: Theme.of(context).primaryTextTheme.headline4,
+                      ),
                       Container(
                           margin: EdgeInsets.only(top: 5),
-                          child: Text(subtitle , overflow: TextOverflow.fade, style: Theme.of(context).primaryTextTheme.headline5!.copyWith(color: SUB_TEXT_COLOR),))
+                          child: Text(
+                            subtitle,
+                            overflow: TextOverflow.fade,
+                            style: Theme.of(context)
+                                .primaryTextTheme
+                                .headline5!
+                                .copyWith(color: SUB_TEXT_COLOR),
+                          ))
                     ],
                   ),
                 ),
@@ -130,10 +150,8 @@ class _CustomAddressSearchScreenState extends State<CustomAddressSearchScreen> {
             margin: EdgeInsets.only(top: 15),
             width: ScreenUtils.bodyWidth,
             height: 1.5,
-            decoration: BoxDecoration(
-              color: SUB_TEXT_COLOR,
-              borderRadius: BorderRadius.circular(5.0)
-            ),
+            decoration:
+                BoxDecoration(color: SUB_TEXT_COLOR, borderRadius: BorderRadius.circular(5.0)),
           )
         ],
       ),

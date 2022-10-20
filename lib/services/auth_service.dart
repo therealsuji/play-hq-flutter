@@ -1,22 +1,24 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:play_hq/helpers/app_enums.dart';
-import 'package:play_hq/helpers/app_secure_storage.dart';
-import 'package:play_hq/models/common_models/auth_token_model.dart';
-import 'package:play_hq/models/common_models/user/user_details.dart';
-import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
-import 'package:play_hq/repository/clients/authentication_repository.dart';
-import 'package:play_hq/repository/clients/user_repository.dart';
-import 'package:play_hq/service_locator.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import '../helpers/app_enums.dart';
+import '../helpers/app_secure_storage.dart';
+import '../models/common_models/auth_token_model.dart';
+import '../models/common_models/user/user_details.dart';
+import '../models/common_models/user/user_game_preferences.dart';
+import '../repository/clients/authentication_repository.dart';
+import '../repository/clients/user_repository.dart';
+import '../injection_container.dart';
 
 class AuthService {
   final _googleSignIn = GoogleSignIn();
-  final _authRepository = locator<AuthenticationRepository>();
-  final _userRepositry = locator<UserRepository>();
+  final _authRepository = sl<AuthenticationRepository>();
+  final _userRepositry = sl<UserRepository>();
   static const USER_DETAILS_KEY = "userDetailsKey";
   static const USER_PREFERENCES_KEY = "userPreferencesKey";
   static const JWT_KEY = "jwtKey";
@@ -119,7 +121,8 @@ class AuthService {
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
     // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     final loggedInUser = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
@@ -139,7 +142,8 @@ class AuthService {
     String accessToken = await SecureStorage.readValue(JWT_KEY) ?? '';
     String refreshToken = await SecureStorage.readValue(REFRESH_KEY) ?? '';
 
-    AuthTokenModel authTokens = AuthTokenModel(refreshToken: refreshToken, accessToken: accessToken);
+    AuthTokenModel authTokens =
+        AuthTokenModel(refreshToken: refreshToken, accessToken: accessToken);
     try {
       var response = await _authRepository.renewTokens(authTokens);
       var localToken = response?.token!.accessToken;

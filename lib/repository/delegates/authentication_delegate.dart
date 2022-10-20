@@ -11,7 +11,7 @@ import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/authentication_repository.dart';
 import 'package:play_hq/services/base_managers/error.dart';
 
-import '../../service_locator.dart';
+import '../../injection_container.dart';
 
 class AuthenticationDelegate extends AuthenticationRepository {
   final _networkCalls = Network.shared;
@@ -23,13 +23,13 @@ class AuthenticationDelegate extends AuthenticationRepository {
           await _networkCalls.performRequest(APIConfig.login, HttpAction.POST, body: body);
       return compute(authUserModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
@@ -43,13 +43,13 @@ class AuthenticationDelegate extends AuthenticationRepository {
           await _networkCalls.performRequest(APIConfig.renewJwt, HttpAction.POST, body: body);
       return compute(authUserModelFromJson, response.body);
     } on TimeoutException {
-      locator<ErrorManager>().showError(TimeoutFailure());
+      sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
     } on SocketException {
-      locator<ErrorManager>().showError(NetworkFailure());
+      sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();
     } catch (e) {
-      locator<ErrorManager>().showError(UnknownFailure());
+      sl<ErrorManager>().showError(UnknownFailure());
       throw UnknownFailure(
         message: e.toString(),
       );
