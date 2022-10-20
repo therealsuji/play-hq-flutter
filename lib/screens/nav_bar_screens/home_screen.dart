@@ -185,47 +185,67 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: EdgeInsets.only(
                             top: ScreenUtils.getDesignWidth(24.0),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                child: GenreWidget(
-                                  gradient: GENRE_YELLOW_GRADIENT,
-                                  name: "ACTION",
-                                  imageUrl: ACTION_GENRE_IMAGE,
-                                ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                                    args: GameListArguments(
-                                        screenTitle: "Action Games",
-                                        apiType: GameLists.GENRE,
-                                        args: {"genre": "action"})),
-                              ),
-                              InkWell(
-                                child: GenreWidget(
-                                  gradient: GENRE_BLUE_GRADIENT,
-                                  name: "ADVENTURE",
-                                  imageUrl: ADVENTURE_GENRE_IMAGE,
-                                ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                                    args: GameListArguments(
-                                        screenTitle: "Action Games",
-                                        apiType: GameLists.GENRE,
-                                        args: {"genre": "adventure"})),
-                              ),
-                              InkWell(
-                                child: GenreWidget(
-                                  gradient: GENRE_GREEN_GRADIENT,
-                                  name: "RACING",
-                                  imageUrl: RACING_GENRE_IMAGE,
-                                ),
-                                onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                                    args: GameListArguments(
-                                        screenTitle: "Action Games",
-                                        apiType: GameLists.GENRE,
-                                        args: {"genre": "racing"})),
-                              ),
-                            ],
-                          ),
+                          child: Consumer<HomeScreenModel>(builder: (_, model, __) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: model.hasInitialDataLoaded
+                                  ? model.prefGenres
+                                      .map((e) => InkWell(
+                                            child: GenreWidget(
+                                              //TODO: this needs to be dynamic
+                                              gradient: GENRE_YELLOW_GRADIENT,
+                                              name: e.name ?? "",
+                                              //TODO: this needs to be dynamic
+                                              imageUrl: ACTION_GENRE_IMAGE,
+                                            ),
+                                            onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                                                args: GameListArguments(
+                                                    screenTitle: "${e.name ?? ''} Games",
+                                                    apiType: GameLists.GENRE,
+                                                    args: {"genre": e.id.toString()})),
+                                          ))
+                                      .toList()
+                                  : <Widget>[for (int i = 0; i < 3; i++) SkeletonGenreWidget()],
+                              //  [
+                              // InkWell(
+                              //   child: GenreWidget(
+                              //     gradient: GENRE_YELLOW_GRADIENT,
+                              //     name: "ACTION",
+                              //     imageUrl: ACTION_GENRE_IMAGE,
+                              //   ),
+                              //   onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                              //       args: GameListArguments(
+                              //           screenTitle: "Action Games",
+                              //           apiType: GameLists.GENRE,
+                              //           args: {"genre": "action"})),
+                              // ),
+                              //   InkWell(
+                              //     child: GenreWidget(
+                              //       gradient: GENRE_BLUE_GRADIENT,
+                              //       name: "ADVENTURE",
+                              //       imageUrl: ADVENTURE_GENRE_IMAGE,
+                              //     ),
+                              //     onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                              //         args: GameListArguments(
+                              //             screenTitle: "Action Games",
+                              //             apiType: GameLists.GENRE,
+                              //             args: {"genre": "adventure"})),
+                              //   ),
+                              //   InkWell(
+                              //     child: GenreWidget(
+                              //       gradient: GENRE_GREEN_GRADIENT,
+                              //       name: "RACING",
+                              //       imageUrl: RACING_GENRE_IMAGE,
+                              //     ),
+                              //     onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
+                              //         args: GameListArguments(
+                              //             screenTitle: "Action Games",
+                              //             apiType: GameLists.GENRE,
+                              //             args: {"genre": "racing"})),
+                              //   ),
+                              // ],
+                            );
+                          }),
                         ),
                       ],
                     ),

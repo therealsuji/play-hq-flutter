@@ -129,16 +129,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 margin: EdgeInsets.all(1.0),
                                 decoration: BoxDecoration(),
                                 child: OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    backgroundColor: BACKGROUND_COLOR,
-                                    foregroundColor: Colors.white,
-                                  ),
+                                  style: OutlinedButton.styleFrom(backgroundColor: BACKGROUND_COLOR),
                                   child: Text(
                                     "Change Preferences",
-                                    style: Theme.of(context)
-                                        .primaryTextTheme
-                                        .button!
-                                        .copyWith(fontSize: 14.0),
+                                    style: Theme.of(context).primaryTextTheme.button!.copyWith(fontSize: 14.0),
                                   ),
                                   onPressed: () {},
                                 ),
@@ -215,10 +209,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _settingsDetailsWidget(
-                                'Facebook', false, false, 'assets/icons/facebook.svg'),
-                            _settingsDetailsWidget(
-                                'Instagram', false, false, 'assets/icons/instagram.svg'),
+                            _settingsDetailsWidget('Facebook', false, false, 'assets/icons/facebook.svg'),
+                            _settingsDetailsWidget('Instagram', false, false, 'assets/icons/instagram.svg'),
                           ],
                         ),
                         95,

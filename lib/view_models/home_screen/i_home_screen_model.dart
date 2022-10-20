@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:api_cache_manager/models/cache_db_model.dart';
 import 'package:api_cache_manager/utils/cache_manager.dart';
+import 'package:play_hq/models/app_genre_model.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
 import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
@@ -24,6 +25,7 @@ class IHomeScreenModel extends HomeScreenModel {
   List<GameResults> _popularGameThisYear = [];
   List<GameResults> _upcomingGamesThisYear = [];
   List<GameResults> _recommendedGames = [];
+  List<Genre> _prefGenre = [];
   String? _displayName;
 
   @override
@@ -37,6 +39,7 @@ class IHomeScreenModel extends HomeScreenModel {
     UserDetails userDetails = await locator<AuthService>().getUserDetails();
     UserGamePreferences gamePreferences = await locator<AuthService>().getUserGamePreferences();
     _displayName = userDetails.displayName ?? "";
+    _prefGenre = gamePreferences.genres;
     try {
       loadingData();
 
@@ -111,4 +114,7 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   List<GameResults> get recommendedGames => _recommendedGames;
+
+  @override
+  List<Genre> get prefGenres => _prefGenre;
 }

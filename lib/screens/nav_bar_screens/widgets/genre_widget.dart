@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/cached_image_widget.dart';
+import 'package:skeletons/skeletons.dart';
 
 class GenreWidget extends StatelessWidget {
   final String name;
@@ -44,6 +45,19 @@ class GenreWidget extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class SkeletonGenreWidget extends StatelessWidget {
+  final double height;
+  final double width;
+  const SkeletonGenreWidget({Key? key, this.height = 99, this.width = 99}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SkeletonLine(
+      style: SkeletonLineStyle(height: height, width: width, borderRadius: BorderRadius.circular(8)),
     );
   }
 }
