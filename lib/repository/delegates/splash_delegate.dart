@@ -9,7 +9,7 @@ import '../../helpers/networks/app_network.dart';
 import '../../models/app_user_model.dart';
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
-import '../../services/base_managers/error.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../clients/splash_repository.dart';
 
 class SplashDelegate extends SplashRepository {

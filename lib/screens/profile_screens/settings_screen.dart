@@ -94,21 +94,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         labelText: widget.userDetails.name ?? "Your Name",
                         iconData: Icons.account_circle_outlined,
                         width: 67,
-                        onChanged: (name) {},
+                        onChanged: (name) => _name = name,
                       ),
                       _profileDetails(
                         title: 'Display Name',
                         labelText: widget.userDetails.displayName ?? 'Display Name',
                         iconData: Icons.account_circle_sharp,
                         width: 85,
-                        onChanged: (displayName) {},
+                        onChanged: (displayName) => _displayName = displayName,
                       ),
                       _profileDetails(
                         title: 'Mobile Number',
                         labelText: widget.userDetails.phone ?? '0774147787',
                         iconData: Icons.call_outlined,
                         width: 95,
-                        onChanged: (phoneNumber) {},
+                        onChanged: (phoneNumber) => _phoneNumber = phoneNumber,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -129,10 +129,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 margin: EdgeInsets.all(1.0),
                                 decoration: BoxDecoration(),
                                 child: OutlinedButton(
-                                  style: OutlinedButton.styleFrom(backgroundColor: BACKGROUND_COLOR),
+                                  style:
+                                      OutlinedButton.styleFrom(backgroundColor: BACKGROUND_COLOR),
                                   child: Text(
                                     "Change Preferences",
-                                    style: Theme.of(context).primaryTextTheme.button!.copyWith(fontSize: 14.0),
+                                    style: Theme.of(context)
+                                        .primaryTextTheme
+                                        .button!
+                                        .copyWith(fontSize: 14.0),
                                   ),
                                   onPressed: () {},
                                 ),
@@ -143,6 +147,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               buttonText: 'Save Changes',
                               gradient: PRIMARY_GRADIENT,
                               width: ScreenUtils.getDesignWidth(156.0),
+                              onPressed: (() => context.read<SettingsViewModel>().updateUserDetails(
+                                    name: _name,
+                                    displayName: _displayName,
+                                    phoneNumber: _phoneNumber,
+                                  )),
                             ),
                           ],
                         ),
@@ -209,8 +218,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _settingsDetailsWidget('Facebook', false, false, 'assets/icons/facebook.svg'),
-                            _settingsDetailsWidget('Instagram', false, false, 'assets/icons/instagram.svg'),
+                            _settingsDetailsWidget(
+                                'Facebook', false, false, 'assets/icons/facebook.svg'),
+                            _settingsDetailsWidget(
+                                'Instagram', false, false, 'assets/icons/instagram.svg'),
                           ],
                         ),
                         95,

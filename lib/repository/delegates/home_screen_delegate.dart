@@ -9,7 +9,7 @@ import '../../helpers/networks/app_network.dart';
 import '../../models/errors/exceptions.dart';
 import '../../models/sales/my_sales_payload.dart';
 import '../../injection_container.dart';
-import '../../services/base_managers/error.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../clients/home_screen_repository.dart';
 
 class HomeDelegate implements HomeRepository {

@@ -9,7 +9,7 @@ import 'package:play_hq/models/app_user_model.dart' as user_model;
 import 'package:play_hq/models/app_user_model.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/authentication_repository.dart';
-import 'package:play_hq/services/base_managers/error.dart';
+import 'package:play_hq/services/base_managers/error_manager.dart';
 
 import '../../injection_container.dart';
 

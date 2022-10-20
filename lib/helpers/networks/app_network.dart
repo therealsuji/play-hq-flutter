@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -8,7 +9,7 @@ import 'package:http/http.dart';
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
 import '../../services/auth_service.dart';
-import '../../services/base_managers/error.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../app_enums.dart';
 import '../app_secure_storage.dart';
 
@@ -59,7 +60,7 @@ class Network {
 
       //Get the jwtToken from secure storage and if existing, add to the header
       String? bearerToken = await SecureStorage.readValue(AuthService.JWT_KEY);
-      // log(bearerToken ?? "No token found");
+      log(bearerToken ?? "No token found");
       if (bearerToken != null && !noToken) {
         _headers.addAll({'Authorization': 'Bearer $bearerToken'});
       }

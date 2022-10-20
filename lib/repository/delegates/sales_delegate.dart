@@ -12,7 +12,7 @@ import '../../models/orders_model/orders.dart';
 import '../../models/sales/my_sales_payload.dart';
 import '../../models/sales/sales_payload_model.dart';
 import '../../injection_container.dart';
-import '../../services/base_managers/error.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../clients/sales_repository.dart';
 
 class SaleDelegate extends SaleRepository {

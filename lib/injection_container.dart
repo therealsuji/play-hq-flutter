@@ -33,7 +33,7 @@ import 'repository/delegates/splash_delegate.dart';
 import 'repository/delegates/user_delegate.dart';
 import 'repository/repositories.dart';
 import 'services/auth_service.dart';
-import 'services/base_managers/error.dart';
+import 'services/base_managers/error_manager.dart';
 import 'services/dialog_service.dart';
 import 'services/error_service.dart';
 import 'services/nav_service.dart';
@@ -72,6 +72,7 @@ void init() {
       authService: sl(),
       navigationService: sl(),
       settingsRepository: sl(),
+      errorManager: sl(),
     ),
   );
 

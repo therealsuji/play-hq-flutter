@@ -6,7 +6,7 @@ import '../../helpers/networks/app_config.dart';
 import '../../helpers/networks/app_network.dart';
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
-import '../../services/base_managers/error.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../clients/purchase_repository.dart';
 
 class PurchaseDelegate extends PurchasesRepository {

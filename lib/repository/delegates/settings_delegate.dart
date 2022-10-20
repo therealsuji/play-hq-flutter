@@ -10,6 +10,10 @@ class SettingsDelegate implements SettingsRepository {
 
   @override
   void updateUserDetails(Map<String, String> body) async {
-    await networkCalls.performRequest(APIConfig.updateUserDetails, HttpAction.POST);
+    await networkCalls.performRequest(
+      APIConfig.updateUserDetails,
+      HttpAction.PUT,
+      body: body,
+    );
   }
 }

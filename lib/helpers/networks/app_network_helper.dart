@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
-import '../../services/base_managers/error.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../app_enums.dart';
 import 'app_network.dart';
 

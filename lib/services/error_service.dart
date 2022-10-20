@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../models/errors/exceptions.dart';
 import '../widgets/custom_snackbar.dart';
-import 'base_managers/error.dart';
+import 'base_managers/error_manager.dart';
 import 'nav_service.dart';
 
 class ErrorService extends ErrorManager {
