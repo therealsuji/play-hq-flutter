@@ -1,3 +1,6 @@
+import 'package:play_hq/helpers/app_assets.dart';
+import 'package:play_hq/helpers/app_colors.dart';
+
 import '../../injection_container.dart';
 import '../../models/app_genre_model.dart';
 import '../../models/common_models/user/user_details.dart';
@@ -21,6 +24,12 @@ class IHomeScreenModel extends HomeScreenModel {
   List<GameResults> _upcomingGamesThisYear = [];
   List<GameResults> _recommendedGames = [];
   List<Genre> _prefGenre = [];
+  // use this when user hasnt set any preferred genres
+  List<Genre> _defaultGenre = [
+    Genre(id: 4, imageBackground: ACTION_GENRE_IMAGE, name: "Action", gradient: GENRE_YELLOW_GRADIENT),
+    Genre(id: 3, imageBackground: ADVENTURE_GENRE_IMAGE, name: "Adventure", gradient: GENRE_BLUE_GRADIENT),
+    Genre(id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GREEN_GRADIENT)
+  ];
   String? _displayName;
 
   @override
@@ -68,9 +77,8 @@ class IHomeScreenModel extends HomeScreenModel {
         }
         notifyListeners();
       });
-      var n4 = _gameApi
-          .getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id))))
-          .then((games) {
+      var n4 =
+          _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
         if (games.results!.length > 0) {
           _recommendedGames = games.results ?? [];
         }
@@ -112,5 +120,5 @@ class IHomeScreenModel extends HomeScreenModel {
   List<GameResults> get recommendedGames => _recommendedGames;
 
   @override
-  List<Genre> get prefGenres => _prefGenre;
+  List<Genre> get prefGenres => _prefGenre.length != 0 ? _prefGenre : _defaultGenre;
 }

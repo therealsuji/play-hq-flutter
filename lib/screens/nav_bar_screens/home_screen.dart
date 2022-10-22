@@ -185,10 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       .map((e) => InkWell(
                                             child: GenreWidget(
                                               //TODO: this needs to be dynamic
-                                              gradient: GENRE_YELLOW_GRADIENT,
+                                              gradient: e.gradient ?? GENRE_YELLOW_GRADIENT,
                                               name: e.name ?? "",
                                               //TODO: this needs to be dynamic
-                                              imageUrl: ACTION_GENRE_IMAGE,
+                                              imageUrl: e.imageBackground ?? ACTION_GENRE_IMAGE,
                                             ),
                                             onTap: () => Navigator.pushNamed(
                                               context,
@@ -320,8 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: GamesWidget(
                             title: val.popularGamesThisYear[index].name,
                             subTitle: val.popularGamesThisYear[index].released != null
-                                ? DateTime.parse(val.popularGamesThisYear[index].released!)
-                                    .format('dd-MM-yyyy')
+                                ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
                                 : "",
                             backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
                             gradient: PRIMARY_GRADIENT,
@@ -396,8 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: GamesWidget(
                             title: val.upComingGamesThisYear[index].name,
                             subTitle: val.upComingGamesThisYear[index].released != null
-                                ? DateTime.parse(val.upComingGamesThisYear[index].released!)
-                                    .format('dd-MM-yyyy')
+                                ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
                                 : "",
                             backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
                             gradient: PRIMARY_GRADIENT,
@@ -664,8 +662,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 30),
             height: 1.5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
@@ -678,12 +675,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Spacer(),
                 CustomTextWidget(
-                  platforms.firstWhere(
-                          (element) => element['id'] == salesPayload.platform)['name'] ??
-                      'Not Found',
+                  platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name'] ?? 'Not Found',
                   isDynamic: false,
-                  style:
-                      Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
+                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
                 )
               ],
             ),
@@ -691,8 +685,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
             height: 1.5,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
+            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
@@ -720,8 +713,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Container(
                   height: ScreenUtils.getDesignHeight(40),
                   width: ScreenUtils.getDesignWidth(100),
-                  decoration: BoxDecoration(
-                      gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(gradient: PRIMARY_GRADIENT, borderRadius: BorderRadius.circular(5)),
                   child: Center(
                       child: Text(
                     'More Details',
