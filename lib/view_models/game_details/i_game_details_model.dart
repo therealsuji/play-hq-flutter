@@ -1,6 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:intl/intl.dart';
 
+import '../../injection_container.dart';
 import '../../models/game_details_models/game_details_model.dart';
 import '../../models/game_details_models/game_screenshot_modal.dart';
 import '../../models/game_status.dart';
@@ -8,7 +9,6 @@ import '../../models/loading_event_model.dart';
 import '../../models/rawg_models/rawg_game_details.dart';
 import '../../models/sales/sales_payload_model.dart';
 import '../../repository/clients/game_details_repository.dart';
-import '../../injection_container.dart';
 import '../../services/nav_service.dart';
 import 'game_details_model.dart';
 
@@ -32,9 +32,7 @@ class IGameDetailsModel extends GameDetailsModel {
   @override
   Future<void> getGameDetails(int id) async {
     try {
-      _eventBus.fire(LoadingEvent.show());
-
-      loadingData();
+      loadingData(showOverlay: true);
       await _gameDetailsApi.getGameDetails(id).then((model) {
         if (model != null) {
           model.gameDetails!.platforms!.removeWhere((element) => element.id == 4);
@@ -60,7 +58,6 @@ class IGameDetailsModel extends GameDetailsModel {
         _salesPayload = value.saleItems ?? [];
       });
       dataLoaded();
-      _eventBus.fire(LoadingEvent.hide());
       notifyListeners();
     } catch (e) {
       print(e.toString());
