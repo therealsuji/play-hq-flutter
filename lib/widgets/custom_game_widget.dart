@@ -13,6 +13,8 @@ class GamesWidget extends StatelessWidget {
   final Gradient? gradient;
   final double? height;
   final double? width;
+  final double? titleFontSize;
+  final double? subTitleFontSize;
 
   final String? title;
   final String? subTitle;
@@ -22,6 +24,8 @@ class GamesWidget extends StatelessWidget {
     this.color,
     this.height = 160,
     this.width = 100,
+    this.titleFontSize = 12,
+    this.subTitleFontSize = 12,
     this.gradient,
     this.title,
     this.subTitle,
@@ -64,22 +68,32 @@ class GamesWidget extends StatelessWidget {
             Positioned(
               bottom: 0.0,
               child: Container(
-                width: ScreenUtils.getDesignWidth(width!),
-                padding: EdgeInsets.only(left: 9.0, bottom: 10.0),
+                margin: EdgeInsets.only(left: 10.0, bottom: 10.0 , right: 10.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    CustomTextWidget(
-                      title ?? "",
-                      isDynamic: true,
-                      style: TextStyle(
-                        fontFamily: CircularBook,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                    Container(
+                      width: ScreenUtils.getDesignWidth(width!),
+                      child: Row(
+                        children: [
+                          Flexible(
+                            flex:1,
+                            child: Container(
+                              child: Text(
+                                title ?? "",
+                                style: TextStyle(
+                                  fontFamily: Neusa,
+                                  fontSize: titleFontSize,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  overflow: TextOverflow.visible
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      maxWidth: ScreenUtils.getDesignWidth(70.0),
-                      minWidth: ScreenUtils.getDesignWidth(30.0),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5.0),
@@ -98,6 +112,7 @@ class GamesWidget extends StatelessWidget {
                               gradient: gradient!,
                               style: Theme.of(context).primaryTextTheme.headline6!.copyWith(
                                     color: Colors.white,
+                                fontSize: subTitleFontSize
                                   ),
                             ),
                     ),

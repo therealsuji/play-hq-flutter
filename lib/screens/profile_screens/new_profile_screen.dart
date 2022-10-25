@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
+import 'package:play_hq/widgets/custom_game_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/app_assets.dart';
@@ -8,6 +11,8 @@ import '../../helpers/app_fonts.dart';
 import '../../helpers/app_screen_utils.dart';
 import '../../helpers/app_strings.dart';
 import '../../models/common_models/game_preferences/response_body.dart';
+import '../../models/game_details_models/game_details_arguments.dart';
+import '../../services/nav_service.dart';
 import '../../view_models/profile/main_profile/main_profile_model.dart';
 import '../../widgets/custom_game_widget.dart';
 
@@ -16,9 +21,9 @@ class TestingPage extends StatefulWidget {
   _TestingPageState createState() => _TestingPageState();
 }
 
-class _TestingPageState extends State<TestingPage> with SingleTickerProviderStateMixin {
-  late ScrollController _scrollController;
-  late TabController _tabController;
+class _TestingPageState extends State<TestingPage>
+    with SingleTickerProviderStateMixin {
+  var _scrollController, _tabController;
 
   @override
   void initState() {

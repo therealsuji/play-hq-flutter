@@ -21,7 +21,7 @@ class PlatformBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final model = Provider.of<CustomSearchModel>(context , listen: false);
+    //final model = Provider.of<CustomSearchModel>(context , listen: false);
 
     return Container(
       margin: EdgeInsets.only(
@@ -89,7 +89,7 @@ class PlatformBottomSheet extends StatelessWidget {
                         },
                       ),
                       onTap: () =>
-                          model.addPlatform(index, platformList![index].id ?? 0),
+                          Provider.of<GameDetailsModel>(context, listen: false).selectedPlatform(platformList![index].id ?? 0)
                     );
                   default:
                     return Container(child: Text('Error'),);
