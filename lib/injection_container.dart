@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
 import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
 import 'package:play_hq/view_models/profile/settings/settings_view_model.dart';
+import 'package:play_hq/view_models/view_models.dart';
 
 import 'helpers/networks/app_network.dart';
 import 'repository/clients/authentication_repository.dart';
@@ -72,6 +73,14 @@ void init() {
       authService: sl(),
       navigationService: sl(),
       settingsRepository: sl(),
+      errorManager: sl(),
+    ),
+  );
+
+  sl.registerFactory<GameDetailsViewModel>(
+    () => IGameDetailsViewModel(
+      gameDetailsRepository: sl(),
+      navigationService: sl(),
       errorManager: sl(),
     ),
   );

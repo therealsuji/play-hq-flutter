@@ -1,20 +1,20 @@
-import 'package:event_bus/event_bus.dart';
 import 'package:intl/intl.dart';
+import 'package:play_hq/models/errors/exceptions.dart';
 
-import '../../injection_container.dart';
 import '../../models/game_details_models/game_details_model.dart';
 import '../../models/game_details_models/game_screenshot_modal.dart';
 import '../../models/game_status.dart';
-import '../../models/loading_event_model.dart';
 import '../../models/rawg_models/rawg_game_details.dart';
 import '../../models/sales/sales_payload_model.dart';
 import '../../repository/clients/game_details_repository.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../../services/nav_service.dart';
 import 'game_details_model.dart';
 
-class IGameDetailsModel extends GameDetailsModel {
-  final _eventBus = sl<EventBus>();
-  final _gameDetailsApi = sl<GameDetailsRepository>();
+class IGameDetailsViewModel extends GameDetailsViewModel {
+  final GameDetailsRepository gameDetailsRepository;
+  final NavigationService navigationService;
+  final ErrorManager errorManager;
 
   GameDetailModel _gameDetailsModel = GameDetailModel();
   List<SalesPayload> _salesPayload = [];
@@ -29,11 +29,17 @@ class IGameDetailsModel extends GameDetailsModel {
 
   int _platformId = 0;
 
+  IGameDetailsViewModel({
+    required this.gameDetailsRepository,
+    required this.navigationService,
+    required this.errorManager,
+  });
+
   @override
   Future<void> getGameDetails(int id) async {
     try {
       loadingData(showOverlay: true);
-      await _gameDetailsApi.getGameDetails(id).then((model) {
+      await gameDetailsRepository.getGameDetails(id).then((model) {
         if (model != null) {
           model.gameDetails!.platforms!.removeWhere((element) => element.id == 4);
           _gameDetailsModel = model.gameDetails!;
@@ -46,15 +52,15 @@ class IGameDetailsModel extends GameDetailsModel {
         }
       });
 
-      await _gameDetailsApi.getSimilarGames(mainGenre.toString(), platforms).then((value) {
+      await gameDetailsRepository.getSimilarGames(mainGenre.toString(), platforms).then((value) {
         _similarGames = value.results ?? [];
       });
 
-      await _gameDetailsApi.getGameStatus(id).then((model) {
+      await gameDetailsRepository.getGameStatus(id).then((model) {
         _gameStatus = model;
       });
 
-      await _gameDetailsApi.getSalesFromGame(id).then((value) {
+      await gameDetailsRepository.getSalesFromGame(id).then((value) {
         _salesPayload = value.saleItems ?? [];
       });
       dataLoaded();
@@ -66,7 +72,7 @@ class IGameDetailsModel extends GameDetailsModel {
 
   @override
   void navigateMainScreen() {
-    sl<NavigationService>().pop();
+    navigationService.pop();
   }
 
   @override
@@ -86,16 +92,14 @@ class IGameDetailsModel extends GameDetailsModel {
       "platform": _platformId
     };
 
-    print('body is $body');
-
-    _eventBus.fire(LoadingEvent.show());
-    await _gameDetailsApi.setGameLibrary(body);
+    // _eventBus.fire(LoadingEvent.show());
+    await gameDetailsRepository.setGameLibrary(body);
 
     getGameStatus(_gameDetailsModel.id ?? 0);
 
-    _eventBus.fire(LoadingEvent.hide());
+    // _eventBus.fire(LoadingEvent.hide());
 
-    sl<NavigationService>().pop();
+    navigationService.pop();
 
     notifyListeners();
   }
@@ -119,17 +123,14 @@ class IGameDetailsModel extends GameDetailsModel {
       "platform": _platformId
     };
 
-    print('Body ' + body.toString());
-    print('Platform ${_platformId.toString()}');
-
-    _eventBus.fire(LoadingEvent.show());
-    await _gameDetailsApi.setGameWishList(body);
+    // _eventBus.fire(LoadingEvent.show());
+    await gameDetailsRepository.setGameWishList(body);
 
     getGameStatus(_gameDetailsModel.id ?? 0);
 
-    _eventBus.fire(LoadingEvent.hide());
+    // _eventBus.fire(LoadingEvent.hide());
 
-    sl<NavigationService>().pop();
+    navigationService.pop();
 
     notifyListeners();
   }
@@ -142,25 +143,28 @@ class IGameDetailsModel extends GameDetailsModel {
 
   @override
   void deleteLibraryGame(int id) async {
-    _eventBus.fire(LoadingEvent.show());
-    await _gameDetailsApi.deleteLibraryGame(id);
+    // _eventBus.fire(LoadingEvent.show());
+    errorManager.showError(UnknownFailure(
+      message: "Removing from library game",
+    ));
+    await gameDetailsRepository.deleteLibraryGame(id);
     getGameStatus(id);
-    _eventBus.fire(LoadingEvent.hide());
+    // _eventBus.fire(LoadingEvent.hide());
     notifyListeners();
   }
 
   @override
   void deleteWishListGame(int id) async {
-    _eventBus.fire(LoadingEvent.show());
-    await _gameDetailsApi.deleteWishListGame(id);
+    // _eventBus.fire(LoadingEvent.show());
+    await gameDetailsRepository.deleteWishListGame(id);
     getGameStatus(id);
-    _eventBus.fire(LoadingEvent.hide());
+    // _eventBus.fire(LoadingEvent.hide());
     notifyListeners();
   }
 
   @override
   void getGameStatus(int id) async {
-    await _gameDetailsApi.getGameStatus(id).then((model) {
+    await gameDetailsRepository.getGameStatus(id).then((model) {
       _gameStatus = model;
     });
     notifyListeners();

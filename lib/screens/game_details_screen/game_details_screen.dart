@@ -32,18 +32,10 @@ class GameDetailsScreen extends StatefulWidget {
 
 class _GameDetailsScreenState extends State<GameDetailsScreen> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Provider.of<GameDetailsModel>(context, listen: false)
-        .getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
-  }
-
-  @override
   void initState() {
     super.initState();
+    context.read<GameDetailsViewModel>().getGameDetails(widget.gameDetailsArguments!.gameId ?? 0);
   }
-
-  List<String> temp = ["1", "2", "3", "4", "5"];
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +48,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         body: [
           Stack(
             children: [
-              Consumer<GameDetailsModel>(
+              Consumer<GameDetailsViewModel>(
                 builder: (_, model, __) {
                   return CachedNetworkImage(
                     height: ScreenUtils.getDesignHeight(293.0),
@@ -95,11 +87,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         BACK_ARROW_ICON,
                         height: ScreenUtils.getDesignHeight(27.0),
                       ),
-                      onTap: () => Provider.of<GameDetailsModel>(context, listen: false)
+                      onTap: () => Provider.of<GameDetailsViewModel>(context, listen: false)
                           .navigateMainScreen(),
                     ),
                   ),
-                  Consumer<GameDetailsModel>(
+                  Consumer<GameDetailsViewModel>(
                     builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.symmetric(
@@ -113,7 +105,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                               releaseDate: model.gameDetails.released,
                               rate: model.gameDetails.rating,
                             ),
-                            Consumer<GameDetailsModel>(
+                            Consumer<GameDetailsViewModel>(
                               builder: (_, status, __) {
                                 return Padding(
                                   padding: EdgeInsets.only(
@@ -128,8 +120,9 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                               width: ScreenUtils.bodyWidth,
                               height: 1.5,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  gradient: PRIMARY_GRADIENT),
+                                borderRadius: BorderRadius.circular(5),
+                                gradient: PRIMARY_GRADIENT,
+                              ),
                             ),
                             // Container(
                             //   margin: EdgeInsets.only(top: 30),
@@ -154,7 +147,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                             //     ],
                             //   ),
                             // ),
-                            // Consumer<GameDetailsModel>(
+                            // Consumer<GameDetailsViewModel>(
                             //   builder: (_, value, __) {
                             //     return Container(
                             //       margin: EdgeInsets.only(top: 15),
@@ -213,7 +206,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   ),
                   _companyContainer(),
                   _subHeadingContainer(title: "Genre", paddingTop: 30.0),
-                  Consumer<GameDetailsModel>(
+                  Consumer<GameDetailsViewModel>(
                     builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.only(
@@ -236,7 +229,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     },
                   ),
                   _subHeadingContainer(title: "Game Screenshots"),
-                  Consumer<GameDetailsModel>(
+                  Consumer<GameDetailsViewModel>(
                     builder: (_, model, __) {
                       return Padding(
                         padding: EdgeInsets.only(
@@ -265,7 +258,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                       left: ScreenUtils.getDesignWidth(24.0),
                       right: ScreenUtils.getDesignWidth(24.0),
                     ),
-                    child: Consumer<GameDetailsModel>(
+                    child: Consumer<GameDetailsViewModel>(
                       builder: (_, model, __) {
                         return Text(
                           model.gameDetails.description ?? "",
@@ -282,7 +275,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                     padding: EdgeInsets.only(
                       top: ScreenUtils.getDesignHeight(10.0),
                     ),
-                    child: Consumer<GameDetailsModel>(builder: (_, model, __) {
+                    child: Consumer<GameDetailsViewModel>(builder: (_, model, __) {
                       return Container(
                         height: ScreenUtils.getDesignHeight(160),
                         child: Skeleton(
@@ -337,7 +330,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
           showAlertDialog(
               context, "Are you sure?", "Do you really want to remove your game from your library?",
               () {
-            Provider.of<GameDetailsModel>(context, listen: false)
+            Provider.of<GameDetailsViewModel>(context, listen: false)
                 .deleteLibraryGame(widget.gameDetailsArguments!.gameId ?? 0);
           });
         },
@@ -352,7 +345,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         onPressed: () {
           showAlertDialog(context, "Are you sure?",
               "Do you really want to remove your game from your wishlist?", () {
-            Provider.of<GameDetailsModel>(context, listen: false)
+            Provider.of<GameDetailsViewModel>(context, listen: false)
                 .deleteWishListGame(widget.gameDetailsArguments!.gameId ?? 0);
           });
         },
@@ -368,7 +361,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed: Provider.of<GameDetailsModel>(context, listen: false).addToWishList,
+                  onPressed:
+                      Provider.of<GameDetailsViewModel>(context, listen: false).addToWishList,
                 );
               },
             ),
@@ -384,7 +378,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed: Provider.of<GameDetailsModel>(context, listen: false).addToLibrary,
+                  onPressed: Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary,
                 );
               },
             ),
@@ -507,7 +501,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Consumer<GameDetailsModel>(
+                  Consumer<GameDetailsViewModel>(
                     builder: (_, model, __) {
                       return Text(
                         "${model.gameDetails.developer != null ? model.gameDetails.developer![0].name : ""}",
@@ -645,7 +639,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
   }
 
   _showPlatformBottomSheet({VoidCallback? onPressed}) async {
-    final model = Provider.of<GameDetailsModel>(context, listen: false);
+    final model = Provider.of<GameDetailsViewModel>(context, listen: false);
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {

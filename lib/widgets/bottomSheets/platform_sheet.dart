@@ -6,35 +6,27 @@ import 'package:provider/provider.dart';
 import '../../helpers/app_enums.dart';
 import '../../helpers/app_screen_utils.dart';
 import '../../models/common_models/rawg_platform_model.dart';
-import '../../view_models/game_details/game_details_model.dart';
 import '../custom_button_widget.dart';
 import '../custom_selecting_widget.dart';
 
 class PlatformBottomSheet extends StatelessWidget {
-
   final List<RawgPlatformModel>? platformList;
   final PlatformBottomSheetType? bottomSheetType;
   final VoidCallback? onPressed;
 
-  PlatformBottomSheet({required this.platformList , required this.bottomSheetType , required this.onPressed});
+  PlatformBottomSheet(
+      {required this.platformList, required this.bottomSheetType, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-
-    //final model = Provider.of<CustomSearchModel>(context , listen: false);
-
     return Container(
-      margin: EdgeInsets.only(
-          top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
+      margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(30), left: 24, right: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             child: Text("Select your Console",
-                style: Theme.of(context)
-                    .primaryTextTheme
-                    .headline5
-                    ?.copyWith(fontSize: 16)),
+                style: Theme.of(context).primaryTextTheme.headline5?.copyWith(fontSize: 16)),
           ),
           Container(
             margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(20)),
@@ -49,7 +41,7 @@ class PlatformBottomSheet extends StatelessWidget {
               ),
               itemCount: platformList!.length,
               itemBuilder: (BuildContext context, index) {
-                switch (bottomSheetType){
+                switch (bottomSheetType) {
                   case PlatformBottomSheetType.SETUP_WISHLIST_GAMES:
                     return GestureDetector(
                       child: Consumer<CustomSearchModel>(
@@ -60,9 +52,8 @@ class PlatformBottomSheet extends StatelessWidget {
                           );
                         },
                       ),
-                      onTap: () =>
-                          Provider.of<CustomSearchModel>(context, listen: false)
-                              .addPlatform(index , platformList![index].id ?? 0),
+                      onTap: () => Provider.of<CustomSearchModel>(context, listen: false)
+                          .addPlatform(index, platformList![index].id ?? 0),
                     );
                   case PlatformBottomSheetType.SETUP_LIBRARY_GAMES:
                     return GestureDetector(
@@ -74,13 +65,12 @@ class PlatformBottomSheet extends StatelessWidget {
                           );
                         },
                       ),
-                      onTap: () =>
-                          Provider.of<CustomSearchModel>(context, listen: false)
-                              .addPlatform(index , platformList![index].id ?? 0),
+                      onTap: () => Provider.of<CustomSearchModel>(context, listen: false)
+                          .addPlatform(index, platformList![index].id ?? 0),
                     );
                   case PlatformBottomSheetType.GAME_DETAIL_ADD:
                     return GestureDetector(
-                      child: Consumer<GameDetailsModel>(
+                      child: Consumer<GameDetailsViewModel>(
                         builder: (_, model, __) {
                           return CustomSelectingWidget(
                             titleText: platformList![index].name,
@@ -88,11 +78,13 @@ class PlatformBottomSheet extends StatelessWidget {
                           );
                         },
                       ),
-                      onTap: () =>
-                          Provider.of<GameDetailsModel>(context, listen: false).selectedPlatform(platformList![index].id ?? 0)
+                      onTap: () => Provider.of<GameDetailsViewModel>(context, listen: false)
+                          .selectedPlatform(platformList![index].id ?? 0),
                     );
                   default:
-                    return Container(child: Text('Error'),);
+                    return Container(
+                      child: Text('Error'),
+                    );
                 }
               },
             ),

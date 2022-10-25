@@ -77,10 +77,11 @@ Route<dynamic> generateRoute(RouteSettings settings) {
               ));
     case GAME_DETAILS_SCREEN:
       return MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider<GameDetailsModel>(
-          create: (context) => IGameDetailsModel(),
-          child:
-              GameDetailsScreen(gameDetailsArguments: settings.arguments as GameDetailsArguments),
+        builder: (context) => ChangeNotifierProvider(
+          create: (context) => sl<GameDetailsViewModel>(),
+          child: GameDetailsScreen(
+            gameDetailsArguments: settings.arguments as GameDetailsArguments,
+          ),
         ),
       );
     case PURCHASE_ACCOUNT_SCREEN:
