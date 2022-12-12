@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/screens/nav_bar_screens/friend_activity_screen.dart';
+import 'package:play_hq/screens/nav_bar_screens/test_home.dart';
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/screens/profile_screens/new_profile_screen.dart';
 import 'package:play_hq/view_models/navigation/tab_navigation_model.dart';

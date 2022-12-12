@@ -8,22 +8,18 @@ import 'package:play_hq/repository/clients/game_api_repositiry.dart';
 class GameApiDelegate extends GameApiRepository with NetworkHelper {
   @override
   Future<RawgGameDetails> getPopularGames() {
-    return this
-        .get<RawgGameDetails>(APIConfig.popularThisYear(), rawgGameDetailsFromJson)
-        .then((value) => value.result);
+    return this.get<RawgGameDetails>(APIConfig.popularThisYear(), rawgGameDetailsFromJson).then((value) => value.result);
   }
 
   @override
   Future<RawgGameDetails> getUpComingGames() {
-    return this
-        .get<RawgGameDetails>(APIConfig.getUpcomingGames(), rawgGameDetailsFromJson)
-        .then((value) => value.result);
+    return this.get<RawgGameDetails>(APIConfig.getUpcomingGames(), rawgGameDetailsFromJson).then((value) => value.result);
   }
 
   @override
   Future<RawgGameDetails> getRecommendedGamesFromGenres(List<int> genres) {
-    return this
-        .get<RawgGameDetails>(APIConfig.getRecommendGamesFromGenres(genres), rawgGameDetailsFromJson)
-        .then((value) => value.result);
+    return this.get<RawgGameDetails>(APIConfig.getRecommendGamesFromGenres(genres), rawgGameDetailsFromJson).then((value) => value.result);
   }
 }
+
+

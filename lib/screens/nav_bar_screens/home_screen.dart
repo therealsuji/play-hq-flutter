@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/screens.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -21,6 +22,7 @@ import '../../widgets/custom_text_widget.dart';
 import '../../widgets/gradient_text_widget.dart';
 import '../../widgets/horizontal_scroll_widget.dart';
 import '../../widgets/raised_gradient_button_widget.dart';
+import '../../widgets/slivers/custom_home_sliver.dart';
 import 'widgets/genre_widget.dart';
 import 'widgets/section_label_widget.dart';
 
@@ -33,385 +35,204 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    Provider.of<HomeScreenModel>(context, listen: false).loadAPICalls();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    Provider.of<HomeScreenModel>(context, listen: false).loadAPICalls();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              decoration: BoxDecoration(gradient: PRIMARY_GRADIENT),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Positioned.fill(
-                    bottom: -0.2,
-                    child: Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: ScreenUtils.getDesignHeight(47.0),
-                        decoration: BoxDecoration(
-                          color: BACKGROUND_COLOR,
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15.0),
-                            topRight: Radius.circular(15.0),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      top: ScreenUtils.statusBarHeight + 20,
-                      left: ScreenUtils.getDesignWidth(24.0),
-                      right: ScreenUtils.getDesignWidth(24.0),
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Consumer<HomeScreenModel>(builder: (_, model, __) {
-                                  return Text(
-                                    "Welcome ${model.displayName ?? 'to PlayHQ'}",
-                                    style: Theme.of(context).primaryTextTheme.headline2,
-                                  );
-                                }),
-                                SizedBox(
-                                  height: ScreenUtils.getDesignHeight(2.0),
-                                ),
-                                Text(
-                                  "Any particular games you’d like to\nbuy today?",
-                                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
-                                        color: Colors.white.withOpacity(0.60),
-                                      ),
-                                ),
-                              ],
-                            ),
-                            Stack(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1.5,
-                                    ),
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: CircleAvatar(
-                                    backgroundColor: Colors.amber,
-                                    radius: 24.0,
-                                  ),
-                                ),
-                                Positioned(
-                                  bottom: 0.0,
-                                  right: 0.0,
-                                  height: ScreenUtils.getDesignWidth(15.0),
-                                  width: ScreenUtils.getDesignWidth(15.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      gradient: GREEN_GRADIENT,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            MAIN_SEARCH_SCREEN,
-                            arguments: SearchType.MAIN_SEARCH,
-                          ),
-                          child: Container(
-                            margin: EdgeInsets.only(
-                              top: ScreenUtils.getDesignHeight(25.0),
-                            ),
-                            width: double.infinity,
-                            height: ScreenUtils.getDesignHeight(50.0),
-                            decoration: BoxDecoration(
-                              color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
-                              borderRadius: BorderRadius.circular(5.0),
-                            ),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: ScreenUtils.getDesignWidth(15.0),
-                                  ),
-                                  child: Icon(
-                                    Icons.search_rounded,
-                                    color: Colors.white.withOpacity(0.7),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: ScreenUtils.getDesignWidth(5.0),
-                                  ),
-                                  child: Text(
-                                    "Search Here...",
-                                    style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                                          color: Colors.white.withOpacity(0.70),
-                                        ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: ScreenUtils.getDesignWidth(24.0),
-                          ),
-                          child: Consumer<HomeScreenModel>(builder: (_, model, __) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: model.hasInitialDataLoaded
-                                  ? model.prefGenres
-                                      .map((e) => InkWell(
-                                            child: GenreWidget(
-                                              //TODO: this needs to be dynamic
-                                              gradient: e.gradient ?? GENRE_YELLOW_GRADIENT,
-                                              name: e.name ?? "",
-                                              //TODO: this needs to be dynamic
-                                              imageUrl: e.imageBackground ?? ACTION_GENRE_IMAGE,
-                                            ),
-                                            onTap: () => Navigator.pushNamed(
-                                              context,
-                                              GAME_LIST_SCREEN,
-                                              arguments: GameListArguments(
-                                                screenTitle: "${e.name ?? ''} Games",
-                                                apiType: GameLists.GENRE,
-                                                args: {
-                                                  "genre": e.id.toString(),
-                                                },
-                                              ),
-                                            ),
-                                          ))
-                                      .toList()
-                                  : <Widget>[for (int i = 0; i < 3; i++) SkeletonGenreWidget()],
-                              //  [
-                              // InkWell(
-                              //   child: GenreWidget(
-                              //     gradient: GENRE_YELLOW_GRADIENT,
-                              //     name: "ACTION",
-                              //     imageUrl: ACTION_GENRE_IMAGE,
-                              //   ),
-                              //   onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                              //       args: GameListArguments(
-                              //           screenTitle: "Action Games",
-                              //           apiType: GameLists.GENRE,
-                              //           args: {"genre": "action"})),
-                              // ),
-                              //   InkWell(
-                              //     child: GenreWidget(
-                              //       gradient: GENRE_BLUE_GRADIENT,
-                              //       name: "ADVENTURE",
-                              //       imageUrl: ADVENTURE_GENRE_IMAGE,
-                              //     ),
-                              //     onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                              //         args: GameListArguments(
-                              //             screenTitle: "Action Games",
-                              //             apiType: GameLists.GENRE,
-                              //             args: {"genre": "adventure"})),
-                              //   ),
-                              //   InkWell(
-                              //     child: GenreWidget(
-                              //       gradient: GENRE_GREEN_GRADIENT,
-                              //       name: "RACING",
-                              //       imageUrl: RACING_GENRE_IMAGE,
-                              //     ),
-                              //     onTap: () => locator<NavigationService>().pushNamed(GAME_LIST_SCREEN,
-                              //         args: GameListArguments(
-                              //             screenTitle: "Action Games",
-                              //             apiType: GameLists.GENRE,
-                              //             args: {"genre": "racing"})),
-                              //   ),
-                              // ],
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+    return CustomScrollView(
+      slivers: [
+        SliverAppBar(
+          expandedHeight: ScreenUtils.getDesignHeight(280),
+          floating: true,
+          flexibleSpace: FlexibleSpaceBar(
+            background: Container(
+              child: ChangeNotifierProvider.value(
+                  value: Provider.of<HomeScreenModel>(context),
+                  child: SliverContent()),
             ),
-            SectionLabel(
-              title: "Recommended for you",
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(10.0),
-              ),
-              child: Consumer<HomeScreenModel>(builder: (_, model, __) {
-                return Container(
-                  height: ScreenUtils.getDesignHeight(290),
-                  child: Skeleton(
-                    isLoading: !model.hasInitialDataLoaded,
-                    skeleton: SkeletonGamesListWidget(
-                      height: ScreenUtils.getDesignHeight(290),
-                      width: ScreenUtils.getDesignWidth(220),
-                      count: 10,
-                    ),
-                    child: HorizontalScrollList(
-                      itemCount: model.recommendedGames.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            GAME_DETAILS_SCREEN,
-                            arguments: GameDetailsArguments(
-                              gameId: model.recommendedGames[index].id,
-                            ),
-                          ),
-                          child: GamesWidget(
-                            backgroundUrl: model.recommendedGames[index].backgroundImage,
-                            title: model.recommendedGames[index].name,
-                            width: ScreenUtils.getDesignWidth(220),
-                            height: ScreenUtils.getDesignHeight(290),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              }),
-            ),
-            SectionLabel(
-              title: "Popular this Year",
-              rightText: "View All",
-            ),
-            Consumer<HomeScreenModel>(
-              builder: (_, val, __) {
-                return Container(
-                  margin: EdgeInsets.only(top: 15),
-                  height: ScreenUtils.getDesignHeight(140),
-                  child: Skeleton(
-                    isLoading: !val.hasInitialDataLoaded,
-                    skeleton: SkeletonGamesListWidget(
-                      count: 10,
-                    ),
-                    child: HorizontalScrollList(
-                      itemCount: val.popularGamesThisYear.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            GAME_DETAILS_SCREEN,
-                            arguments: GameDetailsArguments(
-                              gameId: val.popularGamesThisYear[index].id,
-                            ),
-                          ),
-                          child: GamesWidget(
-                            title: val.popularGamesThisYear[index].name,
-                            subTitle: val.popularGamesThisYear[index].released != null
-                                ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
-                                : "",
-                            backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
-                            gradient: PRIMARY_GRADIENT,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
-            _learnMoreContainer(),
-            SectionLabel(
-              title: "Popular this Week",
-              rightText: "View All",
-            ),
-            Container(
-              height: ScreenUtils.getDesignHeight(190),
-              margin: EdgeInsets.symmetric(vertical: 20),
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  Positioned.fill(
-                    child: CachedImage(
-                        imageUrl:
-                            "https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg",
-                        fit: BoxFit.cover),
-                  ),
-                  Positioned.fill(
-                    bottom: 0,
-                    child: Container(
-                      width: ScreenUtils.getDesignWidth(220),
-                      height: ScreenUtils.getDesignHeight(290),
-                      padding: EdgeInsets.all(10.0),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xff091015), Colors.transparent],
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            SectionLabel(
-              title: "Highly Anticipated",
-              rightText: "View All",
-            ),
-            Consumer<HomeScreenModel>(
-              builder: (_, val, __) {
-                return Container(
-                  margin: EdgeInsets.symmetric(vertical: 15),
-                  height: ScreenUtils.getDesignHeight(140),
-                  child: Skeleton(
-                    isLoading: !val.hasInitialDataLoaded,
-                    skeleton: SkeletonGamesListWidget(
-                      count: 10,
-                    ),
-                    child: HorizontalScrollList(
-                      itemCount: val.upComingGamesThisYear.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                            context,
-                            GAME_DETAILS_SCREEN,
-                            arguments: GameDetailsArguments(
-                              gameId: val.upComingGamesThisYear[index].id,
-                            ),
-                          ),
-                          child: GamesWidget(
-                            title: val.upComingGamesThisYear[index].name,
-                            subTitle: val.upComingGamesThisYear[index].released != null
-                                ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
-                                : "",
-                            backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
-                            gradient: PRIMARY_GRADIENT,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
+          ),
+          backgroundColor: BACKGROUND_COLOR,
+          elevation: 0.0,
         ),
-      ),
+        homeBody()
+      ],
     );
   }
+
+  Widget homeBody() => SliverToBoxAdapter(
+    child: Container(
+      margin: EdgeInsets.only(bottom: 30),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SectionLabel(
+            title: "Recommended for you",
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: ScreenUtils.getDesignHeight(10.0),
+            ),
+            child: Consumer<HomeScreenModel>(builder: (_, model, __) {
+              return Container(
+                height: ScreenUtils.getDesignHeight(290),
+                child: Skeleton(
+                  isLoading: !model.hasInitialDataLoaded,
+                  skeleton: SkeletonGamesListWidget(
+                    height: ScreenUtils.getDesignHeight(290),
+                    width: ScreenUtils.getDesignWidth(220),
+                    count: 10,
+                  ),
+                  child: HorizontalScrollList(
+                    itemCount: model.recommendedGames.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          GAME_DETAILS_SCREEN,
+                          arguments: GameDetailsArguments(
+                            gameId: model.recommendedGames[index].id,
+                          ),
+                        ),
+                        child: GamesWidget(
+                          titleFontSize: 18,
+                          backgroundUrl: model.recommendedGames[index].backgroundImage,
+                          subTitle: '${model.recommendedGames[index].released}',
+                          color: PRIMARY_COLOR,
+                          title: model.recommendedGames[index].name,
+                          width: ScreenUtils.getDesignWidth(220),
+                          height: ScreenUtils.getDesignHeight(290),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            }),
+          ),
+          SectionLabel(
+            title: "Popular this Year",
+            rightText: "View All",
+          ),
+          Consumer<HomeScreenModel>(
+            builder: (_, val, __) {
+              return Container(
+                margin: EdgeInsets.only(top: 15),
+                height: ScreenUtils.getDesignHeight(140),
+                child: Skeleton(
+                  isLoading: !val.hasInitialDataLoaded,
+                  skeleton: SkeletonGamesListWidget(
+                    count: 10,
+                  ),
+                  child: HorizontalScrollList(
+                    itemCount: val.popularGamesThisYear.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          GAME_DETAILS_SCREEN,
+                          arguments: GameDetailsArguments(
+                            gameId: val.popularGamesThisYear[index].id,
+                          ),
+                        ),
+                        child: GamesWidget(
+                          title: val.popularGamesThisYear[index].name,
+                          subTitle: val.popularGamesThisYear[index].released != null
+                              ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
+                              : "",
+                          backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
+                          gradient: PRIMARY_GRADIENT,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+          SectionLabel(
+            title: "Popular this Week",
+            rightText: "View All",
+          ),
+          Container(
+            height: ScreenUtils.getDesignHeight(190),
+            margin: EdgeInsets.symmetric(vertical: 20),
+            width: double.infinity,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                  child: CachedImage(
+                      imageUrl:
+                      "https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg",
+                      fit: BoxFit.cover),
+                ),
+                Positioned.fill(
+                  bottom: 0,
+                  child: Container(
+                    width: ScreenUtils.getDesignWidth(220),
+                    height: ScreenUtils.getDesignHeight(290),
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [Color(0xff091015), Colors.transparent],
+                        begin: Alignment.bottomCenter,
+                        end: Alignment.topCenter,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SectionLabel(
+            title: "Highly Anticipated",
+            rightText: "View All",
+          ),
+          Consumer<HomeScreenModel>(
+            builder: (_, val, __) {
+              return Container(
+                margin: EdgeInsets.symmetric(vertical: 15),
+                height: ScreenUtils.getDesignHeight(140),
+                child: Skeleton(
+                  isLoading: !val.hasInitialDataLoaded,
+                  skeleton: SkeletonGamesListWidget(
+                    count: 10,
+                  ),
+                  child: HorizontalScrollList(
+                    itemCount: val.upComingGamesThisYear.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          GAME_DETAILS_SCREEN,
+                          arguments: GameDetailsArguments(
+                            gameId: val.upComingGamesThisYear[index].id,
+                          ),
+                        ),
+                        child: GamesWidget(
+                          title: val.upComingGamesThisYear[index].name,
+                          subTitle: val.upComingGamesThisYear[index].released != null
+                              ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
+                              : "",
+                          backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
+                          gradient: PRIMARY_GRADIENT,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    ),
+  );
 
   Widget _topGamesContainer({required String hoverImage}) {
     return Padding(

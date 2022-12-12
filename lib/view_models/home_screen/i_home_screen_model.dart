@@ -46,25 +46,6 @@ class IHomeScreenModel extends HomeScreenModel {
     _prefGenre = gamePreferences.genres;
     try {
       loadingData();
-
-      await _homeApi.getSalesFromWishList().then((value) {
-        if (value.saleItems!.length > 0) {
-          _wishListGames = value.saleItems!;
-        }
-      });
-
-      await _homeApi.getSoloGames().then((val) {
-        if (val.saleItems!.length > 0) {
-          _soloGames = val.saleItems ?? [];
-        }
-      });
-
-      var n1 = _homeApi.getBundleGames().then((game) {
-        if (game.saleItems!.length > 0) {
-          _bundleGames = game.saleItems ?? [];
-        }
-        notifyListeners();
-      });
       var n2 = _gameApi.getPopularGames().then((games) {
         if (games.results!.length > 0) {
           _popularGameThisYear = games.results ?? [];
@@ -84,9 +65,7 @@ class IHomeScreenModel extends HomeScreenModel {
         }
         notifyListeners();
       });
-
-      await Future.wait([n1, n2, n3, n4]);
-
+      await Future.wait([n2, n3, n4]);
       dataLoaded();
       notifyListeners();
     } catch (e) {

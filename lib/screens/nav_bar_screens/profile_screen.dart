@@ -139,7 +139,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             content: Consumer<MainProfileModel>(
               builder: (_, value, __) {
                 return Container(
-                  // TODO: THIS IS BROKEN WHEN YOU SCROLL DOWN IT GETS STUCK
                   height: 1000,
                   child: PageView(
                     physics: ScrollPhysics(),

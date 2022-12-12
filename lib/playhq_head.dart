@@ -50,7 +50,7 @@ class _PlayHqHeadState extends State<PlayHqHead> {
       create: (context) => ILoadingOverlay(),
       child: MaterialApp(
         navigatorKey: sl<NavigationService>().navigatorKey,
-        scrollBehavior: CupertinoScrollBehavior(),
+        scrollBehavior: ScrollBehavior(),
         theme: ThemeData(
           accentColor: PRIMARY_COLOR,
           canvasColor: Colors.transparent,
