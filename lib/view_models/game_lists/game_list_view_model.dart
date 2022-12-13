@@ -10,6 +10,8 @@ abstract class GameListViewModel with ChangeNotifier {
 
   void fetchGamesOf2022();
 
+  void fetchAllRecommendedGames();
+
   void fetchGamesFromGenre(String genre);
 
   void increasePageSize();

@@ -82,8 +82,6 @@ class IGameListViewModel extends GameListViewModel {
         notifyListeners();
       });
 
-      print('Top Rated Games: ${_gameResponse.length}');
-
       _eventBus.fire(LoadingEvent.hide());
     } catch (e) {
       print(e);
@@ -94,5 +92,18 @@ class IGameListViewModel extends GameListViewModel {
   @override
   void increasePageSize() {
     // TODO: implement increasePageSize
+  }
+
+  @override
+  void fetchAllRecommendedGames() async{
+    try{
+      _eventBus.fire(LoadingEvent.show());
+
+
+
+    }catch(e){
+      print(e);
+      _eventBus.fire(LoadingEvent.hide());
+    }
   }
 }

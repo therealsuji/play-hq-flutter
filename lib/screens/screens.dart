@@ -11,7 +11,7 @@ export 'package:play_hq/screens/main_screen/main_screen.dart';
 export 'package:play_hq/screens/nav_bar_screens/discover_screen.dart';
 export 'package:play_hq/screens/nav_bar_screens/orders_screen.dart';
 export 'package:play_hq/screens/nav_bar_screens/profile_screen.dart';
-export 'package:play_hq/screens/nav_bar_screens/home_screen.dart';
+export 'package:play_hq/screens/nav_bar_screens/home_screen/home_screen.dart';
 export 'package:play_hq/screens/sign_up_screens/onboarding/user_onboarding/setup_purchase_account_screen.dart';
 export 'package:play_hq/screens/sign_up_screens/onboarding/user_onboarding/setup_sales_account_screen.dart';
 export 'package:play_hq/screens/splash_screen/splash_screen.dart';

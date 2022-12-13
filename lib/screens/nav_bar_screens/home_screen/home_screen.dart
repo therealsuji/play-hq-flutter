@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/nav_bar_screens/home_screen/gamer_buddies_widget.dart';
 import 'package:play_hq/screens/screens.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
-import '../../helpers/app_assets.dart';
-import '../../helpers/app_colors.dart';
-import '../../helpers/app_constants.dart';
-import '../../helpers/app_enums.dart';
-import '../../helpers/app_screen_utils.dart';
-import '../../helpers/app_strings.dart';
-import '../../helpers/app_utils.dart';
-import '../../models/common_models/game_list_arguments_model.dart';
-import '../../models/game_details_models/game_details_arguments.dart';
-import '../../models/sales/sales_payload_model.dart';
-import '../../view_models/home_screen/home_screen_model.dart';
-import '../../view_models/view_models.dart';
-import '../../widgets/cached_image_widget.dart';
-import '../../widgets/custom_button_widget.dart';
-import '../../widgets/custom_game_widget.dart';
-import '../../widgets/custom_text_widget.dart';
-import '../../widgets/gradient_text_widget.dart';
-import '../../widgets/horizontal_scroll_widget.dart';
-import '../../widgets/raised_gradient_button_widget.dart';
-import '../../widgets/slivers/custom_home_sliver.dart';
-import 'widgets/genre_widget.dart';
-import 'widgets/section_label_widget.dart';
+import '../../../helpers/app_assets.dart';
+import '../../../helpers/app_colors.dart';
+import '../../../helpers/app_constants.dart';
+import '../../../helpers/app_enums.dart';
+import '../../../helpers/app_screen_utils.dart';
+import '../../../helpers/app_strings.dart';
+import '../../../helpers/app_utils.dart';
+import '../../../models/common_models/game_list_arguments_model.dart';
+import '../../../models/game_details_models/game_details_arguments.dart';
+import '../../../models/sales/sales_payload_model.dart';
+import '../../../view_models/home_screen/home_screen_model.dart';
+import '../../../view_models/view_models.dart';
+import '../../../widgets/cached_image_widget.dart';
+import '../../../widgets/custom_button_widget.dart';
+import '../../../widgets/custom_game_widget.dart';
+import '../../../widgets/custom_text_widget.dart';
+import '../../../widgets/gradient_text_widget.dart';
+import '../../../widgets/horizontal_scroll_widget.dart';
+import '../../../widgets/raised_gradient_button_widget.dart';
+import '../../../widgets/slivers/custom_home_sliver.dart';
+import '../widgets/genre_widget.dart';
+import '../widgets/section_label_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -73,6 +74,14 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SectionLabel(
             title: "Recommended for you",
+            rightText: 'View All',
+            onClick: () => Navigator.pushNamed(context, GAME_LIST_SCREEN , arguments: GameListArguments(
+              screenTitle: "Recommended Games",
+              apiType: GameLists.RECOMMENDED,
+              args: {
+                "genre": '',
+              },
+            ),),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -116,14 +125,14 @@ class _HomeScreenState extends State<HomeScreen> {
             }),
           ),
           SectionLabel(
-            title: "Popular this Year",
+            title: "Potential Gamer Buddies",
             rightText: "View All",
           ),
           Consumer<HomeScreenModel>(
             builder: (_, val, __) {
               return Container(
-                margin: EdgeInsets.only(top: 15),
-                height: ScreenUtils.getDesignHeight(140),
+                margin: EdgeInsets.only(top: 25),
+                height: ScreenUtils.getDesignHeight(205),
                 child: Skeleton(
                   isLoading: !val.hasInitialDataLoaded,
                   skeleton: SkeletonGamesListWidget(
@@ -140,14 +149,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             gameId: val.popularGamesThisYear[index].id,
                           ),
                         ),
-                        child: GamesWidget(
-                          title: val.popularGamesThisYear[index].name,
-                          subTitle: val.popularGamesThisYear[index].released != null
-                              ? DateTime.parse(val.popularGamesThisYear[index].released!).format('dd-MM-yyyy')
-                              : "",
-                          backgroundUrl: val.popularGamesThisYear[index].backgroundImage,
-                          gradient: PRIMARY_GRADIENT,
-                        ),
+                        child: GamerBuddyWidget(
+                        )
                       );
                     },
                   ),
@@ -157,7 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           SectionLabel(
             title: "Popular this Week",
-            rightText: "View All",
           ),
           Container(
             height: ScreenUtils.getDesignHeight(190),
