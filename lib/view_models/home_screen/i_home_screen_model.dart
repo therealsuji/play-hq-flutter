@@ -26,9 +26,18 @@ class IHomeScreenModel extends HomeScreenModel {
   List<Genre> _prefGenre = [];
   // use this when user hasnt set any preferred genres
   List<Genre> _defaultGenre = [
-    Genre(id: 4, imageBackground: ACTION_GENRE_IMAGE, name: "Action", gradient: GENRE_YELLOW_GRADIENT),
-    Genre(id: 3, imageBackground: ADVENTURE_GENRE_IMAGE, name: "Adventure", gradient: GENRE_BLUE_GRADIENT),
-    Genre(id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GREEN_GRADIENT)
+    Genre(
+        id: 4,
+        imageBackground: ACTION_GENRE_IMAGE,
+        name: "Action",
+        gradient: GENRE_YELLOW_GRADIENT),
+    Genre(
+        id: 3,
+        imageBackground: ADVENTURE_GENRE_IMAGE,
+        name: "Adventure",
+        gradient: GENRE_BLUE_GRADIENT),
+    Genre(
+        id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GREEN_GRADIENT)
   ];
   String? _displayName;
 
@@ -58,8 +67,9 @@ class IHomeScreenModel extends HomeScreenModel {
         }
         notifyListeners();
       });
-      var n4 =
-          _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
+      var n4 = _gameApi
+          .getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id))))
+          .then((games) {
         if (games.results!.length > 0) {
           _recommendedGames = games.results ?? [];
         }
