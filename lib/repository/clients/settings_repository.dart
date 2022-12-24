@@ -1,3 +1,5 @@
+import 'package:play_hq/models/common_models/user/user_details.dart';
+
 abstract class SettingsRepository {
-  void updateUserDetails(Map<String, String> body);
+  Future<UserDetails> updateUserDetails(Map<String, String> body);
 }

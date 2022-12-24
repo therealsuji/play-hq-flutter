@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/helpers/app_colors.dart';
+
+import '../helpers/app_colors.dart';
 
 class CustomTextfieldWidget extends StatelessWidget {
   final dynamic iconData;
@@ -12,7 +13,16 @@ class CustomTextfieldWidget extends StatelessWidget {
   final String? labelText;
   final String? suffixText;
 
-  CustomTextfieldWidget({this.iconData, this.hideText, this.onChanged, this.errorText, this.type , this.hintText , this.labelText , this.suffixText});
+  CustomTextfieldWidget({
+    this.iconData,
+    this.hideText,
+    this.onChanged,
+    this.errorText,
+    this.type,
+    this.hintText,
+    this.labelText,
+    this.suffixText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +75,7 @@ class CustomTextfieldWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(6),
             borderSide: BorderSide.none,
           ),
-          contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20 , right: 12),
+          contentPadding: EdgeInsets.only(left: 12.0, top: 20, bottom: 20, right: 12),
         ),
       ),
     );
