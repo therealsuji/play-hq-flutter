@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return CustomScrollView(
       slivers: [
         SliverAppBar(
-          expandedHeight: ScreenUtils.getDesignHeight(280),
+          expandedHeight: ScreenUtils.getDesignHeight(330.0),
           floating: true,
           flexibleSpace: FlexibleSpaceBar(
             background: Container(

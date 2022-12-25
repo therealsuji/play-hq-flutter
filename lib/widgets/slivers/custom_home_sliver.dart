@@ -33,7 +33,7 @@ class SliverContent extends StatelessWidget {
                 ),
               ),
               Container(
-                height: ScreenUtils.getDesignHeight(280) / 7,
+                height: ScreenUtils.getDesignHeight(280) / 6,
                 decoration: BoxDecoration(
                   color: BACKGROUND_COLOR,
                 ),
@@ -44,7 +44,7 @@ class SliverContent extends StatelessWidget {
             margin: EdgeInsets.only(
               left: 24,
               right: 24,
-              top: ScreenUtils.getDesignHeight(45.0),
+              top: ScreenUtils.getDesignHeight(70.0),
             ),
             child: Column(
               children: [
