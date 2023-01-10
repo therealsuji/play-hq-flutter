@@ -7,6 +7,8 @@ import '../../../models/common_models/user/user_details.dart';
 abstract class MainProfileModel extends ChangeNotifier with AppLoader {
   void getProfileDetails();
 
+  void getUserDetails();
+
   List<Data> get wishlistGames;
   List<Data> get libraryGames;
 

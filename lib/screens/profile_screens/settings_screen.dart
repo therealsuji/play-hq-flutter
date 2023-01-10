@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 Icons.arrow_back_ios_rounded,
                                 color: Colors.white,
                               ),
-                              onTap: (() => Navigator.pop(context)),
+                              onTap: () => Navigator.pop(context, true),
                             ),
                             Container(
                               margin: EdgeInsets.only(left: 15, top: 5),
@@ -91,21 +91,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ),
                       _profileDetails(
                         title: 'Your Name',
-                        labelText: widget.userDetails.name ?? "Your Name",
+                        labelText: widget.userDetails.name ?? '',
                         iconData: Icons.account_circle_outlined,
                         width: 67,
                         onChanged: (name) => _name = name,
                       ),
                       _profileDetails(
                         title: 'Display Name',
-                        labelText: widget.userDetails.displayName ?? 'Display Name',
+                        labelText: widget.userDetails.displayName ?? '',
                         iconData: Icons.account_circle_sharp,
                         width: 85,
                         onChanged: (displayName) => _displayName = displayName,
                       ),
                       _profileDetails(
                         title: 'Mobile Number',
-                        labelText: widget.userDetails.phone ?? '0774147787',
+                        labelText: widget.userDetails.phone ?? '',
                         iconData: Icons.call_outlined,
                         width: 95,
                         onChanged: (phoneNumber) => _phoneNumber = phoneNumber,

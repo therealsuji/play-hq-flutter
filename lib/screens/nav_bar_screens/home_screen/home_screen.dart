@@ -1,9 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:play_hq/screens/nav_bar_screens/home_screen/gamer_buddies_widget.dart';
-import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
-import 'package:play_hq/screens/screens.dart';
-import 'package:play_hq/widgets/carousal_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -57,8 +53,11 @@ class _HomeScreenState extends State<HomeScreen> {
           flexibleSpace: FlexibleSpaceBar(
             background: Container(
               child: ChangeNotifierProvider.value(
-                  value: Provider.of<HomeScreenModel>(context),
-                  child: SliverContent()),
+                value: Provider.of<HomeScreenModel>(context),
+                child: SliverContent(
+                  displayName: context.read<HomeScreenModel>().displayName ?? 'Name',
+                ),
+              ),
             ),
           ),
           backgroundColor: BACKGROUND_COLOR,
@@ -470,7 +469,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 15, left: 15, right: 15, bottom: 30),
             height: 1.5,
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)), gradient: PRIMARY_GRADIENT),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),
@@ -483,9 +483,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Spacer(),
                 CustomTextWidget(
-                  platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name'] ?? 'Not Found',
+                  platforms.firstWhere(
+                          (element) => element['id'] == salesPayload.platform)['name'] ??
+                      'Not Found',
                   isDynamic: false,
-                  style: Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
+                  style:
+                      Theme.of(context).primaryTextTheme.headline4!.copyWith(color: PRIMARY_COLOR),
                 )
               ],
             ),
@@ -493,7 +496,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             margin: EdgeInsets.only(top: 20, left: 15, right: 15, bottom: 20),
             height: 1.5,
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5.0)), color: SUB_TEXT_COLOR),
           ),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 15),

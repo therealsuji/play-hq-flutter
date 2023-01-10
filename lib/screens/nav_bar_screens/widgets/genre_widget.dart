@@ -8,7 +8,12 @@ class GenreWidget extends StatelessWidget {
   final String imageUrl;
   final Gradient gradient;
 
-  GenreWidget({Key? key, required this.name, required this.imageUrl, required this.gradient}) : super(key: key);
+  GenreWidget({
+    Key? key,
+    required this.name,
+    required this.imageUrl,
+    required this.gradient,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,8 @@ class SkeletonGenreWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SkeletonLine(
-      style: SkeletonLineStyle(height: height, width: width, borderRadius: BorderRadius.circular(8)),
+      style:
+          SkeletonLineStyle(height: height, width: width, borderRadius: BorderRadius.circular(8)),
     );
   }
 }

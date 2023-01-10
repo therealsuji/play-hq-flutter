@@ -1,4 +1,8 @@
+import 'dart:convert';
+
+import '../../../helpers/app_secure_storage.dart';
 import '../../../helpers/app_strings.dart';
+import '../../../models/common_models/user/user_details.dart';
 import '../../../models/errors/exceptions.dart';
 import '../../../repository/repositories.dart';
 import '../../../services/auth_service.dart';
@@ -24,7 +28,7 @@ class ISettingsViewModel extends SettingsViewModel {
     required String name,
     required String displayName,
     required String phoneNumber,
-  }) {
+  }) async {
     if (name == "" || displayName == "" || phoneNumber == "") {
       return errorManager.showError(
         UnknownFailure(message: "User details can't be empty!"),
@@ -37,12 +41,18 @@ class ISettingsViewModel extends SettingsViewModel {
       'phone': phoneNumber,
     };
 
-    settingsRepository.updateUserDetails(body);
+    var response = await settingsRepository.updateUserDetails(body);
+
+    _getUserDetails(response);
   }
 
   @override
   void logoutUser() {
     authService.logOut();
     navigationService.pushAndRemoveUntil(AUTH_SCREEN);
+  }
+
+  void _getUserDetails(UserDetails userDetails) {
+    SecureStorage.writeValue('userDetailsKey', json.encode(userDetails.toJson()));
   }
 }

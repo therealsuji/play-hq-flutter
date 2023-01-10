@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import '../../../helpers/app_secure_storage.dart';
 import '../../../models/common_models/game_preferences/response_body.dart';
 import '../../../models/common_models/user/user_details.dart';
 import '../../../repository/clients/main_profile_screen_repository.dart';
@@ -21,7 +24,7 @@ class IMainProfileModel extends MainProfileModel {
           _wishlistGames = value.data;
         }
       });
-      await _mainProfileAPI.getUserDetails().then((value) => _userDetails = value);
+      getUserDetails();
       print("User Avatar: ${_userDetails.avatar}");
       await _mainProfileAPI.getLibraryGames().then((value) {
         if (value.data.isNotEmpty) {
@@ -36,6 +39,17 @@ class IMainProfileModel extends MainProfileModel {
     }
   }
 
+  void getUserDetails() async {
+    var jsonData = await SecureStorage.readValue('userDetailsKey');
+    _userDetails = UserDetails.fromJson(json.decode(jsonData!));
+    notifyListeners();
+  }
+
+  set currentPageViewTab(ProfilePageViewTab index) {
+    _pageViewTab = index;
+    notifyListeners();
+  }
+
   @override
   List<Data> get wishlistGames => _wishlistGames;
 
@@ -47,9 +61,4 @@ class IMainProfileModel extends MainProfileModel {
 
   @override
   ProfilePageViewTab get currentPageViewTab => _pageViewTab;
-
-  set currentPageViewTab(ProfilePageViewTab index) {
-    _pageViewTab = index;
-    notifyListeners();
-  }
 }

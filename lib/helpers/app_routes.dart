@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../injection_container.dart';
 import '../models/common_models/game_list_arguments_model.dart';
 import '../models/common_models/user/user_details.dart';
 import '../models/game_details_models/game_details_arguments.dart';
@@ -12,7 +13,6 @@ import '../screens/profile_screens/settings_screen.dart';
 import '../screens/screens.dart';
 import '../screens/sign_up_screens/auth_flow_screens/authentication_screen.dart';
 import '../screens/sign_up_screens/onboarding/app_onboarding/main_onboarding.dart';
-import '../injection_container.dart';
 import '../view_models/authentication/authentication_model.dart';
 import '../view_models/authentication/i_authentication_model.dart';
 import '../view_models/discover/discover_view_model.dart';

@@ -10,9 +10,13 @@ import '../../models/common_models/game_list_arguments_model.dart';
 import '../../screens/nav_bar_screens/widgets/genre_widget.dart';
 import '../../view_models/home_screen/home_screen_model.dart';
 
-
 class SliverContent extends StatelessWidget {
-  const SliverContent({Key? key}) : super(key: key);
+  final String displayName;
+
+  const SliverContent({
+    required this.displayName,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,20 +29,23 @@ class SliverContent extends StatelessWidget {
             children: [
               Expanded(
                 child: Container(
-                  decoration: BoxDecoration(
-                    gradient: PRIMARY_GRADIENT
-                  ),
+                  decoration: BoxDecoration(gradient: PRIMARY_GRADIENT),
                 ),
               ),
               Container(
-                height: ScreenUtils.getDesignHeight(280)/7,
+                height: ScreenUtils.getDesignHeight(280) / 6,
                 decoration: BoxDecoration(
                   color: BACKGROUND_COLOR,
-                ),),
+                ),
+              ),
             ],
           ),
           Container(
-            margin: EdgeInsets.only(left: 24, right: 24, top: ScreenUtils.getDesignHeight(70)),
+            margin: EdgeInsets.only(
+              left: 24,
+              right: 24,
+              top: ScreenUtils.getDesignHeight(70.0),
+            ),
             child: Column(
               children: [
                 Row(
@@ -49,21 +56,17 @@ class SliverContent extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Welcome Damasu",
-                          style:
-                          Theme.of(context).primaryTextTheme.headline2,
+                          "Welcome $displayName",
+                          style: Theme.of(context).primaryTextTheme.headline2,
                         ),
                         SizedBox(
                           height: ScreenUtils.getDesignHeight(2.0),
                         ),
                         Text(
                           "Any particular games you’d like to\nbuy today?",
-                          style: Theme.of(context)
-                              .primaryTextTheme
-                              .headline4!
-                              .copyWith(
-                            color: Colors.white.withOpacity(0.60),
-                          ),
+                          style: Theme.of(context).primaryTextTheme.headline4!.copyWith(
+                                color: Colors.white.withOpacity(0.60),
+                              ),
                         ),
                       ],
                     ),
@@ -132,8 +135,8 @@ class SliverContent extends StatelessWidget {
                           child: Text(
                             "Search Here...",
                             style: Theme.of(context).primaryTextTheme.headline5!.copyWith(
-                              color: Colors.white.withOpacity(0.70),
-                            ),
+                                  color: Colors.white.withOpacity(0.70),
+                                ),
                           ),
                         ),
                       ],
@@ -142,41 +145,43 @@ class SliverContent extends StatelessWidget {
                 ),
                 const Spacer(),
                 Container(
-                  child: Consumer<HomeScreenModel>(builder: (_, model, __) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: model.hasInitialDataLoaded
-                          ? model.prefGenres
-                          .map((e) => InkWell(
-                        child: GenreWidget(
-                          //TODO: this needs to be dynamic
-                          gradient: GENRE_YELLOW_GRADIENT,
-                          name: e.name ?? "",
-                          //TODO: this needs to be dynamic
-                          imageUrl: ACTION_GENRE_IMAGE,
-                        ),
-                        onTap: () => Navigator.pushNamed(
-                          context,
-                          GAME_LIST_SCREEN,
-                          arguments: GameListArguments(
-                            screenTitle: "${e.name ?? ''} Games",
-                            apiType: GameLists.GENRE,
-                            args: {
-                              "genre": e.id.toString(),
-                            },
-                          ),
-                        ),
-                      ))
-                          .toList()
-                          : <Widget>[for (int i = 0; i < 3; i++) SkeletonGenreWidget()],
-                    );
-                  }),
+                  child: Consumer<HomeScreenModel>(
+                    builder: (_, model, __) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: model.hasInitialDataLoaded
+                            ? model.prefGenres
+                                .map((e) => InkWell(
+                                      child: GenreWidget(
+                                        //TODO: this needs to be dynamic
+                                        gradient: GENRE_YELLOW_GRADIENT,
+                                        name: e.name ?? "",
+                                        //TODO: this needs to be dynamic
+                                        imageUrl: ACTION_GENRE_IMAGE,
+                                      ),
+                                      onTap: () => Navigator.pushNamed(
+                                        context,
+                                        GAME_LIST_SCREEN,
+                                        arguments: GameListArguments(
+                                          screenTitle: "${e.name ?? ''} Games",
+                                          apiType: GameLists.GENRE,
+                                          args: {
+                                            "genre": e.id.toString(),
+                                          },
+                                        ),
+                                      ),
+                                    ))
+                                .toList()
+                            : <Widget>[for (int i = 0; i < 3; i++) SkeletonGenreWidget()],
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
           ),
         ],
-      )
+      ),
     );
   }
 }
