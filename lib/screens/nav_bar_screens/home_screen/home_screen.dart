@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -25,6 +26,7 @@ import '../../../widgets/raised_gradient_button_widget.dart';
 import '../../../widgets/slivers/custom_home_sliver.dart';
 import '../widgets/genre_widget.dart';
 import '../widgets/section_label_widget.dart';
+import 'gamer_buddies_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
