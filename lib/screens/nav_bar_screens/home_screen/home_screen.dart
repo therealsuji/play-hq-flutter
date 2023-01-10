@@ -1,6 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/screens/nav_bar_screens/home_screen/gamer_buddies_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
 import 'package:play_hq/screens/screens.dart';
+import 'package:play_hq/widgets/carousal_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -149,6 +152,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             gameId: val.popularGamesThisYear[index].id,
                           ),
                         ),
+                        // TODO: Need to create a model for Gamer Buddy Details
+                          // TODO: Make a parameter to get the Gamer Buddy in the Widget to populate
                         child: GamerBuddyWidget(
                         )
                       );
@@ -162,37 +167,17 @@ class _HomeScreenState extends State<HomeScreen> {
             title: "Popular this Week",
           ),
           Container(
-            height: ScreenUtils.getDesignHeight(190),
-            margin: EdgeInsets.symmetric(vertical: 20),
-            width: double.infinity,
-            child: Stack(
-              children: [
-                Positioned.fill(
-                  child: CachedImage(
-                      imageUrl:
-                      "https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg",
-                      fit: BoxFit.cover),
-                ),
-                Positioned.fill(
-                  bottom: 0,
-                  child: Container(
-                    width: ScreenUtils.getDesignWidth(220),
-                    height: ScreenUtils.getDesignHeight(290),
-                    padding: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Color(0xff091015), Colors.transparent],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: CarouselSlider.builder(itemCount: 5, itemBuilder: (BuildContext context , int index , int pageViewIndex){
+              return TrendingThisWeekWidget();
+            }, options: CarouselOptions(
+              viewportFraction: 1,
+              height: ScreenUtils.getDesignHeight(250),
+              autoPlay: true,
+              autoPlayAnimationDuration: Duration(seconds: 1)
+            )),
           ),
           SectionLabel(
-            title: "Highly Anticipated",
+            title: "Coming Soon",
             rightText: "View All",
           ),
           Consumer<HomeScreenModel>(
