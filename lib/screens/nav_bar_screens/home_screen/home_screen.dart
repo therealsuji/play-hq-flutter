@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -8,11 +10,13 @@ import '../../../helpers/app_assets.dart';
 import '../../../helpers/app_colors.dart';
 import '../../../helpers/app_constants.dart';
 import '../../../helpers/app_enums.dart';
+import '../../../helpers/app_fonts.dart';
 import '../../../helpers/app_screen_utils.dart';
 import '../../../helpers/app_strings.dart';
 import '../../../helpers/app_utils.dart';
 import '../../../models/common_models/game_list_arguments_model.dart';
 import '../../../models/game_details_models/game_details_arguments.dart';
+import '../../../models/rawg_models/rawg_game_details.dart';
 import '../../../models/sales/sales_payload_model.dart';
 import '../../../view_models/home_screen/home_screen_model.dart';
 import '../../../view_models/view_models.dart';
@@ -72,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget homeBody() => SliverToBoxAdapter(
     child: Container(
-      margin: EdgeInsets.only(bottom: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -185,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
             builder: (_, val, __) {
               return Container(
                 margin: EdgeInsets.symmetric(vertical: 15),
-                height: ScreenUtils.getDesignHeight(140),
+                height: ScreenUtils.getDesignHeight(180),
                 child: Skeleton(
                   isLoading: !val.hasInitialDataLoaded,
                   skeleton: SkeletonGamesListWidget(
@@ -202,14 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             gameId: val.upComingGamesThisYear[index].id,
                           ),
                         ),
-                        child: GamesWidget(
-                          title: val.upComingGamesThisYear[index].name,
-                          subTitle: val.upComingGamesThisYear[index].released != null
-                              ? DateTime.parse(val.upComingGamesThisYear[index].released!).format('dd-MM-yyyy')
-                              : "",
-                          backgroundUrl: val.upComingGamesThisYear[index].backgroundImage,
-                          gradient: PRIMARY_GRADIENT,
-                        ),
+                        child: _comingSoon(val.upComingGamesThisYear[index])
                       );
                     },
                   ),
@@ -221,6 +217,76 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ),
   );
+
+  Widget _comingSoon(GameResults results){
+    return Container(
+      width: ScreenUtils.getDesignWidth(290),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+      ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+            bottom: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(5),
+              child: Container(
+                child: CachedNetworkImage(
+                  imageUrl: results.backgroundImage!,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              gradient: LinearGradient(
+                begin: Alignment.bottomCenter,
+                end: Alignment.topCenter,
+                colors: [
+                  MAIN_CONTAINER_COLOR,
+                  Colors.transparent
+                ],
+              ),
+            ),
+            child: Container(
+              margin: EdgeInsets.only(left: 15 , right: 15 , bottom: 30),
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextWidget(results.name ?? '', isDynamic: true, style: TextStyle(fontFamily: Neusa , color: Colors.white , fontSize: 14, fontWeight: FontWeight.w600), maxWidth: ScreenUtils.getDesignWidth(160), minWidth: ScreenUtils.getDesignWidth(50),),
+                      Container(
+                          margin: EdgeInsets.only(top: 5),
+                          child: CustomTextWidget('Available ${results.released}', isDynamic: true, style: TextStyle(fontFamily: CircularBook , color: PRIMARY_COLOR , fontSize: 12, fontWeight: FontWeight.bold), maxWidth: ScreenUtils.getDesignWidth(200), minWidth: ScreenUtils.getDesignWidth(50),)),
+                    ],
+                  ),
+                  Spacer(),
+                  Container(
+                    width: ScreenUtils.getDesignWidth(100),
+                    height: ScreenUtils.getDesignHeight(40),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.transparent,
+                      border: Border.all(color: PRIMARY_COLOR , width: 1.5)
+                    ),
+                    child: Center(
+                      child: Text('Add to Wishlist' , style: TextStyle(color: Colors.white , fontFamily: CircularBook , fontSize: 12),),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   Widget _topGamesContainer({required String hoverImage}) {
     return Padding(

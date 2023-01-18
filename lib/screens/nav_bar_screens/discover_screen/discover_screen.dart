@@ -1,19 +1,22 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/app_colors.dart';
-import '../../helpers/app_constants.dart';
-import '../../helpers/app_enums.dart';
-import '../../helpers/app_fonts.dart';
-import '../../helpers/app_screen_utils.dart';
-import '../../helpers/app_strings.dart';
-import '../../models/common_models/game_list_arguments_model.dart';
-import '../../models/game_details_models/game_details_arguments.dart';
-import '../../view_models/discover/discover_view_model.dart';
-import '../../widgets/custom_game_widget.dart';
-import '../../widgets/custom_text_widget.dart';
-import '../../widgets/gradient_text_widget.dart';
-import '../../widgets/horizontal_scroll_widget.dart';
+import '../../../helpers/app_colors.dart';
+import '../../../helpers/app_constants.dart';
+import '../../../helpers/app_enums.dart';
+import '../../../helpers/app_fonts.dart';
+import '../../../helpers/app_screen_utils.dart';
+import '../../../helpers/app_strings.dart';
+import '../../../models/common_models/game_list_arguments_model.dart';
+import '../../../models/game_details_models/game_details_arguments.dart';
+import '../../../view_models/discover/discover_view_model.dart';
+import '../../../widgets/custom_game_widget.dart';
+import '../../../widgets/custom_text_widget.dart';
+import '../../../widgets/gradient_text_widget.dart';
+import '../../../widgets/horizontal_scroll_widget.dart';
+import '../home_screen/trending_week_widget.dart';
 
 class DiscoverScreen extends StatefulWidget {
   @override
@@ -42,53 +45,19 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(30.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Latest Releases',
-                    style: Theme.of(context).primaryTextTheme.headline3,
-                  ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
-                ],
-              ),
+            SectionLabel(title: 'Most Wishlisted Games' , rightText: 'View All',),
+            Container(
+              child: CarouselSlider.builder(itemCount: 5, itemBuilder: (BuildContext context , int index , int pageViewIndex){
+                return TrendingThisWeekWidget();
+              }, options: CarouselOptions(
+                  viewportFraction: 0.85,
+                  enlargeCenterPage: true,
+                  height: ScreenUtils.getDesignHeight(250),
+                  autoPlay: true,
+
+                  autoPlayAnimationDuration: Duration(seconds: 1)
+              )),
             ),
-            Consumer<DiscoverViewModel>(builder: (_, val, __) {
-              return Container(
-                height: ScreenUtils.getDesignHeight(155),
-                margin: EdgeInsets.only(top: 10),
-                child: HorizontalScrollList(
-                  itemCount: val.newlyReleasedGames.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        GAME_DETAILS_SCREEN,
-                        arguments: GameDetailsArguments(
-                          gameId: val.newlyReleasedGames[index].id,
-                        ),
-                      ),
-                      child: GamesWidget(
-                        title: val.newlyReleasedGames[index].name,
-                        subTitle: val.newlyReleasedGames[index].released,
-                        backgroundUrl: val.newlyReleasedGames[index].backgroundImage,
-                        gradient: PRIMARY_GRADIENT,
-                      ),
-                    );
-                  },
-                ),
-              );
-            }),
             Container(
               alignment: Alignment.centerLeft,
               margin: EdgeInsets.only(
@@ -153,6 +122,10 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             }),
           ]),
         ));
+  }
+
+  Widget _mostWishlistedGames() {
+    return Container();
   }
 
   Widget _gameofTheWeekWidget() {
