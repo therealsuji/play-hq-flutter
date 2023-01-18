@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/app_assets.dart';
@@ -139,7 +140,7 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                               ),
                               child: Text(
                                 vm.userDetails.name == null
-                                    ? 'Damsara Perera'
+                                    ? 'No Username'
                                     : '${vm.userDetails.name}',
                                 style: TextStyle(
                                   fontSize: 22,
@@ -181,7 +182,7 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            '22',
+                                            '${vm.wishlistGames.length < 10 ? '0${vm.wishlistGames.length}' : vm.wishlistGames.length}',
                                             style: TextStyle(
                                               fontSize: 26,
                                               fontFamily: Neusa,
@@ -245,7 +246,7 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            '11',
+                                            '${vm.libraryGames.length < 10 ? '0${vm.libraryGames.length}' : vm.libraryGames.length}',
                                             style: TextStyle(
                                               fontSize: 26,
                                               fontFamily: Neusa,
@@ -350,8 +351,11 @@ Widget _pageViewChild(List<Data> games) {
             (e) => GamesWidget(
               backgroundUrl: e.game.boxCover,
               height: ScreenUtils.getDesignHeight(195),
-              color: Colors.red,
+              color: PRIMARY_COLOR,
               title: e.game.title,
+              titleFontSize: 16,
+              subTitleFontSize: 14,
+              subTitle: platforms.firstWhere((element) => element['id'] == e.platform)['name'],
             ),
           )
           .toList(),

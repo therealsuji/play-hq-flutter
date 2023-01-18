@@ -19,13 +19,13 @@ class IMainProfileModel extends MainProfileModel {
   void getProfileDetails() async {
     try {
       this.loadingData();
+      getUserDetails();
+      print("User Avatar: ${_userDetails.avatar}");
       await _mainProfileAPI.getWishListGames().then((value) {
         if (value.data.isNotEmpty) {
           _wishlistGames = value.data;
         }
       });
-      getUserDetails();
-      print("User Avatar: ${_userDetails.avatar}");
       await _mainProfileAPI.getLibraryGames().then((value) {
         if (value.data.isNotEmpty) {
           _libraryGames = value.data;
