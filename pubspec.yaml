@@ -21,8 +21,8 @@ dependencies:
     sdk: flutter
 
   # Architecture
-  provider: 5.0.0
-  rxdart: 0.27.1
+  provider: ^6.0.5
+  rxdart: ^0.27.7
   get_it: 7.2.0
   event_bus: 2.0.0
   dartz: 0.10.1
@@ -30,51 +30,51 @@ dependencies:
   flutter_hooks: ^0.18.5+1
 
   # Firebase
-  firebase_core: 1.4.0
-  firebase_auth: 3.0.1
-  firebase_messaging: 10.0.1
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.2
+  firebase_messaging: ^14.2.1
 
   # Utils
-  flutter_launcher_icons: 0.9.1
-  flutter_secure_storage: 4.2.0
-  path_provider: 2.0.2
-  hive: 2.0.4
-  shared_preferences: 2.0.13
-  intl: 0.17.0
+  flutter_launcher_icons: ^0.11.0
+  flutter_secure_storage: ^7.0.1
+  path_provider: ^2.0.12
+  hive: ^2.2.3
+  shared_preferences: ^2.0.17
+  intl: ^0.18.0
   http_extensions_cache: ^1.0.0
   http_extensions: ^1.0.0
   http_extensions_log: ^1.0.0
 
   # Google Maps
-  places_service: 0.1.0+2
-  google_maps_flutter: 2.0.6
-  geolocator: 7.7.0
-  geocoding: 2.0.1
+  places_service: ^0.1.2
+  google_maps_flutter: ^2.2.3
+  geolocator: ^8.2.1
+  geocoding: ^2.0.5
 
   # UI
-  cupertino_icons: 1.0.3
-  lottie: 1.1.0
-  cached_network_image: 3.2.0
+  cupertino_icons: ^1.0.5
+  lottie: ^2.2.0
+  cached_network_image: ^3.2.3
   carousel_slider: ^4.2.1
-  sticky_headers: 0.2.0
-  flutter_typeahead: 3.2.0
-  dotted_border: 2.0.0
-  rect_getter: 1.0.0
-  flutter_svg: 0.22.0
+  sticky_headers: ^0.3.0+2
+  flutter_typeahead: ^4.1.1
+  dotted_border: ^2.0.0+3
+  rect_getter: ^1.1.0
+  flutter_svg: ^1.1.6
   skeleton_text: 3.0.0
-  dots_indicator: 2.0.0
-  another_flushbar: 1.10.24
+  dots_indicator: ^2.1.0
+  another_flushbar: ^1.12.29
   flutter_sticky_header: ^0.6.4
-  badges: 2.0.2
+  badges: ^3.0.2
   rflutter_alert: 2.0.4
   skeletons: ^0.0.3
   
   # Network
-  http: 0.13.3
+  http: ^0.13.5
 
   # SSO (Single sign-on)
-  google_sign_in: 5.0.5
-  flutter_facebook_auth: 3.5.0
+  google_sign_in: ^5.4.3
+  flutter_facebook_auth: ^5.0.7
   
 flutter_icons:
   image_path: 'assets/images/logo@3x.png'
@@ -86,8 +86,8 @@ dev_dependencies:
     sdk: flutter
 
   # Dev
-  hive_generator: 1.1.0
-  build_runner: 2.0.6
+  hive_generator: ^2.0.0
+  build_runner: ^2.3.3
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
