@@ -9,6 +9,7 @@ import '../../helpers/app_fonts.dart';
 import '../../helpers/app_screen_utils.dart';
 import '../../helpers/app_strings.dart';
 import '../../models/common_models/game_preferences/response_body.dart';
+import '../../models/game_details_models/game_details_arguments.dart';
 import '../../view_models/profile/main_profile/main_profile_model.dart';
 import '../../widgets/custom_game_widget.dart';
 
@@ -324,8 +325,8 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                 physics: ScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  _pageViewChild(value.wishlistGames),
-                  _pageViewChild(value.libraryGames),
+                  _pageViewChild(value.wishlistGames , context),
+                  _pageViewChild(value.libraryGames , context),
                 ],
               ),
             );
@@ -336,7 +337,7 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
   }
 }
 
-Widget _pageViewChild(List<Data> games) {
+Widget _pageViewChild(List<Data> games , BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 24),
     child: GridView.count(
@@ -348,14 +349,23 @@ Widget _pageViewChild(List<Data> games) {
       physics: NeverScrollableScrollPhysics(),
       children: games
           .map(
-            (e) => GamesWidget(
-              backgroundUrl: e.game.boxCover,
-              height: ScreenUtils.getDesignHeight(195),
-              color: PRIMARY_COLOR,
-              title: e.game.title,
-              titleFontSize: 16,
-              subTitleFontSize: 14,
-              subTitle: platforms.firstWhere((element) => element['id'] == e.platform)['name'],
+            (e) => GestureDetector(
+              onTap: () => Navigator.pushNamed(
+                context,
+                GAME_DETAILS_SCREEN,
+                arguments: GameDetailsArguments(
+                  gameId: e.game.apiId,
+                ),
+              ),
+              child: GamesWidget(
+                backgroundUrl: e.game.boxCover,
+                height: ScreenUtils.getDesignHeight(195),
+                color: PRIMARY_COLOR,
+                title: e.game.title,
+                titleFontSize: 16,
+                subTitleFontSize: 14,
+                subTitle: platforms.firstWhere((element) => element['id'] == e.platform)['name'],
+              ),
             ),
           )
           .toList(),

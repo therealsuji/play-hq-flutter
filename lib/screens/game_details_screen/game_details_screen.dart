@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:play_hq/widgets/custom_image_slider_dart.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -240,9 +241,14 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                           child: Row(
                             children: model.gameScreenshots.results != null
                                 ? model.gameScreenshots.results!.map((s) {
-                                    return _genreScreenshotContainer(
-                                      imagePath: s.image,
-                                      index: model.gameScreenshots.results!.indexOf(s),
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CustomImageSlider(listImagesModel: model.gameScreenshots.results, current: model.gameScreenshots.results!.indexOf(s))));
+                                      },
+                                      child: _genreScreenshotContainer(
+                                        imagePath: s.image,
+                                        index: model.gameScreenshots.results!.indexOf(s),
+                                      ),
                                     );
                                   }).toList()
                                 : [],
