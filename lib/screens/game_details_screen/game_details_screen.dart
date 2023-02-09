@@ -589,10 +589,11 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
 
   Widget _genreListContainer({String? name, int? index}) {
     return Container(
-      width: ScreenUtils.getDesignWidth(97.0),
-      height: ScreenUtils.getDesignHeight(99.0),
+      width: ScreenUtils.getDesignWidth(110.0),
+      height: ScreenUtils.getDesignHeight(110.0),
       margin: EdgeInsets.only(
-        left: ScreenUtils.getDesignWidth(index == 0 ? 24.0 : 16.0),
+        left: ScreenUtils.getDesignWidth(index == 0 ? 24.0 : 15.0),
+        right: ScreenUtils.getDesignWidth(index == 2 ? 24.0 : 0)
       ),
       decoration: BoxDecoration(
         color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
@@ -602,16 +603,16 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: ScreenUtils.getDesignWidth(57.0),
-            height: ScreenUtils.getDesignHeight(57.0),
-            color: Colors.amber,
+            width: ScreenUtils.getDesignWidth(50.0),
+            height: ScreenUtils.getDesignHeight(50.0),
+            child: Image.asset('assets/images/genres/${name!.toLowerCase()}.png')
           ),
           Padding(
             padding: EdgeInsets.only(
               top: ScreenUtils.getDesignHeight(8.0),
             ),
             child: Text(name ?? "",
-                style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(fontSize: 12)),
+                style: Theme.of(context).primaryTextTheme.subtitle1!.copyWith(fontSize: 14)),
           ),
         ],
       ),

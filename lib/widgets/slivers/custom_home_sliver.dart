@@ -148,29 +148,31 @@ class SliverContent extends StatelessWidget {
                   child: Consumer<HomeScreenModel>(
                     builder: (_, model, __) {
                       return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: model.prefGenres.length > 2 ?  MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
                         children: model.hasInitialDataLoaded
                             ? model.prefGenres
-                                .map((e) => InkWell(
-                                      child: GenreWidget(
-                                        //TODO: this needs to be dynamic
-                                        gradient: GENRE_YELLOW_GRADIENT,
-                                        name: e.name ?? "",
-                                        //TODO: this needs to be dynamic
-                                        imageUrl: ACTION_GENRE_IMAGE,
-                                      ),
-                                      onTap: () => Navigator.pushNamed(
-                                        context,
-                                        GAME_LIST_SCREEN,
-                                        arguments: GameListArguments(
-                                          screenTitle: "${e.name ?? ''} Games",
-                                          apiType: GameLists.GENRE,
-                                          args: {
-                                            "genre": e.id.toString(),
-                                          },
+                                .map((e) => Container(
+                                  margin: EdgeInsets.only(right: model.prefGenres.length > 2 ? 0 : 25),
+                                  child: InkWell(
+                                        child: GenreWidget(
+                                          //TODO: this needs to be dynamic
+                                          gradient: GENRE_YELLOW_GRADIENT,
+                                          name: e.name ?? "",
+                                          imageUrl: 'assets/images/genres/${e.name!.toLowerCase()}.png',
+                                        ),
+                                        onTap: () => Navigator.pushNamed(
+                                          context,
+                                          GAME_LIST_SCREEN,
+                                          arguments: GameListArguments(
+                                            screenTitle: "${e.name ?? ''} Games",
+                                            apiType: GameLists.GENRE,
+                                            args: {
+                                              "genre": e.id.toString(),
+                                            },
+                                          ),
                                         ),
                                       ),
-                                    ))
+                                ))
                                 .toList()
                             : <Widget>[for (int i = 0; i < 3; i++) SkeletonGenreWidget()],
                       );

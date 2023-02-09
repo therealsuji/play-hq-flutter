@@ -36,6 +36,6 @@ const String BUY_GAME_CHARACTER_IMAGE = "assets/images/toad_asset.png";
 const String LEARN_MORE = "assets/images/learn_more.png";
 const String IMAGE_NOT_AVAILABLE = "assets/images/img_not_found.jpg";
 
-const String ADVENTURE_GENRE_IMAGE = "assets/images/adventure.png";
-const String ACTION_GENRE_IMAGE = "assets/images/action.png";
-const String RACING_GENRE_IMAGE = "assets/images/racing.png";
+const String ADVENTURE_GENRE_IMAGE = "assets/images/genres/adventure.png";
+const String ACTION_GENRE_IMAGE = "assets/images/genres/action.png";
+const String RACING_GENRE_IMAGE = "assets/images/genres/racing.png";
