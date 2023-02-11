@@ -4,6 +4,9 @@
 
 import 'dart:convert';
 
+import '../common_models/rawg_platform_model.dart';
+import '../game_details_models/game_details_model.dart';
+
 RawgGameDetails rawgGameDetailsFromJson(String str) => RawgGameDetails.fromJson(json.decode(str));
 
 class RawgGameDetails {
@@ -35,12 +38,16 @@ class GameResults {
     this.tba,
     this.backgroundImage,
     this.rating,
+    this.platforms,
+    this.genres
   });
 
   int? id;
   String? name;
   String? released;
+  final List<RawgPlatformModel>? platforms;
   bool? tba;
+  final List<GenreTagDeveloper>? genres;
   String? backgroundImage;
   double? rating;
 
@@ -49,6 +56,10 @@ class GameResults {
         name: json["name"],
         released: json["released"],
         tba: json["tba"],
+         platforms: json["platforms"] == null ? [] : List<RawgPlatformModel>.from(json["platforms"].map((x) => RawgPlatformModel.fromJson(x))),
+        genres: json["genres"] == null ? []
+        : List<GenreTagDeveloper>.from(
+        json["genres"].map((x) => GenreTagDeveloper.fromJson(x))),
         backgroundImage: json["background_image"],
         rating: json["rating"],
       );

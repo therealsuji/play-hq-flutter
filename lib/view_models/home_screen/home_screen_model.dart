@@ -19,11 +19,17 @@ abstract class HomeScreenModel extends ChangeNotifier with AppLoader {
 
   List<GameResults> get upComingGamesThisYear;
 
+  Future<bool> addToWishlist(GameResults results);
+
   List<GameResults> get recommendedGames;
 
   List<SalesPayload> get bundleGames;
 
   String? get displayName;
+
+  int get selectedPlatformId;
+
+  void selectPlatform(int platformId);
 
   List<Genre> get prefGenres;
 }

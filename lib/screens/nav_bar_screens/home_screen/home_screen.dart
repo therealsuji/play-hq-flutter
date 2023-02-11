@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:play_hq/models/common_models/rawg_platform_model.dart';
 import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -20,6 +21,7 @@ import '../../../models/rawg_models/rawg_game_details.dart';
 import '../../../models/sales/sales_payload_model.dart';
 import '../../../view_models/home_screen/home_screen_model.dart';
 import '../../../view_models/view_models.dart';
+import '../../../widgets/bottomSheets/platform_sheet.dart';
 import '../../../widgets/cached_image_widget.dart';
 import '../../../widgets/custom_button_widget.dart';
 import '../../../widgets/custom_game_widget.dart';
@@ -73,6 +75,26 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
+
+  // Failure Snackbar
+  final SnackBar failureBar = SnackBar(
+    content: Text(
+      "Add to Watchlist Failed",
+      textAlign: TextAlign.center,
+      style: TextStyle(color: Colors.white),
+    ),
+    backgroundColor: Colors.redAccent,
+  );
+
+  // Failure Snackbar
+  final SnackBar successBar = SnackBar(
+    content: Text(
+      "Added to Watchlist",
+      textAlign: TextAlign.center,
+      style: TextStyle(color: Colors.white),
+    ),
+    backgroundColor: Colors.green,
+  );
 
   Widget homeBody() => SliverToBoxAdapter(
     child: Container(
@@ -218,6 +240,32 @@ class _HomeScreenState extends State<HomeScreen> {
     ),
   );
 
+  _showPlatformBottomSheet({VoidCallback? onPressed , required List<RawgPlatformModel> platforms}) async {
+    final model = Provider.of<HomeScreenModel>(context, listen: false);
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          height: ScreenUtils.getDesignHeight(340),
+          decoration: BoxDecoration(
+            color: POP_UP_CONTAINER_COLOR,
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: ChangeNotifierProvider.value(
+            value: model,
+            builder: (BuildContext context, _) {
+              return PlatformBottomSheet(
+                bottomSheetType: PlatformBottomSheetType.HOME_SCREEN_ADD,
+                onPressed: onPressed,
+                platformList: platforms,
+              );
+            },
+          ),
+        );
+      },
+    );
+  }
+
   Widget _comingSoon(GameResults results){
     return Container(
       width: ScreenUtils.getDesignWidth(290),
@@ -267,16 +315,25 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                   Spacer(),
-                  Container(
-                    width: ScreenUtils.getDesignWidth(100),
-                    height: ScreenUtils.getDesignHeight(40),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.transparent,
-                      border: Border.all(color: PRIMARY_COLOR , width: 1.5)
-                    ),
-                    child: Center(
-                      child: Text('Add to Wishlist' , style: TextStyle(color: Colors.white , fontFamily: CircularBook , fontSize: 12),),
+                  GestureDetector(
+                    onTap: (){
+                      _showPlatformBottomSheet(platforms: results.platforms ?? [] , onPressed: () async {
+                        bool value = await Provider.of<HomeScreenModel>(context, listen: false).addToWishlist(results);
+                        value ? ScaffoldMessenger.of(context).showSnackBar(successBar) : ScaffoldMessenger.of(context).showSnackBar(failureBar);
+                      });
+                      // ScaffoldMessenger.of(context).showSnackBar(successBar);
+                    },
+                    child: Container(
+                      width: ScreenUtils.getDesignWidth(100),
+                      height: ScreenUtils.getDesignHeight(40),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Colors.transparent,
+                        border: Border.all(color: PRIMARY_COLOR , width: 1.5)
+                      ),
+                      child: Center(
+                        child: Text('Add to Wishlist' , style: TextStyle(color: Colors.white , fontFamily: CircularBook , fontSize: 12),),
+                      ),
                     ),
                   )
                 ],

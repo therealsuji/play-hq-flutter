@@ -1,6 +1,15 @@
+import 'package:event_bus/event_bus.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/repository/clients/game_details_repository.dart';
+import 'package:play_hq/services/nav_service.dart';
 
+import '../../helpers/app_enums.dart';
+import '../../helpers/networks/app_config.dart';
+import '../../helpers/networks/app_network.dart';
 import '../../injection_container.dart';
 import '../../models/app_genre_model.dart';
 import '../../models/common_models/user/user_details.dart';
@@ -15,6 +24,8 @@ import 'home_screen_model.dart';
 class IHomeScreenModel extends HomeScreenModel {
   final _homeApi = sl<HomeRepository>();
   final _gameApi = sl<GameApiRepository>();
+  final _gameDetailsApi = sl<GameDetailsRepository>();
+  final _eventBus = sl<EventBus>();
 
   int _carouselPageIndex = 0;
   List<SalesPayload> _wishListGames = [];
@@ -24,6 +35,8 @@ class IHomeScreenModel extends HomeScreenModel {
   List<GameResults> _upcomingGamesThisYear = [];
   List<GameResults> _recommendedGames = [];
   List<Genre> _prefGenre = [];
+
+  int _selectedPlatform = 0;
   // use this when user hasnt set any preferred genres
   List<Genre> _defaultGenre = [
     Genre(
@@ -62,6 +75,7 @@ class IHomeScreenModel extends HomeScreenModel {
         notifyListeners();
       });
       var n3 = _gameApi.getUpComingGames().then((games) {
+
         if (games.results!.length > 0) {
           _upcomingGamesThisYear = games.results ?? [];
         }
@@ -110,4 +124,49 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   List<Genre> get prefGenres => _prefGenre.length != 0 ? _prefGenre : _defaultGenre;
+
+  @override
+  Future<bool> addToWishlist(GameResults results ) async {
+    final GameDetailsRepository gameDetailsRepository;
+    final _httpClient = sl<Network>();
+
+    debugPrint('Selected Platform $_selectedPlatform');
+
+    var body = {
+      "game": {
+        "title": results.name,
+        "apiId": results.id,
+        "boxCover": results.backgroundImage,
+        "backgroundImage": results.backgroundImage,
+        "images": [],
+        "platforms": results.platforms!.map((e) => e.id).toList(),
+        "genres": results.genres!.map((e) => e.id).toList(),
+        "releaseDate":
+        "${DateFormat('yyyy-MM-dd').format(DateTime.parse(results.released!))}",
+      },
+      "platform": _selectedPlatform
+    };
+
+    sl<NavigationService>().pop();
+
+    Response response = await _homeApi.addToWishlist(body);
+
+    if(response.statusCode == 201){
+      notifyListeners();
+      return true;
+    }else{
+      return false;
+    }
+    // _eventBus.fire(LoadingEvent.hide());
+  }
+
+  @override
+  int get selectedPlatformId => _selectedPlatform;
+
+  @override
+  void selectPlatform( int platformId) {
+    _selectedPlatform = platformId;
+    notifyListeners();
+  }
+
 }

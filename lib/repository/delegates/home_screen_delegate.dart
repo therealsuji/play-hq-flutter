@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/src/response.dart';
 
 import '../../helpers/app_enums.dart';
 import '../../helpers/networks/app_config.dart';
@@ -15,7 +16,10 @@ import '../clients/home_screen_repository.dart';
 class HomeDelegate implements HomeRepository {
   final Network networkCalls;
 
-  const HomeDelegate(this.networkCalls);
+  final _httpClient = sl<Network>();
+
+
+  HomeDelegate(this.networkCalls);
 
   @override
   Future<MySalesPayload> getSalesFromWishList() async {
@@ -74,5 +78,10 @@ class HomeDelegate implements HomeRepository {
         message: e.toString(),
       );
     }
+  }
+
+  @override
+  Future<Response> addToWishlist(Map<String, dynamic> body) async{
+    return await _httpClient.performRequest(APIConfig.addToWishList, HttpAction.POST, body: body);
   }
 }
