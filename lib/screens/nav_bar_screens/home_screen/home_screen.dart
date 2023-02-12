@@ -107,9 +107,6 @@ class _HomeScreenState extends State<HomeScreen> {
             onClick: () => Navigator.pushNamed(context, GAME_LIST_SCREEN , arguments: GameListArguments(
               screenTitle: "Recommended Games",
               apiType: GameLists.RECOMMENDED,
-              args: {
-                "genre": '',
-              },
             ),),
           ),
           Padding(
@@ -205,6 +202,10 @@ class _HomeScreenState extends State<HomeScreen> {
           SectionLabel(
             title: "Coming Soon",
             rightText: "View All",
+            onClick: () => Navigator.pushNamed(context, GAME_LIST_SCREEN , arguments: GameListArguments(
+              screenTitle: "Games Coming Soon",
+              apiType: GameLists.UPCOMING_GAMES,
+            ),),
           ),
           Consumer<HomeScreenModel>(
             builder: (_, val, __) {

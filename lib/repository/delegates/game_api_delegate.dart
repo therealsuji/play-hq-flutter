@@ -13,7 +13,7 @@ class GameApiDelegate extends GameApiRepository with NetworkHelper {
 
   @override
   Future<RawgGameDetails> getUpComingGames() {
-    return this.get<RawgGameDetails>(APIConfig.getUpcomingGames(), rawgGameDetailsFromJson).then((value) => value.result);
+    return this.get<RawgGameDetails>(APIConfig.getUpcomingGames(5), rawgGameDetailsFromJson).then((value) => value.result);
   }
 
   @override

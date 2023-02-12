@@ -26,11 +26,17 @@ class _GameListScreenState extends State<GameListScreen> {
       case GameLists.TOP_RATED_GAMES:
         Provider.of<GameListViewModel>(context, listen: false).fetchTopRatedGames();
         break;
+      case GameLists.RECOMMENDED:
+        Provider.of<GameListViewModel>(context, listen: false).fetchAllRecommendedGames();
+        break;
       case GameLists.MOST_ANTICIPATED_GAMES:
         Provider.of<GameListViewModel>(context, listen: false).fetchUpcomingGames();
         break;
       case GameLists.GAMES_OF_2022:
         Provider.of<GameListViewModel>(context, listen: false).fetchGamesOf2022();
+        break;
+      case GameLists.UPCOMING_GAMES:
+        Provider.of<GameListViewModel>(context, listen: false).fetchUpcomingGames();
         break;
       case GameLists.GENRE:
         Provider.of<GameListViewModel>(context, listen: false)

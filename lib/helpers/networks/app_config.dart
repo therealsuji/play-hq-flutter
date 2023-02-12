@@ -60,9 +60,10 @@ class APIConfig {
   }
 
   static String getRecommendGamesFromGenres(List<int> genres) {
+    DateTime currentDate = DateTime.now();
     String genreString = genres.join(",");
     // Game count is hardcoded
-    return '$_rawgAPI/games?page_size=5&genres=$genreString&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?dates=${currentDate.year - 5}-01-01,${currentDate.year}-12-31&page_size=8&genres=$genreString&key=$_RAWG_API_KEY';
   }
 
   static String getGamesByGenre(int page, String genre) {
@@ -87,12 +88,12 @@ class APIConfig {
         '&key=$_RAWG_API_KEY';
   }
 
-  static String getUpcomingGames() {
+  static String getUpcomingGames(int size) {
     DateTime currentDate = DateTime.now();
     var startDateTime =
         '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-01';
     var endDateTime = '${currentDate.year + 3}-12-31';
-    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&ordering=-added&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page_size=$size&ordering=-added&key=$_RAWG_API_KEY';
   }
 
   static String getGamesOf2022() {
