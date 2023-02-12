@@ -42,6 +42,8 @@ class _GameListScreenState extends State<GameListScreen> {
         Provider.of<GameListViewModel>(context, listen: false)
             .fetchGamesFromGenre(widget.gameListArguments?.args?['genre'] ?? "");
         break;
+      case GameLists.DEVELOPER:
+
       default:
     }
     super.initState();

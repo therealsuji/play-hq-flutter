@@ -77,6 +77,7 @@ class APIConfig {
     return '$_rawgAPI/games?dates=${currentDate.year - 5}-01-01,${currentDate.year}-12-31&page_size=10&genres=$genre&platforms=$combinedPlatforms&key=$_RAWG_API_KEY';
   }
 
+
   static String popularThisYear() {
     DateTime currentDate = DateTime.now();
     return '$_rawgAPI/games?dates=${currentDate.year}-01-01,${currentDate.year}-12-31&ordering=popularity&key=$_RAWG_API_KEY';

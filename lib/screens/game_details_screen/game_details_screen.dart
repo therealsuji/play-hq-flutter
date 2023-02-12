@@ -11,6 +11,7 @@ import '../../helpers/app_enums.dart';
 import '../../helpers/app_screen_utils.dart';
 import '../../helpers/app_strings.dart';
 import '../../helpers/app_utils.dart';
+import '../../models/common_models/game_list_arguments_model.dart';
 import '../../models/game_details_models/game_details_arguments.dart';
 import '../../models/game_status.dart';
 import '../../view_models/game_details/game_details_model.dart';
@@ -218,9 +219,18 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                           child: Row(
                             children: model.gameDetails.genres != null
                                 ? model.gameDetails.genres!.map((g) {
-                                    return _genreListContainer(
-                                      name: g.name,
-                                      index: model.gameDetails.genres!.indexOf(g),
+                                    return GestureDetector(
+                                      onTap: () => Navigator.pushNamed(context, GAME_LIST_SCREEN , arguments: GameListArguments(
+                                      screenTitle: "${g.name} Games",
+                                      apiType: GameLists.GENRE,
+                                      args: {
+                                        'genre':'${g.id}'
+                                      }
+                                    ),),
+                                      child: _genreListContainer(
+                                        name: g.name,
+                                        index: model.gameDetails.genres!.indexOf(g),
+                                      ),
                                     );
                                   }).toList()
                                 : [],
