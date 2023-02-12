@@ -155,7 +155,7 @@ class _MySalesDetailsScreenState extends State<MySalesDetailsScreen> {
                           ),
                         ),
                         Text(
-                          "${popularConsoles.firstWhere((element) => element['id'] == widget.salesPayload!.platform)['id']}",
+                          "${platforms.firstWhere((element) => element['id'] == widget.salesPayload!.platform)['id']}",
                           style: TextStyle(
                             color: SUB_TEXT_COLOR,
                             fontSize: 14,

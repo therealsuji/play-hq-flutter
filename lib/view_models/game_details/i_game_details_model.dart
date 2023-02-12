@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 
@@ -137,6 +138,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
 
   @override
   void selectedPlatform(int platformId) {
+    debugPrint('Game Platform $platformId');
     _platformId = platformId;
     notifyListeners();
   }

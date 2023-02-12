@@ -2,15 +2,6 @@ import 'package:play_hq/helpers/app_colors.dart';
 
 import 'app_enums.dart';
 
-const List<Map<String, dynamic>> playStationPlatforms = [
-  {'id': 187, 'name': 'PlayStation 5'},
-  {'id': 18, 'name': 'PlayStation 4'},
-  {'id': 16, 'name': 'PlayStation 3'},
-  {'id': 15, 'name': 'PlayStation 2'},
-  {'id': 19, 'name': 'PS Vita'},
-  {'id': 17, 'name': 'PSP'}
-];
-
 const List<Map<String , String>> game_conditions = [
   {'name': 'Mint Condition' , 'API_Slug': 'MINT'},
   {'name': 'Very New' , 'API_Slug': 'VERY_NEW'},
@@ -18,92 +9,10 @@ const List<Map<String , String>> game_conditions = [
   {'name': 'Playable' , 'API_Slug': 'PLAYABLE'},
 ];
 
-const List<Map<String, dynamic>> xboxPlatforms = [
-  {'id': 186, 'name': 'Xbox Series S/X'},
-  {'id': 1, 'name': 'Xbox One'},
-  {'id': 14, 'name': 'Xbox 360'},
-  {'id': 80, 'name': 'Xbox'}
-];
-
 const List<Map<String, dynamic>> discoverComponents = [
   {'name': 'Top Rated Games', 'gradient': GRADIENT_COMPONENT_1 , 'imagePath': 'assets/images/discovery_category_1.png' , 'category' : DiscoverCategory.TOP_RATED_GAMES , 'apiType' : GameLists.TOP_RATED_GAMES},
   {'name': 'Most Anticipated Games', 'gradient': GRADIENT_COMPONENT_2 , 'imagePath': 'assets/images/discovery_category_2.png' , 'category' : DiscoverCategory.MOST_ANTICIPATED_GAMES ,'apiType' : GameLists.MOST_ANTICIPATED_GAMES},
   {'name': 'Games of 2022', 'gradient': GRADIENT_COMPONENT_3 , 'imagePath': 'assets/images/discovery_category_3.png' , 'category' : DiscoverCategory.GAMES_OF_2022 , 'apiType' : GameLists.GAMES_OF_2022},
-];
-
-const List<Map<String, dynamic>> testerGames = [
-  {'id': 2, 'name': 'Call of Duty: Warzone' , 'releaseDate' : '12/02/2019' , 'coverImage' : 'https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg'},
-  {'id': 3, 'name': 'Cyperpunk 2077' , 'releaseDate' : '22/05/2020' , 'coverImage' : 'https://static.wikia.nocookie.net/g-c-a/images/0/0b/Cover-art-6.jpg/revision/latest?cb=20210104020439'},
-  {'id': 4, 'name': 'Ghost of Tsushima' , 'releaseDate' : '17/04/2020' , 'coverImage' : 'https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg'},
-  {'id': 5, 'name': 'Borderlands 3' , 'releaseDate' : '20/01/202' , 'coverImage' : 'https://www.mobygames.com/images/covers/l/591676-borderlands-3-playstation-4-front-cover.jpg'},
-  {'id': 6, 'name': 'God of War' , 'releaseDate' : '02/06/2021' , 'coverImage' : 'https://cdn1.epicgames.com/salesEvent/salesEvent/EGS_GodofWar_SantaMonicaStudio_S2_1200x1600-fbdf3cbc2980749091d52751ffabb7b7'},
-];
-
-const List<Map<String, dynamic>> testerOrders = [
-  {
-    'games': [
-      {
-        'id': 1,
-        'name': 'Call of Duty: Warzone',
-        'releaseDate' : '12/02/2019',
-        'coverImage' : 'https://m.media-amazon.com/images/M/MV5BZWYxY2VmN2ItNjNlNi00ZmM0LWEwMjEtMTE1NGQxMGVhMWQxXkEyXkFqcGdeQXVyMTk2OTAzNTI@._V1_FMjpg_UX1000_.jpg',
-        'platform': 'PlayStation 5',
-      },
-      {
-        'id': 2,
-        'name': 'Cyperpunk 2077',
-        'releaseDate' : '22/05/2020',
-        'coverImage' : 'https://static.wikia.nocookie.net/g-c-a/images/0/0b/Cover-art-6.jpg/revision/latest?cb=20210104020439',
-        'platform': 'PlayStation 5',
-      },
-      {
-        'id': 3,
-        'name': 'Ghost of Tsushima',
-        'releaseDate' : '17/04/2020',
-        'coverImage' : 'https://thetomorrowtechnology.co.ke/wp-content/uploads/2020/08/date-sortie-ghost-of-tsushima-ps4-1200x900-1-1.jpg',
-        'platform': 'PlayStation 5',
-      },
-    ],
-    'price': '\$100',
-    'status': 'Active',
-    'due_date': '12/02/2020',
-    'platform': 'PlayStation 4',
-  },
-  {
-    'games': [
-      {
-        'id': 3,
-        'name': 'Far Cry 06',
-        'releaseDate': '17/04/2020',
-        'coverImage': 'https://image.api.playstation.com/vulcan/img/rnd/202106/0722/s3zMp9o1SdEtPJK267avcCxT.jpg',
-        'platform': 'PlayStation 5',
-      },
-    ],
-    'price': '\$40',
-    'status': 'Active',
-    'due_date': '12/02/2020',
-    'platform': 'Xbox One',
-  },
-  {
-    'games': [
-      {
-        'id': 3,
-        'name': 'Ratchet & Clank: Rift Apart',
-        'releaseDate': '17/04/2020',
-        'coverImage': 'https://i.ytimg.com/vi/ai3o0XtrnM8/maxresdefault.jpg',
-      },
-      {
-        'id': 3,
-        'name': 'Battlefield 2042',
-        'releaseDate': '17/04/2020',
-        'coverImage': 'https://cdn1.epicgames.com/offer/52f57f57120c440fad9bfa0e6c279317/EGS_Battlefield2042_DICE_S1_2560x1440-36f16374c9c29a18a46872795b483d72_2560x1440-36f16374c9c29a18a46872795b483d72',
-      },
-    ],
-    'price': '\$80',
-    'status': 'Active',
-    'due_date': '12/02/2020',
-    'platform': 'PlayStation 5',
-  }
 ];
 
 const List<Map<String, dynamic>> onboardingData = [
@@ -113,33 +22,14 @@ const List<Map<String, dynamic>> onboardingData = [
   {'image': 'assets/images/sales_onboarding.png', 'title': 'Track your Order' , 'description':'Whether you’re selling or buying a game, we’ve got\nyou covered from the start to finish of the order.\nTrack your order easy peasy.'}
 ];
 
-const List<Map<String, dynamic>> nintendoConsoles = [
-  {'id': 7, 'name': 'Nintendo Switch'},
-  {'id': 8, 'name': 'Nintendo 3DS'},
-  {'id': 9, 'name': 'Nintendo DS'},
-
-  {'id': 13, 'name': 'Nintendo DSi'},
-  {'id': 11, 'name': 'Wii'},
-  {'id': 10, 'name': 'Wii U'},
-];
-
 const List<Map<String, dynamic>> platforms = [
   {'id': 187, 'name': 'PlayStation 05'},
   {'id': 18, 'name': 'PlayStation 04'},
   {'id': 16 , 'name': 'PlayStation 03'},
   {'id': 186, 'name': 'Xbox Series S/X'},
+  {'id' : 14 , 'name' : 'Xbox 360'},
   {'id':1 , 'name':'Xbox One'},
   {'id':7, 'name':'Nintendo Switch'}
-];
-
-
-const List<Map<String, dynamic>> popularConsoles = [
-  {'id': 187, 'name': 'PlayStation 5'},
-  {'id': 186, 'name': 'Xbox Series S/X'},
-  {'id': 18, 'name': 'PlayStation 4'},
-  {'id': 16 , 'name': 'PlayStation 03'},
-  {'id': 7, 'name': 'Nintendo Switch'},
-  {'id': 1, 'name': 'Xbox One'},
 ];
 
 const List<Map<String, dynamic>> releaseDates = [

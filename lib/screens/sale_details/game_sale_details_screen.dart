@@ -255,7 +255,7 @@ class _GameSaleDetailsScreenState extends State<GameSaleDetailsScreen> {
 
   String _getPlatformName(int platformId) {
     String platformName = "";
-    popularConsoles.forEach((platform) {
+    platforms.forEach((platform) {
       if (platform['id'] == platformId) {
         platformName = platform['name'];
       }

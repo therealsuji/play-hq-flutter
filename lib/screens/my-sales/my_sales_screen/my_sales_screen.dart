@@ -149,7 +149,7 @@ class _MySalesScreenState extends State<MySalesScreen> {
                 ),
                 Spacer(),
                 Text(
-                  " ${popularConsoles.firstWhere((element) => element['id'] == salesPayload.platform)['name']}",
+                  " ${platforms.firstWhere((element) => element['id'] == salesPayload.platform)['name']}",
                   style: Theme.of(context).primaryTextTheme.headline4,
                 ),
               ],
