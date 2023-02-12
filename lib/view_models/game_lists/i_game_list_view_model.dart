@@ -9,7 +9,7 @@ import 'game_list_view_model.dart';
 class IGameListViewModel extends GameListViewModel {
   final _gameListAPI = sl<GameListRepository>();
   final _eventBus = sl<EventBus>();
-  int _pageSize = 9;
+  int _pageSize = 15;
   List<GameResults> _gameResponse = [];
 
   @override

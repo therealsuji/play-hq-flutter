@@ -66,12 +66,14 @@ class APIConfig {
   }
 
   static String getGamesByGenre(int page, String genre) {
-    return '$_rawgAPI/games?page_size=$page&genres=$genre&key=$_RAWG_API_KEY';
+    DateTime currentDate = DateTime.now();
+    return '$_rawgAPI/games?dates=${currentDate.year - 5}-01-01,${currentDate.year}-12-31&page_size=$page&genres=$genre&key=$_RAWG_API_KEY';
   }
 
   static String getSimilarGames(int page, String genre, List<int> platforms) {
     String combinedPlatforms = platforms.join(',');
-    return '$_rawgAPI/games?page_size=10&genres=$genre&platforms=$combinedPlatforms&key=$_RAWG_API_KEY';
+    DateTime currentDate = DateTime.now();
+    return '$_rawgAPI/games?dates=${currentDate.year - 5}-01-01,${currentDate.year}-12-31&page_size=10&genres=$genre&platforms=$combinedPlatforms&key=$_RAWG_API_KEY';
   }
 
   static String popularThisYear() {
