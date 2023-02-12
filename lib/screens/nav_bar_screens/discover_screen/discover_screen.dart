@@ -73,26 +73,16 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               ),
             ),
             _gameofTheWeekWidget(),
-            Padding(
-              padding: EdgeInsets.only(
-                top: ScreenUtils.getDesignHeight(30.0),
-                left: ScreenUtils.getDesignWidth(24.0),
-                right: ScreenUtils.getDesignWidth(24.0),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'First Person Shooter',
-                    style: Theme.of(context).primaryTextTheme.headline3,
-                  ),
-                  GradientText(
-                    "View All",
-                    gradient: PRIMARY_GRADIENT,
-                    style: Theme.of(context).primaryTextTheme.headline4,
-                  ),
-                ],
-              ),
+            SectionLabel(
+              title: "First Person Shooter",
+              rightText: "View All",
+              onClick: () => Navigator.pushNamed(context, GAME_LIST_SCREEN , arguments: GameListArguments(
+                screenTitle: "First Person Shooter",
+                apiType: GameLists.GENRE,
+                args: {
+                  "genre": 'shooter',
+                },
+              ),),
             ),
             Consumer<DiscoverViewModel>(builder: (_, val, __) {
               return Container(
