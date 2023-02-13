@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/screens/profile_screens/profile_screen/gridview_widget.dart';
+import 'package:play_hq/screens/profile_screens/profile_screen/profile_detail_box_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../../helpers/app_assets.dart';
-import '../../helpers/app_colors.dart';
-import '../../helpers/app_fonts.dart';
-import '../../helpers/app_screen_utils.dart';
-import '../../helpers/app_strings.dart';
-import '../../models/common_models/game_preferences/response_body.dart';
-import '../../models/game_details_models/game_details_arguments.dart';
-import '../../view_models/profile/main_profile/main_profile_model.dart';
-import '../../widgets/custom_game_widget.dart';
+import '../../../helpers/app_assets.dart';
+import '../../../helpers/app_colors.dart';
+import '../../../helpers/app_fonts.dart';
+import '../../../helpers/app_screen_utils.dart';
+import '../../../helpers/app_strings.dart';
+import '../../../models/common_models/game_preferences/response_body.dart';
+import '../../../models/game_details_models/game_details_arguments.dart';
+import '../../../view_models/profile/main_profile/main_profile_model.dart';
+import '../../../widgets/custom_game_widget.dart';
 
 class TestingPage extends StatefulWidget {
   @override
@@ -164,112 +166,7 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                               margin: EdgeInsets.only(
                                 top: ScreenUtils.getDesignHeight(20),
                               ),
-                              child: Container(
-                                width: ScreenUtils.bodyWidth,
-                                height: ScreenUtils.getDesignHeight(80),
-                                margin: EdgeInsets.symmetric(horizontal: 24),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Container(
-                                      height: ScreenUtils.getDesignHeight(80),
-                                      width: ScreenUtils.getDesignWidth(100),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: MAIN_CONTAINER_COLOR,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '${vm.wishlistGames.length < 10 ? '0${vm.wishlistGames.length}' : vm.wishlistGames.length}',
-                                            style: TextStyle(
-                                              fontSize: 26,
-                                              fontFamily: Neusa,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Wishlist Games',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: CircularBook,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white.withOpacity(0.6),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      height: ScreenUtils.getDesignHeight(80),
-                                      width: ScreenUtils.getDesignWidth(100),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: MAIN_CONTAINER_COLOR,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '08',
-                                            style: TextStyle(
-                                              fontSize: 26,
-                                              fontFamily: Neusa,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Gamer Friends',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: CircularBook,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white.withOpacity(0.6),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      height: ScreenUtils.getDesignHeight(80),
-                                      width: ScreenUtils.getDesignWidth(100),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(5),
-                                        color: MAIN_CONTAINER_COLOR,
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            '${vm.libraryGames.length < 10 ? '0${vm.libraryGames.length}' : vm.libraryGames.length}',
-                                            style: TextStyle(
-                                              fontSize: 26,
-                                              fontFamily: Neusa,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Library Games',
-                                            style: TextStyle(
-                                              fontSize: 12,
-                                              fontFamily: CircularBook,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.white.withOpacity(0.6),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                              child: vm.hasInitialDataLoaded ? ProfileDetailsBox(wishlistCount: vm.wishlistGames.length, libraryCount: vm.libraryGames.length, gamerfriendCount: 08,) : SkeletonProfileDetails()
                             )
                           ],
                         ),
@@ -278,7 +175,7 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                   ],
                 ),
               ),
-              expandedHeight: ScreenUtils.getDesignHeight(400),
+              expandedHeight: ScreenUtils.getDesignHeight(380),
               pinned: true,
               floating: true,
               elevation: 0,
@@ -325,8 +222,8 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                 physics: ScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  _pageViewChild(value.wishlistGames , context),
-                  _pageViewChild(value.libraryGames , context),
+                  _pageViewChild(value.wishlistGames , context , value.hasInitialDataLoaded),
+                  _pageViewChild(value.libraryGames , context , value.hasInitialDataLoaded),
                 ],
               ),
             );
@@ -337,38 +234,9 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
   }
 }
 
-Widget _pageViewChild(List<Data> games , BuildContext context) {
+Widget _pageViewChild(List<Data> games , BuildContext context , bool isLoaded) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 24),
-    child: GridView.count(
-      crossAxisCount: 2,
-      padding: EdgeInsets.only(top: 20),
-      mainAxisSpacing: 20,
-      crossAxisSpacing: 20,
-      childAspectRatio: 0.7,
-      physics: NeverScrollableScrollPhysics(),
-      children: games
-          .map(
-            (e) => GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                GAME_DETAILS_SCREEN,
-                arguments: GameDetailsArguments(
-                  gameId: e.game.apiId,
-                ),
-              ),
-              child: GamesWidget(
-                backgroundUrl: e.game.boxCover,
-                height: ScreenUtils.getDesignHeight(195),
-                color: PRIMARY_COLOR,
-                title: e.game.title,
-                titleFontSize: 16,
-                subTitleFontSize: 14,
-                subTitle: platforms.firstWhere((element) => element['id'] == e.platform)['name'],
-              ),
-            ),
-          )
-          .toList(),
-    ),
+    child: isLoaded ? CustomGridView(games: games,) : GridViewSkeleton(count: 4)
   );
 }

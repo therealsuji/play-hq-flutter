@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
 import 'package:provider/provider.dart';
+import 'package:skeletons/skeletons.dart';
 
 import '../../../helpers/app_colors.dart';
 import '../../../helpers/app_constants.dart';
@@ -88,25 +89,31 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               return Container(
                 margin: EdgeInsets.only(top: 10, bottom: ScreenUtils.getDesignHeight(30.0)),
                 height: ScreenUtils.getDesignHeight(155),
-                child: HorizontalScrollList(
-                  itemCount: val.fpsGames.length,
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () => Navigator.pushNamed(
-                        context,
-                        GAME_DETAILS_SCREEN,
-                        arguments: GameDetailsArguments(
-                          gameId: val.fpsGames[index].id,
+                child: Skeleton(
+                  isLoading: !val.hasInitialDataLoaded,
+                  skeleton: SkeletonGamesListWidget(
+                    count: 10,
+                  ),
+                  child: HorizontalScrollList(
+                    itemCount: val.fpsGames.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          GAME_DETAILS_SCREEN,
+                          arguments: GameDetailsArguments(
+                            gameId: val.fpsGames[index].id,
+                          ),
                         ),
-                      ),
-                      child: GamesWidget(
-                        title: val.fpsGames[index].name,
-                        subTitle: val.fpsGames[index].released,
-                        backgroundUrl: val.fpsGames[index].backgroundImage,
-                        gradient: PRIMARY_GRADIENT,
-                      ),
-                    );
-                  },
+                        child: GamesWidget(
+                          title: val.fpsGames[index].name,
+                          subTitle: val.fpsGames[index].released,
+                          backgroundUrl: val.fpsGames[index].backgroundImage,
+                          gradient: PRIMARY_GRADIENT,
+                        ),
+                      );
+                    },
+                  ),
                 ),
               );
             }),
