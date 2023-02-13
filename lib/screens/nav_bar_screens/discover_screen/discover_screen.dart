@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:play_hq/screens/nav_bar_screens/discover_screen/games_carousal_slider.dart';
 import 'package:play_hq/screens/nav_bar_screens/widgets/section_label_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -41,7 +42,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
               height: ScreenUtils.getDesignHeight(495),
               child: Stack(
                 children: [
-                  _carousalWidget(),
+                  CarouselWidget(),
                   _categoryWidget(),
                 ],
               ),
@@ -55,7 +56,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                   enlargeCenterPage: true,
                   height: ScreenUtils.getDesignHeight(250),
                   autoPlay: true,
-
                   autoPlayAnimationDuration: Duration(seconds: 1)
               )),
             ),
@@ -200,61 +200,6 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _carousalWidget() {
-    return Container(
-      height: ScreenUtils.getDesignHeight(330),
-      child: Stack(
-        children: [
-          Container(
-            height: ScreenUtils.getDesignHeight(310),
-            child: Image.network(
-              'https://staticctf.akamaized.net/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/4n6MuqhtRggMjHkAiZJwQY/c77f0a13308353942e2e134b95801c6f/ac-valhalla-heroBanner.jpg',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Container(
-            height: ScreenUtils.getDesignHeight(330),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  BACKGROUND_COLOR,
-                  Colors.black.withOpacity(0.0),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            height: ScreenUtils.getDesignHeight(330),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [
-                  BACKGROUND_COLOR,
-                  Colors.black.withOpacity(0.0),
-                ],
-              ),
-            ),
-          ),
-          Container(
-              alignment: Alignment.bottomLeft,
-              margin: EdgeInsets.only(
-                  left: ScreenUtils.getDesignWidth(24), bottom: ScreenUtils.getDesignHeight(60)),
-              child: Text(
-                'Assasin\'s Creed \nValhalla',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: Neusa,
-                    fontWeight: FontWeight.bold),
-              )),
-        ],
       ),
     );
   }
