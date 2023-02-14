@@ -3,6 +3,7 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 
+import '../../injection_container.dart';
 import '../../models/game_details_models/game_details_model.dart';
 import '../../models/game_details_models/game_screenshot_modal.dart';
 import '../../models/game_status.dart';
@@ -100,10 +101,12 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
 
     // _eventBus.fire(LoadingEvent.hide());
     if(response.statusCode == 201){
+      navigationService.pop();
       getGameStatus(_gameDetailsModel.id ?? 0);
       notifyListeners();
       return true;
     }else{
+      navigationService.pop();
       return false;
     }
   }
@@ -131,10 +134,12 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     Response response  = await gameDetailsRepository.setGameWishList(body);
 
     if (response.statusCode == 201){
+      navigationService.pop();
       notifyListeners();
       getGameStatus(_gameDetailsModel.id ?? 0);
       return true;
     }else{
+      navigationService.pop();
       return false;
     }
   }

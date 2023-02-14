@@ -385,8 +385,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   onPressed: ()async {
                     sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Wishlist') , Icon(Icons.info));
                     bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToWishList();
-                    sl<NavigationService>().pop();
-                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Game Library' : 'Addition to Library Failed', value ? Colors.green : Colors.redAccent));
+                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Wishlist Games' : 'Addition to Wishlist Failed', value ? Colors.green : Colors.redAccent));
                   }
                 );
               },
@@ -406,8 +405,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                   onPressed: ()async {
                     sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Library') , Icon(Icons.info));
                     bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary();
-                    sl<NavigationService>().pop();
-                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Wishlist' : 'Addition to Wishlist Failed', value ? Colors.green : Colors.redAccent));
+                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Library' : 'Addition to Library Failed', value ? Colors.green : Colors.redAccent));
                   }
                 );
               },
