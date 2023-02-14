@@ -6,13 +6,13 @@ import '../../helpers/app_screen_utils.dart';
 import '../../models/errors/exceptions.dart';
 
 abstract class DisplayError {
-  void showError(BuildContext context, Failure exception, [Icon? icon, VoidCallback? onRetry]);
+  void showResponse(BuildContext context, Message exception, [Icon? icon, VoidCallback? onRetry]);
   // void showNotification(BuildContext context, {String? title="", String body=""});
 }
 
 class DisplayImpl extends DisplayError {
   @override
-  void showError(BuildContext context, Failure exception, [Icon? icon, VoidCallback? onRetry]) {
+  void showResponse(BuildContext context, Message exception, [Icon? icon, VoidCallback? onRetry]) {
     final Flushbar _flushBar = Flushbar(
       flushbarPosition: FlushbarPosition.BOTTOM,
       flushbarStyle: FlushbarStyle.FLOATING,

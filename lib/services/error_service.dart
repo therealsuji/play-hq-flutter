@@ -10,9 +10,9 @@ class ErrorService extends ErrorManager {
 
   ErrorService(this.navigationService);
 
-  void showError(Failure failure, [Icon? icon, VoidCallback? onRetry]) {
+  void showError(Message failure, [Icon? icon, VoidCallback? onRetry]) {
     final context = navigationService.navigatorKey.currentState!.overlay!.context;
     final DisplayError handler = DisplayImpl();
-    handler.showError(context, failure, icon, onRetry);
+    handler.showResponse(context, failure, icon, onRetry);
   }
 }

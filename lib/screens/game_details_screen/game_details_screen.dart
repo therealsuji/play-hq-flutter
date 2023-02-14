@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:play_hq/services/base_managers/response_manager.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/widgets/custom_image_slider_dart.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
@@ -11,9 +13,12 @@ import '../../helpers/app_enums.dart';
 import '../../helpers/app_screen_utils.dart';
 import '../../helpers/app_strings.dart';
 import '../../helpers/app_utils.dart';
+import '../../injection_container.dart';
 import '../../models/common_models/game_list_arguments_model.dart';
+import '../../models/errors/exceptions.dart';
 import '../../models/game_details_models/game_details_arguments.dart';
 import '../../models/game_status.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../../view_models/game_details/game_details_model.dart';
 import '../../widgets/bottomSheets/platform_sheet.dart';
 import '../../widgets/custom_body.dart';
@@ -377,8 +382,12 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed:
-                      Provider.of<GameDetailsViewModel>(context, listen: false).addToWishList,
+                  onPressed: ()async {
+                    sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Wishlist') , Icon(Icons.info));
+                    bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToWishList();
+                    sl<NavigationService>().pop();
+                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Game Library' : 'Addition to Library Failed', value ? Colors.green : Colors.redAccent));
+                  }
                 );
               },
             ),
@@ -394,7 +403,12 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               textFontSize: 10.0,
               onPressed: () {
                 _showPlatformBottomSheet(
-                  onPressed: Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary,
+                  onPressed: ()async {
+                    sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Library') , Icon(Icons.info));
+                    bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary();
+                    sl<NavigationService>().pop();
+                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Wishlist' : 'Addition to Wishlist Failed', value ? Colors.green : Colors.redAccent));
+                  }
                 );
               },
             ),
@@ -673,6 +687,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 bottomSheetType: PlatformBottomSheetType.GAME_DETAIL_ADD,
                 onPressed: onPressed,
                 platformList: model.gameDetails.platforms ?? [],
+
               );
             },
           ),

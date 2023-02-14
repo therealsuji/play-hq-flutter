@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 
 import '../../helpers/app_enums.dart';
 import '../../helpers/networks/app_config.dart';
@@ -35,13 +36,13 @@ class GameDetailsDelegate extends GameDetailsRepository with NetworkHelper {
   }
 
   @override
-  Future<void> setGameLibrary(Map<String, dynamic> body) async {
-    await _httpClient.performRequest(APIConfig.addToLibrary, HttpAction.POST, body: body);
+  Future<Response> setGameLibrary(Map<String, dynamic> body) async {
+    return await _httpClient.performRequest(APIConfig.addToLibrary, HttpAction.POST, body: body);
   }
 
   @override
-  Future<void> setGameWishList(Map<String, dynamic> body) async {
-    await _httpClient.performRequest(APIConfig.addToWishList, HttpAction.POST, body: body);
+  Future<Response> setGameWishList(Map<String, dynamic> body) async {
+    return await _httpClient.performRequest(APIConfig.addToWishList, HttpAction.POST, body: body);
   }
 
   @override

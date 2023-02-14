@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/view_models/view_models.dart';
+import 'package:play_hq/widgets/snackbars/custom_snackbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/app_enums.dart';
 import '../../helpers/app_screen_utils.dart';
+import '../../injection_container.dart';
 import '../../models/common_models/rawg_platform_model.dart';
+import '../../services/base_managers/error_manager.dart';
 import '../custom_button_widget.dart';
 import '../custom_selecting_widget.dart';
 
@@ -13,9 +17,10 @@ class PlatformBottomSheet extends StatelessWidget {
   final List<RawgPlatformModel>? platformList;
   final PlatformBottomSheetType? bottomSheetType;
   final VoidCallback? onPressed;
+  final Future<bool>? addingData;
 
   PlatformBottomSheet(
-      {required this.platformList, required this.bottomSheetType, required this.onPressed});
+      {required this.platformList, required this.bottomSheetType, required this.onPressed , this.addingData});
 
   @override
   Widget build(BuildContext context) {
@@ -80,8 +85,10 @@ class PlatformBottomSheet extends StatelessWidget {
                           );
                         },
                       ),
-                      onTap: () => Provider.of<GameDetailsViewModel>(context, listen: false)
-                          .selectedPlatform(platforms[index].id ?? 0),
+                      onTap: () {
+                        Provider.of<GameDetailsViewModel>(context, listen: false)
+                          .selectedPlatform(platforms[index].id ?? 0);
+                      }
                     );
                   case PlatformBottomSheetType.HOME_SCREEN_ADD:
                     return GestureDetector(
@@ -111,7 +118,7 @@ class PlatformBottomSheet extends StatelessWidget {
             child: CustomButton(
               buttonText: 'Confirm',
               gradient: GREEN_GRADIENT,
-              onPressed: onPressed,
+              onPressed: onPressed
             ),
           ),
         ],

@@ -1,6 +1,8 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
+import 'package:play_hq/services/base_managers/response_manager.dart';
+import 'package:play_hq/services/response_service.dart';
 import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
 import 'package:play_hq/view_models/profile/settings/settings_view_model.dart';
 import 'package:play_hq/view_models/view_models.dart';
@@ -66,6 +68,12 @@ void init() {
   );
   sl.registerLazySingleton<AuthService>(
     () => AuthService(),
+  );
+
+  sl.registerLazySingleton<ResponseManager>(
+    () => ResponseService(
+      sl(),
+    ),
   );
 
   sl.registerFactory<SettingsViewModel>(

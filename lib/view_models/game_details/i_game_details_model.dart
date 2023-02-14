@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 
@@ -10,6 +11,7 @@ import '../../models/sales/sales_payload_model.dart';
 import '../../repository/clients/game_details_repository.dart';
 import '../../services/base_managers/error_manager.dart';
 import '../../services/nav_service.dart';
+import '../../widgets/snackbars/custom_snackbar.dart';
 import 'game_details_model.dart';
 
 class IGameDetailsViewModel extends GameDetailsViewModel {
@@ -77,7 +79,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
   }
 
   @override
-  void addToLibrary() async {
+  Future<bool> addToLibrary() async {
     var body = {
       "game": {
         "title": _gameDetailsModel.nameOriginal,
@@ -94,19 +96,20 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     };
 
     // _eventBus.fire(LoadingEvent.show());
-    await gameDetailsRepository.setGameLibrary(body);
-
-    getGameStatus(_gameDetailsModel.id ?? 0);
+    Response response = await gameDetailsRepository.setGameLibrary(body);
 
     // _eventBus.fire(LoadingEvent.hide());
-
-    navigationService.pop();
-
-    notifyListeners();
+    if(response.statusCode == 201){
+      getGameStatus(_gameDetailsModel.id ?? 0);
+      notifyListeners();
+      return true;
+    }else{
+      return false;
+    }
   }
 
   @override
-  void addToWishList() async {
+  Future<bool> addToWishList() async {
     print('releaseDate ' + _gameDetailsModel.released!);
 
     var body = {
@@ -125,15 +128,15 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     };
 
     // _eventBus.fire(LoadingEvent.show());
-    await gameDetailsRepository.setGameWishList(body);
+    Response response  = await gameDetailsRepository.setGameWishList(body);
 
-    getGameStatus(_gameDetailsModel.id ?? 0);
-
-    // _eventBus.fire(LoadingEvent.hide());
-
-    navigationService.pop();
-
-    notifyListeners();
+    if (response.statusCode == 201){
+      notifyListeners();
+      getGameStatus(_gameDetailsModel.id ?? 0);
+      return true;
+    }else{
+      return false;
+    }
   }
 
   @override
@@ -189,4 +192,5 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
 
   @override
   GameScreenshotModal get gameScreenshots => _gameScreenshotModal;
+
 }

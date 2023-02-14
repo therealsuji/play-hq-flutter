@@ -1,12 +1,29 @@
 import '../../helpers/app_strings.dart';
 
-abstract class Failure {
+abstract class Message {
   String? message;
   Duration? duration;
   void Function()? onTap;
 }
 
-class NetworkFailure implements Failure {
+class NormalMessage implements Message {
+  @override
+  Duration? duration;
+
+  @override
+  String? message;
+
+  @override
+  String toString() => message ?? NO_INTERNET_CONNECTION;
+
+  @override
+  void Function()? onTap;
+
+  NormalMessage({this.duration = const Duration(seconds: 1) , this.message});
+
+}
+
+class NetworkFailure implements Message {
   NetworkFailure({this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
@@ -22,7 +39,7 @@ class NetworkFailure implements Failure {
   String toString() => message ?? NO_INTERNET_CONNECTION;
 }
 
-class TimeoutFailure implements Failure {
+class TimeoutFailure implements Message {
   TimeoutFailure({this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
@@ -38,7 +55,7 @@ class TimeoutFailure implements Failure {
   String toString() => TIMEOUT_ERROR;
 }
 
-class FormatFailure implements Failure {
+class FormatFailure implements Message {
   FormatFailure({this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
@@ -54,7 +71,7 @@ class FormatFailure implements Failure {
   String toString() => FORMAT_ERROR;
 }
 
-class HttpFailure implements Failure {
+class HttpFailure implements Message {
   HttpFailure({this.message, this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
@@ -70,7 +87,7 @@ class HttpFailure implements Failure {
   String toString() => HTTP_ERROR;
 }
 
-class UnknownFailure implements Failure {
+class UnknownFailure implements Message {
   UnknownFailure({this.message, this.duration = const Duration(seconds: 2), this.onTap});
 
   @override
