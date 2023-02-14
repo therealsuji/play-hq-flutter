@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../models/errors/exceptions.dart';
-import '../widgets/custom_snackbar.dart';
+import '../widgets/snackbars/custom_snackbar.dart';
 import 'base_managers/error_manager.dart';
 import 'nav_service.dart';
 

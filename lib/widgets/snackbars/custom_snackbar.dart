@@ -1,9 +1,9 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 
-import '../helpers/app_colors.dart';
-import '../helpers/app_screen_utils.dart';
-import '../models/errors/exceptions.dart';
+import '../../helpers/app_colors.dart';
+import '../../helpers/app_screen_utils.dart';
+import '../../models/errors/exceptions.dart';
 
 abstract class DisplayError {
   void showError(BuildContext context, Failure exception, [Icon? icon, VoidCallback? onRetry]);
@@ -79,63 +79,4 @@ class DisplayImpl extends DisplayError {
 
     _flushBar.show(context);
   }
-
-  // @override
-  // void showNotification(BuildContext context, {String? title="", String body=""}) {
-  //   final Flushbar _flushBar = Flushbar(
-  //     flushbarPosition: FlushbarPosition.TOP,
-  //     flushbarStyle: FlushbarStyle.FLOATING,
-  //     reverseAnimationCurve: Curves.decelerate,
-  //     forwardAnimationCurve: Curves.elasticOut,
-  //     margin: const EdgeInsets.symmetric(horizontal: 12.0),
-  //     padding: const EdgeInsets.all(17.0),
-  //     borderRadius: BorderRadius.circular(9.0),
-  //     boxShadows: [
-  //       const BoxShadow(
-  //         color: Color(0xFFCCDDFF),
-  //         offset: Offset(0.0, 3.0),
-  //         blurRadius: 6.0,
-  //       ),
-  //     ],
-  //     isDismissible: true,
-  //     duration: Duration(seconds: 3),
-  //     backgroundColor: Colors.white,
-  //     barBlur: 2.0,
-  //     messageText: Row(
-  //       children: [
-  //         Padding(
-  //           padding: const EdgeInsets.only(right: 12.0),
-  //           child: SvgPicture.asset(
-  //             LOGO3,
-  //             width: 33,
-  //           ),
-  //         ),
-  //         Expanded(
-  //           child: RichText(
-  //             text: TextSpan(
-  //               text: title!,
-  //               style: const TextStyle(
-  //                 color: TEXT_PRIMARY,
-  //                 fontSize: 14.0,
-  //                 fontWeight: FontWeight.bold,
-  //               ),
-  //               children: <TextSpan>[
-  //                 TextSpan(
-  //                   text: ' $body',
-  //                   style: const TextStyle(
-  //                     color: TEXT_PRIMARY,
-  //                     fontSize: 14.0,
-  //                     fontWeight: FontWeight.normal,
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  //
-  //   _flushBar.show(context);
-  // }
 }

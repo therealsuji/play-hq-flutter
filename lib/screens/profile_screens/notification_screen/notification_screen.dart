@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
-import 'package:play_hq/widgets/notification_widget.dart';
+import 'package:play_hq/screens/profile_screens/notification_screen/notification_widget.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({Key? key}) : super(key: key);

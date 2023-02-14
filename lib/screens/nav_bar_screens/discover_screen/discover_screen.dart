@@ -39,7 +39,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         body: SingleChildScrollView(
           child: Column(children: [
             Container(
-              height: ScreenUtils.getDesignHeight(495),
+              height: ScreenUtils.getDesignHeight(570),
               child: Stack(
                 children: [
                   CarouselWidget(),

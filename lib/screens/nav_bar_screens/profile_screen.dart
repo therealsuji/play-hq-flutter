@@ -14,7 +14,7 @@ import '../../models/game_details_models/game_details_arguments.dart';
 import '../../view_models/profile/main_profile/main_profile_model.dart';
 import '../../widgets/custom_game_widget.dart';
 import '../../widgets/custom_text_widget.dart';
-import '../../widgets/page_view_tab_widget.dart';
+import '../profile_screens/profile_screen/page_view_tab_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override

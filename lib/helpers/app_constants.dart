@@ -23,10 +23,10 @@ const List<Map<String, dynamic>> onboardingData = [
 ];
 
 const List<Map<String , dynamic>> testingCarousalData = [
-  {'image' : 'https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg' , 'title': 'Elden Ring'},
-  {'image' : 'https://image.api.playstation.com/vulcan/ap/rnd/202208/0921/3XopdGAJGRy3xNQKnQDvaCRs.png' , 'title': 'Hogwarts Legacy'},
-  {'image' : 'https://store-images.s-microsoft.com/image/apps.7076.14541540923841523.c79d523a-7cfd-4ca7-9bd1-ecf63049e304.e187008e-9ba6-4b5b-84cf-105f5df62c0e?mode=scale&q=90&h=1080&w=1920' , 'title': 'Forspoken'},
-  {'image' : 'https://assets-prd.ignimgs.com/2022/12/01/callistoprotocol-blogroll-1669873578077.jpg' , 'title': 'Callisto Protocol'},
+  {'image' : 'https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg' , 'title': 'Elden Ring' , 'genres' : 'Action/Adventure'},
+  {'image' : 'https://image.api.playstation.com/vulcan/ap/rnd/202208/0921/3XopdGAJGRy3xNQKnQDvaCRs.png' , 'title': 'Hogwarts Legacy' , 'genres' : 'Action/RPG'},
+  {'image' : 'https://store-images.s-microsoft.com/image/apps.7076.14541540923841523.c79d523a-7cfd-4ca7-9bd1-ecf63049e304.e187008e-9ba6-4b5b-84cf-105f5df62c0e?mode=scale&q=90&h=1080&w=1920' , 'title': 'Forspoken' , 'genres' : 'Action/Horror'},
+  {'image' : 'https://assets-prd.ignimgs.com/2022/12/01/callistoprotocol-blogroll-1669873578077.jpg' , 'title': 'Callisto Protocol' , 'genres' : 'Action/Adventure'},
 ];
 
 const List<Map<String, dynamic>> platforms = [
