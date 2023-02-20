@@ -2,7 +2,6 @@
 const String ARROW_RIGHT_ICON = "assets/icons/arrow_right.svg";
 const String BACK_ARROW_ICON = "assets/icons/back_arrow.svg";
 const String STAR_ICON = "assets/icons/star.svg";
-
 const String TICK_MARK_ICON = "assets/icons/tick.svg";
 const String CROSS_MARK_ICON = "assets/icons/cross.svg";
 const String ARROW_LEFT_ICON = "assets/icons/arrow_left.svg";
@@ -32,7 +31,6 @@ const String SMILE_EMOJI = "assets/images/smile_emoji.png";
 const String HOME_BACKGROUND_IMAGE = "assets/images/home_background.svg";
 const String MY_SALES_CHARACTER_IMAGE = "assets/images/luigi_asset.png";
 const String CREATE_SALES_CHARACTER_IMAGE = "assets/images/mario_asset.png";
-const String BUY_GAME_CHARACTER_IMAGE = "assets/images/toad_asset.png";
 const String LEARN_MORE = "assets/images/learn_more.png";
 const String IMAGE_NOT_AVAILABLE = "assets/images/img_not_found.jpg";
 

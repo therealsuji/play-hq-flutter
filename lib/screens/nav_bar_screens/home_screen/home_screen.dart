@@ -16,6 +16,7 @@ import '../../../helpers/app_screen_utils.dart';
 import '../../../helpers/app_strings.dart';
 import '../../../helpers/app_utils.dart';
 import '../../../models/common_models/game_list_arguments_model.dart';
+import '../../../models/common_models/game_preferences/response_body.dart';
 import '../../../models/game_details_models/game_details_arguments.dart';
 import '../../../models/rawg_models/rawg_game_details.dart';
 import '../../../models/sales/sales_payload_model.dart';
@@ -228,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             gameId: val.upComingGamesThisYear[index].id,
                           ),
                         ),
-                        child: _comingSoon(val.upComingGamesThisYear[index])
+                        child: _comingSoon(val.upComingGamesThisYear[index] , val.wishlistGames.any((element) => element.game.apiId == val.upComingGamesThisYear[index].id))
                       );
                     },
                   ),
@@ -267,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _comingSoon(GameResults results){
+  Widget _comingSoon(GameResults results , bool isAdded){
     return Container(
       width: ScreenUtils.getDesignWidth(290),
       decoration: BoxDecoration(
@@ -304,25 +305,28 @@ class _HomeScreenState extends State<HomeScreen> {
               alignment: Alignment.bottomCenter,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomTextWidget(results.name ?? '', isDynamic: true, style: TextStyle(fontFamily: Neusa , color: Colors.white , fontSize: 14, fontWeight: FontWeight.w600), maxWidth: ScreenUtils.getDesignWidth(160), minWidth: ScreenUtils.getDesignWidth(50),),
+                      CustomTextWidget(results.name ?? '', isDynamic: true, style: TextStyle(fontFamily: Neusa , color: Colors.white , fontSize: 16, fontWeight: FontWeight.w600), maxWidth: ScreenUtils.getDesignWidth(160), minWidth: ScreenUtils.getDesignWidth(50),),
                       Container(
                           margin: EdgeInsets.only(top: 5),
-                          child: CustomTextWidget('Available ${results.released}', isDynamic: true, style: TextStyle(fontFamily: CircularBook , color: PRIMARY_COLOR , fontSize: 12, fontWeight: FontWeight.bold), maxWidth: ScreenUtils.getDesignWidth(200), minWidth: ScreenUtils.getDesignWidth(50),)),
+                          child: CustomTextWidget('Available ${results.released}', isDynamic: true, style: TextStyle(fontFamily: CircularBook , color: PRIMARY_COLOR , fontSize: 14, fontWeight: FontWeight.bold), maxWidth: ScreenUtils.getDesignWidth(200), minWidth: ScreenUtils.getDesignWidth(50),)),
                     ],
                   ),
                   Spacer(),
+                  isAdded ?  Container(
+                      margin: EdgeInsets.only(bottom: 15),
+                      child: Text('Already Added' , style: TextStyle(color: Colors.white , fontFamily: CircularBook , fontSize: 16 , fontWeight: FontWeight.w600),)) :
                   GestureDetector(
                     onTap: (){
                       _showPlatformBottomSheet(platforms: results.platforms ?? [] , onPressed: () async {
                         bool value = await Provider.of<HomeScreenModel>(context, listen: false).addToWishlist(results);
                         value ? ScaffoldMessenger.of(context).showSnackBar(successBar) : ScaffoldMessenger.of(context).showSnackBar(failureBar);
                       });
-                      // ScaffoldMessenger.of(context).showSnackBar(successBar);
                     },
                     child: Container(
                       width: ScreenUtils.getDesignWidth(100),

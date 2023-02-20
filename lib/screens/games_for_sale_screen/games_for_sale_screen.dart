@@ -163,7 +163,7 @@ class _GamesForSaleScreenState extends State<GamesForSaleScreen> {
                       title: "Ghost of Tshushima",
                       price: "4000",
                       soldTo: "Jake",
-                      backgroundImage: "assets/images/tshushima.jpg",
+                      backgroundImage: "",
                     );
                   }).toList()),
                 ),

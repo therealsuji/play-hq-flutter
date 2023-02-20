@@ -16,19 +16,37 @@ class GamePreferancesResponse{
   GamePreferancesResponse({required this.data, required this.metaData});
 
   factory GamePreferancesResponse.fromJson(Map<String, dynamic> json) => GamePreferancesResponse(
-    data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+    data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))).toList(),
     metaData: MetaData.fromJson(json["meta"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "game": List<dynamic>.from(data.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
     "meta": metaData.toJson(),
   };
+
+  static List<Data> decode(String musics) =>
+      (json.decode(musics) as List<dynamic>)
+          .map<Data>((item) => Data.fromJson(item))
+          .toList();
+
+  static String encode(List<Data> musics) => json.encode(
+    musics
+        .map<Map<String, dynamic>>((music) => Data.toMap(music))
+        .toList(),
+  );
+
 }
 
 class Data{
 
   Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+
+  static Map<String, dynamic> toMap(Data music) => {
+    'id': music.id,
+    'game': music.game,
+    'platform': music.platform,
+  };
 
   Data({
     required this.id,

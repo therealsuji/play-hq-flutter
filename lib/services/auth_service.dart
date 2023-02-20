@@ -3,8 +3,11 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/app_enums.dart';
 import '../helpers/app_secure_storage.dart';
@@ -12,6 +15,7 @@ import '../models/common_models/auth_token_model.dart';
 import '../models/common_models/user/user_details.dart';
 import '../models/common_models/user/user_game_preferences.dart';
 import '../repository/clients/authentication_repository.dart';
+import '../repository/clients/main_profile_screen_repository.dart';
 import '../repository/clients/user_repository.dart';
 import '../injection_container.dart';
 
@@ -21,9 +25,12 @@ class AuthService {
   final _userRepositry = sl<UserRepository>();
   static const USER_DETAILS_KEY = "userDetailsKey";
   static const USER_PREFERENCES_KEY = "userPreferencesKey";
+  static const WISHLIST_GAMES_KEY = 'userWishlistGames';
   static const JWT_KEY = "jwtKey";
   static const REFRESH_KEY = "refreshKey";
   static const FCM_KEY = "fcmKey";
+
+
 
   Future<bool?> socialLogin(SocialLogin authProvider) async {
     String? token;
@@ -59,7 +66,9 @@ class AuthService {
           saveTokens(response.token!);
           saveUserData(response.user!);
           var userGamePreferences = await _userRepositry.getUserGamePreferences();
+          GamePreferancesResponse userWishlistGames = await _userRepositry.getWishlistGames();
           saveUserGamePreference(userGamePreferences);
+          saveWishlistGames(userWishlistGames.data);
         }
         return isSetupDone;
       } else {
@@ -87,6 +96,17 @@ class AuthService {
 
   void saveUserGamePreference(UserGamePreferences details) {
     SecureStorage.writeValue(USER_PREFERENCES_KEY, json.encode(details.toJson()));
+  }
+
+  void saveWishlistGames(List<Data> games) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(WISHLIST_GAMES_KEY, GamePreferancesResponse.encode(games));
+  }
+
+  Future<List<Data>> getWishlistGames() async {
+    final prefs = await SharedPreferences.getInstance();
+    var jsonData = prefs.getString(WISHLIST_GAMES_KEY);
+    return GamePreferancesResponse.decode(jsonData!);
   }
 
   Future<UserDetails> getUserDetails() async {
@@ -135,6 +155,8 @@ class AuthService {
     await SecureStorage.deleteAll();
     // add other providers
     await GoogleSignIn().signOut();
+    final prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     await FacebookAuth.instance.logOut();
     await FirebaseAuth.instance.signOut();
   }

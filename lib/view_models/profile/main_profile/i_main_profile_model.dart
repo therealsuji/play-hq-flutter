@@ -5,6 +5,7 @@ import '../../../models/common_models/game_preferences/response_body.dart';
 import '../../../models/common_models/user/user_details.dart';
 import '../../../repository/clients/main_profile_screen_repository.dart';
 import '../../../injection_container.dart';
+import '../../../services/auth_service.dart';
 import 'main_profile_model.dart';
 
 class IMainProfileModel extends MainProfileModel {
@@ -17,15 +18,11 @@ class IMainProfileModel extends MainProfileModel {
 
   @override
   void getProfileDetails() async {
+     _wishlistGames = await sl<AuthService>().getWishlistGames();
     try {
       this.loadingData();
       getUserDetails();
       print("User Avatar: ${_userDetails.avatar}");
-      await _mainProfileAPI.getWishListGames().then((value) {
-        if (value.data.isNotEmpty) {
-          _wishlistGames = value.data;
-        }
-      });
       await _mainProfileAPI.getLibraryGames().then((value) {
         if (value.data.isNotEmpty) {
           _libraryGames = value.data;

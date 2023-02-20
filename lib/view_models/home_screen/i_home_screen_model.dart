@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
 import 'package:play_hq/repository/clients/game_details_repository.dart';
+import 'package:play_hq/repository/clients/user_repository.dart';
 import 'package:play_hq/services/nav_service.dart';
 
 import '../../helpers/app_enums.dart';
@@ -25,6 +29,7 @@ class IHomeScreenModel extends HomeScreenModel {
   final _homeApi = sl<HomeRepository>();
   final _gameApi = sl<GameApiRepository>();
   final _gameDetailsApi = sl<GameDetailsRepository>();
+  final _userApi = sl<UserRepository>();
   final _eventBus = sl<EventBus>();
 
   int _carouselPageIndex = 0;
@@ -35,6 +40,7 @@ class IHomeScreenModel extends HomeScreenModel {
   List<GameResults> _upcomingGamesThisYear = [];
   List<GameResults> _recommendedGames = [];
   List<Genre> _prefGenre = [];
+  List<Data> _userWishlistGames = [];
 
   int _selectedPlatform = 0;
   // use this when user hasnt set any preferred genres
@@ -63,7 +69,9 @@ class IHomeScreenModel extends HomeScreenModel {
   @override
   void loadAPICalls() async {
     UserDetails userDetails = await sl<AuthService>().getUserDetails();
-    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
+    UserGamePreferences gamePreferences = await _userApi.getUserGamePreferences();
+    GamePreferancesResponse gamePreferancesResponse = await _userApi.getWishlistGames();
+    _userWishlistGames = gamePreferancesResponse.data;
     _displayName = userDetails.displayName ?? "";
     _prefGenre = gamePreferences.genres;
     try {
@@ -152,6 +160,9 @@ class IHomeScreenModel extends HomeScreenModel {
     Response response = await _homeApi.addToWishlist(body);
 
     if(response.statusCode == 201){
+      Data game = Data.fromJson(jsonDecode(response.body));
+      _userWishlistGames.add(game);
+      sl<AuthService>().saveWishlistGames(_userWishlistGames);
       notifyListeners();
       return true;
     }else{
@@ -169,4 +180,6 @@ class IHomeScreenModel extends HomeScreenModel {
     notifyListeners();
   }
 
+  @override
+  List<Data> get wishlistGames => _userWishlistGames;
 }

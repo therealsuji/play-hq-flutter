@@ -4,6 +4,8 @@ import 'package:play_hq/models/app_genre_model.dart';
 import 'package:play_hq/models/rawg_models/rawg_game_details.dart';
 import 'package:play_hq/models/sales/sales_payload_model.dart';
 
+import '../../models/common_models/game_preferences/response_body.dart';
+
 abstract class HomeScreenModel extends ChangeNotifier with AppLoader {
   void onCarouselPageChanged(int index);
 
@@ -18,6 +20,8 @@ abstract class HomeScreenModel extends ChangeNotifier with AppLoader {
   List<GameResults> get popularGamesThisYear;
 
   List<GameResults> get upComingGamesThisYear;
+
+  List<Data> get wishlistGames;
 
   Future<bool> addToWishlist(GameResults results);
 

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/services/base_managers/response_manager.dart';
 import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/widgets/custom_image_slider_dart.dart';
@@ -360,8 +361,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
       return CustomButton(
         buttonText: "Remove from Wishlist",
         buttonColor: Color(0xffe63946),
-        height: ScreenUtils.getDesignHeight(40.0),
-        textFontSize: 12.0,
+        height: ScreenUtils.getDesignHeight(45.0),
+        textFontSize: 15.0,
         width: double.infinity,
         onPressed: () {
           showAlertDialog(context, "Are you sure?",
@@ -378,8 +379,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
             child: CustomButton(
               buttonText: "Add to Wishlist",
               gradient: SECONDARY_GRADIENT,
-              height: ScreenUtils.getDesignHeight(40.0),
-              textFontSize: 10.0,
+              height: ScreenUtils.getDesignHeight(45.0),
+              textFontSize: 14.0,
               onPressed: () {
                 _showPlatformBottomSheet(
                   onPressed: ()async {
@@ -398,8 +399,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
             child: CustomButton(
               buttonText: "Add to Library",
               gradient: PRIMARY_GRADIENT,
-              height: ScreenUtils.getDesignHeight(40.0),
-              textFontSize: 10.0,
+              height: ScreenUtils.getDesignHeight(45.0),
+              textFontSize: 14.0,
               onPressed: () {
                 _showPlatformBottomSheet(
                   onPressed: ()async {
@@ -571,8 +572,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
 
   Widget _platformContainer(String name) {
     return Container(
-      height: ScreenUtils.getDesignHeight(31.0),
-      width: ScreenUtils.getDesignWidth(84.0),
+      height: ScreenUtils.getDesignHeight(40.0),
+      width: ScreenUtils.getDesignWidth(100.0),
       decoration: BoxDecoration(
         color: MAIN_CONTAINER_COLOR.withOpacity(0.4),
         borderRadius: BorderRadius.circular(38.0),
@@ -581,7 +582,8 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         child: Text(
           name,
           style: Theme.of(context).primaryTextTheme.headline3!.copyWith(
-                fontSize: 10.0,
+                fontFamily: CircularBook,
+                fontSize: 14.0,
               ),
         ),
       ),
