@@ -22,10 +22,11 @@ import '../injection_container.dart';
 class AuthService {
   final _googleSignIn = GoogleSignIn();
   final _authRepository = sl<AuthenticationRepository>();
-  final _userRepositry = sl<UserRepository>();
+  final _userRepository = sl<UserRepository>();
   static const USER_DETAILS_KEY = "userDetailsKey";
   static const USER_PREFERENCES_KEY = "userPreferencesKey";
   static const WISHLIST_GAMES_KEY = 'userWishlistGames';
+  static const LIBRARY_GAMES_KEY = 'libraryGamesKey';
   static const JWT_KEY = "jwtKey";
   static const REFRESH_KEY = "refreshKey";
   static const FCM_KEY = "fcmKey";
@@ -65,10 +66,12 @@ class AuthService {
           log(response.token?.accessToken ?? "");
           saveTokens(response.token!);
           saveUserData(response.user!);
-          var userGamePreferences = await _userRepositry.getUserGamePreferences();
-          GamePreferancesResponse userWishlistGames = await _userRepositry.getWishlistGames();
+          var userGamePreferences = await _userRepository.getUserGamePreferences();
+          GamePreferancesResponse userWishlistGames = await _userRepository.getWishlistGames();
+          GamePreferancesResponse userLibraryGames = await _userRepository.getLibraryGames();
           saveUserGamePreference(userGamePreferences);
           saveWishlistGames(userWishlistGames.data);
+          saveLibraryGames(userLibraryGames.data);
         }
         return isSetupDone;
       } else {
@@ -107,6 +110,45 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     var jsonData = prefs.getString(WISHLIST_GAMES_KEY);
     return GamePreferancesResponse.decode(jsonData!);
+  }
+
+  void addGameToWishlist(Data value) async {
+    List<Data> _data = [];
+    _data = await getWishlistGames();
+    _data.add(value);
+    saveWishlistGames(_data);
+  }
+
+  void removeFromWishlist(int id) async {
+    List<Data> _data = [];
+    _data = await getWishlistGames();
+    _data.removeWhere((element) => element.game.apiId == id);
+    saveWishlistGames(_data);
+  }
+
+  void saveLibraryGames(List<Data> games) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(LIBRARY_GAMES_KEY, GamePreferancesResponse.encode(games));
+  }
+
+  Future<List<Data>> getLibraryGames() async {
+    final prefs = await SharedPreferences.getInstance();
+    var jsonData = prefs.getString(LIBRARY_GAMES_KEY);
+    return GamePreferancesResponse.decode(jsonData!);
+  }
+
+  void addGameToLibrary(Data value) async {
+    List<Data> _data = [];
+    _data = await getLibraryGames();
+    _data.add(value);
+    saveLibraryGames(_data);
+  }
+
+  void removeFromLibrary(int id) async {
+    List<Data> _data = [];
+    _data = await getLibraryGames();
+    _data.removeWhere((element) => element.game.apiId == id);
+    saveLibraryGames(_data);
   }
 
   Future<UserDetails> getUserDetails() async {

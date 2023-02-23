@@ -19,15 +19,11 @@ class IMainProfileModel extends MainProfileModel {
   @override
   void getProfileDetails() async {
      _wishlistGames = await sl<AuthService>().getWishlistGames();
+     _libraryGames = await sl<AuthService>().getLibraryGames();
     try {
       this.loadingData();
       getUserDetails();
       print("User Avatar: ${_userDetails.avatar}");
-      await _mainProfileAPI.getLibraryGames().then((value) {
-        if (value.data.isNotEmpty) {
-          _libraryGames = value.data;
-        }
-      });
       dataLoaded();
       notifyListeners();
     } catch (e) {

@@ -24,7 +24,9 @@ class CarouselItemWidget extends StatelessWidget {
         children: [
           Container(
             height: ScreenUtils.getDesignHeight(600),
-            child: CachedNetworkImage(imageUrl: imagePath,fit: BoxFit.fitHeight,
+            child: CachedNetworkImage(
+              imageUrl: imagePath,
+              fit: BoxFit.fitHeight,
             )
           ),
           Container(

@@ -7,4 +7,6 @@ abstract class UserRepository {
 
   Future<GamePreferancesResponse> getWishlistGames();
 
+  Future<GamePreferancesResponse> getLibraryGames();
+
 }

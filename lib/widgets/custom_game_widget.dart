@@ -13,6 +13,7 @@ class GamesWidget extends StatelessWidget {
   final Gradient? gradient;
   final double? height;
   final double? width;
+  final double? borderRadius;
   final double? titleFontSize;
   final double? subTitleFontSize;
 
@@ -25,6 +26,7 @@ class GamesWidget extends StatelessWidget {
     this.height = 160,
     this.width = 100,
     this.titleFontSize = 12,
+    this.borderRadius = 5,
     this.subTitleFontSize = 12,
     this.gradient,
     this.title,
@@ -37,7 +39,7 @@ class GamesWidget extends StatelessWidget {
       width: ScreenUtils.getDesignWidth(width!),
       height: ScreenUtils.getDesignHeight(height!),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(3.0),
+        borderRadius: BorderRadius.circular(borderRadius!),
         child: Stack(
           children: [
             Positioned.fill(
@@ -45,6 +47,12 @@ class GamesWidget extends StatelessWidget {
                 width: ScreenUtils.getDesignWidth(width!),
                 height: ScreenUtils.getDesignHeight(height!),
                 child: CachedNetworkImage(
+                    progressIndicatorBuilder: (context, url , downloadProgress) => Container(
+                        height: 50,
+                        width: 50,
+                        child: CircularProgressIndicator(value: downloadProgress.progress,)),
+                    maxWidthDiskCache: 500,
+                    maxHeightDiskCache: 600,
                     fit: BoxFit.cover,
                     imageUrl: backgroundUrl ??
                         'https://thumbs.dreamstime.com/b/no-image-available-icon-flat-vector-no-image-available-icon-flat-vector-illustration-132482953.jpg'),
@@ -102,7 +110,7 @@ class GamesWidget extends StatelessWidget {
                               subTitle ?? "",
                               style: TextStyle(
                                 fontFamily: Neusa,
-                                fontSize: 12.0,
+                                fontSize: subTitleFontSize,
                                 fontWeight: FontWeight.bold,
                                 color: color,
                               ),

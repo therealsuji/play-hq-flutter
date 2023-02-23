@@ -17,4 +17,9 @@ class UserDelegate extends UserRepository with NetworkHelper {
   Future<GamePreferancesResponse> getWishlistGames() async{
     return this.get<GamePreferancesResponse>(APIConfig.getWishListGames() , gamePreferancesResponseFromJson).then((value) => value.result);
   }
+
+  @override
+  Future<GamePreferancesResponse> getLibraryGames() async {
+    return this.get<GamePreferancesResponse>(APIConfig.getLibraryGames() , gamePreferancesResponseFromJson).then((value) => value.result);
+  }
 }

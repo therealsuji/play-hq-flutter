@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:play_hq/models/common_models/rawg_platform_model.dart';
 import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
+import 'package:play_hq/services/response_service.dart';
 import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
@@ -15,11 +16,13 @@ import '../../../helpers/app_fonts.dart';
 import '../../../helpers/app_screen_utils.dart';
 import '../../../helpers/app_strings.dart';
 import '../../../helpers/app_utils.dart';
+import '../../../injection_container.dart';
 import '../../../models/common_models/game_list_arguments_model.dart';
 import '../../../models/common_models/game_preferences/response_body.dart';
 import '../../../models/game_details_models/game_details_arguments.dart';
 import '../../../models/rawg_models/rawg_game_details.dart';
 import '../../../models/sales/sales_payload_model.dart';
+import '../../../services/base_managers/response_manager.dart';
 import '../../../view_models/home_screen/home_screen_model.dart';
 import '../../../view_models/view_models.dart';
 import '../../../widgets/bottomSheets/platform_sheet.dart';
@@ -77,26 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Failure Snackbar
-  final SnackBar failureBar = SnackBar(
-    content: Text(
-      "Add to Watchlist Failed",
-      textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white),
-    ),
-    backgroundColor: Colors.redAccent,
-  );
-
-  // Failure Snackbar
-  final SnackBar successBar = SnackBar(
-    content: Text(
-      "Added to Watchlist",
-      textAlign: TextAlign.center,
-      style: TextStyle(color: Colors.white),
-    ),
-    backgroundColor: Colors.green,
-  );
-
   Widget homeBody() => SliverToBoxAdapter(
     child: Container(
       child: Column(
@@ -136,7 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         child: GamesWidget(
-                          titleFontSize: 18,
+                          titleFontSize: ScreenUtils.totalBodyHeight > 800 ? 18 : 14,
+                          subTitleFontSize: ScreenUtils.totalBodyHeight > 800 ? 16 : 14,
                           backgroundUrl: model.recommendedGames[index].backgroundImage,
                           subTitle: '${model.recommendedGames[index].released}',
                           color: PRIMARY_COLOR,
@@ -283,6 +267,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 child: CachedNetworkImage(
                   imageUrl: results.backgroundImage!,
+                  maxHeightDiskCache: 800,
+                  maxWidthDiskCache: 800,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -325,7 +311,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: (){
                       _showPlatformBottomSheet(platforms: results.platforms ?? [] , onPressed: () async {
                         bool value = await Provider.of<HomeScreenModel>(context, listen: false).addToWishlist(results);
-                        value ? ScaffoldMessenger.of(context).showSnackBar(successBar) : ScaffoldMessenger.of(context).showSnackBar(failureBar);
+                        value ? ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Added to Wishlist Successfully', Colors.green)) : ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Add to Wishlist Failed', Colors.red));
                       });
                     },
                     child: Container(

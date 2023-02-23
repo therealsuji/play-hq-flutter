@@ -1,18 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 
 import '../../injection_container.dart';
+import '../../models/common_models/game_preferences/response_body.dart';
 import '../../models/game_details_models/game_details_model.dart';
 import '../../models/game_details_models/game_screenshot_modal.dart';
 import '../../models/game_status.dart';
 import '../../models/rawg_models/rawg_game_details.dart';
 import '../../models/sales/sales_payload_model.dart';
 import '../../repository/clients/game_details_repository.dart';
+import '../../services/auth_service.dart';
 import '../../services/base_managers/error_manager.dart';
 import '../../services/nav_service.dart';
-import '../../widgets/snackbars/custom_snackbar.dart';
+import '../../widgets/snackbars/custom_flushbar.dart';
 import 'game_details_model.dart';
 
 class IGameDetailsViewModel extends GameDetailsViewModel {
@@ -25,6 +29,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
   GameScreenshotModal _gameScreenshotModal = GameScreenshotModal();
 
   List<GameResults> _similarGames = [];
+  List<Data> _userWishlistGames = [];
 
   List<int> platforms = [];
   int mainGenre = 0;
@@ -102,6 +107,8 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     // _eventBus.fire(LoadingEvent.hide());
     if(response.statusCode == 201){
       navigationService.pop();
+      Data game = Data.fromJson(jsonDecode(response.body));
+      sl<AuthService>().addGameToLibrary(game);
       getGameStatus(_gameDetailsModel.id ?? 0);
       notifyListeners();
       return true;
@@ -134,6 +141,8 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     Response response  = await gameDetailsRepository.setGameWishList(body);
 
     if (response.statusCode == 201){
+      Data game = Data.fromJson(jsonDecode(response.body));
+      sl<AuthService>().addGameToWishlist(game);
       navigationService.pop();
       notifyListeners();
       getGameStatus(_gameDetailsModel.id ?? 0);
@@ -146,7 +155,6 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
 
   @override
   void selectedPlatform(int platformId) {
-    debugPrint('Game Platform $platformId');
     _platformId = platformId;
     notifyListeners();
   }
@@ -158,6 +166,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
       message: "Removing from library game",
     ));
     await gameDetailsRepository.deleteLibraryGame(id);
+    sl<AuthService>().removeFromLibrary(id);
     getGameStatus(id);
     // _eventBus.fire(LoadingEvent.hide());
     notifyListeners();
@@ -167,6 +176,10 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
   void deleteWishListGame(int id) async {
     // _eventBus.fire(LoadingEvent.show());
     await gameDetailsRepository.deleteWishListGame(id);
+    errorManager.showError(UnknownFailure(
+      message: "Removing from Wishlist Games",
+    ));
+    sl<AuthService>().removeFromWishlist(id);
     getGameStatus(id);
     // _eventBus.fire(LoadingEvent.hide());
     notifyListeners();

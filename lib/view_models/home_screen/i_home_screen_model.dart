@@ -135,7 +135,6 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   Future<bool> addToWishlist(GameResults results ) async {
-    final GameDetailsRepository gameDetailsRepository;
     final _httpClient = sl<Network>();
 
     debugPrint('Selected Platform $_selectedPlatform');
@@ -157,7 +156,7 @@ class IHomeScreenModel extends HomeScreenModel {
 
     sl<NavigationService>().pop();
 
-    Response response = await _homeApi.addToWishlist(body);
+    Response response = await _gameDetailsApi.setGameWishList(body);
 
     if(response.statusCode == 201){
       Data game = Data.fromJson(jsonDecode(response.body));

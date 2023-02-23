@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/view_models/view_models.dart';
-import 'package:play_hq/widgets/snackbars/custom_snackbar.dart';
+import 'package:play_hq/widgets/snackbars/custom_flushbar.dart';
 import 'package:provider/provider.dart';
 
 import '../../helpers/app_enums.dart';
