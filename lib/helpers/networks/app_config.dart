@@ -92,14 +92,15 @@ class APIConfig {
   static String getUpcomingGames(int size) {
     DateTime currentDate = DateTime.now();
     var startDateTime =
-        '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-01';
+        '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-${currentDate.day}';
     var endDateTime = '${currentDate.year + 3}-12-31';
     return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page_size=$size&ordering=-added&key=$_RAWG_API_KEY';
   }
 
-  static String getGamesOf2022() {
+  static String getGamesOfYear() {
+    DateTime currentDate = DateTime.now();
     return '$_rawgAPI' +
-        '/games?dates=2022-01-01,2022-12-31&ordering=-added' +
+        '/games?dates=${currentDate.year}-01-01,${currentDate.year}-12-31&ordering=-added' +
         '&key=$_RAWG_API_KEY';
   }
 

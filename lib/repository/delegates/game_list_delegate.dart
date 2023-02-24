@@ -39,7 +39,7 @@ class GameListDelegate extends GameListRepository {
   Future<RawgGameDetails> fetchGamesOf2022() async {
     try {
       var response =
-          await _networkCalls.performRequest(APIConfig.getGamesOf2022(), HttpAction.GET);
+          await _networkCalls.performRequest(APIConfig.getGamesOfYear(), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());

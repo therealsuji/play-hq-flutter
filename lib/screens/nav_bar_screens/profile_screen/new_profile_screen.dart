@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:play_hq/helpers/app_constants.dart';
-import 'package:play_hq/screens/profile_screens/profile_screen/gridview_widget.dart';
-import 'package:play_hq/screens/profile_screens/profile_screen/profile_detail_box_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/profile_screen/gridview_widget.dart';
+import 'package:play_hq/screens/nav_bar_screens/profile_screen/profile_detail_box_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../helpers/app_assets.dart';
@@ -15,12 +15,12 @@ import '../../../models/game_details_models/game_details_arguments.dart';
 import '../../../view_models/profile/main_profile/main_profile_model.dart';
 import '../../../widgets/custom_game_widget.dart';
 
-class TestingPage extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   @override
   _TestingPageState createState() => _TestingPageState();
 }
 
-class _TestingPageState extends State<TestingPage> with SingleTickerProviderStateMixin {
+class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   var _scrollController, _tabController;
 
   @override
@@ -100,32 +100,32 @@ class _TestingPageState extends State<TestingPage> with SingleTickerProviderStat
                                       child: SvgPicture.asset(SETTINGS_ICON),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: Stack(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () =>
-                                              Navigator.pushNamed(context, NOTIFICATION_SCREEN),
-                                          child: Container(
-                                            child: SvgPicture.asset(NOTIFICATION_ICON),
-                                          ),
-                                        ),
-                                        Positioned(
-                                          top: 2,
-                                          left: 0,
-                                          child: Container(
-                                            height: 11,
-                                            width: 11,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.green,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  )
+                                  // Padding(
+                                  //   padding: const EdgeInsets.only(left: 30),
+                                  //   child: Stack(
+                                  //     children: [
+                                  //       GestureDetector(
+                                  //         onTap: () =>
+                                  //             Navigator.pushNamed(context, NOTIFICATION_SCREEN),
+                                  //         child: Container(
+                                  //           child: SvgPicture.asset(NOTIFICATION_ICON),
+                                  //         ),
+                                  //       ),
+                                  //       Positioned(
+                                  //         top: 2,
+                                  //         left: 0,
+                                  //         child: Container(
+                                  //           height: 11,
+                                  //           width: 11,
+                                  //           decoration: BoxDecoration(
+                                  //             shape: BoxShape.circle,
+                                  //             color: Colors.green,
+                                  //           ),
+                                  //         ),
+                                  //       )
+                                  //     ],
+                                  //   ),
+                                  // )
                                 ],
                               ),
                             ),
