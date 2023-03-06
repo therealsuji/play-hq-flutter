@@ -31,6 +31,7 @@ class CustomGridView extends StatelessWidget {
                 GAME_DETAILS_SCREEN,
                 arguments: GameDetailsArguments(
                   gameId: e.game.apiId,
+                  title: e.game.title
                 ),
               ),
               child: GamesWidget(

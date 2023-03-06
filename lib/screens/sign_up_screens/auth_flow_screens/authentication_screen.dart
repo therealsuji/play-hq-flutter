@@ -79,7 +79,7 @@ class _AuthenticationScreenState extends State<AuthenticationScreen> {
                             Container(
                                 margin: EdgeInsets.only(top: 7),
                                 child: CustomTextWidget(
-                                    "You stumbled upon a Gem. Sign up/in to see what’s there in store. \n You are gonna love it",
+                                    WELCOME_MESSAGE,
                                     isDynamic: false,
                                     width: ScreenUtils.bodyWidth,
                                     style: TextStyle(

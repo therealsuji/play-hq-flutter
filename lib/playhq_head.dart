@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'helpers/app_colors.dart';
 import 'helpers/app_fonts.dart';
 import 'helpers/app_routes.dart';
-import 'managers/dialog_manager.dart';
 import 'models/search_model/app_search_game_model.dart';
 import 'injection_container.dart';
 import 'services/nav_service.dart';
@@ -127,10 +126,8 @@ class _PlayHqHeadState extends State<PlayHqHead> {
           return Navigator(
             onGenerateRoute: (settings) {
               return MaterialPageRoute(
-                builder: (context) => DialogManager(
-                  child: LoadingWidget(
-                    child: child,
-                  ),
+                builder: (context) => LoadingWidget(
+                  child: child,
                 ),
               );
             },

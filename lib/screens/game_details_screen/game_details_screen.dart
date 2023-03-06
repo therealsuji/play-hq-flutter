@@ -349,11 +349,10 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         textFontSize: 12.0,
         width: double.infinity,
         onPressed: () {
-          showAlertDialog(
-              context, "Are you sure?", "Do you really want to remove your game from your library?",
-              () {
+          sl<ResponseManager>().showConfirmationAlert('Delete ${widget.gameDetailsArguments!.title}?', 'Are you sure you want to Delete ${widget.gameDetailsArguments!.title} from your Library?', () {
             Provider.of<GameDetailsViewModel>(context, listen: false)
                 .deleteLibraryGame(widget.gameDetailsArguments!.gameId ?? 0);
+            Navigator.of(context , rootNavigator: true).pop();
           });
         },
       );
@@ -365,10 +364,10 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
         textFontSize: 15.0,
         width: double.infinity,
         onPressed: () {
-          showAlertDialog(context, "Are you sure?",
-              "Do you really want to remove your game from your wishlist?", () {
+          sl<ResponseManager>().showConfirmationAlert('Delete ${widget.gameDetailsArguments!.title}?', 'Are you sure you want to Delete ${widget.gameDetailsArguments!.title} from your Wishlist Games?', () {
             Provider.of<GameDetailsViewModel>(context, listen: false)
                 .deleteWishListGame(widget.gameDetailsArguments!.gameId ?? 0);
+            Navigator.of(context , rootNavigator: true).pop();
           });
         },
       );

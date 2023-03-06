@@ -12,7 +12,7 @@ const List<Map<String , String>> game_conditions = [
 const List<Map<String, dynamic>> discoverComponents = [
   {'name': 'Top Rated Games', 'gradient': GRADIENT_COMPONENT_1 , 'imagePath': 'assets/images/discovery_category_1.png' , 'category' : DiscoverCategory.TOP_RATED_GAMES , 'apiType' : GameLists.TOP_RATED_GAMES},
   {'name': 'Most Anticipated Games', 'gradient': GRADIENT_COMPONENT_2 , 'imagePath': 'assets/images/discovery_category_2.png' , 'category' : DiscoverCategory.MOST_ANTICIPATED_GAMES ,'apiType' : GameLists.MOST_ANTICIPATED_GAMES},
-  {'name': 'Games of 2022', 'gradient': GRADIENT_COMPONENT_3 , 'imagePath': 'assets/images/discovery_category_3.png' , 'category' : DiscoverCategory.GAMES_OF_2022 , 'apiType' : GameLists.GAMES_OF_2022},
+  {'name': 'Games of 2023', 'gradient': GRADIENT_COMPONENT_3 , 'imagePath': 'assets/images/discovery_category_3.png' , 'category' : DiscoverCategory.GAMES_OF_2022 , 'apiType' : GameLists.GAMES_OF_2022},
 ];
 
 const List<Map<String, dynamic>> onboardingData = [

@@ -41,6 +41,10 @@ const String TIMEOUT_ERROR = 'Server timed out';
 const String FORMAT_ERROR = 'Formatting error';
 const String HTTP_ERROR = 'Oops! An error has occurred';
 
+
+// Welcome Messages
+const String WELCOME_MESSAGE = 'Get ready to connect with Fellow gamers and \nDiscover the Best Games';
+
 //Custom Map Theme
 String mapStyle = '''
 [
