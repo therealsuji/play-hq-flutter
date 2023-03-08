@@ -112,6 +112,8 @@ class APIConfig {
 
   static String getUserDetails = '$_baseUrl' + "/v1/auth/me";
 
+
+  static String updateUserPreferences = '$_baseUrl' + 'users/preferences';
   static String updateUserDetails = '$_baseUrl' + "/users/update";
 
   // Sales API
@@ -129,8 +131,6 @@ class APIConfig {
   }
 
   static String userPreferences = '$_baseUrl' + "/users/preferences";
-
-  static String setupSales = '$_baseUrl' + "/users/update";
 
   // User Games APIs
   static String addWishListGames = '$_baseUrl' + "/wish-list-games/set";

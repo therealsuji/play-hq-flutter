@@ -35,7 +35,7 @@ class SetupSalesDelegate extends SetupSalesRepository {
   @override
   Future<void> setProfileDetails(UserPreferencesModel body) async {
     try {
-      await _networkCalls.performRequest(APIConfig.setupSales, HttpAction.PUT, body: body);
+      await _networkCalls.performRequest(APIConfig.updateUserDetails, HttpAction.PUT, body: body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();

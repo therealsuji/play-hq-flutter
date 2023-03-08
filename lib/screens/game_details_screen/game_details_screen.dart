@@ -403,7 +403,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
               onPressed: () {
                 _showPlatformBottomSheet(
                   onPressed: ()async {
-                    sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Library') , Icon(Icons.info));
+                    sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Library') ,  Icon(Icons.info));
                     bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary();
                     ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Library' : 'Addition to Library Failed', value ? Colors.green : Colors.redAccent));
                   }

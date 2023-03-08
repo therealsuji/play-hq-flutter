@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:play_hq/models/common_models/location_model.dart';
+
 UserDetails userDetailsfromJson(String str) => UserDetails.fromJson(json.decode(str));
 
 class UserDetails {
@@ -20,7 +22,7 @@ class UserDetails {
   String? avatar;
   String? phone;
   bool? isSetupDone;
-  dynamic location;
+  LocationModel? location;
   String? displayName;
 
   factory UserDetails.fromJson(Map<String, dynamic> json) => UserDetails(
@@ -30,7 +32,7 @@ class UserDetails {
         avatar: json["avatar"] == null ? "" : json["avatar"],
         phone: json["phone"] == null ? "" : json["phone"],
         isSetupDone: json["isSetupDone"] == null ? false : json["isSetupDone"],
-        location: json["location"] == null ? "" : json["location"],
+        location: LocationModel.fromJson(json['location']),
         displayName: json["displayName"] == null ? "" : json["displayName"],
       );
 

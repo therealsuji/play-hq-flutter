@@ -48,9 +48,10 @@ class GamesWidget extends StatelessWidget {
                 height: ScreenUtils.getDesignHeight(height!),
                 child: CachedNetworkImage(
                     progressIndicatorBuilder: (context, url , downloadProgress) => Container(
-                        height: 50,
-                        width: 50,
-                        child: CircularProgressIndicator(value: downloadProgress.progress,)),
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          value: downloadProgress.progress,)),
                     maxWidthDiskCache: 500,
                     maxHeightDiskCache: 600,
                     fit: BoxFit.cover,

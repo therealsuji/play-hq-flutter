@@ -1,16 +1,30 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart';
 import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/helpers/networks/app_network_helper.dart';
+import 'package:play_hq/models/common_models/user/user_details.dart';
 import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
+import 'package:play_hq/models/common_models/user/user_preferences.dart';
 import 'package:play_hq/repository/clients/user_repository.dart';
 
+import '../../helpers/app_enums.dart';
+import '../../helpers/networks/app_network.dart';
+import '../../injection_container.dart';
 import '../../models/common_models/game_preferences/response_body.dart';
 
 class UserDelegate extends UserRepository with NetworkHelper {
+
+  final _httpClient = sl<Network>();
+
   @override
   Future<UserGamePreferences> getUserGamePreferences() {
     return this
         .get<UserGamePreferences>(APIConfig.userPreferences, userGameListsFromJson)
         .then((value) => value.result);
+  }
+
+  Future<Response> updateUserDetails(Map<String , dynamic> body) async{
+    return await _httpClient.performRequest(APIConfig.updateUserDetails, HttpAction.PUT, body: body);
   }
 
   @override
@@ -21,5 +35,10 @@ class UserDelegate extends UserRepository with NetworkHelper {
   @override
   Future<GamePreferancesResponse> getLibraryGames() async {
     return this.get<GamePreferancesResponse>(APIConfig.getLibraryGames() , gamePreferancesResponseFromJson).then((value) => value.result);
+  }
+
+  @override
+  Future<Response> updateUserPreferences(Map<String, dynamic> body) async{
+    return await _httpClient.performRequest(APIConfig.updateUserDetails, HttpAction.PUT, body: body);
   }
 }

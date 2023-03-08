@@ -53,4 +53,22 @@ class NetworkHelper {
       );
     }
   }
+
+  Future<NetworkResult<T>> put<T>(String url, Map<String, dynamic> body, computeCallback) async {
+    try {
+      var response = await _httpClient.performRequest(url, HttpAction.PUT, body: body);
+      return NetworkResult(response.body, compute(computeCallback, response.body));
+    } on TimeoutException {
+      sl<ErrorManager>().showError(TimeoutFailure());
+      throw TimeoutFailure();
+    } on SocketException {
+      sl<ErrorManager>().showError(NetworkFailure());
+      throw NetworkFailure();
+    } catch (e) {
+      sl<ErrorManager>().showError(UnknownFailure());
+      throw UnknownFailure(
+        message: e.toString(),
+      );
+    }
+  }
 }

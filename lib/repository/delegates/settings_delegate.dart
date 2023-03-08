@@ -17,7 +17,6 @@ class SettingsDelegate implements SettingsRepository {
       HttpAction.PUT,
       body: body,
     );
-
     return await compute(userDetailsfromJson, response.body);
   }
 }

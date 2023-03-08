@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/app_fonts.dart';
 import 'package:play_hq/helpers/app_screen_utils.dart';
+import 'package:play_hq/models/common_models/location_model.dart';
 import 'package:play_hq/models/common_models/user/user_details.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:play_hq/view_models/profile/settings/settings_view_model.dart';
 import 'package:play_hq/widgets/custom_button_widget.dart';
 import 'package:play_hq/widgets/custom_smaller_button_widget.dart';
 import 'package:play_hq/widgets/custom_text_widget.dart';
 import 'package:play_hq/widgets/custom_textfield_widget.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../helpers/app_strings.dart';
+import '../../../../injection_container.dart';
+import '../../../../models/errors/exceptions.dart';
+import '../../../../services/base_managers/error_manager.dart';
+import '../../../../services/base_managers/response_manager.dart';
 
 class SettingsScreen extends StatefulWidget {
   final UserDetails userDetails;
@@ -23,14 +32,17 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  late String _name, _displayName, _phoneNumber;
+  late String _name, _displayName, _phoneNumber , _address;
+  late LocationModel _location;
 
   @override
   void initState() {
     super.initState();
+    _location = widget.userDetails.location!;
     _name = "${widget.userDetails.name}";
     _displayName = "${widget.userDetails.displayName}";
     _phoneNumber = "${widget.userDetails.phone}";
+    _address = '${widget.userDetails.location!.address}';
   }
 
   @override
@@ -110,6 +122,61 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         width: 95,
                         onChanged: (phoneNumber) => _phoneNumber = phoneNumber,
                       ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 30,
+                        ),
+                        child: CustomTextWidget(
+                          'Current Address',
+                          isDynamic: false,
+                          width: ScreenUtils.getDesignWidth(100),
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: 24,
+                          right: 24,
+                          top: 15
+                        ),
+                        child: Container(
+                          child: Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(right: 10),
+                                child: CustomTextWidget(
+                                  _address,
+                                  isDynamic: true,
+                                  minWidth: ScreenUtils.getDesignWidth(80),
+                                  maxWidth: ScreenUtils.getDesignWidth(200),
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: CircularBook
+                                  ),
+                                ),
+                              ),
+                              Spacer(),
+                              CustomButton(
+                                buttonText: 'Change Address',
+                                gradient: PRIMARY_GRADIENT,
+                                onPressed: () async {
+                                  _location = await sl<NavigationService>().pushNamed(CUSTOM_ADDRESS_SEARCH_SCREEN) as LocationModel;
+                                  setState(() {
+                                    _address = _location.address ?? '';
+                                  });
+
+                                },
+                                width: ScreenUtils.getDesignWidth(120.0),
+                                height: ScreenUtils.getDesignHeight(45),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
                           left: 24,
@@ -147,39 +214,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               buttonText: 'Save Changes',
                               gradient: PRIMARY_GRADIENT,
                               width: ScreenUtils.getDesignWidth(156.0),
-                              onPressed: (() => context.read<SettingsViewModel>().updateUserDetails(
+                              onPressed: () async{
+                                sl<ErrorManager>().showError(NormalMessage(message:'Saving Changes') , Icon(Icons.info));
+                                bool value = await context.read<SettingsViewModel>().updateUserDetails(
                                     name: _name,
                                     displayName: _displayName,
                                     phoneNumber: _phoneNumber,
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          left: 24,
-                          right: 24,
-                          top: 30,
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: EdgeInsets.only(right: 10),
-                              child: CustomTextWidget(
-                                'No Address',
-                                isDynamic: false,
-                                width: ScreenUtils.getDesignWidth(72),
-                                style: Theme.of(context).primaryTextTheme.headline3,
-                              ),
-                            ),
-                            Spacer(),
-                            Container(
-                              child: CustomSmallerButton(
-                                buttonText: 'Add Address',
-                                gradient: PRIMARY_GRADIENT,
-                                textFontSize: 14.0,
-                              ),
+                                    location: _location
+                                );
+                                value ? ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.green)) : ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Error Updating, please try again', Colors.red));
+                              },
                             ),
                           ],
                         ),
