@@ -1,7 +1,11 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart';
 import 'package:places_service/places_service.dart';
+import 'package:play_hq/repository/clients/user_repository.dart';
+import 'package:play_hq/services/base_managers/response_manager.dart';
 
 import '../../../helpers/app_save_locally.dart';
 import '../../../helpers/app_secure_storage.dart';
@@ -22,6 +26,8 @@ class ISetupSalesModel extends SetupSalesViewModel {
   final _setupSalesAPI = sl<SetupSalesRepository>();
   final _eventBus = sl<EventBus>();
   final _placesService = sl<PlacesService>();
+
+  final _userAPi = sl<UserRepository>();
 
   List<GamePreferencesRequest> _selectedGames = [];
 
@@ -74,36 +80,36 @@ class ISetupSalesModel extends SetupSalesViewModel {
   void performAPIRequest() async {
     _eventBus.fire(LoadingEvent.show());
 
+    UserDetails userDetails = await sl<AuthService>().getUserDetails();
     _fullName = await SecureStorage.readValue("displayName") ?? '';
 
+    LocationModel locationModel = LocationModel(
+      address: _selectedAddress,
+      lat: _selectedLatitude,
+      long: _selectedLongitude,
+    );
+
+    var body = {
+      'name': userDetails.name,
+      'displayName': _displayName,
+      'phoneNumber': _mobileNumber,
+      'location': locationModel
+    };
     try {
-      await _setupSalesAPI.setLibraryGames(_selectedGames);
+      bool value = await _userAPi.addLibraryGames(_selectedGames);
 
-      UserDetails userDetails = await sl<AuthService>().getUserDetails();
-
-      print('User Details $userDetails');
-
-      LocationModel locationModel = LocationModel(
-        address: _selectedAddress,
-        lat: _selectedLatitude,
-        long: _selectedLongitude,
-      );
-
-      UserPreferencesModel _setupSalesModel = UserPreferencesModel(
-        phoneNumber: _mobileNumber,
-        displayName: _displayName,
-        name: userDetails.name,
-        location: locationModel,
-      );
-
-      await _setupSalesAPI.setProfileDetails(_setupSalesModel);
-
-      sl<NavigationService>().pushReplacement(MAIN_SCREEN);
-
-      _eventBus.fire(LoadingEvent.hide());
+      if(value){
+        Response value = await _userAPi.updateUserDetails(body);
+        if(value.statusCode >= 200 && value.statusCode < 300){
+          _eventBus.fire(LoadingEvent.hide());
+          sl<ResponseManager>().showResponse('Details Added Successfully', Colors.green);
+          sl<NavigationService>().pushReplacement(MAIN_SCREEN);
+        }
+      }
     } catch (e) {
       print(e.toString());
       _eventBus.fire(LoadingEvent.hide());
+      sl<ResponseManager>().showResponse('Something went wrong, please try again', Colors.redAccent);
     }
   }
 

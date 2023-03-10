@@ -96,7 +96,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                     create: (context) => ICreateSaleModel(),
                   ),
                 ],
-                child: SetupPurchaseAccountScreen(),
+                child: SetupPurchaseAccountScreen(
+                  isOnboarding: settings.arguments as bool,
+                ),
               ));
     case SPLASH_SCREEN:
       return MaterialPageRoute(

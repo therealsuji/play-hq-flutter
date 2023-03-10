@@ -49,6 +49,6 @@ class UserDelegate extends UserRepository with NetworkHelper {
 
   @override
   Future<bool> addWishlistGames(dynamic body) {
-    return this.post(APIConfig.addLibraryGames, body).then((value) => value);
+    return this.post(APIConfig.addWishListGames, body).then((value) => value);
   }
 }

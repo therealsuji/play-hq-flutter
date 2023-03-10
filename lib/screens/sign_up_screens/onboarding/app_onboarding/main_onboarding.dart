@@ -128,7 +128,6 @@ class _MainOnboardingState extends State<MainOnboarding> {
               onTap: () => Navigator.pushNamed(
                 context,
                 SETUP_PURCHASE_ACCOUNT_ROUTE,
-                arguments: SearchType.SETUP_PURCHASES,
               ),
               child: Container(
                 alignment: Alignment.topRight,

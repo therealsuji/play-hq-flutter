@@ -14,25 +14,23 @@ abstract class SetupPurchaseAccountModel extends ChangeNotifier with AppLoader{
 
   void changePlatformState(bool state);
 
-  void selectPlatform(int platformId);
-
-  int get platformId;
-
   bool get currentReleaseDateState;
 
   void changeReleaseDateState(bool state);
 
   List<int> get selectedGenres;
 
-  void addSelectedGenres(index , Map<String, dynamic> genre);
+  void addSelectedGenres(int genreName);
+
+  void updatePreferences();
 
   List<int> get selectedPlatforms;
 
-  void addSelectedPlatforms(int index,  Map<String, dynamic> platform);
+  void addSelectedPlatforms(int platform);
 
-  List<int> get selectedReleaseDates;
+  List<String> get selectedReleaseDates;
 
-  void addReleaseDates(int index , Map<String, dynamic> releaseDates);
+  void addReleaseDates(String releaseDates);
 
   List<GamePreferencesRequest> get selectedGameList;
 
@@ -41,13 +39,5 @@ abstract class SetupPurchaseAccountModel extends ChangeNotifier with AppLoader{
   void loadDetails();
 
   void performAPIRequest();
-
-  int? get genreCount;
-
-  int get totalPlatformCount;
-
-  int? get releaseDateCount;
-
-
 
 }

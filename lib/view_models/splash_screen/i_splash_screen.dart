@@ -21,7 +21,7 @@ class ISplashModel extends SplashScreenModel {
   @override
   void navigateOnBoarding() {
     sl<NavigationService>()
-        .pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE, args: SearchType.SETUP_PURCHASES);
+        .pushReplacement(SETUP_PURCHASE_ACCOUNT_ROUTE , args: true);
   }
 
   @override

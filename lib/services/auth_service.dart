@@ -109,7 +109,11 @@ class AuthService {
   Future<List<Data>> getWishlistGames() async {
     final prefs = await SharedPreferences.getInstance();
     var jsonData = prefs.getString(WISHLIST_GAMES_KEY);
-    return GamePreferancesResponse.decode(jsonData!);
+    List<Data> games = GamePreferancesResponse.decode(jsonData!);
+    if(games.isEmpty){
+      games = await sl<UserRepository>().getWishlistGames().then((value) => value.data);
+    }
+    return games;
   }
 
   void addGameToWishlist(Data value) async {
@@ -134,7 +138,11 @@ class AuthService {
   Future<List<Data>> getLibraryGames() async {
     final prefs = await SharedPreferences.getInstance();
     var jsonData = prefs.getString(LIBRARY_GAMES_KEY);
-    return GamePreferancesResponse.decode(jsonData!);
+    List<Data> games = GamePreferancesResponse.decode(jsonData!);
+    if(games.isEmpty){
+      games = await sl<UserRepository>().getLibraryGames().then((value) => value.data);
+    }
+    return games;
   }
 
   void addGameToLibrary(Data value) async {

@@ -205,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         .button!
                                         .copyWith(fontSize: 14.0),
                                   ),
-                                  onPressed: () => sl<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE),
+                                  onPressed: () => sl<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE , args: false),
                                 ),
                               ),
                             ),

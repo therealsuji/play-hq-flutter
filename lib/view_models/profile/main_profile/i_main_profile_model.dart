@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:play_hq/repository/clients/user_repository.dart';
+
 import '../../../helpers/app_secure_storage.dart';
 import '../../../models/common_models/game_preferences/response_body.dart';
 import '../../../models/common_models/user/user_details.dart';
@@ -18,10 +20,10 @@ class IMainProfileModel extends MainProfileModel {
 
   @override
   void getProfileDetails() async {
-     _wishlistGames = await sl<AuthService>().getWishlistGames();
-     _libraryGames = await sl<AuthService>().getLibraryGames();
     try {
       this.loadingData();
+      _wishlistGames = await sl<AuthService>().getWishlistGames();
+      _libraryGames = await sl<AuthService>().getLibraryGames();
       getUserDetails();
       print("User Avatar: ${_userDetails.avatar}");
       dataLoaded();

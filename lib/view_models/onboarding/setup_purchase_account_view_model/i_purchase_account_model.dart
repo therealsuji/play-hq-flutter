@@ -1,6 +1,10 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
+import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/user_repository.dart';
+import 'package:play_hq/services/base_managers/error_manager.dart';
 
 import '../../../helpers/app_strings.dart';
 import '../../../models/common_models/game_preferences/request_body.dart';
@@ -8,6 +12,7 @@ import '../../../models/common_models/release_date_model.dart';
 import '../../../models/loading_event_model.dart';
 import '../../../repository/clients/setup_purchase_repository.dart';
 import '../../../injection_container.dart';
+import '../../../services/base_managers/response_manager.dart';
 import '../../../services/nav_service.dart';
 import 'purchase_account_model.dart';
 
@@ -16,39 +21,47 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   bool _currentPlatformState = false;
   bool _currentReleaseDateState = false;
 
-  int? _genreCount;
-  int _platformCount = 0;
-  int? _releaseDateCount;
-
   // Lists for the API call
-  List<String> _genreList = [];
-  List<String> _platformList = [];
-  List<ReleaseDate> _releaseDateList = [];
+  List<int> _genreList = [];
+  List<int> _platformList = [];
+  List<String> _releaseDateList = [];
 
-  List<int> _selectedGenres = [];
-  List<int> _selectedPlatforms = [];
-  List<int> _selectedReleaseDates = [];
   List<GamePreferencesRequest> _selectedGames = [];
-
-  int _platformId = 0;
 
   final _userApi = sl<UserRepository>();
   final _eventBus = sl<EventBus>();
 
   @override
-  void addSelectedGenres(index, Map<String, dynamic> genre) {
-    if (_selectedGenres.contains(index)) {
-      _selectedGenres.remove(index);
-      _genreList.remove(genre['id'].toString());
+  void loadDetails() async {
+    loadingData(showOverlay: true);
+    UserGamePreferences _preferences = await sl<UserRepository>().getUserGamePreferences();
+    if(_preferences.genres.isNotEmpty){
+      _currentGenreState = true;
+    }
+    _preferences.genres.forEach((element) {
+      _genreList.add(element.id ?? 0);
+    });
+    if(_preferences.platforms.isNotEmpty){
+      _currentPlatformState = true;
+      _preferences.platforms.forEach((element) {
+        _platformList.add(element.id ?? 0);
+      });
+    }
+    notifyListeners();
+    dataLoaded();
+  }
+
+  @override
+  void addSelectedGenres(genreName) {
+    if (_genreList.contains(genreName)) {
+      _genreList.remove(genreName);
     } else {
-      if (_selectedGenres.length >= 3) {
+      if (_genreList.length >= 3) {
         return;
       } else {
-        _selectedGenres.add(index);
-        _genreList.add(genre['id'].toString());
+        _genreList.add(genreName);
       }
     }
-    _genreCount = _selectedGenres.length;
     notifyListeners();
   }
 
@@ -62,8 +75,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   bool get currentGenreState => _currentGenreState;
 
   @override
-  // TODO: implement selectedItems
-  List<int> get selectedGenres => _selectedGenres;
+  List<int> get selectedGenres => _genreList;
 
   @override
   void changePlatformState(bool state) {
@@ -75,20 +87,17 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   bool get currentPlatFormState => _currentPlatformState;
 
   @override
-  void addSelectedPlatforms(int index, Map<String, dynamic> platform) {
-    if (_selectedPlatforms.contains(index)) {
-      _selectedPlatforms.remove(index);
-      _platformList.remove(platform['id'].toString());
+  void addSelectedPlatforms(platformName) {
+    if (_platformList.contains(platformName)) {
+      _platformList.remove(platformName);
     } else {
-      if (_selectedPlatforms.length >= 3) {
+      if (_platformList.length >= 3) {
         return;
       } else {
-        _selectedPlatforms.add(index);
-        _platformList.add(platform['id'].toString());
+        _platformList.add(platformName);
       }
     }
     notifyListeners();
-    _platformCount = _platformList.length;
   }
 
   @override
@@ -101,22 +110,19 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   bool get currentReleaseDateState => _currentReleaseDateState;
 
   @override
-  void addReleaseDates(int index, Map<String, dynamic> releaseDate) {
-    ReleaseDate dates = ReleaseDate(fromDate: releaseDate['start'], toDate: releaseDate['end']);
+  void addReleaseDates(releaseDates) {
+    // ReleaseDate dates = ReleaseDate(fromDate: releaseDate['start'], toDate: releaseDate['end']);
 
-    if (_selectedReleaseDates.contains(index)) {
-      _selectedReleaseDates.remove(index);
-      _releaseDateList.removeWhere((element) => element.fromDate == dates.fromDate);
+    if (_releaseDateList.contains(releaseDates)) {
+      _releaseDateList.remove(releaseDates);
     } else {
-      _selectedReleaseDates.add(index);
-      _releaseDateList.add(dates);
+      _releaseDateList.add(releaseDates);
     }
     notifyListeners();
-    _releaseDateCount = _selectedReleaseDates.length;
   }
 
   @override
-  List<int> get selectedReleaseDates => _selectedReleaseDates;
+  List<String> get selectedReleaseDates => _releaseDateList;
 
   @override
   void addSelectedGame(GamePreferencesRequest game) {
@@ -128,16 +134,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   List<GamePreferencesRequest> get selectedGameList => _selectedGames;
 
   @override
-  int? get genreCount => _genreCount;
-
-  @override
-  int get totalPlatformCount => _platformCount;
-
-  @override
-  int? get releaseDateCount => _releaseDateCount;
-
-  @override
-  List<int> get selectedPlatforms => _selectedPlatforms;
+  List<int> get selectedPlatforms => _platformList;
 
   @override
   void performAPIRequest() async {
@@ -150,32 +147,44 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
     };
 
     try {
-      await Future.wait([
-        sl<UserRepository>().addWishlistGames(_selectedGames),
-        sl<UserRepository>().updateUserPreferences(gamePreferances)
-      ]);
-      _eventBus.fire(LoadingEvent.hide());
-      sl<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
+      bool value = await sl<UserRepository>().addWishlistGames(_selectedGames);
+      if(value){
+        Response response = await sl<UserRepository>().updateUserPreferences(gamePreferances);
+        if(response.statusCode >= 200 && response.statusCode < 300){
+          sl<ResponseManager>().showResponse('Details Added Successfully', Colors.green);
+          _eventBus.fire(LoadingEvent.hide());
+          sl<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
+        }else{
+          sl<ResponseManager>().showResponse('Something went wrong, please try again', Colors.redAccent);
+        }
+      }
     } catch (e) {
       print(e.toString());
+      sl<ResponseManager>().showResponse('Something went wrong, please try again', Colors.redAccent);
       _eventBus.fire(LoadingEvent.hide());
     }
     notifyListeners();
   }
 
   @override
-  void selectPlatform(int platformId) {
-    _platformId = platformId;
-    notifyListeners();
-  }
+  void updatePreferences() async{
+    sl<ErrorManager>().showError(NormalMessage(message: 'Updating Details') , Icon(Icons.info));
+    var gamePreferances = {
+      "genres": _genreList,
+      "releaseDates": _releaseDateList,
+      "platforms": _platformList
+    };
 
-  @override
-  int get platformId => _platformId;
-
-  @override
-  void loadDetails() async {
-    UserGamePreferences _preferences = await sl<UserRepository>().getUserGamePreferences();
-    _currentGenreState = true;
-    notifyListeners();
+    try{
+      Response response = await sl<UserRepository>().updateUserPreferences(gamePreferances);
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.green);
+        await Future.delayed(Duration(seconds: 1));
+        sl<NavigationService>().pushAndRemoveUntil(MAIN_SCREEN);
+      }
+    }catch(e){
+      print(e.toString());
+      sl<ResponseManager>().showResponse('Something went wrong, please try again', Colors.redAccent);
+    }
   }
 }

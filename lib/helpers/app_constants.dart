@@ -30,9 +30,9 @@ const List<Map<String , dynamic>> testingCarousalData = [
 ];
 
 const List<Map<String, dynamic>> platforms = [
-  {'id': 187, 'name': 'PlayStation 05'},
-  {'id': 18, 'name': 'PlayStation 04'},
-  {'id': 16 , 'name': 'PlayStation 03'},
+  {'id': 187, 'name': 'PlayStation 5'},
+  {'id': 18, 'name': 'PlayStation 4'},
+  {'id': 16 , 'name': 'PlayStation 3'},
   {'id': 186, 'name': 'Xbox Series S/X'},
   {'id' : 14 , 'name' : 'Xbox 360'},
   {'id':1 , 'name':'Xbox One'},
@@ -40,10 +40,10 @@ const List<Map<String, dynamic>> platforms = [
 ];
 
 const List<Map<String, dynamic>> releaseDates = [
-  {'start': '2016-01-01','end':'2018-12-31', 'name': '2015-2017'},
-  {'start': '2018-01-01', 'end':'2020-12-31','name': '2018-2020'},
-  {'start': '2021-01-01', 'end':'2024-10-31', 'name': '2021-Present'},
-  {'start': '2000-01-01', 'end':'2014-12-31' , 'name': 'Old Classics'}
+  {'start': '2016-01-01','end':'2018-12-31', 'name': '2015-2017' , 'id' : '02'},
+  {'start': '2018-01-01', 'end':'2020-12-31','name': '2018-2020' , 'id' : '04'},
+  {'start': '2021-01-01', 'end':'2024-10-31', 'name': '2021-Present' , 'id' : '06'},
+  {'start': '2000-01-01', 'end':'2014-12-31' , 'name': 'Old Classics' , 'id' : '08'}
 ];
 
 const List<Map<String, dynamic>> genreList = [
