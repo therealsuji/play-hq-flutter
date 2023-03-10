@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/services/nav_service.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../helpers/app_colors.dart';
@@ -7,6 +8,7 @@ import '../../../../helpers/app_enums.dart';
 import '../../../../helpers/app_fonts.dart';
 import '../../../../helpers/app_screen_utils.dart';
 import '../../../../helpers/app_strings.dart';
+import '../../../../injection_container.dart';
 import '../../../../view_models/main_onboarding/main_onboarding_model.dart';
 import '../../../../widgets/custom_button_widget.dart';
 import '../../../../widgets/custom_text_widget.dart';
@@ -56,11 +58,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
                             buttonText: 'Setup Preferances',
                             width: ScreenUtils.bodyWidth,
                             gradient: PRIMARY_GRADIENT,
-                            onPressed: () => Navigator.pushNamed(
-                              context,
-                              SETUP_PURCHASE_ACCOUNT_ROUTE,
-                              arguments: SearchType.SETUP_PURCHASES,
-                            ),
+                            onPressed: () => sl<NavigationService>().pushAndRemoveUntil(PURCHASE_ACCOUNT_SCREEN , args: true)
                           )
                         : Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,10 +123,7 @@ class _MainOnboardingState extends State<MainOnboarding> {
               );
             }),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                SETUP_PURCHASE_ACCOUNT_ROUTE,
-              ),
+              onTap: () => sl<NavigationService>().pushAndRemoveUntil(PURCHASE_ACCOUNT_SCREEN),
               child: Container(
                 alignment: Alignment.topRight,
                 margin: EdgeInsets.only(top: ScreenUtils.getDesignHeight(40), right: 24),

@@ -103,7 +103,7 @@ class ISetupSalesModel extends SetupSalesViewModel {
         if(value.statusCode >= 200 && value.statusCode < 300){
           _eventBus.fire(LoadingEvent.hide());
           sl<ResponseManager>().showResponse('Details Added Successfully', Colors.green);
-          sl<NavigationService>().pushReplacement(MAIN_SCREEN);
+          sl<NavigationService>().pushAndRemoveUntil(MAIN_SCREEN);
         }
       }
     } catch (e) {
