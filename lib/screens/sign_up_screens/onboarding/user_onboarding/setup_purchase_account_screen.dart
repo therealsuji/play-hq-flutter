@@ -29,6 +29,14 @@ class SetupPurchaseAccountScreen extends StatefulWidget {
 }
 
 class _SetupPurchaseAccountScreenState extends State<SetupPurchaseAccountScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    context.read<SetupPurchaseAccountModel>().loadDetails();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

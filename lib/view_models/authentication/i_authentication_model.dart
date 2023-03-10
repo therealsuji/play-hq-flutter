@@ -14,7 +14,6 @@ class IAuthenticationModel extends AuthenticationModel {
     sl<EventBus>().fire(LoadingEvent.show());
     var isSetupDone = await sl<AuthService>().socialLogin(socialLogin);
     sl<EventBus>().fire(LoadingEvent.hide());
-
     if (isSetupDone == true) {
       sl<NavigationService>().pushReplacement(MAIN_SCREEN);
     } else if (isSetupDone == false) {

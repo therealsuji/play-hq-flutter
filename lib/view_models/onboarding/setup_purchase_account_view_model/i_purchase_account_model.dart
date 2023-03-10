@@ -1,4 +1,6 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
+import 'package:play_hq/repository/clients/user_repository.dart';
 
 import '../../../helpers/app_strings.dart';
 import '../../../models/common_models/game_preferences/request_body.dart';
@@ -30,7 +32,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
 
   int _platformId = 0;
 
-  final _setupPurchasesAPI = sl<SetupPurchaseRepository>();
+  final _userApi = sl<UserRepository>();
   final _eventBus = sl<EventBus>();
 
   @override
@@ -148,8 +150,10 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
     };
 
     try {
-      await _setupPurchasesAPI.setGameWishList(_selectedGames);
-      await _setupPurchasesAPI.setGamePreferences(gamePreferances);
+      await Future.wait([
+        sl<UserRepository>().addWishlistGames(_selectedGames),
+        sl<UserRepository>().updateUserPreferences(gamePreferances)
+      ]);
       _eventBus.fire(LoadingEvent.hide());
       sl<NavigationService>().pushNamed(SETUP_SALES_ACCOUNT_ROUTE);
     } catch (e) {
@@ -167,4 +171,11 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
 
   @override
   int get platformId => _platformId;
+
+  @override
+  void loadDetails() async {
+    UserGamePreferences _preferences = await sl<UserRepository>().getUserGamePreferences();
+    _currentGenreState = true;
+    notifyListeners();
+  }
 }

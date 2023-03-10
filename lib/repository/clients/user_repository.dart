@@ -9,9 +9,13 @@ abstract class UserRepository {
 
   Future<GamePreferancesResponse> getWishlistGames();
 
+  Future<bool> addWishlistGames(dynamic body);
+
+  Future<bool> addLibraryGames(Map<String , dynamic> body);
+
   Future<Response> updateUserDetails(Map<String , dynamic> body);
 
-  Future<Response> updateUserPreferences(Map<String , dynamic> body);
+  Future<void> updateUserPreferences(Map<String , dynamic> body);
 
   Future<GamePreferancesResponse> getLibraryGames();
 }

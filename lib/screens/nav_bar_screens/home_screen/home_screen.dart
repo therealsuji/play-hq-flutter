@@ -310,8 +310,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   GestureDetector(
                     onTap: (){
                       _showPlatformBottomSheet(platforms: results.platforms ?? [] , onPressed: () async {
-                        bool value = await Provider.of<HomeScreenModel>(context, listen: false).addToWishlist(results);
-                        value ? ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Added to Wishlist Successfully', Colors.green)) : ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Add to Wishlist Failed', Colors.red));
+                        await Provider.of<HomeScreenModel>(context, listen: false).addToWishlist(results);
                       });
                     },
                     child: Container(

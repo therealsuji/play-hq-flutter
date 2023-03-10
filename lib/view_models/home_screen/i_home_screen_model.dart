@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/helpers/app_assets.dart';
@@ -9,6 +10,7 @@ import 'package:play_hq/helpers/app_colors.dart';
 import 'package:play_hq/models/common_models/game_preferences/response_body.dart';
 import 'package:play_hq/repository/clients/game_details_repository.dart';
 import 'package:play_hq/repository/clients/user_repository.dart';
+import 'package:play_hq/services/base_managers/response_manager.dart';
 import 'package:play_hq/services/nav_service.dart';
 
 import '../../helpers/app_enums.dart';
@@ -134,7 +136,7 @@ class IHomeScreenModel extends HomeScreenModel {
   List<Genre> get prefGenres => _prefGenre.length != 0 ? _prefGenre : _defaultGenre;
 
   @override
-  Future<bool> addToWishlist(GameResults results ) async {
+  Future<void> addToWishlist(GameResults results ) async {
     final _httpClient = sl<Network>();
 
     debugPrint('Selected Platform $_selectedPlatform');
@@ -161,11 +163,11 @@ class IHomeScreenModel extends HomeScreenModel {
     if(response.statusCode == 201){
       Data game = Data.fromJson(jsonDecode(response.body));
       _userWishlistGames.add(game);
+      sl<ResponseManager>().showResponse('Game added to Wishlist', Colors.green);
       sl<AuthService>().saveWishlistGames(_userWishlistGames);
       notifyListeners();
-      return true;
     }else{
-      return false;
+      sl<ResponseManager>().showResponse('Game added to Wishlist', Colors.green);
     }
     // _eventBus.fire(LoadingEvent.hide());
   }

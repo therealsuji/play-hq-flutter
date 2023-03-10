@@ -23,7 +23,7 @@ abstract class HomeScreenModel extends ChangeNotifier with AppLoader {
 
   List<Data> get wishlistGames;
 
-  Future<bool> addToWishlist(GameResults results);
+  Future<void> addToWishlist(GameResults results);
 
   List<GameResults> get recommendedGames;
 

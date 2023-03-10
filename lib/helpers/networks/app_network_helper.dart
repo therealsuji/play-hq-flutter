@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:http/http.dart';
 
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
@@ -10,18 +11,19 @@ import '../app_enums.dart';
 import 'app_network.dart';
 
 class NetworkResult<T> {
-  dynamic rawResult;
+  Response rawResult;
   Future<T> result;
   NetworkResult(this.rawResult, this.result);
 }
 
 class NetworkHelper {
   final _httpClient = sl<Network>();
+  
 
-  Future<NetworkResult<T>> get<T>(String url, computeCallback) async {
+  Future<NetworkResult<T>> fetchAll<T>(String url, computeCallback) async {
     try {
-      var response = await _httpClient.performRequest(url, HttpAction.GET);
-      return NetworkResult(response.body, compute(computeCallback, response.body));
+      Response response = await _httpClient.performRequest(url, HttpAction.GET);
+      return NetworkResult(response, compute(computeCallback, response.body));
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
@@ -36,10 +38,14 @@ class NetworkHelper {
     }
   }
 
-  Future<NetworkResult<T>> post<T>(String url, Map<String, dynamic> body, computeCallback) async {
+  Future<bool> post<T>(String url, dynamic body) async {
     try {
-      var response = await _httpClient.performRequest(url, HttpAction.POST, body: body);
-      return NetworkResult(response.body, compute(computeCallback, response.body));
+      Response response = await _httpClient.performRequest(url, HttpAction.POST, body: body);
+      if(response.statusCode >= 200 && response.statusCode < 300){
+        return true;
+      }else{
+        return false;
+      }
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
@@ -56,8 +62,8 @@ class NetworkHelper {
 
   Future<NetworkResult<T>> put<T>(String url, Map<String, dynamic> body, computeCallback) async {
     try {
-      var response = await _httpClient.performRequest(url, HttpAction.PUT, body: body);
-      return NetworkResult(response.body, compute(computeCallback, response.body));
+      Response response = await _httpClient.performRequest(url, HttpAction.PUT, body: body);
+      return NetworkResult(response, compute(computeCallback, response.body));
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();

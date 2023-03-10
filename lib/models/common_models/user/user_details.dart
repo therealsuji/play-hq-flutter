@@ -32,7 +32,7 @@ class UserDetails {
         avatar: json["avatar"] == null ? "" : json["avatar"],
         phone: json["phone"] == null ? "" : json["phone"],
         isSetupDone: json["isSetupDone"] == null ? false : json["isSetupDone"],
-        location: LocationModel.fromJson(json['location']),
+        location: json['location'] == null ? LocationModel() : LocationModel.fromJson(json['location']),
         displayName: json["displayName"] == null ? "" : json["displayName"],
       );
 

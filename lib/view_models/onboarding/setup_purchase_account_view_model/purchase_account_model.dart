@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:play_hq/helpers/app_loading.dart';
 import 'package:play_hq/models/common_models/game_model.dart';
 import 'package:play_hq/models/common_models/game_preferences/request_body.dart';
 
 
-abstract class SetupPurchaseAccountModel with ChangeNotifier{
+abstract class SetupPurchaseAccountModel extends ChangeNotifier with AppLoader{
 
   bool get currentGenreState;
 
@@ -36,6 +37,8 @@ abstract class SetupPurchaseAccountModel with ChangeNotifier{
   List<GamePreferencesRequest> get selectedGameList;
 
   void addSelectedGame(GamePreferencesRequest game);
+
+  void loadDetails();
 
   void performAPIRequest();
 

@@ -19,7 +19,7 @@ class UserDelegate extends UserRepository with NetworkHelper {
   @override
   Future<UserGamePreferences> getUserGamePreferences() {
     return this
-        .get<UserGamePreferences>(APIConfig.userPreferences, userGameListsFromJson)
+        .fetchAll<UserGamePreferences>(APIConfig.userPreferences, userGameListsFromJson)
         .then((value) => value.result);
   }
 
@@ -29,16 +29,26 @@ class UserDelegate extends UserRepository with NetworkHelper {
 
   @override
   Future<GamePreferancesResponse> getWishlistGames() async{
-    return this.get<GamePreferancesResponse>(APIConfig.getWishListGames() , gamePreferancesResponseFromJson).then((value) => value.result);
+    return this.fetchAll<GamePreferancesResponse>(APIConfig.getWishListGames() , gamePreferancesResponseFromJson).then((value) => value.result);
   }
 
   @override
   Future<GamePreferancesResponse> getLibraryGames() async {
-    return this.get<GamePreferancesResponse>(APIConfig.getLibraryGames() , gamePreferancesResponseFromJson).then((value) => value.result);
+    return this.fetchAll<GamePreferancesResponse>(APIConfig.getLibraryGames() , gamePreferancesResponseFromJson).then((value) => value.result);
   }
 
   @override
   Future<Response> updateUserPreferences(Map<String, dynamic> body) async{
-    return await _httpClient.performRequest(APIConfig.updateUserDetails, HttpAction.PUT, body: body);
+    return await _httpClient.performRequest(APIConfig.userPreferences, HttpAction.PUT, body: body);
+  }
+
+  @override
+  Future<bool> addLibraryGames(dynamic body) {
+    return this.post(APIConfig.addLibraryGames, body).then((value) => value);
+  }
+
+  @override
+  Future<bool> addWishlistGames(dynamic body) {
+    return this.post(APIConfig.addLibraryGames, body).then((value) => value);
   }
 }

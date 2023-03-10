@@ -205,7 +205,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                         .button!
                                         .copyWith(fontSize: 14.0),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () => sl<NavigationService>().pushNamed(SETUP_PURCHASE_ACCOUNT_ROUTE),
                                 ),
                               ),
                             ),
@@ -216,13 +216,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               width: ScreenUtils.getDesignWidth(156.0),
                               onPressed: () async{
                                 sl<ErrorManager>().showError(NormalMessage(message:'Saving Changes') , Icon(Icons.info));
-                                bool value = await context.read<SettingsViewModel>().updateUserDetails(
+                                await context.read<SettingsViewModel>().updateUserDetails(
                                     name: _name,
                                     displayName: _displayName,
                                     phoneNumber: _phoneNumber,
                                     location: _location
                                 );
-                                value ? ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.green)) : ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse('Error Updating, please try again', Colors.red));
                               },
                             ),
                           ],

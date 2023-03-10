@@ -384,8 +384,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 _showPlatformBottomSheet(
                   onPressed: ()async {
                     sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Wishlist') , Icon(Icons.info));
-                    bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToWishList();
-                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Wishlist Games' : 'Addition to Wishlist Failed', value ? Colors.green : Colors.redAccent));
+                    await Provider.of<GameDetailsViewModel>(context, listen: false).addToWishList();
                   }
                 );
               },
@@ -404,8 +403,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                 _showPlatformBottomSheet(
                   onPressed: ()async {
                     sl<ErrorManager>().showError(NormalMessage(message:'Adding Game to Library') ,  Icon(Icons.info));
-                    bool value = await Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary();
-                    ScaffoldMessenger.of(context).showSnackBar(sl<ResponseManager>().showResponse(value ? 'Added to Library' : 'Addition to Library Failed', value ? Colors.green : Colors.redAccent));
+                    await Provider.of<GameDetailsViewModel>(context, listen: false).addToLibrary();
                   }
                 );
               },

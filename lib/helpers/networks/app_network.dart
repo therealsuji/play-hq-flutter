@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:play_hq/services/nav_service.dart';
 
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
@@ -12,6 +13,7 @@ import '../../services/auth_service.dart';
 import '../../services/base_managers/error_manager.dart';
 import '../app_enums.dart';
 import '../app_secure_storage.dart';
+import '../app_strings.dart';
 
 class Network {
   Network._privateConstructor();
@@ -132,7 +134,12 @@ class Network {
       debugPrint("Network Call: $url");
       debugPrint("StatusCode: ${response.statusCode} Result: ${response.body}");
 
-      return response;
+      if(response.statusCode == 401){
+        sl<NavigationService>().pushNamed(AUTH_SCREEN);
+        return response;
+      }else{
+        return response;
+      }
     } on SocketException {
       sl<ErrorManager>().showError(NetworkFailure());
       throw NetworkFailure();

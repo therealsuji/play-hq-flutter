@@ -17,10 +17,10 @@ class ResponseService extends ResponseManager{
   ResponseService(this.navigationService);
 
   @override
-  SnackBar showResponse(String message, Color color) {
+  void showResponse(String message, Color color) {
     final context = navigationService.navigatorKey.currentState!.overlay!.context;
     final ResponseSnackBar handler = IResponseSnackBar();
-    return handler.showResponse(message, color);
+    ScaffoldMessenger.of(context).showSnackBar(handler.showResponse(message, color));
   }
 
   @override

@@ -16,10 +16,10 @@ class LocationModel {
   String? address;
 
   factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
-    lat: json["lat"].toDouble(),
-    long: json["long"].toDouble(),
-    address: json["address"],
-    id: json["id"]
+    lat: json['lat'] == null ? 0.0 : json["lat"].toDouble(),
+    long: json['long'] == null ? 0.0 : json["long"].toDouble(),
+    address: json['address'] == null ? 'Not Specified' : json["address"],
+    id: json["id"] == null ? 0 : json['id']
   );
 
   Map<String, dynamic> toJson() => {

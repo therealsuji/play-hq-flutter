@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show ChangeNotifier;
 import 'package:play_hq/models/common_models/location_model.dart';
 
 abstract class SettingsViewModel with ChangeNotifier {
-  Future<bool> updateUserDetails({
+  Future<void> updateUserDetails({
     required String name,
     required String displayName,
     required String phoneNumber,

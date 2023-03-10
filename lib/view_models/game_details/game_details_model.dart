@@ -12,9 +12,9 @@ abstract class GameDetailsViewModel extends ChangeNotifier with AppLoader {
 
   void navigateMainScreen();
 
-  Future<bool> addToLibrary();
+  Future<void> addToLibrary();
 
-  Future<bool> addToWishList();
+  Future<void> addToWishList();
 
   void deleteWishListGame(int id);
 

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
+import 'package:play_hq/services/base_managers/response_manager.dart';
 
 import '../../injection_container.dart';
 import '../../models/common_models/game_preferences/response_body.dart';
@@ -89,7 +91,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
   }
 
   @override
-  Future<bool> addToLibrary() async {
+  Future<void> addToLibrary() async {
     var body = {
       "game": {
         "title": _gameDetailsModel.nameOriginal,
@@ -113,17 +115,17 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
       navigationService.pop();
       Data game = Data.fromJson(jsonDecode(response.body));
       sl<AuthService>().addGameToLibrary(game);
+      sl<ResponseManager>().showResponse('Game added to Library', Colors.green);
       getGameStatus(_gameDetailsModel.id ?? 0);
       notifyListeners();
-      return true;
     }else{
       navigationService.pop();
-      return false;
+      sl<ResponseManager>().showResponse('Something went wrong, please try again', Colors.redAccent);
     }
   }
 
   @override
-  Future<bool> addToWishList() async {
+  Future<void> addToWishList() async {
     print('releaseDate ' + _gameDetailsModel.released!);
 
     var body = {
@@ -147,13 +149,13 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     if (response.statusCode == 201){
       Data game = Data.fromJson(jsonDecode(response.body));
       sl<AuthService>().addGameToWishlist(game);
+      sl<ResponseManager>().showResponse('Game added to Library', Colors.green);
+      getGameStatus(_gameDetailsModel.id ?? 0);
       navigationService.pop();
       notifyListeners();
-      getGameStatus(_gameDetailsModel.id ?? 0);
-      return true;
     }else{
       navigationService.pop();
-      return false;
+      sl<ResponseManager>().showResponse('Something went wrong, please try again', Colors.redAccent);
     }
   }
 

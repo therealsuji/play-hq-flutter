@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:play_hq/models/common_models/location_model.dart';
+import 'package:play_hq/services/base_managers/response_manager.dart';
 
 import '../../../helpers/app_secure_storage.dart';
 import '../../../helpers/app_strings.dart';
@@ -34,7 +36,7 @@ class ISettingsViewModel extends SettingsViewModel {
   });
 
   @override
-  Future<bool> updateUserDetails({
+  Future<void> updateUserDetails({
     required LocationModel location,
     required String name,
     required String displayName,
@@ -51,11 +53,11 @@ class ISettingsViewModel extends SettingsViewModel {
 
     if (response.statusCode == 200){
       UserDetails user = UserDetails.fromJson(jsonDecode(response.body));
+      sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.green);
       _getUserDetails(user);
-      return true;
     }else{
+      sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.redAccent);
       debugPrint('Could not update');
-      return false;
     }
 
   }
