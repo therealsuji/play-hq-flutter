@@ -161,7 +161,11 @@ class AuthService {
 
   Future<UserDetails> getUserDetails() async {
     var jsonData = await SecureStorage.readValue(USER_DETAILS_KEY);
-    return UserDetails.fromJson(json.decode(jsonData!));
+    UserDetails user = UserDetails.fromJson(json.decode(jsonData!));
+    if(user.displayName!.isEmpty){
+      user = await _userRepository.getUserDetails();
+    }
+    return user;
   }
 
   Future<UserGamePreferences> getUserGamePreferences() async {

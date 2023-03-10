@@ -24,6 +24,7 @@ class IMainProfileModel extends MainProfileModel {
       this.loadingData();
       _wishlistGames = await sl<AuthService>().getWishlistGames();
       _libraryGames = await sl<AuthService>().getLibraryGames();
+      _userDetails = await sl<AuthService>().getUserDetails();
       getUserDetails();
       print("User Avatar: ${_userDetails.avatar}");
       dataLoaded();
