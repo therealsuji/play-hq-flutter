@@ -50,7 +50,6 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
   Future<void> getGameDetails(int id) async {
     try {
       loadingData(showOverlay: true);
-
       await gameDetailsRepository.getGameDetails(id).then((model) {
         if (model != null) {
           model.gameDetails!.platforms!.removeWhere((element) => element.id == 4);
@@ -60,16 +59,13 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
           model.gameDetails!.platforms!.forEach((element) {
             platforms.add(element.id ?? 0);
           });
-          notifyListeners();
         }
       });
-
-
       await gameDetailsRepository.getGameStatus(id).then((model) {
         _gameStatus = model;
+      }).then((value) {
+        dataLoaded();
       });
-
-      dataLoaded();
 
 
       await gameDetailsRepository.getSimilarGames(mainGenre.toString(), platforms).then((value) {

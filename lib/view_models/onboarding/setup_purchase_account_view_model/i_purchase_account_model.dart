@@ -1,6 +1,7 @@
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:play_hq/helpers/app_constants.dart';
 import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/user_repository.dart';
@@ -26,6 +27,8 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   List<int> _platformList = [];
   List<String> _releaseDateList = [];
 
+  List<Map<String,dynamic>> _apiReleaseDates = [];
+
   List<GamePreferencesRequest> _selectedGames = [];
 
   final _userApi = sl<UserRepository>();
@@ -37,14 +40,21 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
     UserGamePreferences _preferences = await sl<UserRepository>().getUserGamePreferences();
     if(_preferences.genres.isNotEmpty){
       _currentGenreState = true;
+      _preferences.genres.forEach((element) {
+        _genreList.add(element.id ?? 0);
+      });
     }
-    _preferences.genres.forEach((element) {
-      _genreList.add(element.id ?? 0);
-    });
     if(_preferences.platforms.isNotEmpty){
       _currentPlatformState = true;
       _preferences.platforms.forEach((element) {
         _platformList.add(element.id ?? 0);
+      });
+    }
+
+    if(_preferences.releaseDates.isNotEmpty){
+      _currentReleaseDateState = true;
+      _preferences.releaseDates.forEach((element) {
+        _releaseDateList.add(releaseDates.firstWhere((date) => element.id == date.id).name ?? '');
       });
     }
     notifyListeners();
@@ -110,13 +120,13 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   bool get currentReleaseDateState => _currentReleaseDateState;
 
   @override
-  void addReleaseDates(releaseDates) {
+  void addReleaseDates(datesString) {
     // ReleaseDate dates = ReleaseDate(fromDate: releaseDate['start'], toDate: releaseDate['end']);
 
-    if (_releaseDateList.contains(releaseDates)) {
-      _releaseDateList.remove(releaseDates);
+    if (_releaseDateList.contains(datesString)) {
+      _releaseDateList.remove(datesString);
     } else {
-      _releaseDateList.add(releaseDates);
+      _releaseDateList.add(datesString);
     }
     notifyListeners();
   }
@@ -140,10 +150,25 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   void performAPIRequest() async {
     _eventBus.fire(LoadingEvent.show());
 
+    releaseDates.forEach((element) {
+      _releaseDateList.forEach((dateString) {
+        if(element.name == dateString){
+          var body = {
+            'fromDate':element.fromDate,
+            'toDate':element.toDate,
+            'id': element.id
+          };
+          _apiReleaseDates.add(body);
+        }
+      });
+    });
+
+    debugPrint('Release Dates $_apiReleaseDates');
+
     var gamePreferances = {
       "genres": _genreList,
-      "releaseDates": _releaseDateList,
-      "platforms": _platformList
+      "platforms": _platformList,
+      "releaseDates": _apiReleaseDates,
     };
 
     try {
@@ -169,9 +194,24 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
   @override
   void updatePreferences() async{
     sl<ErrorManager>().showError(NormalMessage(message: 'Updating Details') , Icon(Icons.info));
+
+    releaseDates.forEach((element) {
+      _releaseDateList.forEach((dateString) {
+        if(element.name == dateString){
+          var body = {
+            'fromDate':element.fromDate,
+            'toDate':element.toDate,
+            'id': element.id
+          };
+          _apiReleaseDates.add(body);
+        }
+      });
+    });
+
+
     var gamePreferances = {
       "genres": _genreList,
-      "releaseDates": _releaseDateList,
+      "releaseDates": _apiReleaseDates,
       "platforms": _platformList
     };
 
@@ -180,7 +220,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
       if(response.statusCode >= 200 && response.statusCode < 300){
         sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.green);
         await Future.delayed(Duration(seconds: 1));
-        sl<NavigationService>().pushAndRemoveUntil(MAIN_SCREEN);
+        sl<NavigationService>().pop();
       }
     }catch(e){
       print(e.toString());

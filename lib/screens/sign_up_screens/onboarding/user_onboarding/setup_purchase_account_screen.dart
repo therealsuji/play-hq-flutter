@@ -246,11 +246,11 @@ class _SetupPurchaseAccountScreenState
                               onTap: () => Provider.of<
                                           SetupPurchaseAccountModel>(context,
                                       listen: false)
-                                  .addReleaseDates(releaseDates[index]['name']),
+                                  .addReleaseDates(releaseDates[index].name ?? ''),
                               child: CustomSelectingWidget(
-                                titleText: releaseDates[index]['name'],
+                                titleText: releaseDates[index].name,
                                 active: val.selectedReleaseDates
-                                    .contains(releaseDates[index]['name']),
+                                    .contains(releaseDates[index].name),
                               ),
                             );
                           },

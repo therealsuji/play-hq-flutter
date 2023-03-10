@@ -1,4 +1,5 @@
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/models/common_models/release_date_model.dart';
 
 import 'app_enums.dart';
 
@@ -39,11 +40,15 @@ const List<Map<String, dynamic>> platforms = [
   {'id':7, 'name':'Nintendo Switch'}
 ];
 
-const List<Map<String, dynamic>> releaseDates = [
-  {'start': '2016-01-01','end':'2018-12-31', 'name': '2015-2017' , 'id' : '02'},
-  {'start': '2018-01-01', 'end':'2020-12-31','name': '2018-2020' , 'id' : '04'},
-  {'start': '2021-01-01', 'end':'2024-10-31', 'name': '2021-Present' , 'id' : '06'},
-  {'start': '2000-01-01', 'end':'2014-12-31' , 'name': 'Old Classics' , 'id' : '08'}
+List<ReleaseDate> releaseDates = [
+  ReleaseDate(fromDate: '2016-01-01' , toDate: '2018-12-31', name: '2016-2018' , id: 02 ),
+  ReleaseDate(fromDate: '2018-01-01' , toDate: '2020-12-31', name: '2018-2020' , id: 04 ),
+  ReleaseDate(fromDate: '2021-01-01' , toDate: '2023-12-31', name: '2021-Current' , id: 06 ),
+  ReleaseDate(fromDate: '2010-01-01' , toDate: '2015-12-31', name: 'Old Classics' , id: 08 ),
+  // {'start': '2016-01-01','end':'2018-12-31', 'name': '2015-2017' , 'id' : '02'},
+  // {'start': '2018-01-01', 'end':'2020-12-31','name': '2018-2020' , 'id' : '04'},
+  // {'start': '2021-01-01', 'end':'2024-10-31', 'name': '2021-Present' , 'id' : '06'},
+  // {'start': '2000-01-01', 'end':'2014-12-31' , 'name': 'Old Classics' , 'id' : '08'}
 ];
 
 const List<Map<String, dynamic>> genreList = [
