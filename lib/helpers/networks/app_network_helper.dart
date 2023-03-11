@@ -31,7 +31,7 @@ class CachedResponse {
 class NetworkHelper {
   final _httpClient = sl<Network>();
 
-  Future<NetworkResult<T>> fetchAll<T>(String url, computeCallback , bool cacheData) async {
+  Future<NetworkResult<T>> fetchAll<T>(String url, computeCallback, {bool cacheData = false}) async {
     final cacheManager = CacheManager(
       Config(
         'my_cache_key',
@@ -41,31 +41,22 @@ class NetworkHelper {
       ),
     );
     try {
-      if(cacheData) {
+      if (cacheData) {
         final fileInfo = await cacheManager.getFileFromCache(url);
         final file = fileInfo?.file;
         if (file != null && file.existsSync()) {
-          debugPrint(
-              'Data Already Saved'
-          );
+          debugPrint('Data Already Saved');
           final cachedData = await file.readAsString();
-          return NetworkResult(
-              cachedData, compute(computeCallback, cachedData));
+          return NetworkResult(cachedData, compute(computeCallback, cachedData));
         } else {
-          Response response =
-          await _httpClient.performRequest(url, HttpAction.GET);
+          Response response = await _httpClient.performRequest(url, HttpAction.GET);
           final responseData = response.body;
-          await cacheManager.putFile(
-              url, Uint8List.fromList(utf8.encode(responseData))
-          );
-          return NetworkResult(
-              response, compute(computeCallback, response.body));
+          await cacheManager.putFile(url, Uint8List.fromList(utf8.encode(responseData)));
+          return NetworkResult(response, compute(computeCallback, response.body));
         }
-      }else{
-        Response response =
-        await _httpClient.performRequest(url, HttpAction.GET);
-        return NetworkResult(
-            response, compute(computeCallback, response.body));
+      } else {
+        Response response = await _httpClient.performRequest(url, HttpAction.GET);
+        return NetworkResult(response, compute(computeCallback, response.body));
       }
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
@@ -83,8 +74,7 @@ class NetworkHelper {
 
   Future<bool> post<T>(String url, dynamic body) async {
     try {
-      Response response =
-          await _httpClient.performRequest(url, HttpAction.POST, body: body);
+      Response response = await _httpClient.performRequest(url, HttpAction.POST, body: body);
       if (response.statusCode >= 200 && response.statusCode < 300) {
         return true;
       } else {
@@ -104,11 +94,9 @@ class NetworkHelper {
     }
   }
 
-  Future<NetworkResult<T>> put<T>(
-      String url, Map<String, dynamic> body, computeCallback) async {
+  Future<NetworkResult<T>> put<T>(String url, Map<String, dynamic> body, computeCallback) async {
     try {
-      Response response =
-          await _httpClient.performRequest(url, HttpAction.PUT, body: body);
+      Response response = await _httpClient.performRequest(url, HttpAction.PUT, body: body);
       return NetworkResult(response, compute(computeCallback, response.body));
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());

@@ -1,5 +1,3 @@
-
-
 class ReleaseDate {
   ReleaseDate({
     this.fromDate,
@@ -13,11 +11,10 @@ class ReleaseDate {
   int? id;
 
   factory ReleaseDate.fromJson(Map<String, dynamic> json) => ReleaseDate(
-    fromDate: json["fromDate"] == null ? '' : json['fromDate'],
-    toDate: json["toDate"] == null ? '' : json['toDate'],
-    id: json['id'] == null ? '' : json['id'],
-    name: json['name'] == null ? '' : json['name']
-  );
+      fromDate: json["fromDate"] == null ? '' : json['fromDate'],
+      toDate: json["toDate"] == null ? '' : json['toDate'],
+      id: json['id'] == null ? 0 : json['id'],
+      name: json['name'] == null ? '' : json['name']);
 
   Map<String, dynamic> toJson() => {
     "fromDate": fromDate,

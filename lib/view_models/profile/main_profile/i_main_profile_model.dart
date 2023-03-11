@@ -3,15 +3,13 @@ import 'dart:convert';
 import 'package:play_hq/repository/clients/user_repository.dart';
 
 import '../../../helpers/app_secure_storage.dart';
+import 'package:play_hq/services/auth_service.dart';
 import '../../../models/common_models/game_preferences/response_body.dart';
 import '../../../models/common_models/user/user_details.dart';
-import '../../../repository/clients/main_profile_screen_repository.dart';
 import '../../../injection_container.dart';
-import '../../../services/auth_service.dart';
 import 'main_profile_model.dart';
 
 class IMainProfileModel extends MainProfileModel {
-  final _mainProfileAPI = sl<MainProfileScreenRepository>();
   final _userApi = sl<UserRepository>();
 
   List<Data> _wishlistGames = [];
@@ -20,12 +18,21 @@ class IMainProfileModel extends MainProfileModel {
   ProfilePageViewTab _pageViewTab = ProfilePageViewTab.WISHLIST_TAB;
 
   @override
-  void getProfileDetails() async {
+  void getProfileDetails(String? email) async {
     try {
       this.loadingData();
-      _wishlistGames = await _userApi.getWishlistGames();
-      _libraryGames = await _userApi.getLibraryGames();
-      _userDetails = await _userApi.getUserDetails();
+
+      if (email != null) {
+        _wishlistGames = await _userApi.getWishlistGamesFromUserEmail(email).then((value) => value.data);
+        _libraryGames = await _userApi.getLibraryGamesFromUserEmail(email).then((value) => value.data);
+        _userDetails = await _userApi.getUserDetailsFromEmail(email);
+      } else {
+        _wishlistGames = await sl<AuthService>().getWishlistGames();
+        _libraryGames = await sl<AuthService>().getLibraryGames();
+        _userDetails = await sl<AuthService>().getUserDetails();
+      }
+
+      print("User Avatar: ${_userDetails.avatar}");
       dataLoaded();
       notifyListeners();
     } catch (e) {

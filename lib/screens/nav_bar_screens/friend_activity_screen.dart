@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app_strings.dart';
 
 import '../../helpers/app_colors.dart';
 import '../../helpers/app_fonts.dart';
@@ -30,9 +31,21 @@ class _FriendActivityState extends State<FriendActivity> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: CustomTextWidget(
-                        "Notifications",
-                        style: Theme.of(context).primaryTextTheme.headline2,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomTextWidget(
+                            "Notifications",
+                            style: Theme.of(context).primaryTextTheme.headline2,
+                          ),
+                          GestureDetector(
+                            onTap: () => Navigator.pushNamed(context, FRIENDS_SEARCH),
+                            child: Icon(
+                              Icons.search_rounded,
+                              color: Colors.white.withOpacity(0.7),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     _friendRequests(),

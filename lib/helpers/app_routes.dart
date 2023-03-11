@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/screens/custom_search_screen/friends_search_screen.dart';
+import 'package:play_hq/screens/nav_bar_screens/profile_screen/profile_screen.dart';
+import 'package:play_hq/view_models/custom_search/friends_search_model.dart';
 import 'package:provider/provider.dart';
 
 import '../injection_container.dart';
@@ -76,6 +79,13 @@ Route<dynamic> generateRoute(RouteSettings settings) {
                 ],
                 child: SetupSalesAccountScreen(),
               ));
+    case FRIENDS_SEARCH:
+      return MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider<FriendsSearchModel>(
+          create: (context) => FriendsSearchModel(),
+          child: FriendsSearchScreen(),
+        ),
+      );
     case GAME_DETAILS_SCREEN:
       return MaterialPageRoute(
         builder: (context) => ChangeNotifierProvider(
@@ -160,10 +170,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (context) => MultiProvider(
           providers: [
-            ChangeNotifierProvider<SalesDetailsViewModel>(
-                create: (context) => ISalesDetailsViewModel()),
-            ChangeNotifierProvider<OrderRequestViewModel>(
-                create: (context) => IOrderRequestsViewModel())
+            ChangeNotifierProvider<SalesDetailsViewModel>(create: (context) => ISalesDetailsViewModel()),
+            ChangeNotifierProvider<OrderRequestViewModel>(create: (context) => IOrderRequestsViewModel())
           ],
           child: MySalesDetailsScreen(
             salesPayload: settings.arguments as SalesPayload,
@@ -187,6 +195,15 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => ChangeNotifierProvider<CustomMapModel>(
                 create: (context) => ICustomMapModel(),
                 child: CustomMapScreen(),
+              ));
+    case USER_PROFILE_SCREEN:
+      return MaterialPageRoute(
+          builder: (context) => ChangeNotifierProvider<MainProfileModel>(
+                create: (context) => IMainProfileModel(),
+                child: Scaffold(
+                  backgroundColor: BACKGROUND_COLOR,
+                  body: ProfileScreen(userEmail: settings.arguments as String),
+                ),
               ));
     default:
       return MaterialPageRoute(

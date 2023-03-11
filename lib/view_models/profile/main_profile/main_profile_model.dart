@@ -5,7 +5,7 @@ import 'package:play_hq/models/common_models/game_preferences/response_body.dart
 import '../../../models/common_models/user/user_details.dart';
 
 abstract class MainProfileModel extends ChangeNotifier with AppLoader {
-  void getProfileDetails();
+  void getProfileDetails(String? email);
 
   void getUserDetails();
 
