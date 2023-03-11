@@ -203,9 +203,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     count: 10,
                   ),
                   child: HorizontalScrollList(
-                    itemCount: val.upComingGamesThisYear.length < 8 ? val.upComingGamesThisYear.length : 8,
+                    itemCount: val.upComingGamesThisYear.length < 6 ? val.upComingGamesThisYear.length : 6,
                     itemBuilder: (BuildContext context, int index) {
-                      debugPrint('Upcoming Games Length ${val.upComingGamesThisYear.length}');
                       return GestureDetector(
                         onTap: () => Navigator.pushNamed(
                           context,

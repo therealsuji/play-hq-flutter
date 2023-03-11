@@ -64,15 +64,12 @@ class APIConfig {
         '&key=$_RAWG_API_KEY';
   }
 
-  static Future<String> getRecommendGamesFromGenres() async {
+  static Future<String> getRecommendGamesFromGenres(int page) async {
+    DateTime currentDate = DateTime.now();
     UserGamePreferences gamePreferences = await sl<UserRepository>().getUserGamePreferences();
     String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
     String genres = gamePreferences.genres.map((obj) => obj.id.toString()).join(',');
-    DateTime currentDate = DateTime.now();
-    final random = Random(currentDate.millisecondsSinceEpoch ~/ 259200000);
-    final random2 = Random();
-    final randomPage = random.nextInt(10) + 1;
-    return '$_rawgAPI/games?&page=$randomPage&page_size=15&ordering=-released&dates=2019-01-01,${currentDate.year}-${currentDate.month < 10 ? '0${currentDate.month}' : currentDate.month}-20&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?&page=$page&page_size=15&ordering=-released&dates=2019-01-01,${currentDate.year}-${currentDate.month < 10 ? '0${currentDate.month}' : currentDate.month}-20&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
   }
 
   static String getGamesByGenre(int page, String genre) {
@@ -106,7 +103,7 @@ class APIConfig {
     var startDateTime =
         '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-05';
     var endDateTime = '${currentDate.year + 3}-12-31';
-    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page=1&page_size=15&ordering=-added&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page=$size&page_size=15&ordering=-added&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
   }
 
   static String getGamesOfYear() {

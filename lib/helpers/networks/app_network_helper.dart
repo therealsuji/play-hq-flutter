@@ -14,6 +14,12 @@ import '../app_enums.dart';
 import 'app_cache_manager.dart';
 import 'app_network.dart';
 
+class RawgResult{
+  int gamesCount;
+  Response response;
+  RawgResult(this.gamesCount , this.response);
+}
+
 class NetworkResult<T> {
   dynamic rawResult;
   Future<T> result;
@@ -79,6 +85,14 @@ class NetworkHelper {
         message: e.toString(),
       );
     }
+  }
+
+  Future<RawgResult> rawgPostCalls(String url) async {
+    Response response = await _httpClient.performRequest(url, HttpAction.GET);
+    final body = jsonDecode(response.body);
+    final count = int.parse(body['count'].toString());
+    int pages = (count/15).floor();
+    return RawgResult(pages, response);
   }
 
   Future<bool> post<T>(String url, dynamic body) async {
