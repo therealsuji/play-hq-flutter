@@ -19,7 +19,7 @@ class GameApiDelegate extends GameApiRepository with NetworkHelper {
     RawgResult rawgResult = await this.rawgPostCalls(await APIConfig.getUpcomingGames(2));
     final random2 = Random();
     final randomSize = random2.nextInt(rawgResult.gamesCount) + 1;
-    return this.fetchAll<RawgGameDetails>(await APIConfig.getUpcomingGames(randomSize), rawgGameDetailsFromJson , false).then((value) => value.result);
+    return this.fetchAll<RawgGameDetails>(await APIConfig.getUpcomingGames(randomSize), rawgGameDetailsFromJson).then((value) => value.result);
   }
 
   @override
@@ -33,7 +33,7 @@ class GameApiDelegate extends GameApiRepository with NetworkHelper {
     }else{
       pages = random.nextInt(10) + 1;
     }
-    return this.fetchAll<RawgGameDetails>(await APIConfig.getRecommendGamesFromGenres(pages), rawgGameDetailsFromJson , true).then((value) => value.result);
+    return this.fetchAll<RawgGameDetails>(await APIConfig.getRecommendGamesFromGenres(pages), rawgGameDetailsFromJson , cacheData: true).then((value) => value.result);
   }
 }
 
