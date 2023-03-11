@@ -58,7 +58,7 @@ class GameListDelegate extends GameListRepository {
   @override
   Future<RawgGameDetails> fetchUpcomingGames(int size) async {
     try {
-      var response = await _networkCalls.performRequest(APIConfig.getUpcomingGames(15), HttpAction.GET);
+      var response = await _networkCalls.performRequest(await APIConfig.getUpcomingGames(15), HttpAction.GET);
       return compute(rawgGameDetailsFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:play_hq/helpers/app_assets.dart';
 import 'package:play_hq/helpers/app_colors.dart';
+import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/screens/nav_bar_screens/friend_activity_screen.dart';
 import 'package:play_hq/screens/screens.dart';
 import 'package:play_hq/view_models/navigation/tab_navigation_model.dart';
@@ -14,6 +15,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

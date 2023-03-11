@@ -70,6 +70,7 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   void loadAPICalls() async {
+    APIConfig.setGenreBase();
     UserDetails userDetails = await sl<AuthService>().getUserDetails();
     UserGamePreferences gamePreferences = await _userApi.getUserGamePreferences();
     GamePreferancesResponse gamePreferancesResponse = await _userApi.getWishlistGames();

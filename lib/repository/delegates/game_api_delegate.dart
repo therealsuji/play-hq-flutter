@@ -12,13 +12,13 @@ class GameApiDelegate extends GameApiRepository with NetworkHelper {
   }
 
   @override
-  Future<RawgGameDetails> getUpComingGames() {
-    return this.fetchAll<RawgGameDetails>(APIConfig.getUpcomingGames(5), rawgGameDetailsFromJson).then((value) => value.result);
+  Future<RawgGameDetails> getUpComingGames() async{
+    return this.fetchAll<RawgGameDetails>(await APIConfig.getUpcomingGames(5), rawgGameDetailsFromJson).then((value) => value.result);
   }
 
   @override
-  Future<RawgGameDetails> getRecommendedGamesFromGenres(List<int> genres) {
-    return this.fetchAll<RawgGameDetails>(APIConfig.getRecommendGamesFromGenres(genres), rawgGameDetailsFromJson).then((value) => value.result);
+  Future<RawgGameDetails> getRecommendedGamesFromGenres(List<int> genres) async{
+    return this.fetchAll<RawgGameDetails>(await APIConfig.getRecommendGamesFromGenres(), rawgGameDetailsFromJson).then((value) => value.result);
   }
 }
 

@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     count: 10,
                   ),
                   child: HorizontalScrollList(
-                    itemCount: model.recommendedGames.length,
+                    itemCount: model.recommendedGames.length < 8 ? model.recommendedGames.length : 8,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         onTap: () => Navigator.pushNamed(

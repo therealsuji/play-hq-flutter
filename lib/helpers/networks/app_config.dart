@@ -1,15 +1,20 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/date_filter_model.dart';
+import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
+import 'package:play_hq/services/auth_service.dart';
 
+import '../../injection_container.dart';
 import 'app_configurations.dart';
 
 class APIConfig {
   //Base url and version are private and not exposed
   static String? _rawgAPI;
   static String? _baseUrl;
+  static String? _personalizedBase = '';
   static String _RAWG_API_KEY = 'be9f8d00d9d04aa6b1b3f6ee26f305b4';
 
   // static const _VERSION = "api-version=1";
@@ -29,6 +34,13 @@ class APIConfig {
         _baseUrl = "https://playhq-v2-production.up.railway.app";
         break;
     }
+  }
+
+  static void setGenreBase() async{
+    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
+    String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
+    _personalizedBase = '$_rawgAPI' + '/games?platforms=' + platforms + '&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
+    debugPrint('Personalized URL $_personalizedBase');
   }
 
   /// Urls that are needed from the RAWG API
@@ -59,11 +71,15 @@ class APIConfig {
         '&key=$_RAWG_API_KEY';
   }
 
-  static String getRecommendGamesFromGenres(List<int> genres) {
+  static Future<String> getRecommendGamesFromGenres() async {
+    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
+    String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
+    String genres = gamePreferences.genres.map((obj) => obj.id.toString()).join(',');
     DateTime currentDate = DateTime.now();
-    String genreString = genres.join(",");
-    // Game count is hardcoded
-    return '$_rawgAPI/games?dates=${currentDate.year - 5}-01-01,${currentDate.year}-12-31&page_size=8&genres=$genreString&key=$_RAWG_API_KEY';
+    final random = Random(currentDate.millisecondsSinceEpoch ~/ 259200000);
+    final random2 = Random();
+    final randomPage = random.nextInt(10) + 1;
+    return '$_rawgAPI/games?&page=$randomPage&page_size=15&ordering=-released&dates=2019-01-01,${currentDate.year}-${currentDate.month < 10 ? '0${currentDate.month}' : currentDate.month}-20&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
   }
 
   static String getGamesByGenre(int page, String genre) {
@@ -89,12 +105,17 @@ class APIConfig {
         '&key=$_RAWG_API_KEY';
   }
 
-  static String getUpcomingGames(int size) {
+  static Future<String> getUpcomingGames(int size) async{
     DateTime currentDate = DateTime.now();
+    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
+    String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
+    String genres = gamePreferences.genres.map((obj) => obj.id.toString()).join(',');
+    final random2 = Random();
+    final randomPage = random2.nextInt(5) + 1;
     var startDateTime =
         '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-05';
     var endDateTime = '${currentDate.year + 3}-12-31';
-    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page_size=$size&ordering=-added&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page=$randomPage&page_size=$size&ordering=-added&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
   }
 
   static String getGamesOfYear() {
