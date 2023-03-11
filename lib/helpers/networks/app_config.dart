@@ -121,6 +121,7 @@ class APIConfig {
 
   static String getUserDetails = '$_baseUrl' + "/v1/auth/me";
 
+  static String getUserDetailsFromEmail(String email) => '$_baseUrl' + "/users/email/$email";
 
   static String updateUserPreferences = '$_baseUrl' + 'users/preferences';
   static String updateUserDetails = '$_baseUrl' + "/users/update";
@@ -192,5 +193,16 @@ class APIConfig {
     return '$_baseUrl' + '/library-games';
   }
 
+  static String getLibraryGamesFromEmail(String email) {
+    return '$_baseUrl' + '/library-games/user/$email';
+  }
+
+  static String getWishListGamesFromEmail(String email) {
+    return '$_baseUrl' + '/wish-list-games/user/$email';
+  }
+
   static String getGameStatus(int id) => '$_baseUrl' + '/list/check/$id';
+
+  // FRIENDS API
+  static String searchFriends(String query, int page) => '$_baseUrl' + '/friends/search/$query?page=$page';
 }

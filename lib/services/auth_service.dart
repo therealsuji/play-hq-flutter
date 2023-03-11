@@ -31,8 +31,6 @@ class AuthService {
   static const REFRESH_KEY = "refreshKey";
   static const FCM_KEY = "fcmKey";
 
-
-
   Future<bool?> socialLogin(SocialLogin authProvider) async {
     String? token;
     try {
@@ -99,14 +97,14 @@ class AuthService {
 
   void saveWishlistGames(List<Data> games) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(WISHLIST_GAMES_KEY, GamePreferancesResponse.encode(games));
+    await prefs.setString(WISHLIST_GAMES_KEY, GamePreferencesResponse.encode(games));
   }
 
   Future<List<Data>> getWishlistGames() async {
     final prefs = await SharedPreferences.getInstance();
     var jsonData = prefs.getString(WISHLIST_GAMES_KEY);
-    List<Data> games = GamePreferancesResponse.decode(jsonData!);
-    if(games.isEmpty){
+    List<Data> games = GamePreferencesResponse.decode(jsonData!);
+    if (games.isEmpty) {
       games = await sl<UserRepository>().getWishlistGames().then((value) => value);
     }
     return games;
@@ -128,14 +126,14 @@ class AuthService {
 
   void saveLibraryGames(List<Data> games) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(LIBRARY_GAMES_KEY, GamePreferancesResponse.encode(games));
+    await prefs.setString(LIBRARY_GAMES_KEY, GamePreferencesResponse.encode(games));
   }
 
   Future<List<Data>> getLibraryGames() async {
     final prefs = await SharedPreferences.getInstance();
     var jsonData = prefs.getString(LIBRARY_GAMES_KEY);
-    List<Data> games = GamePreferancesResponse.decode(jsonData!);
-    if(games.isEmpty){
+    List<Data> games = GamePreferencesResponse.decode(jsonData!);
+    if (games.isEmpty) {
       games = await sl<UserRepository>().getLibraryGames().then((value) => value);
     }
     return games;
@@ -158,7 +156,7 @@ class AuthService {
   Future<UserDetails> getUserDetails() async {
     var jsonData = await SecureStorage.readValue(USER_DETAILS_KEY);
     UserDetails user = UserDetails.fromJson(json.decode(jsonData!));
-    if(user.displayName!.isEmpty){
+    if (user.displayName!.isEmpty) {
       user = await _userRepository.getUserDetails();
     }
     return user;
@@ -192,8 +190,7 @@ class AuthService {
     final LoginResult loginResult = await FacebookAuth.instance.login();
 
     // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
     // Once signed in, return the UserCredential
     final loggedInUser = await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
@@ -215,8 +212,7 @@ class AuthService {
     String accessToken = await SecureStorage.readValue(JWT_KEY) ?? '';
     String refreshToken = await SecureStorage.readValue(REFRESH_KEY) ?? '';
 
-    AuthTokenModel authTokens =
-        AuthTokenModel(refreshToken: refreshToken, accessToken: accessToken);
+    AuthTokenModel authTokens = AuthTokenModel(refreshToken: refreshToken, accessToken: accessToken);
     try {
       var response = await _authRepository.renewTokens(authTokens);
       var localToken = response?.token!.accessToken;

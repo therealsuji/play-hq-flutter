@@ -1,9 +1,13 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/widgets/custom_button_widget.dart';
+import 'package:provider/provider.dart';
+
 import 'package:play_hq/screens/nav_bar_screens/profile_screen/gridview_widget.dart';
 import 'package:play_hq/screens/nav_bar_screens/profile_screen/profile_detail_box_widget.dart';
-import 'package:provider/provider.dart';
 
 import '../../../helpers/app_assets.dart';
 import '../../../helpers/app_colors.dart';
@@ -11,25 +15,49 @@ import '../../../helpers/app_fonts.dart';
 import '../../../helpers/app_screen_utils.dart';
 import '../../../helpers/app_strings.dart';
 import '../../../models/common_models/game_preferences/response_body.dart';
-import '../../../models/game_details_models/game_details_arguments.dart';
 import '../../../view_models/profile/main_profile/main_profile_model.dart';
-import '../../../widgets/custom_game_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
+  final String? userEmail;
+
+  ProfileScreen({
+    Key? key,
+    this.userEmail,
+  }) : super(key: key);
+
   @override
-  _TestingPageState createState() => _TestingPageState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
-  var _scrollController, _tabController;
-
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
+  late ScrollController _scrollController;
+  late TabController _tabController;
+  var showUserActivityBtns = false;
   @override
   void initState() {
     super.initState();
     _scrollController = ScrollController();
     _tabController = TabController(vsync: this, length: 2);
-    context.read<MainProfileModel>().getProfileDetails();
+    context.read<MainProfileModel>().getProfileDetails(widget.userEmail);
+    if (widget.userEmail != null) {
+      setState(() {
+        showUserActivityBtns = true;
+      });
+      _scrollController.addListener(() {
+        if (_scrollController.offset > 180) {
+          setState(() {
+            showUserActivityBtns = false;
+          });
+        } else {
+          setState(() {
+            showUserActivityBtns = true;
+          });
+        }
+      });
+    }
   }
+
+  var innerScrollController;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +86,7 @@ class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderSt
                             ),
                           ),
                           Expanded(
-                            flex: 2,
+                            flex: widget.userEmail == null ? 2 : 3,
                             child: Container(
                               color: BACKGROUND_COLOR,
                             ),
@@ -100,32 +128,6 @@ class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderSt
                                       child: SvgPicture.asset(SETTINGS_ICON),
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(left: 30),
-                                  //   child: Stack(
-                                  //     children: [
-                                  //       GestureDetector(
-                                  //         onTap: () =>
-                                  //             Navigator.pushNamed(context, NOTIFICATION_SCREEN),
-                                  //         child: Container(
-                                  //           child: SvgPicture.asset(NOTIFICATION_ICON),
-                                  //         ),
-                                  //       ),
-                                  //       Positioned(
-                                  //         top: 2,
-                                  //         left: 0,
-                                  //         child: Container(
-                                  //           height: 11,
-                                  //           width: 11,
-                                  //           decoration: BoxDecoration(
-                                  //             shape: BoxShape.circle,
-                                  //             color: Colors.green,
-                                  //           ),
-                                  //         ),
-                                  //       )
-                                  //     ],
-                                  //   ),
-                                  // )
                                 ],
                               ),
                             ),
@@ -142,9 +144,7 @@ class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderSt
                                 top: ScreenUtils.getDesignHeight(15),
                               ),
                               child: Text(
-                                vm.userDetails.name == null
-                                    ? 'No Username'
-                                    : '${vm.userDetails.name}',
+                                vm.userDetails.name == null ? 'No Username' : '${vm.userDetails.name}',
                                 style: TextStyle(
                                   fontSize: 22,
                                   color: Colors.white,
@@ -163,11 +163,16 @@ class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderSt
                               ),
                             ),
                             Container(
-                              margin: EdgeInsets.only(
-                                top: ScreenUtils.getDesignHeight(20),
-                              ),
-                              child: vm.hasInitialDataLoaded ? ProfileDetailsBox(wishlistCount: vm.wishlistGames.length, libraryCount: vm.libraryGames.length, gamerfriendCount: 08,) : SkeletonProfileDetails()
-                            )
+                                margin: EdgeInsets.only(
+                                  top: ScreenUtils.getDesignHeight(20),
+                                ),
+                                child: vm.hasInitialDataLoaded
+                                    ? ProfileDetailsBox(
+                                        wishlistCount: vm.wishlistGames.length,
+                                        libraryCount: vm.libraryGames.length,
+                                        gamerfriendCount: 08,
+                                      )
+                                    : SkeletonProfileDetails())
                           ],
                         ),
                       );
@@ -175,55 +180,89 @@ class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderSt
                   ],
                 ),
               ),
-              expandedHeight: ScreenUtils.getDesignHeight(380),
+              expandedHeight: ScreenUtils.getDesignHeight(widget.userEmail == null ? 380 : 430),
               pinned: true,
               floating: true,
               elevation: 0,
               forceElevated: innerBoxIsScrolled,
               bottom: PreferredSize(
                 preferredSize: Size.fromHeight(0.0),
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 24),
-                  height: ScreenUtils.getDesignHeight(45),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
-                  ),
-                  child: TabBar(
-                    indicator: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        5.0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (showUserActivityBtns)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20),
+                        child: Row(
+                          children: [
+                            Flexible(
+                              flex: 1,
+                              child: CustomButton(
+                                buttonText: "Report User",
+                                gradient: ALERT_GRADIENT,
+                                height: ScreenUtils.getDesignHeight(45.0),
+                                textFontSize: 14.0,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: CustomButton(
+                                buttonText: "Report User",
+                                gradient: ALERT_GRADIENT,
+                                height: ScreenUtils.getDesignHeight(45.0),
+                                textFontSize: 14.0,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      gradient: PRIMARY_GRADIENT,
-                    ),
-                    controller: _tabController,
-                    tabs: [
-                      // first tab [you can add an icon using the icon property]
-                      Tab(
-                        text: 'Wishlist Games',
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 24),
+                      height: ScreenUtils.getDesignHeight(45),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: MAIN_CONTAINER_COLOR.withOpacity(0.6),
                       ),
+                      child: TabBar(
+                        indicator: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            5.0,
+                          ),
+                          gradient: PRIMARY_GRADIENT,
+                        ),
+                        controller: _tabController,
+                        tabs: [
+                          // first tab [you can add an icon using the icon property]
+                          Tab(
+                            text: 'Wishlist Games',
+                          ),
 
-                      // second tab [you can add an icon using the icon property]
-                      Tab(
-                        text: 'Library Games',
+                          // second tab [you can add an icon using the icon property]
+                          Tab(
+                            text: 'Library Games',
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ];
         },
         body: Consumer<MainProfileModel>(
-          builder: (_, value, __) {
+          builder: (context, value, __) {
             return Container(
               height: 1000,
               child: TabBarView(
                 physics: ScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  _pageViewChild(value.wishlistGames , context , value.hasInitialDataLoaded),
-                  _pageViewChild(value.libraryGames , context , value.hasInitialDataLoaded),
+                  _pageViewChild(value.wishlistGames, context, value.hasInitialDataLoaded),
+                  _pageViewChild(value.libraryGames, context, value.hasInitialDataLoaded),
                 ],
               ),
             );
@@ -234,9 +273,12 @@ class _TestingPageState extends State<ProfileScreen> with SingleTickerProviderSt
   }
 }
 
-Widget _pageViewChild(List<Data> games , BuildContext context , bool isLoaded) {
+Widget _pageViewChild(List<Data> games, BuildContext context, bool isLoaded) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 24),
-    child: isLoaded ? CustomGridView(games: games,) : GridViewSkeleton(count: 4)
-  );
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: isLoaded
+          ? CustomGridView(
+              games: games,
+            )
+          : GridViewSkeleton(count: 4));
 }

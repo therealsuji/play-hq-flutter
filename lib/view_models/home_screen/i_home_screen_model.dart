@@ -46,18 +46,9 @@ class IHomeScreenModel extends HomeScreenModel {
 
   int _selectedPlatform = 0;
   List<Genre> _defaultGenre = [
-    Genre(
-        id: 4,
-        imageBackground: ACTION_GENRE_IMAGE,
-        name: "Action",
-        gradient: GENRE_YELLOW_GRADIENT),
-    Genre(
-        id: 3,
-        imageBackground: ADVENTURE_GENRE_IMAGE,
-        name: "Adventure",
-        gradient: GENRE_BLUE_GRADIENT),
-    Genre(
-        id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GREEN_GRADIENT)
+    Genre(id: 4, imageBackground: ACTION_GENRE_IMAGE, name: "Action", gradient: GENRE_YELLOW_GRADIENT),
+    Genre(id: 3, imageBackground: ADVENTURE_GENRE_IMAGE, name: "Adventure", gradient: GENRE_BLUE_GRADIENT),
+    Genre(id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GREEN_GRADIENT)
   ];
   String? _displayName;
 
@@ -77,15 +68,13 @@ class IHomeScreenModel extends HomeScreenModel {
     try {
       loadingData();
       var n3 = _gameApi.getUpComingGames().then((games) {
-
         if (games.results!.length > 0) {
           _upcomingGamesThisYear = games.results ?? [];
         }
         notifyListeners();
       });
-      var n4 = _gameApi
-          .getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id))))
-          .then((games) {
+      var n4 =
+          _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
         if (games.results!.length > 0) {
           _recommendedGames = games.results ?? [];
         }
@@ -128,7 +117,7 @@ class IHomeScreenModel extends HomeScreenModel {
   List<Genre> get prefGenres => _prefGenre.length != 0 ? _prefGenre : _defaultGenre;
 
   @override
-  Future<void> addToWishlist(GameResults results ) async {
+  Future<void> addToWishlist(GameResults results) async {
     final _httpClient = sl<Network>();
 
     debugPrint('Selected Platform $_selectedPlatform');
@@ -142,8 +131,7 @@ class IHomeScreenModel extends HomeScreenModel {
         "images": [],
         "platforms": results.platforms!.map((e) => e.id).toList(),
         "genres": results.genres!.map((e) => e.id).toList(),
-        "releaseDate":
-        "${DateFormat('yyyy-MM-dd').format(DateTime.parse(results.released!))}",
+        "releaseDate": "${DateFormat('yyyy-MM-dd').format(DateTime.parse(results.released!))}",
       },
       "platform": _selectedPlatform
     };
@@ -152,13 +140,13 @@ class IHomeScreenModel extends HomeScreenModel {
 
     Response response = await _gameDetailsApi.setGameWishList(body);
 
-    if(response.statusCode == 201){
+    if (response.statusCode == 201) {
       Data game = Data.fromJson(jsonDecode(response.body));
       _userWishlistGames.add(game);
       sl<ResponseManager>().showResponse('Game added to Wishlist', Colors.green);
       sl<AuthService>().saveWishlistGames(_userWishlistGames);
       notifyListeners();
-    }else{
+    } else {
       sl<ResponseManager>().showResponse('Game added to Wishlist', Colors.green);
     }
     // _eventBus.fire(LoadingEvent.hide());
@@ -168,7 +156,7 @@ class IHomeScreenModel extends HomeScreenModel {
   int get selectedPlatformId => _selectedPlatform;
 
   @override
-  void selectPlatform( int platformId) {
+  void selectPlatform(int platformId) {
     _selectedPlatform = platformId;
     notifyListeners();
   }

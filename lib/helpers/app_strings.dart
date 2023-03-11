@@ -5,7 +5,7 @@ const String SIGN_UP_SCREEN = 'signup';
 const String PURCHASE_ACCOUNT_SCREEN = 'setupPurchase';
 const String SALES_ACCOUNT_SCREEN = 'setupSales';
 const String MAIN_SCREEN = 'main';
-const String SEARCH_SCREEN = 'search';
+const String FRIENDS_SEARCH = 'friendsSearch';
 const String GAME_DETAILS_SCREEN = 'gamedetails';
 const String LANDING_PAGE_SCREEN = 'landingpage';
 const String CREATE_TRADE_SCREEN = 'createTrade';
@@ -30,6 +30,7 @@ const String BUY_GAMES_SCREEN = 'buyGames';
 const String MY_SALES_DETAILS_SCREEN = 'mysaleDetails';
 const String GAME_LIST_SCREEN = 'gameListScreen';
 const String GAME_SALE_DETAILS_SCREEN = 'gameSaleDetails';
+const String USER_PROFILE_SCREEN = 'profileScreen';
 
 // Search Screens
 const String MAIN_SEARCH_SCREEN = 'mainSearchScreen';

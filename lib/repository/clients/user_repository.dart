@@ -12,6 +12,10 @@ abstract class UserRepository {
 
   Future<List<Data>> getWishlistGames();
 
+  Future<GamePreferencesResponse> getWishlistGamesFromUserEmail(String email);
+
+  Future<GamePreferencesResponse> getLibraryGamesFromUserEmail(String email);
+
   Future<bool> addWishlistGames(dynamic body);
 
   Future<bool> addLibraryGames(dynamic body);
@@ -26,9 +30,11 @@ abstract class UserRepository {
 
   Future<UserDetails> getUserDetails();
 
-  Future<Response> updateUserDetails(Map<String , dynamic> body);
+  Future<UserDetails> getUserDetailsFromEmail(String email);
 
-  Future<Response> updateUserPreferences(Map<String , dynamic> body);
+  Future<Response> updateUserDetails(Map<String, dynamic> body);
+
+  Future<Response> updateUserPreferences(Map<String, dynamic> body);
 
   Future<List<Data>> getLibraryGames();
 }

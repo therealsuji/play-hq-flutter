@@ -9,7 +9,9 @@ import 'package:play_hq/repository/clients/game_api_repositiry.dart';
 class GameApiDelegate extends GameApiRepository with NetworkHelper {
   @override
   Future<RawgGameDetails> getPopularGames() {
-    return this.fetchAll<RawgGameDetails>(APIConfig.popularThisYear(), rawgGameDetailsFromJson , true).then((value) => value.result);
+    return this
+        .fetchAll<RawgGameDetails>(APIConfig.popularThisYear(), rawgGameDetailsFromJson, cacheData: true)
+        .then((value) => value.result);
   }
 
   @override

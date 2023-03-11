@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:play_hq/models/common_models/location_model.dart';
 
 UserDetails userDetailsfromJson(String str) => UserDetails.fromJson(json.decode(str));
+List<UserDetails> listUserDetailsFromJson(String str) =>
+    List<UserDetails>.from(json.decode(str)['data'].map((x) => UserDetails.fromJson((x))));
 
 class UserDetails {
   UserDetails({
@@ -32,7 +34,7 @@ class UserDetails {
         avatar: json["avatar"] == null ? "" : json["avatar"],
         phone: json["phone"] == null ? "" : json["phone"],
         isSetupDone: json["isSetupDone"] == null ? false : json["isSetupDone"],
-        location: json['location'] == null ? LocationModel() : LocationModel.fromJson(json['location']),
+        location: json['location'] == null ? null : LocationModel.fromJson(json['location']),
         displayName: json["displayName"] == null ? "" : json["displayName"],
       );
 

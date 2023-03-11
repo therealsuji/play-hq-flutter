@@ -17,10 +17,9 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   final _networkCalls = Network.shared;
 
   @override
-  Future<GamePreferancesResponse> getLibraryGames() async {
+  Future<GamePreferencesResponse> getLibraryGames() async {
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.getLibraryGames(), HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getLibraryGames(), HttpAction.GET);
       return compute(gamePreferancesResponseFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
@@ -37,10 +36,9 @@ class MainProfileScreenDelegate extends MainProfileScreenRepository {
   }
 
   @override
-  Future<GamePreferancesResponse> getWishListGames() async {
+  Future<GamePreferencesResponse> getWishListGames() async {
     try {
-      var response =
-          await _networkCalls.performRequest(APIConfig.getWishListGames(), HttpAction.GET);
+      var response = await _networkCalls.performRequest(APIConfig.getWishListGames(), HttpAction.GET);
       return compute(gamePreferancesResponseFromJson, response.body);
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
