@@ -74,7 +74,7 @@ class IHomeScreenModel extends HomeScreenModel {
         notifyListeners();
       });
       var n4 =
-          _gameApi.getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id)))).then((games) {
+          _gameApi.getRecommendedGamesFromGenres().then((games) {
         if (games.results!.length > 0) {
           _recommendedGames = games.results ?? [];
         }

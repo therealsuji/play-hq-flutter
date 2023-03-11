@@ -23,7 +23,7 @@ class GameApiDelegate extends GameApiRepository with NetworkHelper {
   }
 
   @override
-  Future<RawgGameDetails> getRecommendedGamesFromGenres(List<int> genres) async{
+  Future<RawgGameDetails> getRecommendedGamesFromGenres() async{
     int pages = 0;
     RawgResult rawgResult = await this.rawgPostCalls(await APIConfig.getRecommendGamesFromGenres(5));
     DateTime currentDate = DateTime.now();

@@ -1,4 +1,6 @@
 import 'package:event_bus/event_bus.dart';
+import 'package:play_hq/models/errors/exceptions.dart';
+import 'package:play_hq/services/base_managers/error_manager.dart';
 
 import '../../helpers/app_enums.dart';
 import '../../helpers/app_strings.dart';
@@ -15,11 +17,12 @@ class IAuthenticationModel extends AuthenticationModel {
     var isSetupDone = await sl<AuthService>().socialLogin(socialLogin);
     sl<EventBus>().fire(LoadingEvent.hide());
     if (isSetupDone == true) {
-      sl<NavigationService>().pushReplacement(MAIN_SCREEN);
+      sl<NavigationService>().pushAndRemoveUntil(MAIN_SCREEN);
     } else if (isSetupDone == false) {
       sl<NavigationService>().pushReplacement(MAIN_ONBOARDING);
     } else {
       // TODO: show error
+      sl<ErrorManager>().showError(NormalMessage(message: 'Something went wrong, please try again'));
     }
   }
 }

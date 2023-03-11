@@ -105,7 +105,7 @@ class IGameListViewModel extends GameListViewModel {
     try{
       _eventBus.fire(LoadingEvent.show());
       var n4 = _gameApi
-          .getRecommendedGamesFromGenres(List.from(gamePreferences.genres.map((e) => (e.id))))
+          .getRecommendedGamesFromGenres()
           .then((games) {
         if (games.results!.length > 0) {
           _gameResponse = games.results ?? [];

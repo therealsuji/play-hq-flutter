@@ -65,6 +65,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
         _gameStatus = model;
       }).then((value) {
         dataLoaded();
+        notifyListeners();
       });
 
 

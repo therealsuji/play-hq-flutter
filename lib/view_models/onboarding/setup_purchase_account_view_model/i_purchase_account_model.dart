@@ -2,10 +2,12 @@ import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:play_hq/helpers/app_constants.dart';
+import 'package:play_hq/helpers/app_secure_storage.dart';
 import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
 import 'package:play_hq/models/errors/exceptions.dart';
 import 'package:play_hq/repository/clients/user_repository.dart';
 import 'package:play_hq/services/base_managers/error_manager.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../helpers/app_strings.dart';
 import '../../../models/common_models/game_preferences/request_body.dart';
@@ -218,6 +220,7 @@ class ISetupPurchaseAccountModel extends SetupPurchaseAccountModel {
     try{
       Response response = await sl<UserRepository>().updateUserPreferences(gamePreferances);
       if(response.statusCode >= 200 && response.statusCode < 300){
+        SecureStorage.deleteKey('userPreferencesKey');
         sl<ResponseManager>().showResponse('Details Updated Successfully', Colors.green);
         await Future.delayed(Duration(seconds: 1));
         sl<NavigationService>().pop();
