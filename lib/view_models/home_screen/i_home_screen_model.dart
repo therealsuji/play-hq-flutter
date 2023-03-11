@@ -67,8 +67,8 @@ class IHomeScreenModel extends HomeScreenModel {
     _userWishlistGames = await _userApi.getWishlistGames();
     _displayName = userDetails.displayName ?? "";
     _prefGenre = gamePreferences.genres;
-    skeletonDataLoading();
     try {
+      skeletonDataLoading();
       var n4 =
           _gameApi.getRecommendedGamesFromGenres().then((games) {
         if (games.results!.length > 0) {

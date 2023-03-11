@@ -21,22 +21,21 @@ class IMainProfileModel extends MainProfileModel {
   void getProfileDetails(String? email) async {
     try {
       this.loadingData();
-
-      if (email != null) {
+      if (email!.isNotEmpty) {
         _wishlistGames = await _userApi.getWishlistGamesFromUserEmail(email).then((value) => value.data);
         _libraryGames = await _userApi.getLibraryGamesFromUserEmail(email).then((value) => value.data);
         _userDetails = await _userApi.getUserDetailsFromEmail(email);
       } else {
-        _wishlistGames = await sl<AuthService>().getWishlistGames();
-        _libraryGames = await sl<AuthService>().getLibraryGames();
-        _userDetails = await sl<AuthService>().getUserDetails();
+        _wishlistGames = await _userApi.getWishlistGames();
+        _libraryGames = await _userApi.getLibraryGames();
+        _userDetails = await _userApi.getUserDetails();
       }
 
       print("User Avatar: ${_userDetails.avatar}");
       dataLoaded();
       notifyListeners();
     } catch (e) {
-      print("Exception is here {$e}");
+      print("Exception is here $e");
       hideLoader();
     }
   }

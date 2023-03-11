@@ -39,7 +39,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     _scrollController = ScrollController();
     _tabController = TabController(vsync: this, length: 2);
     context.read<MainProfileModel>().getProfileDetails(widget.userEmail);
-    if (widget.userEmail != null) {
+    if (widget.userEmail!.isNotEmpty) {
       setState(() {
         showUserActivityBtns = true;
       });
@@ -69,7 +69,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             SliverAppBar(
               centerTitle: false,
               automaticallyImplyLeading: false,
-              collapsedHeight: ScreenUtils.getDesignHeight(60),
+              collapsedHeight: ScreenUtils.getDesignHeight(80),
               backgroundColor: BACKGROUND_COLOR,
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
@@ -86,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                             ),
                           ),
                           Expanded(
-                            flex: widget.userEmail == null ? 2 : 3,
+                            flex: widget.userEmail!.isEmpty ? 2 : 3,
                             child: Container(
                               color: BACKGROUND_COLOR,
                             ),
@@ -180,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   ],
                 ),
               ),
-              expandedHeight: ScreenUtils.getDesignHeight(widget.userEmail == null ? 380 : 430),
+              expandedHeight: ScreenUtils.getDesignHeight(widget.userEmail!.isEmpty ? 380 : 430),
               pinned: true,
               floating: true,
               elevation: 0,
@@ -190,33 +190,35 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (showUserActivityBtns)
-                      Padding(
-                        padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20),
-                        child: Row(
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: CustomButton(
-                                buttonText: "Report User",
-                                gradient: ALERT_GRADIENT,
-                                height: ScreenUtils.getDesignHeight(45.0),
-                                textFontSize: 14.0,
+                      Visibility(
+                        visible: showUserActivityBtns,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 20),
+                          child: Row(
+                            children: [
+                              Flexible(
+                                flex: 1,
+                                child: CustomButton(
+                                  buttonText: "Report User",
+                                  gradient: ALERT_GRADIENT,
+                                  height: ScreenUtils.getDesignHeight(45.0),
+                                  textFontSize: 14.0,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Flexible(
-                              flex: 1,
-                              child: CustomButton(
-                                buttonText: "Report User",
-                                gradient: ALERT_GRADIENT,
-                                height: ScreenUtils.getDesignHeight(45.0),
-                                textFontSize: 14.0,
+                              SizedBox(
+                                width: 20,
                               ),
-                            ),
-                          ],
+                              Flexible(
+                                flex: 1,
+                                child: CustomButton(
+                                  buttonText: "Report User",
+                                  gradient: ALERT_GRADIENT,
+                                  height: ScreenUtils.getDesignHeight(45.0),
+                                  textFontSize: 14.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     Container(

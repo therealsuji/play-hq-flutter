@@ -91,9 +91,9 @@ class UserDelegate extends UserRepository with NetworkHelper {
   @override
   Future<UserDetails> getUserDetails() async {
     var jsonData = await SecureStorage.readValue(USER_DETAILS_KEY);
+    debugPrint('Get User Details $jsonData');
     if (jsonData == null) {
-      UserDetails user =
-          await this.fetchAll<UserDetails>(APIConfig.getUserDetails, userDetailsfromJson).then((value) => value.result);
+      UserDetails user = await this.fetchAll<UserDetails>(APIConfig.getUserDetails, userDetailsfromJson).then((value) => value.result);
       SecureStorage.writeValue(USER_DETAILS_KEY, json.encode(user.toJson()));
       return user;
     } else {

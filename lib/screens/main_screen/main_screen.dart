@@ -85,7 +85,7 @@ class _MainScreenState extends State<MainScreen> {
             case 2:
               return FriendActivity();
             case 3:
-              return ProfileScreen();
+              return ProfileScreen(userEmail: '',);
             default:
               return Container();
           }
