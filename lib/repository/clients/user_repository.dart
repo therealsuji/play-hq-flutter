@@ -7,11 +7,15 @@ import '../../models/common_models/user/user_details.dart';
 abstract class UserRepository {
   Future<UserGamePreferences> getUserGamePreferences();
 
-  Future<GamePreferancesResponse> getWishlistGames();
+  Future<List<Data>> getWishlistGames();
 
   Future<bool> addWishlistGames(dynamic body);
 
   Future<bool> addLibraryGames(dynamic body);
+
+  Future<void> addGameToWishlist(Data game);
+
+  Future<void> addGameToLibrary(Data game);
 
   Future<UserDetails> getUserDetails();
 
@@ -19,5 +23,5 @@ abstract class UserRepository {
 
   Future<Response> updateUserPreferences(Map<String , dynamic> body);
 
-  Future<GamePreferancesResponse> getLibraryGames();
+  Future<List<Data>> getLibraryGames();
 }

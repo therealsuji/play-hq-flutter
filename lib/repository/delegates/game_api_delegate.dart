@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:play_hq/helpers/networks/app_config.dart';
 import 'package:play_hq/helpers/networks/app_network_helper.dart';
@@ -8,17 +9,19 @@ import 'package:play_hq/repository/clients/game_api_repositiry.dart';
 class GameApiDelegate extends GameApiRepository with NetworkHelper {
   @override
   Future<RawgGameDetails> getPopularGames() {
-    return this.fetchAll<RawgGameDetails>(APIConfig.popularThisYear(), rawgGameDetailsFromJson).then((value) => value.result);
+    return this.fetchAll<RawgGameDetails>(APIConfig.popularThisYear(), rawgGameDetailsFromJson , true).then((value) => value.result);
   }
 
   @override
   Future<RawgGameDetails> getUpComingGames() async{
-    return this.fetchAll<RawgGameDetails>(await APIConfig.getUpcomingGames(5), rawgGameDetailsFromJson).then((value) => value.result);
+    final random2 = Random();
+    final randomSize = random2.nextInt(5) + 1;
+    return this.fetchAll<RawgGameDetails>(await APIConfig.getUpcomingGames(randomSize), rawgGameDetailsFromJson , false).then((value) => value.result);
   }
 
   @override
   Future<RawgGameDetails> getRecommendedGamesFromGenres(List<int> genres) async{
-    return this.fetchAll<RawgGameDetails>(await APIConfig.getRecommendGamesFromGenres(), rawgGameDetailsFromJson).then((value) => value.result);
+    return this.fetchAll<RawgGameDetails>(await APIConfig.getRecommendGamesFromGenres(), rawgGameDetailsFromJson , true).then((value) => value.result);
   }
 }
 

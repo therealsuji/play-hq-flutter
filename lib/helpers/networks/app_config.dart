@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:play_hq/helpers/app_enums.dart';
 import 'package:play_hq/models/common_models/date_filter_model.dart';
 import 'package:play_hq/models/common_models/user/user_game_preferences.dart';
+import 'package:play_hq/repository/clients/user_repository.dart';
 import 'package:play_hq/services/auth_service.dart';
 
 import '../../injection_container.dart';
@@ -35,14 +36,6 @@ class APIConfig {
         break;
     }
   }
-
-  static void setGenreBase() async{
-    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
-    String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
-    _personalizedBase = '$_rawgAPI' + '/games?platforms=' + platforms + '&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
-    debugPrint('Personalized URL $_personalizedBase');
-  }
-
   /// Urls that are needed from the RAWG API
   static String getGenres =
       '$_rawgAPI' + '/genres?ordering=&page=1&page_size=30&' + 'key=$_RAWG_API_KEY';
@@ -72,7 +65,7 @@ class APIConfig {
   }
 
   static Future<String> getRecommendGamesFromGenres() async {
-    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
+    UserGamePreferences gamePreferences = await sl<UserRepository>().getUserGamePreferences();
     String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
     String genres = gamePreferences.genres.map((obj) => obj.id.toString()).join(',');
     DateTime currentDate = DateTime.now();
@@ -107,15 +100,13 @@ class APIConfig {
 
   static Future<String> getUpcomingGames(int size) async{
     DateTime currentDate = DateTime.now();
-    UserGamePreferences gamePreferences = await sl<AuthService>().getUserGamePreferences();
+    UserGamePreferences gamePreferences = await sl<UserRepository>().getUserGamePreferences();
     String platforms = gamePreferences.platforms.map((obj) => obj.id.toString()).join(',');
     String genres = gamePreferences.genres.map((obj) => obj.id.toString()).join(',');
-    final random2 = Random();
-    final randomPage = random2.nextInt(5) + 1;
     var startDateTime =
         '${currentDate.year}-${currentDate.month >= 10 ? currentDate.month : "0${currentDate.month}"}-05';
     var endDateTime = '${currentDate.year + 3}-12-31';
-    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page=$randomPage&page_size=$size&ordering=-added&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
+    return '$_rawgAPI/games?dates=$startDateTime,$endDateTime&page=1&page_size=15&ordering=-added&platforms=$platforms&genres=$genres&key=$_RAWG_API_KEY';
   }
 
   static String getGamesOfYear() {

@@ -14,7 +14,7 @@ class HorizontalScrollList extends StatelessWidget {
     required this.itemBuilder,
     this.axis = Axis.horizontal,
     this.emptyListWidget,
-    this.emptyListText = "No games available yet",
+    this.emptyListText = "No games available yet, \nmaybe try changing your preferences",
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,8 @@ class HorizontalScrollList extends StatelessWidget {
               Center(
                 child: Text(
                   emptyListText,
-                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white , fontSize: 16),
                 ),
               ),
     );

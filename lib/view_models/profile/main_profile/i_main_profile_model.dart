@@ -12,6 +12,7 @@ import 'main_profile_model.dart';
 
 class IMainProfileModel extends MainProfileModel {
   final _mainProfileAPI = sl<MainProfileScreenRepository>();
+  final _userApi = sl<UserRepository>();
 
   List<Data> _wishlistGames = [];
   List<Data> _libraryGames = [];
@@ -22,10 +23,9 @@ class IMainProfileModel extends MainProfileModel {
   void getProfileDetails() async {
     try {
       this.loadingData();
-      _wishlistGames = await sl<AuthService>().getWishlistGames();
-      _libraryGames = await sl<AuthService>().getLibraryGames();
-      _userDetails = await sl<AuthService>().getUserDetails();
-      print("User Avatar: ${_userDetails.avatar}");
+      _wishlistGames = await _userApi.getWishlistGames();
+      _libraryGames = await _userApi.getLibraryGames();
+      _userDetails = await _userApi.getUserDetails();
       dataLoaded();
       notifyListeners();
     } catch (e) {

@@ -1,29 +1,72 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart';
+import 'package:http_extensions_cache/http_extensions_cache.dart';
 
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
 import '../../services/base_managers/error_manager.dart';
 import '../app_enums.dart';
+import 'app_cache_manager.dart';
 import 'app_network.dart';
 
 class NetworkResult<T> {
-  Response rawResult;
+  dynamic rawResult;
   Future<T> result;
+
   NetworkResult(this.rawResult, this.result);
+}
+
+class CachedResponse {
+  final Response response;
+  final DateTime expiry;
+
+  CachedResponse(this.response, this.expiry);
 }
 
 class NetworkHelper {
   final _httpClient = sl<Network>();
-  
 
-  Future<NetworkResult<T>> fetchAll<T>(String url, computeCallback) async {
+  Future<NetworkResult<T>> fetchAll<T>(String url, computeCallback , bool cacheData) async {
+    final cacheManager = CacheManager(
+      Config(
+        'my_cache_key',
+        stalePeriod: const Duration(days: 2),
+        maxNrOfCacheObjects: 100,
+        repo: JsonCacheInfoRepository(databaseName: 'cache_manager'),
+      ),
+    );
     try {
-      Response response = await _httpClient.performRequest(url, HttpAction.GET);
-      return NetworkResult(response, compute(computeCallback, response.body));
+      if(cacheData) {
+        final fileInfo = await cacheManager.getFileFromCache(url);
+        final file = fileInfo?.file;
+        if (file != null && file.existsSync()) {
+          debugPrint(
+              'Data Already Saved'
+          );
+          final cachedData = await file.readAsString();
+          return NetworkResult(
+              cachedData, compute(computeCallback, cachedData));
+        } else {
+          Response response =
+          await _httpClient.performRequest(url, HttpAction.GET);
+          final responseData = response.body;
+          await cacheManager.putFile(
+              url, Uint8List.fromList(utf8.encode(responseData))
+          );
+          return NetworkResult(
+              response, compute(computeCallback, response.body));
+        }
+      }else{
+        Response response =
+        await _httpClient.performRequest(url, HttpAction.GET);
+        return NetworkResult(
+            response, compute(computeCallback, response.body));
+      }
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());
       throw TimeoutFailure();
@@ -40,10 +83,11 @@ class NetworkHelper {
 
   Future<bool> post<T>(String url, dynamic body) async {
     try {
-      Response response = await _httpClient.performRequest(url, HttpAction.POST, body: body);
-      if(response.statusCode >= 200 && response.statusCode < 300){
+      Response response =
+          await _httpClient.performRequest(url, HttpAction.POST, body: body);
+      if (response.statusCode >= 200 && response.statusCode < 300) {
         return true;
-      }else{
+      } else {
         return false;
       }
     } on TimeoutException {
@@ -60,9 +104,11 @@ class NetworkHelper {
     }
   }
 
-  Future<NetworkResult<T>> put<T>(String url, Map<String, dynamic> body, computeCallback) async {
+  Future<NetworkResult<T>> put<T>(
+      String url, Map<String, dynamic> body, computeCallback) async {
     try {
-      Response response = await _httpClient.performRequest(url, HttpAction.PUT, body: body);
+      Response response =
+          await _httpClient.performRequest(url, HttpAction.PUT, body: body);
       return NetworkResult(response, compute(computeCallback, response.body));
     } on TimeoutException {
       sl<ErrorManager>().showError(TimeoutFailure());

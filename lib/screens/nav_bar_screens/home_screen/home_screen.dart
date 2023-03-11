@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Consumer<HomeScreenModel>(builder: (_, model, __) {
               return Container(
-                height: ScreenUtils.getDesignHeight(290),
+                height: ScreenUtils.getDesignHeight(320),
                 child: Skeleton(
                   isLoading: !model.hasInitialDataLoaded,
                   skeleton: SkeletonGamesListWidget(
@@ -119,8 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         child: GamesWidget(
-                          titleFontSize: ScreenUtils.totalBodyHeight > 800 ? 18 : 14,
-                          subTitleFontSize: ScreenUtils.totalBodyHeight > 800 ? 16 : 14,
+                          titleFontSize: ScreenUtils.totalBodyHeight > 800 ? 20 : 14,
+                          subTitleFontSize: ScreenUtils.totalBodyHeight > 800 ? 18 : 14,
                           backgroundUrl: model.recommendedGames[index].backgroundImage,
                           subTitle: '${model.recommendedGames[index].released}',
                           color: PRIMARY_COLOR,
@@ -203,8 +203,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     count: 10,
                   ),
                   child: HorizontalScrollList(
-                    itemCount: val.upComingGamesThisYear.length,
+                    itemCount: val.upComingGamesThisYear.length < 8 ? val.upComingGamesThisYear.length : 8,
                     itemBuilder: (BuildContext context, int index) {
+                      debugPrint('Upcoming Games Length ${val.upComingGamesThisYear.length}');
                       return GestureDetector(
                         onTap: () => Navigator.pushNamed(
                           context,

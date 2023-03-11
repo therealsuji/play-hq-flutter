@@ -67,11 +67,7 @@ class AuthService {
           saveTokens(response.token!);
           saveUserData(response.user!);
           var userGamePreferences = await _userRepository.getUserGamePreferences();
-          GamePreferancesResponse userWishlistGames = await _userRepository.getWishlistGames();
-          GamePreferancesResponse userLibraryGames = await _userRepository.getLibraryGames();
           saveUserGamePreference(userGamePreferences);
-          saveWishlistGames(userWishlistGames.data);
-          saveLibraryGames(userLibraryGames.data);
         }
         return isSetupDone;
       } else {
@@ -111,7 +107,7 @@ class AuthService {
     var jsonData = prefs.getString(WISHLIST_GAMES_KEY);
     List<Data> games = GamePreferancesResponse.decode(jsonData!);
     if(games.isEmpty){
-      games = await sl<UserRepository>().getWishlistGames().then((value) => value.data);
+      games = await sl<UserRepository>().getWishlistGames().then((value) => value);
     }
     return games;
   }
@@ -140,7 +136,7 @@ class AuthService {
     var jsonData = prefs.getString(LIBRARY_GAMES_KEY);
     List<Data> games = GamePreferancesResponse.decode(jsonData!);
     if(games.isEmpty){
-      games = await sl<UserRepository>().getLibraryGames().then((value) => value.data);
+      games = await sl<UserRepository>().getLibraryGames().then((value) => value);
     }
     return games;
   }

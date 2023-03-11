@@ -70,21 +70,13 @@ class IHomeScreenModel extends HomeScreenModel {
 
   @override
   void loadAPICalls() async {
-    APIConfig.setGenreBase();
-    UserDetails userDetails = await sl<AuthService>().getUserDetails();
+    UserDetails userDetails = await _userApi.getUserDetails();
     UserGamePreferences gamePreferences = await _userApi.getUserGamePreferences();
-    GamePreferancesResponse gamePreferancesResponse = await _userApi.getWishlistGames();
-    _userWishlistGames = gamePreferancesResponse.data;
+    _userWishlistGames = await _userApi.getWishlistGames();
     _displayName = userDetails.displayName ?? "";
     _prefGenre = gamePreferences.genres;
     try {
       loadingData();
-      var n2 = _gameApi.getPopularGames().then((games) {
-        if (games.results!.length > 0) {
-          _popularGameThisYear = games.results ?? [];
-        }
-        notifyListeners();
-      });
       var n3 = _gameApi.getUpComingGames().then((games) {
 
         if (games.results!.length > 0) {
@@ -100,7 +92,7 @@ class IHomeScreenModel extends HomeScreenModel {
         }
         notifyListeners();
       });
-      await Future.wait([n2, n3, n4]);
+      await Future.wait([n3, n4]);
       dataLoaded();
       notifyListeners();
     } catch (e) {

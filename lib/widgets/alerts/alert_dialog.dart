@@ -93,9 +93,7 @@ class CustomAlertImpl extends CustomAlert{
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: 15,
-              ),
+              Spacer(),
               Text(
                 desc,
                 style: TextStyle(
