@@ -35,8 +35,9 @@ class IMainProfileModel extends MainProfileModel {
   }
 
   void getUserDetails() async {
-    var jsonData = await SecureStorage.readValue('userDetailsKey');
-    _userDetails = UserDetails.fromJson(json.decode(jsonData!));
+    _wishlistGames = await _userApi.getWishlistGames();
+    _libraryGames = await _userApi.getLibraryGames();
+    _userDetails = await _userApi.getUserDetails();
     notifyListeners();
   }
 

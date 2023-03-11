@@ -124,4 +124,14 @@ class UserDelegate extends UserRepository with NetworkHelper {
     var jsonData = prefs.getString(WISHLIST_GAMES_KEY);
     throw UnimplementedError();
   }
+
+  @override
+  Future<void> deleteLibraryGame(int id) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteWishListGame(int id) {
+    throw UnimplementedError();
+  }
 }

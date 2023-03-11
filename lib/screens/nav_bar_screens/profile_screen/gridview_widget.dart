@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:play_hq/view_models/profile/main_profile/main_profile_model.dart';
+import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../../helpers/app_colors.dart';
@@ -26,14 +28,17 @@ class CustomGridView extends StatelessWidget {
       children: games!
           .map(
             (e) => GestureDetector(
-              onTap: () => Navigator.pushNamed(
-                context,
-                GAME_DETAILS_SCREEN,
-                arguments: GameDetailsArguments(
-                  gameId: e.game.apiId,
-                  title: e.game.title
-                ),
-              ),
+              onTap: () async {
+                var res = await Navigator.pushNamed(
+                  context,
+                  GAME_DETAILS_SCREEN,
+                  arguments: GameDetailsArguments(
+                      gameId: e.game.apiId, title: e.game.title),
+                );
+                if(res == true){
+                  context.read<MainProfileModel>().getUserDetails();
+                }
+              },
               child: GamesWidget(
                 backgroundUrl: e.game.boxCover,
                 height: ScreenUtils.getDesignHeight(195),
@@ -64,9 +69,7 @@ class GridViewSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-            crossAxisSpacing: 20,
-            childAspectRatio: 0.7),
+            crossAxisCount: 2, crossAxisSpacing: 20, childAspectRatio: 0.7),
         padding: EdgeInsets.only(top: 20),
         itemCount: count,
         itemBuilder: (BuildContext ctx, int index) {

@@ -5,6 +5,9 @@ import '../../models/common_models/game_preferences/response_body.dart';
 import '../../models/common_models/user/user_details.dart';
 
 abstract class UserRepository {
+
+  //TODO: Migrate all User related API calls to this
+
   Future<UserGamePreferences> getUserGamePreferences();
 
   Future<List<Data>> getWishlistGames();
@@ -16,6 +19,10 @@ abstract class UserRepository {
   Future<void> addGameToWishlist(Data game);
 
   Future<void> addGameToLibrary(Data game);
+
+  Future<void> deleteWishListGame(int id);
+
+  Future<void> deleteLibraryGame(int id);
 
   Future<UserDetails> getUserDetails();
 

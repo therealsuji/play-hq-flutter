@@ -95,8 +95,7 @@ class _GameDetailsScreenState extends State<GameDetailsScreen> {
                         BACK_ARROW_ICON,
                         height: ScreenUtils.getDesignHeight(27.0),
                       ),
-                      onTap: () => Provider.of<GameDetailsViewModel>(context, listen: false)
-                          .navigateMainScreen(),
+                      onTap: () => Navigator.pop(context, true),
                     ),
                   ),
                   Consumer<GameDetailsViewModel>(

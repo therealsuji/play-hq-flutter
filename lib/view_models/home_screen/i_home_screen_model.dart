@@ -45,7 +45,6 @@ class IHomeScreenModel extends HomeScreenModel {
   List<Data> _userWishlistGames = [];
 
   int _selectedPlatform = 0;
-  // use this when user hasnt set any preferred genres
   List<Genre> _defaultGenre = [
     Genre(
         id: 4,
