@@ -2,7 +2,9 @@ import 'package:event_bus/event_bus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:places_service/places_service.dart';
 import 'package:play_hq/repository/clients/friends_repository.dart';
+import 'package:play_hq/repository/clients/skeleton_loading_repository.dart';
 import 'package:play_hq/repository/delegates/friends_delegate.dart';
+import 'package:play_hq/repository/delegates/skeleton_loading_delegate.dart';
 import 'package:play_hq/services/base_managers/response_manager.dart';
 import 'package:play_hq/services/response_service.dart';
 import 'package:play_hq/view_models/profile/settings/i_settings_view_model.dart';
@@ -139,6 +141,10 @@ void init() {
   );
   sl.registerFactory<UserRepository>(
     () => UserDelegate(),
+  );
+
+  sl.registerFactory<SkeletonLoadingRepository>(()
+    => SkeletonLoadingDelegate()
   );
 
   sl.registerFactory<SettingsRepository>(

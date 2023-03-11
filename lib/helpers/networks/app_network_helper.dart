@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart';
 import 'package:http_extensions_cache/http_extensions_cache.dart';
+import 'package:play_hq/helpers/app_loading.dart';
+import 'package:play_hq/repository/clients/skeleton_loading_repository.dart';
 
 import '../../models/errors/exceptions.dart';
 import '../../injection_container.dart';
@@ -36,6 +38,7 @@ class CachedResponse {
 
 class NetworkHelper {
   final _httpClient = sl<Network>();
+  final _skeletonLoading = sl<SkeletonLoadingRepository>();
 
   Future<NetworkResult<T>> fetchAll<T>(String url, computeCallback, {bool cacheData = false}) async {
     final cacheManager = CacheManager(
@@ -51,7 +54,6 @@ class NetworkHelper {
         final fileInfo = await cacheManager.getFileFromCache(url);
         final file = fileInfo?.file;
         if (file != null && file.existsSync()) {
-          debugPrint('Data Already Saved');
           final cachedData = await file.readAsString();
           return NetworkResult(cachedData, compute(computeCallback, cachedData));
         } else {

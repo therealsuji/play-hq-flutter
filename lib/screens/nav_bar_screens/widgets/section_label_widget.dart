@@ -23,7 +23,7 @@ class SectionLabel extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).primaryTextTheme.headline3,
+            style: Theme.of(context).primaryTextTheme.displayMedium,
           ),
           ...[
             if (rightText != null)

@@ -127,12 +127,11 @@ const GENRE_GREEN_GRADIENT = LinearGradient(
     Color.fromRGBO(33, 146, 137, 1),
   ],
 );
-const GENRE_YELLOW_GRADIENT = LinearGradient(
+const GENRE_GRADIENT = LinearGradient(
   begin: Alignment.topRight,
   end: Alignment.bottomLeft,
   colors: [
-    Color.fromRGBO(255, 193, 70, 1),
-    Color.fromRGBO(254, 182, 74, 1),
-    Color.fromRGBO(254, 162, 79, 1),
+    Color(0xFFf7ba2c),
+    Color(0xFFea5459)
   ],
 );

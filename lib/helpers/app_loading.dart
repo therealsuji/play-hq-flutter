@@ -13,6 +13,14 @@ class AppLoader {
     }
   }
 
+  void skeletonDataLoading(){
+    _initialDataLoaded = false;
+  }
+
+  void skeletonDataLoaded(){
+    _initialDataLoaded = true;
+  }
+
   void dataLoaded() {
     if (!_initialDataLoaded) {
       hideLoader();

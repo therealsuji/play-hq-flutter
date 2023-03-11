@@ -24,6 +24,7 @@ import '../../models/rawg_models/rawg_game_details.dart';
 import '../../models/sales/sales_payload_model.dart';
 import '../../repository/clients/game_api_repositiry.dart';
 import '../../repository/clients/home_screen_repository.dart';
+import '../../repository/clients/skeleton_loading_repository.dart';
 import '../../services/auth_service.dart';
 import 'home_screen_model.dart';
 
@@ -31,6 +32,7 @@ class IHomeScreenModel extends HomeScreenModel {
   final _homeApi = sl<HomeRepository>();
   final _gameApi = sl<GameApiRepository>();
   final _gameDetailsApi = sl<GameDetailsRepository>();
+  final _loadingSkeleton  = sl<SkeletonLoadingRepository>();
   final _userApi = sl<UserRepository>();
   final _eventBus = sl<EventBus>();
 
@@ -46,9 +48,9 @@ class IHomeScreenModel extends HomeScreenModel {
 
   int _selectedPlatform = 0;
   List<Genre> _defaultGenre = [
-    Genre(id: 4, imageBackground: ACTION_GENRE_IMAGE, name: "Action", gradient: GENRE_YELLOW_GRADIENT),
-    Genre(id: 3, imageBackground: ADVENTURE_GENRE_IMAGE, name: "Adventure", gradient: GENRE_BLUE_GRADIENT),
-    Genre(id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GREEN_GRADIENT)
+    Genre(id: 4, imageBackground: ACTION_GENRE_IMAGE, name: "Action", gradient: GENRE_GRADIENT),
+    Genre(id: 3, imageBackground: ADVENTURE_GENRE_IMAGE, name: "Adventure", gradient: GENRE_GRADIENT),
+    Genre(id: 1, imageBackground: RACING_GENRE_IMAGE, name: "Racing", gradient: GENRE_GRADIENT)
   ];
   String? _displayName;
 
@@ -65,14 +67,8 @@ class IHomeScreenModel extends HomeScreenModel {
     _userWishlistGames = await _userApi.getWishlistGames();
     _displayName = userDetails.displayName ?? "";
     _prefGenre = gamePreferences.genres;
+    skeletonDataLoading();
     try {
-      loadingData();
-      var n3 = _gameApi.getUpComingGames().then((games) {
-        if (games.results!.length > 0) {
-          _upcomingGamesThisYear = games.results ?? [];
-        }
-        notifyListeners();
-      });
       var n4 =
           _gameApi.getRecommendedGamesFromGenres().then((games) {
         if (games.results!.length > 0) {
@@ -80,9 +76,14 @@ class IHomeScreenModel extends HomeScreenModel {
         }
         notifyListeners();
       });
-      await Future.wait([n3, n4]);
-      dataLoaded();
-      notifyListeners();
+      await Future.wait([n4]);
+      skeletonDataLoaded();
+      var n3 = _gameApi.getUpComingGames().then((games) {
+        if (games.results!.length > 0) {
+          _upcomingGamesThisYear = games.results ?? [];
+        }
+        notifyListeners();
+      });
     } catch (e) {
       print("Error Given " + e.toString());
       hideLoader();

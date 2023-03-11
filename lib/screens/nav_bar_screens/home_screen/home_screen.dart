@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:play_hq/models/common_models/rawg_platform_model.dart';
+import 'package:play_hq/repository/clients/skeleton_loading_repository.dart';
 import 'package:play_hq/screens/nav_bar_screens/home_screen/trending_week_widget.dart';
 import 'package:play_hq/services/response_service.dart';
 import 'package:provider/provider.dart';
@@ -95,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Padding(
             padding: EdgeInsets.only(
-              top: ScreenUtils.getDesignHeight(10.0),
+              top: ScreenUtils.getDesignHeight(20.0),
             ),
             child: Consumer<HomeScreenModel>(builder: (_, model, __) {
               return Container(
@@ -194,6 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Consumer<HomeScreenModel>(
             builder: (_, val, __) {
+              debugPrint('Skeleton Loading ${sl<SkeletonLoadingRepository>().loadingState}');
               return Container(
                 margin: EdgeInsets.symmetric(vertical: 15),
                 height: ScreenUtils.getDesignHeight(180),
