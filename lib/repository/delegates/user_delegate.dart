@@ -155,4 +155,14 @@ class UserDelegate extends UserRepository with NetworkHelper {
         .fetchAll<GamePreferencesResponse>(APIConfig.getWishListGamesFromEmail(email), gamePreferancesResponseFromJson)
         .then((value) => value.result);
   }
+
+  @override
+  Future<void> deleteLibraryGame(int id) {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteWishListGame(int id) {
+    throw UnimplementedError();
+  }
 }

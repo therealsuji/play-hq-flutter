@@ -111,7 +111,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
       navigationService.pop();
       Data game = Data.fromJson(jsonDecode(response.body));
       sl<AuthService>().addGameToLibrary(game);
-      sl<ResponseManager>().showResponse('Game added to Library', Colors.green);
+      sl<ResponseManager>().showResponse('${_gameDetailsModel.name} added to Library', Colors.green);
       getGameStatus(_gameDetailsModel.id ?? 0);
       notifyListeners();
     }else{
@@ -145,7 +145,7 @@ class IGameDetailsViewModel extends GameDetailsViewModel {
     if (response.statusCode == 201){
       Data game = Data.fromJson(jsonDecode(response.body));
       sl<AuthService>().addGameToWishlist(game);
-      sl<ResponseManager>().showResponse('Game added to Library', Colors.green);
+      sl<ResponseManager>().showResponse('${_gameDetailsModel.name} added to Wishlist', Colors.green);
       getGameStatus(_gameDetailsModel.id ?? 0);
       navigationService.pop();
       notifyListeners();
